@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.Buffs.Minions;
 using Redemption.Globals;
 using Redemption.Items.Weapons.PostML.Magic;
@@ -14,9 +13,8 @@ namespace Redemption.Items.Weapons.PostML.Summon
     public class UkonRuno : ModItem
 	{
 		public override void SetStaticDefaults()
-        {
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<PoemOfIlmatar>();
-
+		{
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<PoemOfIlmatar>();
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
         }
@@ -25,7 +23,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
         {
             Item.damage = 240;
             Item.DamageType = DamageClass.Summon;
-            Item.width = 36;
+            Item.width = 38;
             Item.height = 30;
             Item.mana = 20;
             Item.useTime = 20;
@@ -34,11 +32,11 @@ namespace Redemption.Items.Weapons.PostML.Summon
             Item.noMelee = true;
             Item.knockBack = 2;
             Item.value = Item.sellPrice(0, 20, 0, 0);
-            Item.rare = ModContent.RarityType<TurquoiseRarity>();
+            Item.rare = RarityType<TurquoiseRarity>();
             Item.UseSound = SoundID.Item44;
             Item.autoReuse = false;
-            Item.buffType = ModContent.BuffType<UkkonenBuff>();
-            Item.shoot = ModContent.ProjectileType<Ukkonen>();
+            Item.buffType = BuffType<UkkonenBuff>();
+            Item.shoot = ProjectileType<Ukkonen>();
             Item.ExtraItemShoot(ProjectileID.RainFriendly);
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

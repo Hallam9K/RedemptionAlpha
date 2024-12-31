@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary.Core;
 using Redemption.BaseExtension;
@@ -87,7 +86,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 Vector2 velocity = spawnPos.DirectionTo(Projectile.Center);
                 MakeDust(spawnPos, velocity * 100);
             }
-            if (progress >= 1)
+            if (progress >= 1 && !Player.channel)
             {
                 launchVec = Player.Center.DirectionTo(Main.MouseWorld);
                 dirVec = launchVec;
@@ -98,6 +97,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public void Launch()
         {
             OpacityTimer++;
+            Player.GetModPlayer<RedePlayer>().fallSpeedIncrease += 50;
             if (timer++ == 0)
             {
                 SoundEngine.PlaySound(SoundID.Item74, Projectile.position);
@@ -107,13 +107,16 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 MakeDustTrail();
                 MakeDust(Main.rand.NextVector2FromRectangle(Player.Hitbox), -Player.velocity);
                 Player.velocity = launchVec * 40;
-                Player.GetModPlayer<RedePlayer>().fallSpeedIncrease += 50;
                 Projectile.friendly = true;
                 Player.Redemption().contactImmune = true;
             }
             else if (timer <= 25)
             {
-                Player.velocity *= 0.8f;
+                Player.Redemption().contactImmune = true;
+            }
+            else
+            {
+                Player.velocity *= 0.5f;
             }
             if (timer >= 30)
                 Projectile.Kill();
@@ -125,7 +128,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
                 Vector2 spawnPos = aimmed.Center + Main.rand.NextVector2CircularEdge(200, 200);
                 Vector2 velocity = spawnPos.DirectionTo(aimmed.Center);
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), spawnPos, velocity * 24, ModContent.ProjectileType<PZGauntlet_Proj2>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Player.whoAmI);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), spawnPos, velocity * 24, ProjectileType<PZGauntlet_Proj2>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Player.whoAmI);
             }
         }
         public void MakeDustTrail()
@@ -165,12 +168,14 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 timer = 15;
                 aimmed = target;
                 onHit = true;
+
+                Player.AddImmuneTime(-1, 40);
             }
 
-            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<PZGauntlet_Explosion>(), 0, 0, Player.whoAmI);
+            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileType<PZGauntlet_Explosion>(), 0, 0, Player.whoAmI);
             SoundEngine.PlaySound(SoundID.Item14 with { Volume = 2f }, Projectile.position);
             if (target.knockBackResist > 0)
-                target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 15);
+                target.AddBuff(BuffType<StunnedDebuff>(), 15);
 
             Vector2 drawPos = Vector2.Lerp(Projectile.Center, target.Center, 0.5f);
             ParticleSystem.NewParticle(drawPos, dirVec, new LaserParticle(4), Color.LightGreen, 4f);
@@ -242,8 +247,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         }
         public override void PostDraw(Color lightColor)
         {
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
-            Texture2D trail = ModContent.Request<Texture2D>("Redemption/Textures/Ray", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D flare = Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+            Texture2D trail = Request<Texture2D>("Redemption/Textures/Ray", AssetRequestMode.ImmediateLoad).Value;
 
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 origin = new(flare.Width / 2, flare.Height / 2);
@@ -315,7 +320,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;
                 for (int i = 0; i < 5; i++)
                 {
-                    int dust = Dust.NewDust(Projectile.Center, 1, 1, ModContent.DustType<GlowDust>(), 0f, 0f, Scale: .5f);
+                    int dust = Dust.NewDust(Projectile.Center, 1, 1, DustType<GlowDust>(), 0f, 0f, Scale: .5f);
                     Main.dust[dust].velocity *= 2;
                     Main.dust[dust].noGravity = true;
                     Color dustColor = new(color.R, color.G, color.B) { A = 0 };
@@ -330,7 +335,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Main.spriteBatch.End();
             Main.spriteBatch.BeginAdditive();
 
-            Texture2D teleportGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D teleportGlow = Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
             Rectangle rect2 = new(0, 0, teleportGlow.Width, teleportGlow.Height);
             Vector2 origin2 = new(teleportGlow.Width / 2, teleportGlow.Height / 2);
             Vector2 position2 = Projectile.Center - Main.screenPosition;

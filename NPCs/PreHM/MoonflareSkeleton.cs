@@ -190,7 +190,7 @@ namespace Redemption.NPCs.PreHM
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    if (NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100)
+                    if (NPC.velocity.Y == 0 && NPC.Sight(globalNPC.attacker, 100, false, true))
                     {
                         SoundEngine.PlaySound(SoundID.DD2_GhastlyGlaiveImpactGhost, NPC.position);
                         AITimer = 0;

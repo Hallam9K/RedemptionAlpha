@@ -18,7 +18,14 @@ namespace Redemption.Textures
         public static Asset<Texture2D> BigFlare;
         public static Asset<Texture2D> WhiteFlare;
         public static Asset<Texture2D> WhiteGlow;
+        public static Asset<Texture2D> WhiteOrb;
         public static Asset<Texture2D> GunFlash;
+        public static Asset<Texture2D> GlowParticle;
+        public static Asset<Texture2D> RainbowParticle1;
+        public static Asset<Texture2D> RainbowParticle2;
+        public static Asset<Texture2D> RainbowParticle3;
+
+
         public override void Load()
         {
             if (Main.dedServ)
@@ -34,7 +41,12 @@ namespace Redemption.Textures
             BigFlare = ModContent.Request<Texture2D>("Redemption/Textures/BigFlare");
             WhiteFlare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare");
             WhiteGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow");
+            WhiteOrb = ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb");
             GunFlash = ModContent.Request<Texture2D>("Redemption/Textures/GunFlash");
+            GlowParticle = Request<Texture2D>("Redemption/Particles/GlowParticle");
+            RainbowParticle1 = Request<Texture2D>("Redemption/Particles/RainbowParticle1");
+            RainbowParticle2 = Request<Texture2D>("Redemption/Particles/RainbowParticle2");
+            RainbowParticle3 = Request<Texture2D>("Redemption/Particles/RainbowParticle3");
         }
     }
 }

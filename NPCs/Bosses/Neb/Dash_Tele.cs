@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
@@ -30,8 +29,8 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             if (Projectile.localAI[0] == 0)
             {
-                Projectile.alpha -= 4;
-                if (Projectile.alpha <= 200)
+                Projectile.alpha -= 8;
+                if (Projectile.alpha <= 160)
                     Projectile.localAI[0] = 1;
             }
             else
@@ -48,7 +47,7 @@ namespace Redemption.NPCs.Bosses.Neb
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
-                Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Color color = Projectile.GetAlpha(Color.White with { A = 0 }) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
             return true;

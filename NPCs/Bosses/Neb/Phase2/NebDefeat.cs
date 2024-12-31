@@ -1,6 +1,7 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.NPCs.Friendly;
 using Redemption.Textures;
 using Redemption.UI.ChatUI;
 using ReLogic.Content;
@@ -114,7 +115,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         public override bool PreDraw(ref Color lightColor)
         {
             Asset<Texture2D> texture = TextureAssets.Projectile[Type];
-            glowMask ??= ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Neb/Phase2/NebDefeatFade");
+            glowMask ??= Request<Texture2D>("Redemption/NPCs/Bosses/Neb/Phase2/NebDefeatFade");
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int num215 = texture.Height() / 4;
             int y7 = num215 * Projectile.frame;

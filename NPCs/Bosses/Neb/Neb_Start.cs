@@ -1,16 +1,16 @@
-using Terraria;
-using Terraria.ID;
-using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
-using Terraria.Audio;
-using Redemption.Globals;
-using ParticleLibrary;
-using Redemption.Particles;
-using Redemption.BaseExtension;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Effects.PrimitiveTrails;
-using ReLogic.Content;
+using ParticleLibrary;
+using ParticleLibrary.Core;
 using Redemption.Base;
+using Redemption.BaseExtension;
+using Redemption.Effects.PrimitiveTrails;
+using Redemption.Globals;
+using Redemption.Particles;
+using ReLogic.Content;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
@@ -21,7 +21,7 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             // DisplayName.SetDefault("");
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -44,13 +44,15 @@ namespace Redemption.NPCs.Bosses.Neb
             NPC.aiStyle = -1;
             NPC.alpha = 255;
             NPC.behindTiles = true;
+            NPC.ShowNameOnHover = false;
         }
         Vector2 origin;
         public override void AI()
         {
-            Player player = Main.player[NPC.target];
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest(true);
+
+            Player player = Main.player[NPC.target];
 
             if (NPC.ai[0] < 5)
             {
@@ -64,7 +66,9 @@ namespace Redemption.NPCs.Bosses.Neb
             switch (NPC.ai[0])
             {
                 case 0:
-                    player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
+                    int nearPlayer = RedeHelper.GetNearestAlivePlayer(NPC);
+                    if (nearPlayer >= 0)
+                        player = Main.player[nearPlayer];
                     origin = player.Center + new Vector2(200, 0);
                     NPC.ai[0] = 1;
                     break;
@@ -120,9 +124,9 @@ namespace Redemption.NPCs.Bosses.Neb
                 case 4:
                     if (NPC.ai[2]++ == 5)
                     {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Neb_Start_Visual>(), 0, new Vector2(0, 90), SoundID.Item163, NPC.whoAmI);
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Neb_Start_Visual2>(), 0, new Vector2(0, 90), NPC.whoAmI);
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Neb_Start_Visual3>(), 0, new Vector2(0, 90), NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ProjectileType<Neb_Start_Visual>(), 0, new Vector2(0, 90), SoundID.Item163, NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ProjectileType<Neb_Start_Visual2>(), 0, new Vector2(0, 90), NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ProjectileType<Neb_Start_Visual3>(), 0, new Vector2(0, 90), NPC.whoAmI);
                     }
                     if (NPC.ai[2] >= 5)
                         player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, 10);
@@ -139,36 +143,39 @@ namespace Redemption.NPCs.Bosses.Neb
                     NPC.Center = new Vector2(origin.X, player.position.Y - 80f);
                     NPC.velocity *= 0;
 
-                    SoundEngine.PlaySound(CustomSounds.NebSound3, NPC.position);
-                    SoundEngine.PlaySound(CustomSounds.Teleport2, NPC.position);
+                    if (!Main.dedServ)
+                    {
+                        SoundEngine.PlaySound(CustomSounds.NebSound3, NPC.position);
+                        SoundEngine.PlaySound(CustomSounds.Teleport2, NPC.position);
+                    }
                     DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.IndianRed, 5, 4, 3, 1, 2, 0, ai0: .05f, ai1: Main.rand.Next(50, 60));
                     DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.Pink, 5, 5, 3, 1, 2, 0, ai0: .05f, ai1: Main.rand.Next(50, 60));
                     DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.Purple, 5, 6, 3, 1, 2, 0, ai0: .05f, ai1: Main.rand.Next(50, 60));
                     DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.Blue, 5, 7, 1, 3, 2, 0, ai0: .05f, ai1: Main.rand.Next(50, 60));
                     for (int d = 0; d < 16; d++)
-                        ParticleManager.NewParticle(NPC.Center, RedeHelper.Spread(6), new RainbowParticle(), Color.White, 1);
+                        ParticleManager.NewParticle<RainbowParticle>(NPC.Center, RedeHelper.Spread(6), Color.White, 1);
 
                     RedeDraw.SpawnExplosion(NPC.Center, Color.White * 0.4f, scale: 6, noDust: true);
                     RedeDraw.SpawnExplosion(NPC.Center, Color.White * 0.2f, shakeAmount: 150, scale: 12, noDust: true);
 
                     NPC.netUpdate = true;
-                    NPC.SetDefaults(ModContent.NPCType<Nebuleus>());
+                    NPC.SetDefaults(NPCType<Nebuleus>());
                     break;
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D glow = Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
             Vector2 drawOrigin = new(glow.Width / 2, glow.Height / 2);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             spriteBatch.Draw(glow, NPC.Center - screenPos, null, Color.MediumPurple * NPC.Opacity, NPC.rotation, drawOrigin, NPC.scale * 0.4f, 0, 0);
             spriteBatch.Draw(glow, NPC.Center - screenPos, null, Color.MediumPurple * NPC.Opacity, -NPC.rotation, drawOrigin, NPC.scale * 0.4f, 0, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
 
@@ -203,11 +210,11 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             if (proType == 0)
             {
-                tManager.CreateTrail(Projectile, new RainbowTrail(5f, 0.002f, 1f, .75f), new RoundCap(), new DefaultTrailPosition(), 260f, 1600f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
+                tManager.CreateTrail(Projectile, new RainbowTrail(5f, 0.002f, 1f, .75f), new RoundCap(), new DefaultTrailPosition(), 260f, 1600f, new ImageShader(Request<Texture2D>("Redemption/Textures/Trails/Trail_1").Value, 0.01f, 1f, 1f));
                 tManager.CreateTrail(Projectile, new GradientTrail(new Color(255, 170, 242, 0), new Color(255, 255, 255, 0)), new RoundCap(), new DefaultTrailPosition(), 130f, 600f);
             }
             else
-                tManager.CreateTrail(Projectile, new RainbowTrail(4f, 0.002f, 1f, .8f), new RoundCap(), new DefaultTrailPosition(), 200f, 800f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_6", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
+                tManager.CreateTrail(Projectile, new RainbowTrail(4f, 0.002f, 1f, .8f), new RoundCap(), new DefaultTrailPosition(), 200f, 800f, new ImageShader(Request<Texture2D>("Redemption/Textures/Trails/Trail_6", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
         }
         public float vectorOffset = 0f;
         public bool offsetLeft = false;
@@ -215,7 +222,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public override void AI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || npc.ai[0] == 5 || npc.type != ModContent.NPCType<Neb_Start>())
+            if (!npc.active || npc.ai[0] == 5 || npc.type != NPCType<Neb_Start>())
                 Projectile.Kill();
 
             Projectile.rotation += 0.1f;
@@ -252,20 +259,20 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             if (proType == 0)
             {
-                Texture2D texture = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Neb/GiantStar_Proj").Value;
+                Texture2D texture = Request<Texture2D>("Redemption/NPCs/Bosses/Neb/GiantStar_Proj").Value;
                 Vector2 position = Projectile.Center - Main.screenPosition;
                 Rectangle rect = new(0, 0, texture.Width, texture.Height);
                 Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
 
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.BeginAdditive();
 
                 Color color = new(Main.DiscoR * 6, Main.DiscoG * 6, Main.DiscoB * 6);
                 Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), color * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale * 0.5f, 0, 0);
                 Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), color * 0.7f * Projectile.Opacity, -Projectile.rotation, origin, Projectile.scale * 0.5f, 0, 0);
 
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.BeginDefault();
             }
         }
     }

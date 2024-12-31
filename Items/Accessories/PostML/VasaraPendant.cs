@@ -12,6 +12,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.PostML
@@ -44,7 +45,7 @@ namespace Redemption.Items.Accessories.PostML
             int tooltipLocation = tooltips.FindIndex(TooltipLine => TooltipLine.Name.Equals("Tooltip2"));
             if (tooltipLocation != -1)
             {
-                TooltipLine line = new(Mod, "IreLine", "Ukko's Ire: " + player.GetModPlayer<VasaraPendant_Player>().ireCharge + "/200") { OverrideColor = Color.LightGoldenrodYellow };
+                TooltipLine line = new(Mod, "IreLine", Language.GetTextValue("Mods.Redemption.Items.VasaraPendant.IreLine") + player.GetModPlayer<VasaraPendant_Player>().ireCharge + "/200") { OverrideColor = Color.LightGoldenrodYellow };
                 tooltips.Insert(tooltipLocation, line);
             }
         }

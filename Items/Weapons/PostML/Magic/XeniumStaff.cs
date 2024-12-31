@@ -1,8 +1,6 @@
-using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
-using Redemption.Items.Weapons.PostML.Summon;
 using Redemption.Projectiles.Magic;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;
@@ -20,7 +18,6 @@ namespace Redemption.Items.Weapons.PostML.Magic
         {
             /* Tooltip.SetDefault("Casts two harmless bubble mines\n" +
                 "Right-click to fire a small " + ElementID.PoisonS + " beam that detonates any mine it hits"); */
-            Item.staff[Item.type] = true;
             Item.ResearchUnlockCount = 1;
         }
 
@@ -40,8 +37,12 @@ namespace Redemption.Items.Weapons.PostML.Magic
             Item.rare = ItemRarityID.Purple;
             Item.UseSound = SoundID.Item117;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<XeniumBubble_Proj>();
+            Item.shoot = ProjectileType<XeniumBubble_Proj>();
             Item.shootSpeed = 13f;
+        }
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-8, 0);
         }
         public override bool AltFunctionUse(Player player) => true;
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
@@ -55,7 +56,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
         {
             if (player.altFunctionUse == 2)
             {
-                type = ModContent.ProjectileType<XeniumStaff_Proj>();
+                type = ProjectileType<XeniumStaff_Proj>();
                 Projectile.NewProjectile(source, position, velocity, type, damage / 4, knockback, player.whoAmI);
                 return false;
             }
@@ -93,10 +94,10 @@ namespace Redemption.Items.Weapons.PostML.Magic
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<XeniumAlloy>(), 12)
-                .AddIngredient(ModContent.ItemType<Capacitor>())
-                .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 5)
-                .AddTile(ModContent.TileType<XeniumRefineryTile>())
+                .AddIngredient(ItemType<XeniumAlloy>(), 12)
+                .AddIngredient(ItemType<Capacitor>())
+                .AddIngredient(ItemType<CarbonMyofibre>(), 5)
+                .AddTile(TileType<XeniumRefineryTile>())
                 .Register();
         }
     }

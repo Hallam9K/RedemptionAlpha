@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
 		{
 			Item.damage = 9;
             Item.DamageType = DamageClass.Ranged;
-            Item.width = 22;
+            Item.width = 18;
             Item.height = 44;
             Item.useTime = 21;
             Item.useAnimation = 21;

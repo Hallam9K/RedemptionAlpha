@@ -11,6 +11,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Tools.PreHM
@@ -227,7 +228,7 @@ namespace Redemption.Items.Tools.PreHM
             {
                 if (Main.rand.NextBool(skele ? 20 : 80))
                 {
-                    CombatText.NewText(target.getRect(), Color.Orange, "Decapitated!");
+                    CombatText.NewText(target.getRect(), Color.Orange, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Decapitated"));
                     target.Redemption().decapitated = true;
                     hit.Crit = true;
                     target.StrikeInstantKill();

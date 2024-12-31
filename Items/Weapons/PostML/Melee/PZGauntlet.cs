@@ -10,8 +10,13 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<SwarmerCannon>();
+            // DisplayName.SetDefault("Infectious Gauntlet");
+            /* Tooltip.SetDefault("Punches enemies up-close\n" +
+                "Holding down left-click and hitting an enemy will fire a flurry of fists if you are airborne"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<SwarmerCannon>();
+            Item.ResearchUnlockCount = 1;
         }
+
         public override void SetDefaults()
         {
             Item.damage = 410;
@@ -26,10 +31,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.channel = true;
             Item.knockBack = 9;
             Item.value = Item.sellPrice(0, 20, 0, 0);
-            Item.rare = ModContent.RarityType<TurquoiseRarity>();
+            Item.rare = RarityType<TurquoiseRarity>();
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<PZGauntlet_Proj>();
+            Item.shoot = ProjectileType<PZGauntlet_Proj>();
             Item.shootSpeed = 5f;
         }
     }

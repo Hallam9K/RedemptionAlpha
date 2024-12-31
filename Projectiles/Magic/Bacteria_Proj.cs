@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
@@ -30,10 +29,22 @@ namespace Redemption.Projectiles.Magic
             Projectile.timeLeft = Main.rand.Next(40, 71);
             Projectile.DamageType = DamageClass.Magic;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 4;
+            Projectile.idStaticNPCHitCooldown = 10;
         }
+        NPC target;
         public override void AI()
         {
+            if (Projectile.ai[0] >= 5)
+            {
+                Projectile.penetrate = 1;
+                if (RedeHelper.ClosestNPC(ref target, 3000, Projectile.Center))
+                {
+                    float speed = Projectile.rotation * 10;
+                    Projectile.Move(target.Center, speed, 30);
+                }
+                else
+                    Projectile.timeLeft--;
+            }
             if (++Projectile.frameCounter >= 5)
             {
                 Projectile.frameCounter = 0;
@@ -51,12 +62,15 @@ namespace Redemption.Projectiles.Magic
             if (Projectile.ai[0] < 3)
             {
                 for (int i = 0; i < 2; i++)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.Spread(7), ModContent.ProjectileType<Bacteria_Proj>(), Projectile.damage, 0, Projectile.owner, Main.rand.Next(3, 5));
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.Spread(7), ProjectileType<Bacteria_Proj>(), Projectile.damage, 0, Projectile.owner, Main.rand.Next(3, 5));
             }
             else if (Projectile.ai[0] == 3 || Projectile.ai[0] == 4)
             {
                 for (int i = 0; i < 2; i++)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.Spread(7), ModContent.ProjectileType<Bacteria_Proj>(), Projectile.damage, 0, Projectile.owner, Main.rand.Next(5, 8));
+                {
+                    int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.Spread(7), ProjectileType<Bacteria_Proj>(), Projectile.damage, 0, Projectile.owner, Main.rand.Next(5, 7));
+                    Main.projectile[p].timeLeft = Main.rand.Next(40, 181);
+                }
             }
         }
         public override bool PreDraw(ref Color lightColor)
@@ -71,11 +85,12 @@ namespace Redemption.Projectiles.Magic
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(RedeColor.FadeColour1) * 2, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(ModContent.BuffType<BInfectionDebuff>(), 1000);
+            target.AddBuff(BuffType<BInfectionDebuff>(), 1000);
         }
     }
 }

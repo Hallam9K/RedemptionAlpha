@@ -1,11 +1,10 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.Audio;
 using Redemption.Globals;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
@@ -38,7 +37,7 @@ namespace Redemption.NPCs.Bosses.Neb
             if (Main.myPlayer == Projectile.owner)
             {
                 for (int i = 0; i < 5; i++)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(10, (MathHelper.ToRadians(72) * i) + Projectile.rotation), ModContent.ProjectileType<CrystalStarShard_Proj>(), Projectile.damage / 2, 0, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(10, (MathHelper.ToRadians(72) * i) + Projectile.rotation), ProjectileType<CrystalStarShard_Proj>(), (int)(Projectile.damage * .8f), 0, Main.myPlayer);
             }
         }
         public override void AI()
@@ -125,7 +124,7 @@ namespace Redemption.NPCs.Bosses.Neb
             {
                 LaserScale = 1;
                 if (Main.myPlayer == Projectile.owner)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<CrystalStar_Proj>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<CrystalStar_Proj>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
             }
 
             if (Projectile.timeLeft >= 50)

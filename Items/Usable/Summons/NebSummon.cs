@@ -13,6 +13,7 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Redemption.WorldGeneration.Soulless;
 using SubworldLibrary;
+using Terraria.Localization;
 
 namespace Redemption.Items.Usable.Summons
 {
@@ -24,15 +25,14 @@ namespace Redemption.Items.Usable.Summons
             /* Tooltip.SetDefault("Summons the Angel of the Cosmos"
                 + "\nOnly usable at night"
                 + "\nNot consumable"); */
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 8));
             Item.ResearchUnlockCount = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 13;
         }
 
         public override void SetDefaults()
         {
-            Item.width = 38;
-            Item.height = 26;
+            Item.width = 36;
+            Item.height = 34;
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 65, 0, 0);
             Item.useAnimation = 30;
@@ -71,7 +71,7 @@ namespace Redemption.Items.Usable.Summons
                     }
                     else
                     {
-                        Main.NewText("Nebuleus is nowhere to be found...", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B);
+                        Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.NebGone"), Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B);
                         type = ModContent.NPCType<Nebuleus2_Clone>();
 
                         if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -94,7 +94,7 @@ namespace Redemption.Items.Usable.Summons
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.Teleport1, player.position);
 
-                        Main.NewText("Nebuleus is nowhere to be found...", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B);
+                        Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.NebGone"), Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B);
                         type = ModContent.NPCType<Nebuleus_Clone>();
 
                         if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -110,7 +110,7 @@ namespace Redemption.Items.Usable.Summons
         {
             Player player = Main.player[Main.myPlayer];
             int tooltipLocation = tooltips.FindIndex(TooltipLine => TooltipLine.Name.Equals("Tooltip0"));
-            string text1 = "Right-click to summon Nebuleus' Final Form instantly";
+            string text1 = Language.GetTextValue("Mods.Redemption.Items.NebSummon.SummonP2");
             TooltipLine line = new(Mod, "text1", text1)
             {
                 OverrideColor = Main.DiscoColor

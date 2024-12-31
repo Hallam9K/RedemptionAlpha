@@ -1,17 +1,21 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-using System;
-using Terraria.ModLoader;
-using Redemption.Base;
-using ParticleLibrary;
-using Redemption.Particles;
-using Redemption.Globals;
-using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
+using ParticleLibrary;
+using ParticleLibrary.Core;
+using Redemption.Base;
+using Redemption.BaseExtension;
+using Redemption.Dusts;
+using Redemption.Effects;
+using Redemption.Globals;
+using Redemption.Particles;
+using Redemption.Textures;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.Audio;
-using Redemption.BaseExtension;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
@@ -43,20 +47,28 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public float vectorOffset = 0f;
         public bool offsetLeft = false;
         public Vector2 originalVelocity = Vector2.Zero;
+
+        private readonly int NUMPOINTS = 50;
+        public Color baseColor = Color.Pink;
+        public Color endColor = RedeColor.NebColour;
+        public Color edgeColor = Color.Purple;
+        private List<Vector2> cache;
+        private List<Vector2> cache2;
+        private DanTrail trail;
+        private DanTrail trail2;
+        private readonly float thickness = 4f;
         public override void OnSpawn(IEntitySource source)
         {
             if (proType == 0)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PNebula2_Friendly>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PNebula3_Friendly>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<PNebula2_Friendly>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<PNebula3_Friendly>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
             }
         }
         public override void AI()
         {
             Projectile.alpha += 2;
             Projectile.localAI[0]++;
-            if (proType != 0)
-                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), Color.HotPink * (Projectile.Opacity * 2f), 1f * Projectile.Opacity, .45f, Main.rand.Next(10, 20));
 
             if (originalVelocity == Vector2.Zero)
                 originalVelocity = Projectile.velocity;
@@ -64,26 +76,44 @@ namespace Redemption.Items.Weapons.PostML.Melee
             {
                 if (offsetLeft)
                 {
-                    vectorOffset -= 0.5f;
-                    if (vectorOffset <= -1.3f)
+                    vectorOffset -= 0.1f;
+                    if (vectorOffset <= -1f)
                     {
-                        vectorOffset = -1.3f;
+                        vectorOffset = -1f;
                         offsetLeft = false;
                     }
                 }
                 else
                 {
-                    vectorOffset += 0.5f;
-                    if (vectorOffset >= 1.3f)
+                    vectorOffset += 0.1f;
+                    if (vectorOffset >= 1f)
                     {
-                        vectorOffset = 1.3f;
+                        vectorOffset = 1f;
                         offsetLeft = true;
                     }
                 }
                 float velRot = BaseUtility.RotationTo(Projectile.Center, Projectile.Center + originalVelocity);
                 Projectile.velocity = BaseUtility.RotateVector(default, new Vector2(Projectile.velocity.Length(), 0f), velRot + (vectorOffset * 0.5f));
             }
+            else
+            {
+                if (Main.rand.NextBool(3))
+                    ParticleManager.NewParticle(Projectile.Center + Projectile.velocity, RedeHelper.Spread(1), new RainbowParticle(), Color.White, Main.rand.NextFloat(.4f, .6f) * Projectile.Opacity, 0, 0, 0, 0, Main.rand.Next(20, 40), Projectile.Opacity * .5f);
+                for (int i = 0; i < 3; i++)
+                {
+                    Dust dust = Main.dust[Dust.NewDust(Projectile.Center, 2, 2, DustType<GlowDust>(), Scale: 2 * Projectile.Opacity)];
+                    dust.noGravity = true;
+                    dust.noLight = true;
+                    Color dustColor = new(RedeColor.NebColour.R, RedeColor.NebColour.G, RedeColor.NebColour.B) { A = 0 };
+                    dust.color = dustColor * .2f * Projectile.Opacity;
+                }
+            }
             Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57f;
+            if (proType != 0 && Main.netMode != NetmodeID.Server)
+            {
+                TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
+                ManageTrail();
+            }
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -98,12 +128,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.FinalDamage *= 1.4f * Projectile.timeLeft / 120;
-            modifiers.ModifyHitInfo += (ref NPC.HitInfo hitInfo) =>
-            {
-                if (hitInfo.Damage < 40)
-                    hitInfo.Damage = 40;
-            };
+            modifiers.FinalDamage *= 1.1f * Projectile.timeLeft / 120;
         }
         public override bool PreDraw(ref Color lightColor)
         {
@@ -119,7 +144,78 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
                 return false;
             }
-            return true;
+            else
+            {
+                Main.spriteBatch.End();
+                Main.spriteBatch.BeginAdditive();
+
+                Vector2 drawOrigin = new(CommonTextures.WhiteOrb.Width() / 2, CommonTextures.WhiteOrb.Height() / 2);
+                Main.EntitySpriteDraw(CommonTextures.WhiteOrb.Value, Projectile.Center - (Projectile.velocity / 20) - Main.screenPosition, null, Color.Pink, Projectile.rotation, drawOrigin, 1 * Projectile.Opacity, SpriteEffects.None, 0);
+
+                Main.spriteBatch.End();
+                Main.spriteBatch.BeginDefault();
+
+                Main.spriteBatch.End();
+                Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
+
+                Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+                Matrix view = Main.GameViewMatrix.ZoomMatrix;
+                Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+                effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+                effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value);
+                effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
+                effect.Parameters["repeats"].SetValue(1f);
+
+                trail?.Render(effect);
+                trail2?.Render(effect);
+
+                Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+                return true;
+            }
+        }
+        public void ManageTrail()
+        {
+            trail ??= new DanTrail(Main.instance.GraphicsDevice, NUMPOINTS, new TriangularTip(4),
+            factor =>
+            {
+                float mult = factor;
+                if (mult < 0.01f)
+                {
+                    mult = 0.01f;
+                }
+
+                return thickness * 6 * mult * Projectile.Opacity;
+            },
+            factor =>
+            {
+                if (factor.X > 0.99f)
+                    return Color.Transparent;
+
+                return edgeColor * 0.1f * factor.X * Projectile.Opacity;
+            });
+
+            trail.Positions = cache.ToArray();
+            trail.NextPosition = Projectile.Center;
+            trail2 ??= new DanTrail(Main.instance.GraphicsDevice, NUMPOINTS, new TriangularTip(4),
+            factor =>
+            {
+                float mult = factor;
+                if (mult < 0.01f)
+                {
+                    mult = 0.01f;
+                }
+
+                return thickness * 3 * mult * Projectile.Opacity;
+            },
+            factor =>
+            {
+                float progress = EaseFunction.EaseCubicOut.Ease(1 - factor.X);
+                return Color.Lerp(baseColor, endColor, EaseFunction.EaseCubicIn.Ease(progress)) * (1 - progress) * Projectile.Opacity;
+            });
+
+            trail2.Positions = cache2.ToArray();
+            trail2.NextPosition = Projectile.Center;
         }
     }
     public class PNebula2_Friendly : PNebula1_Friendly

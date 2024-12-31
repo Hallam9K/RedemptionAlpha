@@ -5,6 +5,7 @@ using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Ranged
@@ -54,7 +55,7 @@ namespace Redemption.Projectiles.Ranged
                     }
                     else
                     {
-                        CombatText.NewText(player.getRect(), Color.Cyan, "No targets found!");
+                        CombatText.NewText(player.getRect(), Color.Cyan, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.NoTargets"));
                         player.ClearBuff(ModContent.BuffType<HardlightCooldown>());
                         Projectile.Kill();
                     }

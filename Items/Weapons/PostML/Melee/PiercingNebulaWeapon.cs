@@ -1,9 +1,10 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Globals.Player;
 using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,7 +17,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
             // DisplayName.SetDefault("Piercing Nebula");
             /* Tooltip.SetDefault("Deals more damage the closer you are to the target\n" +
                 "'Penetrates through even the fabric of space'"); */
-            Item.ResearchUnlockCount = 1;
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
         }
 
@@ -35,21 +35,21 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.value = Item.buyPrice(1, 0, 0, 0);
             Item.UseSound = SoundID.Item125;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<PNebula1_Friendly>();
+            Item.shoot = ProjectileType<PNebula1_Friendly>();
             Item.shootSpeed = 9f;
-            Item.rare = ModContent.RarityType<CosmicRarity>();
+            Item.rare = RarityType<CosmicRarity>();
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture).Value;
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            type = ModContent.ProjectileType<PiercingNebulaWeapon_Proj>();
+            type = ProjectileType<PiercingNebulaWeapon_Proj>();
         }
         public override void AddRecipes()
         {
             CreateRecipe()
                 .AddIngredient(ItemID.DayBreak)
-                .AddIngredient(ModContent.ItemType<LifeFragment>(), 8)
+                .AddIngredient(ItemType<LifeFragment>(), 8)
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();
         }

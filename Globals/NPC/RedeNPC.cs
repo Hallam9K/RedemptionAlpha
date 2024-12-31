@@ -48,6 +48,7 @@ using Redemption.Items.Donator.Spoopy;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Critters;
 using Redemption.UI.Dialect;
+using Terraria.Localization;
 
 namespace Redemption.Globals.NPC
 {
@@ -185,14 +186,14 @@ namespace Redemption.Globals.NPC
             {
                 if (Main.rand.NextBool(200) && !ItemLists.BluntSwing.Contains(item.type))
                 {
-                    CombatText.NewText(npc.getRect(), Color.Orange, "Decapitated!");
+                    CombatText.NewText(npc.getRect(), Color.Orange, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Decapitated"));
                     decapitated = true;
                     modifiers.SetInstantKill();
                     modifiers.SetCrit();
                 }
                 else if (Main.rand.NextBool(80) && (item.axe > 0 || item.Redemption().TechnicallyAxe) && item.type != ModContent.ItemType<BeardedHatchet>())
                 {
-                    CombatText.NewText(npc.getRect(), Color.Orange, "Decapitated!");
+                    CombatText.NewText(npc.getRect(), Color.Orange, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Decapitated"));
                     decapitated = true;
                     modifiers.SetInstantKill();
                     modifiers.SetCrit();

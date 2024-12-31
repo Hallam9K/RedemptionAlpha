@@ -273,7 +273,7 @@ namespace Redemption.NPCs.PreHM
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 4, 30, interactDoorStyle: 2);
 
-                    if (NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) < 60 * 60)
+                    if (NPC.velocity.Y == 0 && NPC.Sight(globalNPC.attacker, 60, false, true))
                     {
                         NPC.LookAtEntity(globalNPC.attacker);
                         AITimer = 0;

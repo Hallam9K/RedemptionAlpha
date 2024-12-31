@@ -1,4 +1,5 @@
-using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.Neb.Clone;
+using Redemption.NPCs.Bosses.Neb.Phase2;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
@@ -30,11 +31,13 @@ namespace Redemption.NPCs.Bosses.Neb
         public override void AI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
+            if (!npc.active || (npc.type != NPCType<Nebuleus>() && npc.type != NPCType<Nebuleus_Clone>() && npc.type != NPCType<Nebuleus2>() && npc.type != NPCType<Nebuleus2_Clone>()))
+                Projectile.Kill();
             Projectile.Center = npc.Center;
             Projectile.velocity = Vector2.Zero;
 
             Projectile.localAI[0]++;
-            Projectile.rotation += 0.06f;
+            Projectile.rotation += 0.04f;
             if (Projectile.localAI[0] <= 120)
                 Projectile.alpha -= 2;
             if (Projectile.localAI[0] >= 200)

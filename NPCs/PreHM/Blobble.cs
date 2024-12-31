@@ -203,9 +203,9 @@ namespace Redemption.NPCs.PreHM
             if (Main.rand.NextBool(2) && !RedeWorld.blobbleSwarm && RedeWorld.blobbleSwarmCooldown <= 0)
             {
                 if (Main.netMode == NetmodeID.Server)
-                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("A blobble swarm has arrived!"), Color.PaleGreen);
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(Language.GetTextValue("Mods.Redemption.StatusMessage.Event.BlobbleSwarm")), Color.PaleGreen);
                 else
-                    Main.NewText("A blobble swarm has arrived!", Color.PaleGreen);
+                    Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Event.BlobbleSwarm"), Color.PaleGreen);
                 RedeWorld.blobbleSwarm = true;
             }
         }

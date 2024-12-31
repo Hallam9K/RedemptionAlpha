@@ -1,12 +1,11 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using Redemption.Effects.PrimitiveTrails;
-using ReLogic.Content;
 using Redemption.Globals;
+using ReLogic.Content;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
@@ -34,7 +33,7 @@ namespace Redemption.NPCs.Bosses.Neb
         }
         public void DoTrailCreation(TrailManager tManager)
         {
-            tManager.CreateTrail(Projectile, new RainbowTrail(5f, 0.002f, 1f, .75f), new RoundCap(), new DefaultTrailPosition(), 50f, 100f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
+            tManager.CreateTrail(Projectile, new RainbowTrail(5f, 0.002f, 1f, .75f), new RoundCap(), new DefaultTrailPosition(), 50f, 100f, new ImageShader(Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
         }
         public float rot;
         public override void AI()
@@ -122,7 +121,7 @@ namespace Redemption.NPCs.Bosses.Neb
                 LaserScale = 1;
                 if (Projectile.owner == Main.myPlayer)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<StarFall_Proj>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<StarFall_Proj>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
                 }
             }
             if (Projectile.timeLeft >= 50)

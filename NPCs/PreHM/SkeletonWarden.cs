@@ -323,7 +323,7 @@ namespace Redemption.NPCs.PreHM
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    if (NPC.velocity.Y == 0 && Main.rand.NextBool(80) && NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100)
+                    if (NPC.velocity.Y == 0 && Main.rand.NextBool(80) && NPC.Sight(globalNPC.attacker, 100, false, true))
                     {
                         if (globalNPC.attacker is not Player || !NPC.PlayerDead() && !(globalNPC.attacker as Player).RedemptionPlayerBuff().skeletonFriendly)
                         {
@@ -391,7 +391,7 @@ namespace Redemption.NPCs.PreHM
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    if (NPC.velocity.Y == 0 && Main.rand.NextBool(80) && NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100)
+                    if (NPC.velocity.Y == 0 && Main.rand.NextBool(80) && NPC.Sight(globalNPC.attacker, 100, false, true))
                     {
                         if (globalNPC.attacker is not Player || !NPC.PlayerDead() && !(globalNPC.attacker as Player).RedemptionPlayerBuff().skeletonFriendly)
                         {

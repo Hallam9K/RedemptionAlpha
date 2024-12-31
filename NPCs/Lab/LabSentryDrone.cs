@@ -8,6 +8,7 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Redemption.Biomes;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Lab
 {
@@ -80,7 +81,7 @@ namespace Redemption.NPCs.Lab
                 customGunRot = false;
                 if (NPC.ai[1] == 0)
                 {
-                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "INTRUDER DETECTED...", true, false);
+                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, Language.GetTextValue("Mods.Redemption.Cutscene.LabDrone"), true, false);
                     NPC.ai[1] = 1;
                 }
             }

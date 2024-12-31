@@ -4,6 +4,7 @@ using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PostML.Ranged
@@ -58,7 +59,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                         }
                         else
                         {
-                            CombatText.NewText(player.getRect(), Color.Red, "No targets found!");
+                            CombatText.NewText(player.getRect(), Color.Red, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.NoTargets"));
                             Projectile.Kill();
                         }
                         break;

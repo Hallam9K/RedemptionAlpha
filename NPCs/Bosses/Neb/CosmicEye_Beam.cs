@@ -1,13 +1,11 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
+using Redemption.NPCs.Bosses.Neb.Phase2;
 using System;
 using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Redemption.NPCs.Bosses.Neb.Phase2;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
@@ -42,7 +40,7 @@ namespace Redemption.NPCs.Bosses.Neb
             Projectile eye = Main.projectile[(int)Projectile.ai[0]];
             if (AITimer == 0)
             {
-                if (eye.type == ModContent.ProjectileType<CosmicEye3>())
+                if (eye.type == ProjectileType<CosmicEye3>())
                     Projectile.timeLeft = 80;
                 LaserScale = 0.1f;
             }
@@ -50,13 +48,20 @@ namespace Redemption.NPCs.Bosses.Neb
             if (AITimer == 20)
                 SoundEngine.PlaySound(SoundID.Item125, Projectile.position);
 
-            if (eye.active && eye.type == ModContent.ProjectileType<CosmicEye>())
+            if (eye.active && (eye.type == ProjectileType<CosmicEye>() || eye.type == ProjectileType<CosmicEye3>()))
             {
                 Projectile.Center = eye.Center;
                 Projectile.velocity = RedeHelper.PolarVector(10, eye.rotation + (float)-Math.PI / 2);
             }
 
-            if (AITimer > 20 && AITimer <= 30)
+            int a = 20;
+            int b = 30;
+            if (eye.type == ProjectileType<CosmicEye3>())
+            {
+                a = 40;
+                b = 50;
+            }
+            if (AITimer > a && AITimer <= b)
                 LaserScale += 0.09f;
             else if (Projectile.timeLeft < 10 || !eye.active)
             {
@@ -76,7 +81,8 @@ namespace Redemption.NPCs.Bosses.Neb
         }
         public override bool CanHitPlayer(Player target)
         {
-            return AITimer > 20;
+            Projectile eye = Main.projectile[(int)Projectile.ai[0]];
+            return AITimer > (eye.type == ProjectileType<CosmicEye3>() ? 40 : 20);
         }
         #region Drawcode
         public void DrawLaser(Texture2D texture, Vector2 start, Vector2 unit, float rotation = 0f, float scale = 1f, float maxDist = 2000f, Color color = default, int transDist = 1)
@@ -100,12 +106,12 @@ namespace Redemption.NPCs.Bosses.Neb
         public override bool PreDraw(ref Color lightColor)
         {
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(Color.White), (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
         #endregion

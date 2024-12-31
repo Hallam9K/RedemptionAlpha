@@ -399,6 +399,7 @@ Mods: {
 				SkeletonParty3: The skeletons reconsidered partying tonight...
 				SkeletonParty4: The skeletons got bored and went home!
 				Again: " again."
+				BlobbleSwarm: "A blobble swarm has arrived!"
 			}
 
 			Other: {
@@ -413,6 +414,12 @@ Mods: {
 				NebGone: Nebuleus is nowhere to be seen...
 				NPCWokeUp: "{0} has woken up!"
 				Unconscious: "{0} was knocked unconscious..."
+				NebGone: "Nebuleus is nowhere to be found..."
+				WarheadConditions1: "The bomb is too close to unexplodable tiles"
+				WarheadConditions2: "The bomb must be activated on the surface and in the far reaches of the world"
+				NothingHappens: "Nothing happens..."
+				Decapitated: "Decapitated!"
+				NoTargets: "No targets found!"
 			}
 		}
 
@@ -525,6 +532,7 @@ Mods: {
 
 		SpecialTooltips: {
 			Viewer: Hold [Shift] to view lore
+			SunkenCaptainViewer: "On the backside there's a note, hold [Shift] to read"
 			Unbreakable: "[c/ff0000:Unbreakable]"
 			Unbreakable5000: "[c/ff0000:Unbreakable (5000% Pickaxe Power)]"
 
@@ -1078,6 +1086,8 @@ Mods: {
 					4: "[@f0]I'll beat you up if you annoy me again."
 				}
 
+				ScannerUnimportant: "TARGET UNIMPORTANT..."
+
 				Intro: {
 					DroneBreak: Did you seriously just destroy my drones?
 					DroneIfChicken: Alright listen here you little chicken nugget.
@@ -1357,10 +1367,9 @@ Mods: {
 					1: Ah,[0.1] you have brought me here yourself.
 					2: My eyes have loomed upon thee long enough,[0.1] it is time to take action.
 					2Alt: Forgive my prying eyes,[0.1] for I have been observing thee from afar.
-					3: The daring hunt of all that threaten you brings a chill through my body.
-					4: Thy presence is all-consuming within my thoughts,[0.1] but I shan't run from this opportunity gifted to me.
-					5: The chatter ends here.[0.5] Prove to me your resolve,[0.1] and I will show my own.
-					6: If you lose to me,[0.1] you may be spared from watchers far greater than I.
+					3: Thy presence is all-consuming within my thoughts,[0.1] but I shan't run from this opportunity gifted to me.
+					4: The chatter ends here.[0.5] Prove to me your resolve,[0.1] and I will show my own.
+					5: If you lose to me,[0.1] you may be spared from watchers far greater than I.
 				}
 
 				Resummon: {
@@ -2611,6 +2620,11 @@ Mods: {
 				DisplayName: Cursed Samurai
 				Description: Right-click buff to clear your samurai
 			}
+
+			NebPetBuff2: {
+				DisplayName: Nebby
+				Description: Nebbity Nobbity Nibbity Nuu, this small star gril be followin' you
+			}
 		}
 
 		Biomes: {
@@ -2868,13 +2882,11 @@ Mods: {
 					ForestNymph: The dryad, {0}, says she's seen a Forest Nymph on this island at one point. They're rarely seen, usually nearby giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?
 					UGPortal: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs in Gathuram. He's told of some rather intriguing things lying by the portal, might be an cool find."
 					EaglecrestGolem: While I was having a walk I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I shot it from a safe distance. Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another foe to face.
-					
 					Spirits:
 						'''
 						Ever see tiny lights dancing from a slain skeleton? Or a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
 						{0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
 						'''
-					
 					Insects: Wanna know about some insects? If you wanna find tree bugs, then chop down some trees. They live on tree tops, with their green shell camouflaging them in the foliage. Coast Scarabs can also be found on palm trees at the beach, their shells sparkle when wet. Grand larvae are, well, rather gross - though they can make excellent bait. That is, if you're brave enough to get close to one.
 					Undead: When encountering skeletons and undead, its logical to assume {0} weapons aren't effective against them, while {1} weapons are. I used to like exploring the caves, until me and Zephos encountered a skeleton Vex...
 					Slimes: Best way to deal with slimes? Burn them. Alternatively, {0} weapons can freeze them in their place, THEN you can burn them!
@@ -2920,13 +2932,11 @@ Mods: {
 					ForestNymph: Ya know {0}? She's seen a Forest Nymph on this island at one point. Super rare creatures those are, you'd only find them near giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?
 					UGPortal: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs. He's told of some rather cool things lying by the portal, I'd give it a search if I were you!"
 					EaglecrestGolem: While I was having a stroll I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I gave it a WHAM with my sword! Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another challenge to face!
-
 					Spirits:
 						'''
 						Ever see tiny lights skitterin' from a slain skeleton? Or a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
 						{0} or {1} weapons may bring them harm.
 						'''
-
 					Insects: Insects? Why do you want me to tell you about insects? That's more Daerel's thing, he'll yap to you for ages about random bugs. If only he were here.
 					Undead: When encountering skeletons and undead, {0} weapons are the best against them. On the other hand, {1} weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.
 					Slimes: If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies{0}. Or, you could use {1} weapons to freeze them, but that isn't as fun.
@@ -3474,6 +3484,7 @@ Mods: {
 				Note2: have TeoChrome-issued pills on hand just in case.
 				Note3: high chance of irradiation and suffering ARS.
 				Note4: Acute Radiation Syndrome detected.
+				Irradiated: "Irradiated"
 			}
 
 			GracesGuidance: {
@@ -3624,6 +3635,11 @@ Mods: {
 				Tooltip: Summons a chibi Nebby to give you moral support!
 			}
 
+			GildedBonnet2: {
+				DisplayName: Bygone Gilded Bonnet
+				Tooltip: Summons Nebby to give you moral support!
+			}
+
 			HamSandwich: {
 				DisplayName: Ham Sandwich
 				Tooltip:
@@ -3747,6 +3763,7 @@ Mods: {
 					Once built up, Ukko's ire conjures smashing rocks and lightning to strike all foes around you for 5 seconds
 					15 second cooldown
 					'''
+				IreLine: "Ukko's Ire: "
 			}
 
 			Xenoemia: {
@@ -4039,7 +4056,7 @@ Mods: {
 					'''
 				Lore:
 					'''
-					'Cloak and breastplate replicated from the first ancient Crusaders of the Demonhollow. 
+					'Cloak and breastplate replicated from the first ancient Crusaders of the Demonhollow.
 					The metal's unique sheen was traditionally covered up by the Priests who wore it to earn the respect of the soldiers who served them.'
 					'''
 			}
@@ -4380,6 +4397,21 @@ Mods: {
 			NebuleusVanity: {
 				DisplayName: Nebuleus Robes
 				Tooltip: ""
+			}
+
+			NebuleusMask2: {
+				DisplayName: Bygone Nebuleus Mask
+				Tooltip: ""
+			}
+
+			NebuleusVanity2: {
+				DisplayName: Bygone Nebuleus Vanity
+				Tooltip: ""
+			}
+
+			NebWings2: {
+				DisplayName: Bygone Nebuleus Wings
+				Tooltip: "{$Mods.Redemption.Items.NebWings.Tooltip}"
 			}
 
 			OldTophat: {
@@ -5949,6 +5981,12 @@ Mods: {
 			DoppelsSword: {
 				DisplayName: Steel Sword Fragment
 				Tooltip: ""
+				Lore:
+					'''
+					'A strange sword from the Silver Age, made of shining steel. Marks of battle are scarce,
+                    as it was seldom used by its wielder. It feels oddly nostalgic.'
+					'''
+
 			}
 
 			DubiousWatcherPainting: {
@@ -6128,6 +6166,16 @@ Mods: {
 			SunkenCaptainPainting: {
 				DisplayName: Sunken Captain
 				Tooltip: "'M. Tea'"
+				Lore:
+					'''
+					'Once a great captain, a legend to some,
+                    Even after death would he still sail the seas,
+                    Leading his phantom crew to unknown lands.
+                    Only under the brightest light of the moon
+                    Could they set a foot on a seashore.
+                    Until then, they were ever chasing waves
+                    With the thickest of fog keeping them company.'
+					'''
 			}
 
 			ThornPlush: {
@@ -7784,6 +7832,7 @@ Mods: {
 					Only usable at night
 					Not consumable
 					'''
+				SummonP2: "Right-click to summon Nebuleus' Final Form instantly"
 			}
 
 			OmegaTransmitter: {
@@ -7835,6 +7884,7 @@ Mods: {
 					Only usable at night
 					Not consumable
 					'''
+				EchoLine: "The ring still glows a faint blue..."
 			}
 
 			ThornBag: {
@@ -8482,7 +8532,7 @@ Mods: {
 			}
 
 			XeniumStaff: {
-				DisplayName: Xenium Staff
+				DisplayName: Xenium Detonator
 				Tooltip:
 					'''
 					Casts two harmless bubble mines
@@ -11309,6 +11359,17 @@ Mods: {
 			Egg_Proj.DisplayName: Egg_ Proj
 			WickerManEmberExplosion_Visual.DisplayName: Wicker Man Ember Explosion_ Visual
 			MoonflareForce_Proj.DisplayName: Moonflare Force
+			NebMirage_PiercingNebula.DisplayName: Nebuleus Mirage
+			Neb2Mirage_PiercingNebula.DisplayName: Nebuleus Mirage
+			Neb_Moonbeam.DisplayName: Moonbeam
+			Neb_Moonbeam_Tele.DisplayName: ""
+			Neb_Meteor.DisplayName: Meteor
+			Neb_Meteor_Tele.DisplayName: Meteor
+			Neb_Lightning.DisplayName: Cosmic Fulgura
+			Neb_Lightning_Tele.DisplayName: ""
+			Neb_Vortex.DisplayName: Cosmic Vortex
+			PoemTornado_Rock.DisplayName: Illmatar Rock
+			NebPet2_Proj.DisplayName: Nebby
 		}
 
 		NPCs: {
@@ -11444,6 +11505,7 @@ Mods: {
 			Thorn: {
 				DisplayName: Thorn, Bane of the Forest
 				XmasName: Everthorn, Bane of the Holidays
+				FireResist: "+Fire Resistance"
 
 				BossChecklistIntegration: {
 					DespawnMessage: Thorn returned to his blighted forest...

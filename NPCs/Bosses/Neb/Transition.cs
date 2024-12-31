@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
@@ -8,11 +7,6 @@ namespace Redemption.NPCs.Bosses.Neb
     public class Transition : ModProjectile
     {
         public override string Texture => "Redemption/Textures/TransitionTex";
-
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Transition");
-        }
         public override void SetDefaults()
         {
             Projectile.width = 500;

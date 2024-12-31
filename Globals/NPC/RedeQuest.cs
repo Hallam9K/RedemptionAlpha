@@ -25,14 +25,14 @@ namespace Redemption.Globals
         public static int calaviaVar;
         public static int slayerRep;
 
-        public static bool[] adviceUnlocked = new bool[6];
+        public static bool[] adviceUnlocked = new bool[9];
         public static bool[] adviceSeen = new bool[20];
 
         // Second row is for the advice not needing unlocking, so adviceUnlocked and adviceSeen can use same enum numbers even though its different sized arrays
         // Add new unlockable advice before "Elements"
         public enum Advice : byte
         {
-            UGPortal, ForestNymph, UkkoEye, EaglecrestGolem, Androids, StarSerpent,
+            UGPortal, ForestNymph, UkkoEye, EaglecrestGolem, Androids, StarSerpent, EymenNoza, FoolLeft, DemonFort,
             Elements, Insects, Invisibility, GuardPoints, DirtyWound, Fool, Chalice, Spirits, Undead, Slimes, Erhan
         }
 
@@ -205,7 +205,7 @@ namespace Redemption.Globals
                 flags[k] = voltVars[k];
             writer.Write(flags);
 
-            BitsByte[] adviceUnlockFlags = new BitsByte[3];
+            BitsByte[] adviceUnlockFlags = new BitsByte[2];
             int flagID = 0;
             for (int k = 0; k < adviceUnlocked.Length; k++)
             {
@@ -242,7 +242,7 @@ namespace Redemption.Globals
             for (int k = 0; k < voltVars.Length; k++)
                 voltVars[k] = flags[k];
 
-            BitsByte[] adviceUnlockFlags = new BitsByte[3] { reader.ReadByte(), reader.ReadByte(), reader.ReadByte() };
+            BitsByte[] adviceUnlockFlags = new BitsByte[2] { reader.ReadByte(), reader.ReadByte() };
             int flagID = 0;
             for (int k = 0; k < adviceUnlocked.Length; k++)
             {

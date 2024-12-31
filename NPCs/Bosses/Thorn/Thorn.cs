@@ -809,7 +809,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                             PhaseTwo = true;
 
                             AdvancedPopupRequest fireText = new();
-                            fireText.Text = "+Fire Resistance";
+                            fireText.Text = Language.GetTextValue("Mods.Redemption.NPCs.Thorn.FireResist");
                             fireText.DurationInFrames = 120;
                             fireText.Color = Color.Orange;
                             fireText.Velocity = new Vector2(0, -3);

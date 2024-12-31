@@ -1,15 +1,14 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using Redemption.Globals;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
     public class CrystalStarShard_Proj : ModProjectile
-	{
+    {
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Crystal Star Shard");
@@ -19,20 +18,20 @@ namespace Redemption.NPCs.Bosses.Neb
         }
 
         public override void SetDefaults()
-		{
-			Projectile.width = 10;
-			Projectile.height = 10;
-			Projectile.hostile = true;
-			Projectile.friendly = false;
-			Projectile.penetrate = 1;
-			Projectile.timeLeft = 120;
+        {
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.hostile = true;
+            Projectile.friendly = false;
+            Projectile.penetrate = 1;
+            Projectile.timeLeft = 120;
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 1;
         }
-		public override void AI()
-		{
+        public override void AI()
+        {
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
-		}
+        }
         public override bool PreDraw(ref Color lightColor)
         {
             Vector2 drawOrigin = new(TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);

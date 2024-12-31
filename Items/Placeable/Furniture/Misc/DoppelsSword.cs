@@ -3,6 +3,7 @@ using Redemption.Tiles.Furniture.Misc;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Misc
@@ -28,9 +29,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'A strange sword from the Silver Age, made of shining steel. Marks of battle are scarce,\n" +
-                    "as it was seldom used by its wielder. It feels oddly nostalgic.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.DoppelsSword.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -38,7 +37,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

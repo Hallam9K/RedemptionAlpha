@@ -1,0 +1,26 @@
+=== 0.8 Beta .406 === (New Year's Patch)
+- Resprited Fragment of Virtue, Moonflare Candle, Ukon Runo, Galaxy Stone, Anomaly Detector, Poem of Illmatar, and Lunar Shot
+- Fixed Toxic Bile <-> Xenomite shimmer result
+- Improved visuals of Piercing Nebula weapon
+- Added localisation for "Decapitated!", Geiger Muller's "% Irradiated", Vasara Pendant's "Ukko's Ire:", Sky Squire set's "Hold [] to view lore", Steel Sword Fragment & Sunken Captain Painting's lore, Hologram Remote's "Nothing happens...", "Nebuleus is nowhere to be found", Wedding Ring's "The ring still glows a faint blue...", Blast Battery & Hardlight set's "No targets found!", Scanner Drone's "TARGET UNIMPORTANT...", Thorn's "+Fire Resistance", "INTRUDER DETECTED...", Blobble Swarm event, and Nuclear Warhead conditions
+1508. Changed Nebuleus Wings' stats
+1568. Nebuleus' shouts of her attacks are now drawcode instead of projectiles, meaning they can have localisation
+1577. Buffed Nebuleus' Crystal Star Shard damage from 50% base damage -> 80% base damage
+1578. Added new attack to Nebuleus, adds onto the Piercing Nebulas past first subphase, Nebuleus sends out mirages of herself to position around the player and shoot their own Piercing Nebulas, mirages also appear during Piercing Nebula Bursts past 2nd subphase
+1579. Increased visibility of Nebuleus' star blast and dash telegraphs
+1580. Improved Nebuleus' Nebula Dash attack to have multiple set directions (up down up down, left right left right, up left down right, etc)
+1590. Added a new attack to Nebuleus called Kuunvalo, harnesses the power of the moon to send down a colossal orbital moonlight deathray
+1594. Added a new attack to Nebuleus called Meteor Armada
+1600. Added a new attack to Final Form Nebuleus called Cosmic Fulgura
+1602. Certain Final Form Nebuleus' attacks only happen after certain health thresholds to keep the fight changing
+1605. Nebuleus drops her loot when transformed into Final Form Nebuleus
+1608. Reworked the Spiralling Shine attack from Final Form Nebuleus (The one where she spins around shooting rainbow bolts into the center), now a cosmic vortex gradually forms in the center that builds up as she shoots bolts into it, until exploding in an AoE
+1914. Resprited Nebuleus vanity set, can shimmer into the old version
+1918. Added Bygone Nebuleus Wings as shimmer result of Nebuleus Wings (The first sprite of the wings), and Bygone Gilded Bonnet
+2073. The mod's pre-hardmode enemies that have close-ranged attacks won't attack if the target is out of line of sight, so less hitting through walls
+2074. Mitosis bacteria accelerates into enemies on their final split and can linger for longer, nerfed hit cooldown from 4 -> 10 but final splits have no pierce so it wouldn't matter for them, and nerfed use time from 23 -> 43
+2075. Infectious Gauntlet can be held down to time when to launch better, increased launch distance and stopping distance beyond a hit target, contact damage immunity for the whole launch and full immunity after hitting a target
+2076. Buffed Poem of Illmatar damage from 140 -> 220, Builds up a spiral of rocks that spin around the tornado, launching at nearby enemies after reaching the top
+2077. Added more failsafes for Golden Gateway generation, should have no problem with Remnants now surely...
+2078. Resprited and renamed Xenium Staff to Xenium Detonator
+===============

@@ -352,7 +352,7 @@ namespace Redemption.NPCs.PreHM
 
                     if (AITimer++ == 0)
                     {
-                        if ((globalNPC.attacker is NPC attackerNPC2 && attackerNPC2.life >= NPC.life) || NPC.DistanceSQ(globalNPC.attacker.Center) <= 100 * 100)
+                        if ((globalNPC.attacker is NPC attackerNPC2 && attackerNPC2.life >= NPC.life) || NPC.Sight(globalNPC.attacker, 100, false, true))
                         {
                             EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 120);
                             AITimer = 0;

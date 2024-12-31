@@ -8,6 +8,7 @@ using Redemption.Globals;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Redemption.Items.Materials.PreHM;
+using Terraria.Localization;
 
 namespace Redemption.Items.Usable.Summons
 {
@@ -78,7 +79,7 @@ namespace Redemption.Items.Usable.Summons
             if (RedeBossDowned.keeperSaved)
             {
                 TooltipLine line = new(Mod, "SpiritLine",
-                    "The ring still glows a faint blue...")
+                    Language.GetTextValue("Mods.Redemption.Items.WeddingRing.EchoLine"))
                 {
                     OverrideColor = Color.LightSkyBlue
                 };

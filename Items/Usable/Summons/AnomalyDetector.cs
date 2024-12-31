@@ -16,7 +16,7 @@ namespace Redemption.Items.Usable.Summons
         {
             /* Tooltip.SetDefault("Summons a strange portal..."
                 + "\nNot consumable"); */
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 8));
 
             Item.ResearchUnlockCount = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
@@ -48,7 +48,7 @@ namespace Redemption.Items.Usable.Summons
             {
                 SoundEngine.PlaySound(SoundID.Roar, player.position);
 
-                int type = ModContent.NPCType<SoI>();
+                int type = NPCType<SoI>();
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);

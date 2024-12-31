@@ -114,7 +114,7 @@ namespace Redemption.UI
                 }
                 if (fail)
                 {
-                    string status = "The bomb is too close to unexplodable tiles";
+                    string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Other.WarheadConditions1");
                     Main.NewText(Language.GetTextValue(status), Color.White);
                     return;
                 }
@@ -124,7 +124,7 @@ namespace Redemption.UI
                 }
                 else if (ButtonState < 2)
                 {
-                    string status = "The bomb must be activated on the surface and in the far reaches of the world";
+                    string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Other.WarheadConditions2");
                     Main.NewText(Language.GetTextValue(status), Color.White);
                 }
             }

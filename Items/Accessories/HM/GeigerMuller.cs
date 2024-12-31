@@ -84,7 +84,7 @@ namespace Redemption.Items.Accessories.HM
 
             string text1 = rad + Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.StatusEnd") + rad2;
             TooltipLine line = new(Mod, "Geiger1", text1) { OverrideColor = Color.LightGreen };
-            TooltipLine line2 = new(Mod, "Geiger2", ((int)(modPlayer.radiationLevel * 100)).ToString() + "% Irradiated") { OverrideColor = c };
+            TooltipLine line2 = new(Mod, "Geiger2", ((int)(modPlayer.radiationLevel * 100)).ToString() + "%" + Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Irradiated")) { OverrideColor = c };
             tooltips.Insert(2, line);
             tooltips.Insert(3, line2);
         }

@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
@@ -33,22 +33,24 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         {
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             Projectile.localAI[1]++;
+            NPC npc = Main.npc[(int)Projectile.ai[0]];
+            Projectile.Center = RedeHelper.RotateVector(npc.Center, Projectile.Center, .02f);
             if (Projectile.localAI[0] == 0)
             {
                 Projectile.alpha -= 4;
                 if (Projectile.alpha <= 0)
                 {
                     if (Main.myPlayer == Projectile.owner)
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<CosmicEye_Beam>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.whoAmI);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<CosmicEye_Beam>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.whoAmI);
                     Projectile.localAI[0] = 1;
                 }
             }
             else
             {
                 Projectile.localAI[0]++;
-                if (Projectile.localAI[0] >= 120)
+                if (Projectile.localAI[0] >= 100)
                 {
-                    Projectile.alpha += 6;
+                    Projectile.alpha += 20;
                     if (Projectile.alpha >= 255)
                         Projectile.Kill();
                 }

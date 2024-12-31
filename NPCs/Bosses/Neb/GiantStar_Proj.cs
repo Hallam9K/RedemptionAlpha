@@ -1,8 +1,9 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.Neb.Phase2;
+using Redemption.Textures;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -33,12 +34,12 @@ namespace Redemption.NPCs.Bosses.Neb
         public override void AI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || (npc.type != ModContent.NPCType<Nebuleus>() && npc.type != ModContent.NPCType<Nebuleus_Clone>() && npc.type != ModContent.NPCType<Nebuleus2>() && npc.type != ModContent.NPCType<Nebuleus2_Clone>()))
+            if (!npc.active || (npc.type != NPCType<Nebuleus>() && npc.type != NPCType<Nebuleus_Clone>() && npc.type != NPCType<Nebuleus2>() && npc.type != NPCType<Nebuleus2_Clone>()))
                 Projectile.Kill();
             Projectile.Center = npc.Center;
 
             Projectile.localAI[1]++;
-            if (Projectile.localAI[1] == 10)
+            if (Projectile.localAI[1] == 10 && !Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.NebSound2, Projectile.position);
 
             Projectile.rotation += 0.1f;
@@ -72,21 +73,27 @@ namespace Redemption.NPCs.Bosses.Neb
             else
                 Projectile.hostile = false;
         }
+        public override bool ShouldUpdatePosition() => false;
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Asset<Texture2D> texture = TextureAssets.Projectile[Projectile.type];
+            Asset<Texture2D> whiteGlow = CommonTextures.WhiteGlow;
             Vector2 position = Projectile.Center - Main.screenPosition;
-            Rectangle rect = new(0, 0, texture.Width, texture.Height);
-            Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
+            Rectangle rect = new(0, 0, texture.Width(), texture.Height());
+            Vector2 origin = new(texture.Width() / 2f, texture.Height() / 2f);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
-            Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), Main.DiscoColor * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), Main.DiscoColor * 0.7f * Projectile.Opacity, -Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(whiteGlow.Value, position, null, Main.DiscoColor * 0.8f * Projectile.Opacity, 0, whiteGlow.Size() / 2, Projectile.scale * 1.8f, 0, 0);
+            Main.EntitySpriteDraw(whiteGlow.Value, position, null, Color.White * .5f * Projectile.Opacity, 0, whiteGlow.Size() / 2, Projectile.scale * 1.4f, 0, 0);
+            Main.EntitySpriteDraw(whiteGlow.Value, position, null, Color.White * .5f * Projectile.Opacity, 0, whiteGlow.Size() / 2, Projectile.scale * .8f, 0, 0);
+
+            Main.EntitySpriteDraw(texture.Value, position, new Rectangle?(rect), Main.DiscoColor * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture.Value, position, new Rectangle?(rect), Main.DiscoColor * 0.7f * Projectile.Opacity, -Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }

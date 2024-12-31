@@ -8,7 +8,6 @@ namespace Redemption.Items.Materials.HM
 	{
 		public override void SetStaticDefaults()
         {
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Xenomite>();
             Item.ResearchUnlockCount = 25;
 		}
 

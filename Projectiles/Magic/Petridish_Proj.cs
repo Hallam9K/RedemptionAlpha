@@ -39,7 +39,7 @@ namespace Redemption.Projectiles.Magic
         }
         public override void OnKill(int timeLeft)
         {
-            SoundEngine.PlaySound(SoundID.Shatter, Projectile.position);
+            SoundEngine.PlaySound(SoundID.Shatter with { PitchVariance = .2f, Volume = .4f }, Projectile.position);
             for (int i = 0; i < 10; i++)
             {
                 int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.t_Slime);

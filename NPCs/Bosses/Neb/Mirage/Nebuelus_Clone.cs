@@ -1,7 +1,9 @@
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Items.Armor.Vanity;
+using Redemption.NPCs.Friendly;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,9 +29,9 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.DryadsWardDebuff] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Electrified] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Bleeding] = true;
-            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<PureChillDebuff>()] = true;
-            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<DragonblazeDebuff>()] = true;
-            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<MoonflareDebuff>()] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffType<PureChillDebuff>()] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffType<DragonblazeDebuff>()] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffType<MoonflareDebuff>()] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
@@ -40,14 +42,14 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         public override void BossLoot(ref string name, ref int potionType)
         {
             NPC nPC = new();
-            nPC.SetDefaults(ModContent.NPCType<Nebuleus>());
+            nPC.SetDefaults(NPCType<Nebuleus>());
             Main.BestiaryTracker.Kills.RegisterKill(nPC);
 
             potionType = ItemID.SuperHealingPotion;
             if (!Main.expertMode && Main.rand.NextBool(7))
             {
-                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<NebuleusMask>());
-                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<NebuleusVanity>());
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemType<NebuleusMask>());
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemType<NebuleusVanity>());
             }
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedNebuleus, -1);
@@ -66,6 +68,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         }
         public override bool PreAI()
         {
+            shout = false;
             if (NPC.ai[0] is 1)
             {
                 NPC.ai[3] = 2;

@@ -1560,9 +1560,16 @@ namespace Redemption.WorldGeneration
                     progress.Message = "Thinking with portals...Golden Gateway";
                     Point16 dims = new();
                     Generator.GetDimensions("WorldGeneration/JShrine", Mod, ref dims);
+                    int totalAttempts = 0;
                     bool placed = false;
                     while (!placed)
                     {
+                        totalAttempts++;
+                        if (totalAttempts >= 1000 && totalAttempts <= 5000)
+                            progress.Message = "Thinking with portals...Golden Gateway (Attempts: " + totalAttempts + "/5000)";
+                        else if (totalAttempts > 5000)
+                            progress.Message = "Thinking with portals...Finding literally anywhere to place this darn gateway";
+
                         int placeX = WorldGen.genRand.Next(0, Main.maxTilesX);
 
                         int placeY = (int)Main.worldSurface - 160;
@@ -1583,9 +1590,9 @@ namespace Redemption.WorldGeneration
                         bool onTile = tile.TileType != TileID.Grass;
                         if (Main.remixWorld || Main.zenithWorld)
                             onTile = tile.TileType != TileID.CorruptGrass && tile.TileType != TileID.CrimsonGrass && tile.TileType != TileID.CrimsonJungleGrass && tile.TileType != TileID.CorruptJungleGrass;
-                        if (onTile)
+                        if (onTile && totalAttempts < 5000)
                             continue;
-                        if (!CheckFlat(placeX + 4, placeY, 10, 2))
+                        if (!CheckFlat(placeX + 4, placeY, 10, totalAttempts < 2000 ? 2 : 4) && totalAttempts < 4000)
                             continue;
 
                         Vector2 origin = new(placeX - (dims.X / 2), placeY - 13);
@@ -1605,9 +1612,9 @@ namespace Redemption.WorldGeneration
                             if (placeY > Main.worldSurface)
                                 continue;
                             tile = Framing.GetTileSafely(placeX, placeY);
-                            if (onTile)
+                            if (onTile && totalAttempts < 5000)
                                 continue;
-                            if (!CheckFlat(placeX + 4, placeY, 10, 2))
+                            if (!CheckFlat(placeX + 4, placeY, 10, totalAttempts < 2000 ? 2 : 4) && totalAttempts < 4000)
                                 continue;
 
                             origin = new(placeX - (dims.X / 2), placeY - 13);
@@ -1621,7 +1628,7 @@ namespace Redemption.WorldGeneration
                                 if (Main.remixWorld || Main.zenithWorld)
                                     a = false;
                                 int type = Framing.GetTileSafely((int)origin.X + i, (int)origin.Y + j).TileType;
-                                if (!WorldGen.InWorld((int)origin.X + i, (int)origin.Y + j) || TileLists.BlacklistTiles.Contains(type) || type == TileID.SnowBlock || type == TileID.Sand || type == ModContent.TileType<HeartOfThornsTile>() || a)
+                                if (!WorldGen.InWorld((int)origin.X + i, (int)origin.Y + j) || TileLists.BlacklistTiles.Contains(type) || type == TileID.SnowBlock || type == TileID.Sand || type == TileType<HeartOfThornsTile>() || a)
                                 {
                                     whitelist = true;
                                     break;
@@ -1633,7 +1640,7 @@ namespace Redemption.WorldGeneration
                                 }
                             }
                         }
-                        if (whitelist)
+                        if (whitelist && totalAttempts < 5000)
                             continue;
 
                         int attempts2 = 0;
@@ -1658,7 +1665,7 @@ namespace Redemption.WorldGeneration
                                     }
                                 }
                             }
-                            if (whitelist2)
+                            if (whitelist2 && totalAttempts < 1000)
                                 continue;
 
                             if (attempts2 >= 200)

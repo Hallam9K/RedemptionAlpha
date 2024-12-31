@@ -1,12 +1,12 @@
-using System;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
+using ParticleLibrary.Core;
 using Redemption.Base;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Globals;
 using Redemption.Particles;
 using ReLogic.Content;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -37,7 +37,7 @@ namespace Redemption.NPCs.Bosses.Neb
         }
         public void DoTrailCreation(TrailManager tManager)
         {
-            tManager.CreateTrail(Projectile, new RainbowTrail(5f, 0.002f, 1f, .75f), new RoundCap(), new DefaultTrailPosition(), 150f, 130f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
+            tManager.CreateTrail(Projectile, new RainbowTrail(5f, 0.002f, 1f, .75f), new RoundCap(), new DefaultTrailPosition(), 150f, 130f, new ImageShader(Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
         }
         public override void AI()
         {
@@ -95,13 +95,13 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             if (Projectile.localAI[0] == 0)
             {
-                Projectile.alpha -= 2;
-                if (Projectile.alpha <= 170)
+                Projectile.alpha -= 4;
+                if (Projectile.alpha <= 120)
                     Projectile.localAI[0] = 1;
             }
             else
             {
-                Projectile.alpha++;
+                Projectile.alpha += 3;
                 if (Projectile.alpha >= 255)
                     Projectile.Kill();
             }
@@ -117,7 +117,7 @@ namespace Redemption.NPCs.Bosses.Neb
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
-                Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Color color = Projectile.GetAlpha(Color.White with { A = 0 }) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
             return true;
@@ -146,7 +146,7 @@ namespace Redemption.NPCs.Bosses.Neb
             if (Projectile.localAI[0] == 0)
             {
                 if (Projectile.owner == Main.myPlayer)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<CurvingStar_Tele3>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0], Projectile.ai[1]);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<CurvingStar_Tele3>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0], Projectile.ai[1]);
                 Projectile.localAI[0]++;
             }
             else
@@ -162,7 +162,7 @@ namespace Redemption.NPCs.Bosses.Neb
                     }
                     SoundEngine.PlaySound(SoundID.Item117, Projectile.position);
                     if (Projectile.owner == Main.myPlayer)
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<CurvingStar2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0], Projectile.ai[1]);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<CurvingStar2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0], Projectile.ai[1]);
                     Projectile.Kill();
                 }
             }

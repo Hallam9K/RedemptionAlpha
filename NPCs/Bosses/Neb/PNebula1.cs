@@ -1,15 +1,19 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ID;
-using System;
-using Terraria.ModLoader;
-using Terraria.GameContent;
-using Terraria.Audio;
-using Redemption.Base;
 using ParticleLibrary;
-using Redemption.Particles;
+using ParticleLibrary.Core;
+using Redemption.Base;
+using Redemption.Dusts;
+using Redemption.Effects;
 using Redemption.Globals;
+using Redemption.Particles;
+using Redemption.Textures;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
@@ -51,7 +55,6 @@ namespace Redemption.NPCs.Bosses.Neb
         }
 
         public override bool ShouldUpdatePosition() => false;
-
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -61,9 +64,9 @@ namespace Redemption.NPCs.Bosses.Neb
                 LaserScale = 1;
                 if (Projectile.owner == Main.myPlayer)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PNebula1>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PNebula2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PNebula3>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<PNebula1>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<PNebula2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<PNebula3>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
                 }
             }
             if (Projectile.timeLeft >= 50)
@@ -174,24 +177,29 @@ namespace Redemption.NPCs.Bosses.Neb
             Projectile.penetrate = -1;
             Projectile.timeLeft = 180;
             Projectile.tileCollide = false;
-            Projectile.extraUpdates = 1;
+            Projectile.extraUpdates = 2;
         }
         public float vectorOffset = 0f;
         public bool offsetLeft = false;
         public Vector2 originalVelocity = Vector2.Zero;
 
+        private readonly int NUMPOINTS = 60;
+        public Color baseColor = Color.Pink;
+        public Color endColor = RedeColor.NebColour;
+        public Color edgeColor = Color.Purple;
+        private List<Vector2> cache;
+        private List<Vector2> cache2;
+        private DanTrail trail;
+        private DanTrail trail2;
+        private readonly float thickness = 4f;
+
         public override void AI()
         {
             Projectile.localAI[0]++;
             if (Projectile.localAI[0] == 30)
-                SoundEngine.PlaySound(SoundID.Item125, Projectile.position);
+                SoundEngine.PlaySound(SoundID.Item125 with { Pitch = .2f }, Projectile.position);
             if (Projectile.localAI[0] >= 30)
             {
-                if (proType != 0)
-                {
-                    ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), Color.Pink, 0.6f, .45f, Main.rand.Next(50, 60));
-                }
-
                 if (originalVelocity == Vector2.Zero)
                 {
                     originalVelocity = Projectile.velocity;
@@ -219,12 +227,31 @@ namespace Redemption.NPCs.Bosses.Neb
                     float velRot = BaseUtility.RotationTo(Projectile.Center, Projectile.Center + originalVelocity);
                     Projectile.velocity = BaseUtility.RotateVector(default, new Vector2(Projectile.velocity.Length(), 0f), velRot + (vectorOffset * 0.5f));
                 }
+                else
+                {
+                    if (Main.rand.NextBool(3))
+                        ParticleManager.NewParticle(Projectile.Center + Projectile.velocity, RedeHelper.Spread(1), new RainbowParticle(), Color.White, Main.rand.NextFloat(.4f, .6f) * Projectile.Opacity, 0, 0, 0, 0, Main.rand.Next(20, 40), Projectile.Opacity);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Dust dust = Main.dust[Dust.NewDust(Projectile.Center, 2, 2, DustType<GlowDust>(), Scale: 2 * Projectile.Opacity)];
+                        dust.noGravity = true;
+                        dust.noLight = true;
+                        Color dustColor = new(RedeColor.NebColour.R, RedeColor.NebColour.G, RedeColor.NebColour.B) { A = 0 };
+                        dust.color = dustColor * .3f * Projectile.Opacity;
+                    }
+                }
                 Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57f;
                 Projectile.spriteDirection = 1;
                 Projectile.hostile = true;
             }
             else
                 Projectile.hostile = false;
+
+            if (proType != 0 && Main.netMode != NetmodeID.Server)
+            {
+                TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
+                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+            }
         }
         public override bool ShouldUpdatePosition()
         {
@@ -249,7 +276,36 @@ namespace Redemption.NPCs.Bosses.Neb
                     Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
                     return false;
                 }
-                return true;
+                else
+                {
+                    Main.spriteBatch.End();
+                    Main.spriteBatch.BeginAdditive();
+
+                    Vector2 drawOrigin = new(CommonTextures.WhiteOrb.Width() / 2, CommonTextures.WhiteOrb.Height() / 2);
+                    Main.EntitySpriteDraw(CommonTextures.WhiteOrb.Value, Projectile.Center - (Projectile.velocity / 20) - Main.screenPosition, null, Color.Pink, Projectile.rotation, drawOrigin, 1.5f * Projectile.Opacity, SpriteEffects.None, 0);
+
+                    Main.spriteBatch.End();
+                    Main.spriteBatch.BeginDefault();
+
+                    Main.spriteBatch.End();
+                    Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
+
+                    Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+                    Matrix view = Main.GameViewMatrix.ZoomMatrix;
+                    Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+                    effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+                    effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value);
+                    effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
+                    effect.Parameters["repeats"].SetValue(1f);
+
+                    trail?.Render(effect);
+                    trail2?.Render(effect);
+
+                    Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+
+                    return true;
+                }
             }
             else
                 return false;

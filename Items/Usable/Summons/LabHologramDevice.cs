@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable.Summons
@@ -61,7 +62,7 @@ namespace Redemption.Items.Usable.Summons
                 type = ModContent.NPCType<PZ_Body_Holo>();
             else
             {
-                CombatText.NewText(player.getRect(), Color.Cyan, "Nothing happens...", true, true);
+                CombatText.NewText(player.getRect(), Color.Cyan, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.NothingHappens"), true, true);
                 return true;
             }
 

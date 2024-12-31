@@ -286,7 +286,7 @@ namespace Redemption.NPCs.PreHM
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    if (NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) < 50 * 50)
+                    if (NPC.velocity.Y == 0 && NPC.Sight(globalNPC.attacker, 50, false, true))
                     {
                         NPC.LookAtEntity(globalNPC.attacker);
                         AITimer = 0;

@@ -115,7 +115,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         frameType = 1;
                         NPC.ai[0] = 2;
                         if (RedeBossDowned.slayerDeath == 0 && RedeWorld.Alignment > 0)
-                            CombatText.NewText(NPC.getRect(), Colors.RarityCyan, "TARGET UNIMPORTANT...", true, true);
+                            CombatText.NewText(NPC.getRect(), Colors.RarityCyan, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.ScannerUnimportant"), true, true);
                     }
                     break;
                 case 2: // Yeet out

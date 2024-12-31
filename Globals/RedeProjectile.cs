@@ -16,6 +16,7 @@ using Redemption.NPCs.Friendly.SpiritSummons;
 using Redemption.NPCs.Critters;
 using Redemption.Helpers;
 using System.Net;
+using Terraria.Localization;
 
 namespace Redemption.Globals
 {
@@ -93,7 +94,7 @@ namespace Redemption.Globals
             {
                 if (Main.rand.NextBool(chance))
                 {
-                    CombatText.NewText(target.getRect(), Color.Orange, "Decapitated!");
+                    CombatText.NewText(target.getRect(), Color.Orange, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Decapitated"));
                     target.Redemption().decapitated = true;
                     crit = true;
                     target.StrikeInstantKill();

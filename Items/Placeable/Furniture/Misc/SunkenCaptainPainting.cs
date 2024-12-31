@@ -3,6 +3,7 @@ using Redemption.Tiles.Furniture.Misc;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Misc
@@ -29,14 +30,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'Once a great captain, a legend to some," +
-                    "\nEven after death would he still sail the seas,\n" +
-                    "Leading his phantom crew to unknown lands.\n" +
-                    "Only under the brightest light of the moon\n" +
-                    "Could they set a foot on a seashore.\n" +
-                    "Until then, they were ever chasing waves\n" +
-                    "With the thickest of fog keeping them company.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.SunkenCaptainPainting.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -44,7 +38,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "On the backside there's a note, hold [Shift] to read")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.SunkenCaptainViewer"))
                 {
                     OverrideColor = Color.Gray,
                 };
