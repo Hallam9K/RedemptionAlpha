@@ -399,7 +399,7 @@ Mods: {
 				SkeletonParty3: The skeletons reconsidered partying tonight...
 				SkeletonParty4: The skeletons got bored and went home!
 				Again: " again."
-				BlobbleSwarm: "A blobble swarm has arrived!"
+				BlobbleSwarm: A blobble swarm has arrived!
 			}
 
 			Other: {
@@ -411,15 +411,14 @@ Mods: {
 				Keeper3: The Keeper's spirit fades away... ?
 				SkullDigger: Skull Digger's Spirit fades away...
 				GolemSpawn: A sleeping stone appears...
-				NebGone: Nebuleus is nowhere to be seen...
+				NebGone: Nebuleus is nowhere to be found...
 				NPCWokeUp: "{0} has woken up!"
 				Unconscious: "{0} was knocked unconscious..."
-				NebGone: "Nebuleus is nowhere to be found..."
-				WarheadConditions1: "The bomb is too close to unexplodable tiles"
-				WarheadConditions2: "The bomb must be activated on the surface and in the far reaches of the world"
-				NothingHappens: "Nothing happens..."
-				Decapitated: "Decapitated!"
-				NoTargets: "No targets found!"
+				WarheadConditions1: The bomb is too close to unexplodable tiles
+				WarheadConditions2: The bomb must be activated on the surface and in the far reaches of the world
+				NothingHappens: Nothing happens...
+				Decapitated: Decapitated!
+				NoTargets: No targets found!
 			}
 		}
 
@@ -532,7 +531,7 @@ Mods: {
 
 		SpecialTooltips: {
 			Viewer: Hold [Shift] to view lore
-			SunkenCaptainViewer: "On the backside there's a note, hold [Shift] to read"
+			SunkenCaptainViewer: On the backside there's a note, hold [Shift] to read
 			Unbreakable: "[c/ff0000:Unbreakable]"
 			Unbreakable5000: "[c/ff0000:Unbreakable (5000% Pickaxe Power)]"
 
@@ -1086,7 +1085,7 @@ Mods: {
 					4: "[@f0]I'll beat you up if you annoy me again."
 				}
 
-				ScannerUnimportant: "TARGET UNIMPORTANT..."
+				ScannerUnimportant: TARGET UNIMPORTANT...
 
 				Intro: {
 					DroneBreak: Did you seriously just destroy my drones?
@@ -3484,7 +3483,7 @@ Mods: {
 				Note2: have TeoChrome-issued pills on hand just in case.
 				Note3: high chance of irradiation and suffering ARS.
 				Note4: Acute Radiation Syndrome detected.
-				Irradiated: "Irradiated"
+				Irradiated: " Irradiated"
 			}
 
 			GracesGuidance: {
@@ -5984,9 +5983,8 @@ Mods: {
 				Lore:
 					'''
 					'A strange sword from the Silver Age, made of shining steel. Marks of battle are scarce,
-                    as it was seldom used by its wielder. It feels oddly nostalgic.'
+					as it was seldom used by its wielder. It feels oddly nostalgic.'
 					'''
-
 			}
 
 			DubiousWatcherPainting: {
@@ -6169,12 +6167,12 @@ Mods: {
 				Lore:
 					'''
 					'Once a great captain, a legend to some,
-                    Even after death would he still sail the seas,
-                    Leading his phantom crew to unknown lands.
-                    Only under the brightest light of the moon
-                    Could they set a foot on a seashore.
-                    Until then, they were ever chasing waves
-                    With the thickest of fog keeping them company.'
+					Even after death would he still sail the seas,
+					Leading his phantom crew to unknown lands.
+					Only under the brightest light of the moon
+					Could they set a foot on a seashore.
+					Until then, they were ever chasing waves
+					With the thickest of fog keeping them company.'
 					'''
 			}
 
@@ -7832,7 +7830,7 @@ Mods: {
 					Only usable at night
 					Not consumable
 					'''
-				SummonP2: "Right-click to summon Nebuleus' Final Form instantly"
+				SummonP2: Right-click to summon Nebuleus' Final Form instantly
 			}
 
 			OmegaTransmitter: {
@@ -7884,7 +7882,7 @@ Mods: {
 					Only usable at night
 					Not consumable
 					'''
-				EchoLine: "The ring still glows a faint blue..."
+				EchoLine: The ring still glows a faint blue...
 			}
 
 			ThornBag: {
@@ -11505,7 +11503,7 @@ Mods: {
 			Thorn: {
 				DisplayName: Thorn, Bane of the Forest
 				XmasName: Everthorn, Bane of the Holidays
-				FireResist: "+Fire Resistance"
+				FireResist: +Fire Resistance
 
 				BossChecklistIntegration: {
 					DespawnMessage: Thorn returned to his blighted forest...
