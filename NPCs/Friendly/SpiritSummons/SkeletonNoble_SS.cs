@@ -106,9 +106,6 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         private int AniFrameY;
         public override void OnSpawn(IEntitySource source)
         {
-            Player player = Main.player[(int)NPC.ai[3]];
-            NPC.damage = (int)(NPC.damage * player.GetTotalDamage(DamageClass.Summon).Additive);
-
             ChoosePersonality();
             SetStats();
 

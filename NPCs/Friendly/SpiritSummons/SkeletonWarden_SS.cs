@@ -158,9 +158,6 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         private NPC defending;
         public override void OnSpawn(IEntitySource source)
         {
-            Player player = Main.player[(int)NPC.ai[3]];
-            NPC.damage = (int)(NPC.damage * player.GetTotalDamage(DamageClass.Summon).Additive);
-
             SetStats();
 
             TimerRand = Main.rand.Next(80, 280);

@@ -90,9 +90,6 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
         public override void OnSpawn(IEntitySource source)
         {
-            Player player = Main.player[(int)NPC.ai[3]];
-            NPC.damage = (int)(NPC.damage * player.GetTotalDamage(DamageClass.Summon).Additive);
-
             if (Main.rand.NextBool(3))
                 HasEyes = true;
             SetStats();

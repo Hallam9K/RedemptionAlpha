@@ -127,6 +127,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             if (!RedeBossDowned.downedEaglecrestGolem)
             {
                 RedeQuest.adviceSeen[(int)RedeQuest.Advice.EaglecrestGolem] = true;
+                RedeQuest.SyncData();
 
                 RedeWorld.Alignment += 0;
                 ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.EaglecrestDefeat"), 300, 30, 0, Color.DarkGoldenrod);

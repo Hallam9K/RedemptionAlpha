@@ -15,7 +15,6 @@ namespace Redemption.Items.Usable.Potions
             // DisplayName.SetDefault("Flask of Nitroglycerine");
             // Tooltip.SetDefault("Melee attacks gain the Explosive Bonus");
             Item.ResearchUnlockCount = 20;
-            ElementID.ItemExplosive[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -25,13 +24,13 @@ namespace Redemption.Items.Usable.Potions
             Item.useAnimation = 15;
             Item.useTime = 15;
             Item.consumable = true;
-            Item.width = 22;
-            Item.height = 30;
+            Item.width = 28;
+            Item.height = 34;
             Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 5, 0);
             Item.rare = ItemRarityID.LightRed;
-            Item.buffType = ModContent.BuffType<ExplosiveFlaskBuff>();
-            Item.buffTime = 52000;
+            Item.buffType = BuffType<ExplosiveFlaskBuff>();
+            Item.buffTime = Item.flaskTime;
         }
         public override void AddRecipes()
         {

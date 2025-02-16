@@ -202,6 +202,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (!RedeBossDowned.downedSlayer)
             {
                 RedeQuest.adviceSeen[(int)RedeQuest.Advice.Androids] = true;
+                RedeQuest.SyncData();
 
                 if (NPC.ai[0] == 11)
                     RedeWorld.Alignment += 0;

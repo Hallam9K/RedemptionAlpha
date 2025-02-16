@@ -155,6 +155,7 @@ namespace Redemption.NPCs.Bosses.Neb
             if (!RedeBossDowned.downedNebuleus)
             {
                 RedeQuest.adviceSeen[(int)RedeQuest.Advice.StarSerpent] = true;
+                RedeQuest.SyncData();
 
                 RedeWorld.Alignment += 0;
                 ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromLiteral("..."), 120, 30, 0, Color.DarkGoldenrod);
@@ -986,9 +987,9 @@ namespace Redemption.NPCs.Bosses.Neb
                                     Shout(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Shout.StarBlast"));
                                 if (NPC.ai[2] == 100)
                                     ArmAnimation(1, true);
-                                if (NPC.ai[2] == 130 || NPC.ai[2] == 170)
+                                if (NPC.ai[2] == 130)
                                 {
-                                    int pieCut = 8;
+                                    int pieCut = 6;
                                     for (int m = 0; m < pieCut; m++)
                                     {
                                         if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -999,14 +1000,14 @@ namespace Redemption.NPCs.Bosses.Neb
                                         }
                                     }
                                 }
-                                if (NPC.ai[2] == 150)
+                                if (NPC.ai[2] == 170)
                                 {
-                                    int pieCut = 8;
+                                    int pieCut = 6;
                                     for (int m = 0; m < pieCut; m++)
                                     {
                                         if (Main.netMode != NetmodeID.MultiplayerClient)
                                         {
-                                            int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ProjectileType<CurvingStar_Tele4>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.002f, 1);
+                                            int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ProjectileType<CurvingStar_Tele4>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.01f, 1);
                                             Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                             Main.projectile[projID].netUpdate = true;
                                         }

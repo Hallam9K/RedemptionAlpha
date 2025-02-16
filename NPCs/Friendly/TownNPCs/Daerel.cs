@@ -498,19 +498,13 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 default:
 
                     Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue." + wayfarer + ".IntroDialogue2", bro);
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        RedeQuest.wayfarerVars[0] = 4;
-                        RedeQuest.SyncData();
-                    }
+                    RedeQuest.wayfarerVars[0] = 4;
+                    RedeQuest.SyncData();
                     break;
                 case 3:
                     Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue." + wayfarer + ".IntroDialogue4", bro);
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        RedeQuest.wayfarerVars[0] = 4;
-                        RedeQuest.SyncData();
-                    }
+                    RedeQuest.wayfarerVars[0] = 4;
+                    RedeQuest.SyncData();
                     break;
             }
         }
@@ -529,11 +523,8 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             if (npc.type == NPCType<Zephos>())
                 wayfarer = "Zephos";
             Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue." + wayfarer + ".IntroDialogue3");
-            if (Main.netMode != NetmodeID.MultiplayerClient)
-            {
-                RedeQuest.wayfarerVars[0] = 3;
-                RedeQuest.SyncData();
-            }
+            RedeQuest.wayfarerVars[0] = 3;
+            RedeQuest.SyncData();
         }
     }
 }

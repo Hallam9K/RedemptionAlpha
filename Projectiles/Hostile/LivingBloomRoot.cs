@@ -42,7 +42,7 @@ namespace Redemption.Projectiles.Hostile
         {
             return Projectile.velocity.Length() != 0;
         }
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= NPCHelper.HostileProjDamageMultiplier();
         public override void AI()
         {
             if (Main.rand.NextBool(2) && Projectile.localAI[0] < 30)

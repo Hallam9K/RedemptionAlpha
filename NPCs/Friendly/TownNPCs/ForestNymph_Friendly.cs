@@ -396,6 +396,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 if (RedeQuest.forestNymphVar == 0)
                 {
                     RedeQuest.adviceSeen[(int)RedeQuest.Advice.ForestNymph] = true;
+                    RedeQuest.SyncData();
 
                     SoundEngine.PlaySound(SoundID.MenuTick);
                     if (player.ConsumeItem(ItemID.HerbBag))

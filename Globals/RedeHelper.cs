@@ -921,6 +921,13 @@ namespace Redemption.Globals
     public static class NPCHelper
     {
         #region NPC Methods
+        public static int HostileProjDamageMultiplier()
+        {
+            int multi = 2;
+            if (Main.expertMode)
+                multi *= Main.masterMode ? 3 : 2;
+            return multi;
+        }
         public static int HostileProjDamage(int damage)
         {
             damage /= 2;

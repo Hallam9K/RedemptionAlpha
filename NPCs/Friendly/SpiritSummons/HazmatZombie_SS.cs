@@ -26,7 +26,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Idle,
             Wander,
             Alert,
-            SoulMove
+            SoulMove = 10
         }
         public ActionState AIState
         {
@@ -73,9 +73,6 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         private int runCooldown;
         public override void OnSpawn(IEntitySource source)
         {
-            Player player = Main.player[(int)NPC.ai[3]];
-            NPC.damage = (int)(NPC.damage * player.GetTotalDamage(DamageClass.Summon).Additive);
-
             Variant = Main.rand.Next(2);
             TimerRand = Main.rand.Next(80, 120);
             NPC.netUpdate = true;

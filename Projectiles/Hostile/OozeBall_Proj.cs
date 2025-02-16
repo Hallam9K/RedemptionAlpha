@@ -28,7 +28,7 @@ namespace Redemption.Projectiles.Hostile
             Projectile.Redemption().friendlyHostile = true;
         }
         public override bool? CanHitNPC(NPC target) => target.whoAmI != Projectile.ai[0] ? null : false;
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= NPCHelper.HostileProjDamageMultiplier();
         public override void AI()
         {
             if (++Projectile.frameCounter >= 5)

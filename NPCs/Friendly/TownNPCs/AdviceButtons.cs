@@ -131,6 +131,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             if (locked || ForceHidden)
                 return;
             RedeQuest.adviceSeen[AdviceType] = true;
+            RedeQuest.SyncData();
             SoundEngine.PlaySound(SoundID.Chat);
 
             bool isDaerel = npc.type == NPCType<Daerel>();

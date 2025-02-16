@@ -205,29 +205,47 @@ namespace Redemption.Globals
                 flags[k] = voltVars[k];
             writer.Write(flags);
 
-            BitsByte[] adviceUnlockFlags = new BitsByte[2];
-            int flagID = 0;
-            for (int k = 0; k < adviceUnlocked.Length; k++)
-            {
-                if (k % 8 == 0)
-                    flagID++;
+            #region Advice stuff (Evil Temporary Solution)
+            var adviceUnlockedflags1 = new BitsByte();
+            adviceUnlockedflags1[0] = adviceUnlocked[0];
+            adviceUnlockedflags1[1] = adviceUnlocked[1];
+            adviceUnlockedflags1[2] = adviceUnlocked[2];
+            adviceUnlockedflags1[3] = adviceUnlocked[3];
+            adviceUnlockedflags1[4] = adviceUnlocked[4];
+            adviceUnlockedflags1[5] = adviceUnlocked[5];
+            adviceUnlockedflags1[6] = adviceUnlocked[6];
+            adviceUnlockedflags1[7] = adviceUnlocked[7];
+            writer.Write(adviceUnlockedflags1);
+            var adviceUnlockedflags2 = new BitsByte();
+            adviceUnlockedflags2[0] = adviceUnlocked[8];
+            writer.Write(adviceUnlockedflags2);
 
-                adviceUnlockFlags[flagID][k] = adviceUnlocked[k];
-            }
-            for (int k = 0; k < adviceUnlockFlags.Length; k++)
-                writer.Write(adviceUnlockFlags[k]);
-
-            BitsByte[] adviceSeenFlags = new BitsByte[3];
-            flagID = 0;
-            for (int k = 0; k < adviceSeen.Length; k++)
-            {
-                if (k % 8 == 0)
-                    flagID++;
-
-                adviceSeenFlags[flagID][k] = adviceSeen[k];
-            }
-            for (int k = 0; k < adviceSeenFlags.Length; k++)
-                writer.Write(adviceSeenFlags[k]);
+            var adviceSeenflags1 = new BitsByte();
+            adviceSeenflags1[0] = adviceSeen[0];
+            adviceSeenflags1[2] = adviceSeen[2];
+            adviceSeenflags1[3] = adviceSeen[3];
+            adviceSeenflags1[4] = adviceSeen[4];
+            adviceSeenflags1[5] = adviceSeen[5];
+            adviceSeenflags1[6] = adviceSeen[6];
+            adviceSeenflags1[7] = adviceSeen[7];
+            writer.Write(adviceSeenflags1);
+            var adviceSeenflags2 = new BitsByte();
+            adviceSeenflags2[0] = adviceSeen[8];
+            adviceSeenflags2[1] = adviceSeen[9];
+            adviceSeenflags2[2] = adviceSeen[10];
+            adviceSeenflags2[3] = adviceSeen[11];
+            adviceSeenflags2[4] = adviceSeen[12];
+            adviceSeenflags2[5] = adviceSeen[13];
+            adviceSeenflags2[6] = adviceSeen[14];
+            adviceSeenflags2[7] = adviceSeen[15];
+            writer.Write(adviceSeenflags2);
+            var adviceSeenflags3 = new BitsByte();
+            adviceSeenflags3[0] = adviceSeen[16];
+            adviceSeenflags3[1] = adviceSeen[17];
+            adviceSeenflags3[2] = adviceSeen[18];
+            adviceSeenflags3[3] = adviceSeen[19];
+            writer.Write(adviceSeenflags3);
+            #endregion
 
             for (int k = 0; k < wayfarerVars.Length; k++)
                 writer.Write(wayfarerVars[k]);
@@ -242,24 +260,43 @@ namespace Redemption.Globals
             for (int k = 0; k < voltVars.Length; k++)
                 voltVars[k] = flags[k];
 
-            BitsByte[] adviceUnlockFlags = new BitsByte[2] { reader.ReadByte(), reader.ReadByte() };
-            int flagID = 0;
-            for (int k = 0; k < adviceUnlocked.Length; k++)
-            {
-                if (k % 8 == 0)
-                    flagID++;
+            #region Advice stuff (Evil Temporary Solution)
+            BitsByte adviceUnlockedflags1 = reader.ReadByte();
+            adviceUnlocked[0] = adviceUnlockedflags1[0];
+            adviceUnlocked[1] = adviceUnlockedflags1[1];
+            adviceUnlocked[2] = adviceUnlockedflags1[2];
+            adviceUnlocked[3] = adviceUnlockedflags1[3];
+            adviceUnlocked[4] = adviceUnlockedflags1[4];
+            adviceUnlocked[5] = adviceUnlockedflags1[5];
+            adviceUnlocked[6] = adviceUnlockedflags1[6];
+            adviceUnlocked[7] = adviceUnlockedflags1[7];
+            BitsByte adviceUnlockedflags2 = reader.ReadByte();
+            adviceUnlocked[0] = adviceUnlockedflags2[8];
 
-                adviceUnlocked[k] = adviceUnlockFlags[flagID][k];
-            }
-            BitsByte[] adviceSeenFlags = new BitsByte[3] { reader.ReadByte(), reader.ReadByte(), reader.ReadByte() };
-            flagID = 0;
-            for (int k = 0; k < adviceSeen.Length; k++)
-            {
-                if (k % 8 == 0)
-                    flagID++;
-
-                adviceSeen[k] = adviceSeenFlags[flagID][k];
-            }
+            BitsByte adviceSeenflags1 = reader.ReadByte();
+            adviceSeen[0] = adviceSeenflags1[0];
+            adviceSeen[1] = adviceSeenflags1[1];
+            adviceSeen[2] = adviceSeenflags1[2];
+            adviceSeen[3] = adviceSeenflags1[3];
+            adviceSeen[4] = adviceSeenflags1[4];
+            adviceSeen[5] = adviceSeenflags1[5];
+            adviceSeen[6] = adviceSeenflags1[6];
+            adviceSeen[7] = adviceSeenflags1[7];
+            BitsByte adviceSeenflags2 = reader.ReadByte();
+            adviceSeen[8] = adviceSeenflags2[0];
+            adviceSeen[9] = adviceSeenflags2[1];
+            adviceSeen[10] = adviceSeenflags2[2];
+            adviceSeen[11] = adviceSeenflags2[3];
+            adviceSeen[12] = adviceSeenflags2[4];
+            adviceSeen[13] = adviceSeenflags2[5];
+            adviceSeen[14] = adviceSeenflags2[6];
+            adviceSeen[15] = adviceSeenflags2[7];
+            BitsByte adviceSeenflags3 = reader.ReadByte();
+            adviceSeen[16] = adviceSeenflags3[0];
+            adviceSeen[17] = adviceSeenflags3[1];
+            adviceSeen[18] = adviceSeenflags3[2];
+            adviceSeen[19] = adviceSeenflags3[3];
+            #endregion
 
             for (int k = 0; k < wayfarerVars.Length; k++)
                 wayfarerVars[k] = reader.ReadInt32();

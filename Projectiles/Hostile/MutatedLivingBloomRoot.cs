@@ -39,7 +39,7 @@ namespace Redemption.Projectiles.Hostile
         {
             return target.type != ModContent.NPCType<MutatedLivingBloom>() ? null : false;
         }
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= NPCHelper.HostileProjDamageMultiplier();
         public override void AI()
         {
             if (Main.rand.NextBool(2) && Projectile.localAI[0] < 30)

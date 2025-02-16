@@ -113,6 +113,7 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer >= 260)
                     {
                         RedeQuest.adviceSeen[(int)RedeQuest.Advice.UGPortal] = true;
+                        RedeQuest.SyncData();
 
                         string s = Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Keybind");
                         foreach (string key in Redemption.RedeSpiritwalkerAbility.GetAssignedKeys())

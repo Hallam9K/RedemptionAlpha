@@ -28,7 +28,7 @@ namespace Redemption.NPCs.HM
             Projectile.Redemption().ParryBlacklist = true;
             Projectile.Redemption().friendlyHostile = true;
         }
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= NPCHelper.HostileProjDamageMultiplier();
         public override bool? CanHitNPC(NPC target)
         {
             if (target.Redemption().spiritSummon)

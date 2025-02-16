@@ -146,6 +146,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 if (Main.LocalPlayer.RedemptionAbility().Spiritwalker)
                     RedeQuest.adviceSeen[(int)RedeQuest.Advice.UGPortal] = true;
 
+                RedeQuest.SyncData();
                 TalkedOnce = true;
             }
             WeightedRandom<string> chat = new(Main.rand);
@@ -309,6 +310,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         public override void OnClick(NPC npc, Player player)
         {
             RedeQuest.adviceSeen[(int)RedeQuest.Advice.UkkoEye] = true;
+            RedeQuest.SyncData();
             npc.GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[4] = false;
             SoundEngine.PlaySound(SoundID.Chat);
             Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.GolemEyeDialogue");

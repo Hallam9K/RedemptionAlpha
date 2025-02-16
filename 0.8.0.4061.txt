@@ -1,0 +1,28 @@
+=== 0.8 Beta .4061 === (Element Cross-Mod Patch)
+- Added Arcane element to a bunch of vanilla projectiles (None for the mod's weapons since backporting would take too long)
+- Fixed issue that caused multiplayer to be unloadable (still don't recommend it!!!)
+- Buffed Gladestone Golem crux spirits to have 20 defense and reduced dr of guard points from 90% -> 75%
+- Buffed Skull Digger crux spirit's damage from 28 -> 30
+- Bygone Nebuleus Robes has right name now
+- Added a Mod Call for checking if the Raveyard is active
+1669. Crux Cards that have different spirits show each one's damage in the tooltip
+1675. Added prefixes for Crux Cards
+1677. Buffed Crux Card: Gathic Soldiers to spawn an extra duelist
+1708. Fixed Crux Cards consuming Lost Souls if used while a spirit is active
+1943. Fixed bile and nitro flasks
+1966. Corrected hostile projectile damage conversion for hostile projectiles hitting targeted NPCs and spirits
+1972. Reduced Crux Card: Common Guard soul cost from 14 -> 12
+1974. Crux Cards have small flavour text in their tooltip relating to what the spirits do
+1975. Buffed Crux Card: Kyretha damage from 60 -> 78, matching damage of Blade of the Mountain
+2034. Elemental effects and multipliers work for NPCs hitting NPCs
+2083. Restyled Adam's hair
+2084. Added Mod Calls for adding Element Overrides, Element Multipliers, and hiding element icons from item tooltips
+2085. Tweaked Elemental Multipliers for NPC types:
+> Against Demons - Celestial +30% -> +20%
+> Against Spirits - Arcane +15% -> +25%
+> Against Hot NPCs - Fire -50% -> -20%
+> Against Wet NPCs - Water -50% -> -25%
+> Against Blood NPCs - Poison +10% -> +25%
+2086. Tugging Crux Card spirits back to your position no longer costs Lost Souls
+2088. Added optional bool in "addElementItem" Mod Call for making projectiles inherit the elements of the item it came from automatically
+===============

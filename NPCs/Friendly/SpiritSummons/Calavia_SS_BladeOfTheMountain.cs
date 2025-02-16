@@ -116,7 +116,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.FinalDamage *= 4;
+            modifiers.FinalDamage *= NPCHelper.HostileProjDamageMultiplier();
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             float tipBonus;
             tipBonus = npc.Distance(target.Center) / 3;
@@ -186,7 +186,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Projectile.DamageType = DamageClass.Summon;
         }
         public override bool? CanHitNPC(NPC target) => Projectile.ai[1] > 1 && Projectile.ai[1] != 3 && Projectile.ai[1] != 4 ? null : false;
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= NPCHelper.HostileProjDamageMultiplier();
         private Vector2 startVector;
         private Vector2 vector;
         private float speed;
@@ -402,7 +402,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Projectile.friendly = true;
             Projectile.hostile = false;
         }
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= NPCHelper.HostileProjDamageMultiplier();
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.frame < 2;
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(BuffID.Frostburn, 120);
     }

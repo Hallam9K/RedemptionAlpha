@@ -35,7 +35,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Stab,
             SpinSlash,
             Icefall,
-            SoulMove
+            SoulMove = 10
         }
         public ActionState AIState
         {
@@ -99,8 +99,6 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
         public override void OnSpawn(IEntitySource source)
         {
-            Player player = Main.player[(int)NPC.ai[3]];
-            NPC.damage = (int)(NPC.damage * player.GetTotalDamage(DamageClass.Summon).Additive);
             NPC.localAI[0] = Main.rand.Next(80, 120);
             NPC.netUpdate = true;
         }

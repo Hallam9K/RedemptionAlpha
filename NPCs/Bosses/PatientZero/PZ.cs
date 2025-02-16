@@ -160,6 +160,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 RedeQuest.adviceUnlocked[(int)RedeQuest.Advice.StarSerpent] = true;
                 if (RedeBossDowned.downedNebuleus)
                     RedeQuest.adviceSeen[(int)RedeQuest.Advice.StarSerpent] = true;
+                RedeQuest.SyncData();
 
                 Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<LabHologramDevice>());
             }

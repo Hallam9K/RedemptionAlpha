@@ -91,9 +91,6 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         private int AniFrameX;
         public override void OnSpawn(IEntitySource source)
         {
-            Player player = Main.player[(int)NPC.ai[3]];
-            NPC.damage = (int)(NPC.damage * player.GetTotalDamage(DamageClass.Summon).Additive);
-
             HeadType = 8;
             HasEyes = true;
             VisionIncrease = 300;

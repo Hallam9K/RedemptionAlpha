@@ -105,6 +105,7 @@ namespace Redemption.Globals.NPC
                 RedeQuest.adviceUnlocked[(int)RedeQuest.Advice.ForestNymph] = true;
                 if (RedeQuest.forestNymphVar > 0)
                     RedeQuest.adviceSeen[(int)RedeQuest.Advice.ForestNymph] = true;
+                RedeQuest.SyncData();
 
                 TalkedDryad = true;
             }
@@ -148,12 +149,14 @@ namespace Redemption.Globals.NPC
                 RedeQuest.adviceUnlocked[(int)RedeQuest.Advice.EaglecrestGolem] = true;
                 if (RedeBossDowned.downedEaglecrestGolem)
                     RedeQuest.adviceSeen[(int)RedeQuest.Advice.EaglecrestGolem] = true;
+                RedeQuest.SyncData();
             }
             else if (npc.type is NPCID.WallofFlesh && !Main.hardMode)
             {
                 RedeQuest.adviceUnlocked[(int)RedeQuest.Advice.Androids] = true;
                 if (RedeBossDowned.downedSlayer)
                     RedeQuest.adviceSeen[(int)RedeQuest.Advice.Androids] = true;
+                RedeQuest.SyncData();
             }
             else if (npc.type is NPCID.MoonLordCore && !Terraria.NPC.downedMoonlord)
             {
@@ -162,6 +165,7 @@ namespace Redemption.Globals.NPC
                     Main.npc[FallenID].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[4] = true;
                 if (RedeBossDowned.downedADD)
                     RedeQuest.adviceSeen[(int)RedeQuest.Advice.UkkoEye] = true;
+                RedeQuest.SyncData();
             }
             return base.PreKill(npc);
         }
@@ -203,7 +207,7 @@ namespace Redemption.Globals.NPC
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (spiritSummon && projectile.hostile && !projectile.Redemption().friendlyHostile)
-                modifiers.FinalDamage *= 4;
+                modifiers.FinalDamage *= NPCHelper.HostileProjDamageMultiplier();
         }
         public override void OnHitNPC(Terraria.NPC npc, Terraria.NPC target, Terraria.NPC.HitInfo hit)
         {

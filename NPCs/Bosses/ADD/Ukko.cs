@@ -209,6 +209,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 int fallen = NPC.FindFirstNPC(NPCType<Fallen>());
                 if (fallen >= 0)
                     Main.npc[fallen].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[4] = false;
+                RedeQuest.SyncData();
 
                 RedeWorld.Alignment += 0;
                 ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.ADDDefeat"), 300, 30, 0, Color.DarkGoldenrod);

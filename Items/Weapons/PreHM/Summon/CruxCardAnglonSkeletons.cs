@@ -1,180 +1,37 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.BaseExtension;
-using Redemption.Buffs.Cooldowns;
-using Redemption.Buffs;
-using Redemption.Dusts;
-using Redemption.Globals;
-using Redemption.Items.Materials.PreHM;
 using Redemption.NPCs.Friendly.SpiritSummons;
-using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Summon
 {
-    public class CruxCardAnglonSkeletons : ModItem
+    public class CruxCardAnglonSkeletons : BaseCruxCard
     {
-        public override void SetStaticDefaults()
+        public override void SafeSetDefaults()
         {
-            // DisplayName.SetDefault("Crux Card: Common Guard");
-            /* Tooltip.SetDefault("Summons the spirits of a Skeleton Warden, Flagbearer, and Noble\n" +
-                "Right-click to tug the spirits back to your position, consuming 2 [i:" + ModContent.ItemType<LostSoul>() + "]\n" +
-                "Consumes 14 [i:" + ModContent.ItemType<LostSoul>() + "] on use\n" +
-                "Can only use one Spirit Card at a time"); */
-            Item.ResearchUnlockCount = 1;
-        }
-
-        public override void SetDefaults()
-        {
-            Item.damage = 28;
-            Item.DamageType = DamageClass.Summon;
+            SpiritTypes = new int[3] { NPCType<SkeletonWarden_SS>(), NPCType<SkeletonFlagbearer_SS>(), NPCType<SkeletonNoble_SS>() };
+            SoulCost = 12;
+            SpiritHealth = new int[3] { 120, 92, 144 };
+            SpiritDefense = new int[3] { 11, 9, 15 };
+            SpiritDamage = new int[3] { 18, 10, 28 };
+            SpawnDustSize = 1.5f;
             Item.knockBack = 9;
-            Item.width = 40;
-            Item.height = 40;
-            Item.maxStack = 1;
             Item.rare = ItemRarityID.Green;
             Item.value = Item.sellPrice(0, 2, 66, 0);
-            Item.useAnimation = 45;
-            Item.useTime = 45;
-            Item.noMelee = true;
-            Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.UseSound = SoundID.NPCDeath6;
         }
-        public override bool AltFunctionUse(Player player) => true;
-        public override bool CanUseItem(Player player)
+        public override void SpawnSpirits(Player player)
         {
-            if (player.HasBuff<CruxCardCooldown>())
-                return false;
-
-            int soul = player.FindItem(ModContent.ItemType<LostSoul>());
-            if (player.altFunctionUse == 2)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                bool active2 = false;
-                for (int n = 0; n < Main.maxNPCs; n++)
-                {
-                    NPC npc = Main.npc[n];
-                    if (!npc.active || (npc.type != ModContent.NPCType<SkeletonWarden_SS>() && npc.type != ModContent.NPCType<SkeletonNoble_SS>() && npc.type != ModContent.NPCType<SkeletonFlagbearer_SS>()))
-                        continue;
-
-                    if (npc.ai[3] == player.whoAmI)
-                        active2 = true;
-                }
-                if (active2 && soul >= 0 && player.inventory[soul].stack >= 2)
-                {
-                    player.inventory[soul].stack -= 2;
-                    if (player.inventory[soul].stack <= 0)
-                        player.inventory[soul] = new Item();
-                    return true;
-                }
-                return false;
-
-            }
-            if (soul >= 0 && player.inventory[soul].stack >= 14)
-            {
-                player.inventory[soul].stack -= 14;
-                if (player.inventory[soul].stack <= 0)
-                    player.inventory[soul] = new Item();
+                NewSpirit(player, (int)player.Center.X + 10, (int)player.Center.Y + 10, 0);
+                NewSpirit(player, (int)player.Center.X + 10, (int)player.Center.Y + 10, 1);
+                NewSpirit(player, (int)player.Center.X + 10, (int)player.Center.Y + 10, 2);
             }
             else
-                return false;
-            bool active = false;
-            for (int n = 0; n < Main.maxNPCs; n++)
             {
-                NPC npc = Main.npc[n];
-                if (!npc.active || !npc.Redemption().spiritSummon)
-                    continue;
-
-                if (npc.ai[3] == player.whoAmI)
-                    active = true;
+                NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: SpiritTypes[0]);
+                NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: SpiritTypes[1]);
+                NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: SpiritTypes[2]);
             }
-            return !active;
-        }
-        public override bool? UseItem(Player player)
-        {
-            if (player.whoAmI == Main.myPlayer)
-            {
-                player.AddBuff(ModContent.BuffType<CruxCardBuff>(), 2);
-                if (player.altFunctionUse == 2)
-                {
-                    for (int n = 0; n < Main.maxNPCs; n++)
-                    {
-                        NPC npc = Main.npc[n];
-                        if (!npc.active || (npc.type != ModContent.NPCType<SkeletonWarden_SS>() && npc.type != ModContent.NPCType<SkeletonNoble_SS>() && npc.type != ModContent.NPCType<SkeletonFlagbearer_SS>()) || npc.ai[3] != player.whoAmI)
-                            continue;
-
-                        for (int i = 0; i < 10; i++)
-                        {
-                            int dust = Dust.NewDust(npc.position + npc.velocity, npc.width, npc.height, DustID.DungeonSpirit, 0, 0, Scale: 2);
-                            Main.dust[dust].velocity *= 2f;
-                            Main.dust[dust].noGravity = true;
-                        }
-                        npc.ai[0] = 10;
-                        npc.netUpdate = true;
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < 16; i++)
-                    {
-                        int dust = Dust.NewDust(player.Center - Vector2.One, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 1.5f);
-                        Main.dust[dust].noGravity = true;
-                        Color dustColor = new(188, 244, 227) { A = 0 };
-                        Main.dust[dust].color = dustColor;
-                    }
-                    int type = ModContent.NPCType<SkeletonWarden_SS>();
-                    int type2 = ModContent.NPCType<SkeletonNoble_SS>();
-                    int type3 = ModContent.NPCType<SkeletonFlagbearer_SS>();
-
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.Center.X + 10, (int)player.Center.Y + 10, type, ai3: player.whoAmI);
-                        NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.Center.X + 10, (int)player.Center.Y + 10, type2, ai3: player.whoAmI);
-                        NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.Center.X + 10, (int)player.Center.Y + 10, type3, ai3: player.whoAmI);
-                    }
-                    else
-                    {
-                        NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
-                        NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type2);
-                        NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type3);
-                    }
-                }
-            }
-            return true;
-        }
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
-        {
-            int tooltipLocation = tooltips.FindIndex(TooltipLine => TooltipLine.Name.Equals("Damage"));
-            if (tooltipLocation != -1)
-            {
-                tooltips.Insert(tooltipLocation, new TooltipLine(Mod, "MaxLife", "120/92/144 base health"));
-                tooltips.Insert(tooltipLocation + 2, new TooltipLine(Mod, "Defense", "11/9/15 defense"));
-            }
-        }
-        private float drawTimer;
-        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-        {
-            Texture2D texture = TextureAssets.Item[Item.type].Value;
-            RedeDraw.DrawTreasureBagEffect(spriteBatch, texture, ref drawTimer, position, new Rectangle(0, 0, texture.Width, texture.Height), Color.LightBlue, 0, origin, scale, 0);
-            spriteBatch.Draw(texture, position, new Rectangle(0, 0, texture.Width, texture.Height), drawColor, 0, origin, scale, 0, 0f);
-            return false;
-        }
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-        {
-            Texture2D texture = TextureAssets.Item[Item.type].Value;
-            Rectangle frame;
-            if (Main.itemAnimations[Item.type] != null)
-                frame = Main.itemAnimations[Item.type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);
-            else
-                frame = texture.Frame();
-            Vector2 origin = frame.Size() / 2f;
-
-            RedeDraw.DrawTreasureBagEffect(spriteBatch, texture, ref drawTimer, Item.Center - Main.screenPosition, frame, Color.LightBlue, rotation, origin, scale, 0);
-            spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
-            return false;
         }
     }
 }

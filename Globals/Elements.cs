@@ -1,80 +1,180 @@
-using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
+using Redemption.Buffs;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals.Player;
+using Redemption.Items.Weapons.HM.Ranged;
+using Redemption.Textures.Elements;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace Redemption.Globals
 {
     public static class ElementID
     {
         #region Element Bools
-        public static bool[] ProjArcane = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.EnchantedBoomerang, ProjectileID.Starfury, ProjectileID.MagicMissile, ProjectileID.EighthNote, ProjectileID.QuarterNote, ProjectileID.TiedEighthNote, ProjectileID.RainbowRodBullet, ProjectileID.EyeLaser, ProjectileID.PinkLaser, ProjectileID.PurpleLaser, ProjectileID.MagicDagger, ProjectileID.CrystalStorm, ProjectileID.DeathLaser, ProjectileID.SwordBeam, ProjectileID.AmethystBolt, ProjectileID.TopazBolt, ProjectileID.SapphireBolt, ProjectileID.EmeraldBolt, ProjectileID.RubyBolt, ProjectileID.DiamondBolt, ProjectileID.AmberBolt, ProjectileID.RuneBlast, ProjectileID.TerraBeam, ProjectileID.LightBeam, ProjectileID.NightBeam, ProjectileID.EnchantedBeam, ProjectileID.FrostBeam, ProjectileID.EyeBeam, ProjectileID.Skull, ProjectileID.DeathSickle, ProjectileID.LostSoulFriendly, ProjectileID.LostSoulHostile, ProjectileID.Shadowflames, ProjectileID.VampireKnife, ProjectileID.SpectreWrath, ProjectileID.MiniRetinaLaser, ProjectileID.CrystalVileShardHead, ProjectileID.CrystalVileShardShaft, ProjectileID.CrystalPulse, ProjectileID.CrystalPulse2, ProjectileID.MedusaHeadRay, ProjectileID.MedusaHead, ProjectileID.StardustSoldierLaser, ProjectileID.Twinkle, ProjectileID.NebulaLaser, ProjectileID.VortexLaser, ProjectileID.ClothiersCurse, ProjectileID.MinecartMechLaser, ProjectileID.TerrarianBeam, ProjectileID.Terrarian, ProjectileID.NebulaArcanum, ProjectileID.NebulaArcanumExplosionShot, ProjectileID.NebulaArcanumExplosionShotShard, ProjectileID.StardustGuardianExplosion, ProjectileID.StardustCellMinion, ProjectileID.StardustCellMinionShot, ProjectileID.StardustDragon1, ProjectileID.StardustDragon2, ProjectileID.StardustDragon3, ProjectileID.StardustDragon4, ProjectileID.PhantasmArrow, ProjectileID.LastPrismLaser, ProjectileID.LastPrism, ProjectileID.NebulaBlaze1, ProjectileID.NebulaBlaze2, ProjectileID.MoonlordTurret, ProjectileID.MoonlordTurretLaser, ProjectileID.LunarFlare, ProjectileID.SkyFracture, ProjectileID.DD2DarkMageBolt, ProjectileID.BookOfSkullsSkull, ProjectileID.SparkleGuitar, ProjectileID.TitaniumStormShard, ProjectileID.StardustPunch, ProjectileID.NebulaDrill, ProjectileID.StardustDrill, ProjectileID.JestersArrow, ProjectileID.MonkStaffT2Ghast, ProjectileID.AbigailMinion, ProjectileID.AbigailCounter, ProjectileID.Trimarang, ProjectileID.GreenLaser);
-        public static bool[] ItemArcane = ItemID.Sets.Factory.CreateBoolSet(ItemID.EnchantedSword, ItemID.SpectrePickaxe, ItemID.NebulaPickaxe, ItemID.StardustPickaxe, ItemID.SpectreHamaxe, ItemID.LunarHamaxeNebula, ItemID.LunarHamaxeStardust, ItemID.MonkStaffT2, ItemID.OpticStaff, ItemID.Phantasm);
-        public static bool[] NPCArcane = NPCID.Sets.Factory.CreateBoolSet(NPCID.CursedSkull, NPCID.GiantCursedSkull, NPCID.GraniteFlyer, NPCID.Tim, NPCID.ChaosBallTim, NPCID.ChaosBall, NPCID.WaterSphere, NPCID.ChaosElemental, NPCID.CursedHammer, NPCID.CrimsonAxe, NPCID.EnchantedSword, NPCID.DungeonSpirit, NPCID.ShadowFlameApparition, NPCID.PirateGhost, NPCID.Poltergeist, NPCID.NebulaBeast, NPCID.NebulaBrain, NPCID.NebulaHeadcrab, NPCID.NebulaSoldier, NPCID.StardustCellBig, NPCID.StardustCellSmall, NPCID.StardustJellyfishBig, NPCID.StardustJellyfishSmall, NPCID.StardustSoldier, NPCID.StardustSpiderBig, NPCID.StardustSpiderSmall, NPCID.StardustWormBody, NPCID.StardustWormHead, NPCID.StardustWormTail, NPCID.CultistDragonBody1, NPCID.CultistDragonBody2, NPCID.CultistDragonBody3, NPCID.CultistDragonBody4, NPCID.CultistDragonHead, NPCID.CultistDragonTail);
+        // Arcane
+        public static bool[] ProjArcane = ProjectileID.Sets.Factory.CreateBoolSet(
+            ProjectileID.EnchantedBoomerang, ProjectileID.Starfury, ProjectileID.MagicMissile, ProjectileID.EighthNote, ProjectileID.QuarterNote, ProjectileID.TiedEighthNote, ProjectileID.RainbowRodBullet, ProjectileID.MagicDagger, ProjectileID.CrystalStorm, ProjectileID.SwordBeam, ProjectileID.AmethystBolt, ProjectileID.TopazBolt, ProjectileID.SapphireBolt, ProjectileID.EmeraldBolt, ProjectileID.RubyBolt, ProjectileID.DiamondBolt, ProjectileID.AmberBolt, ProjectileID.RuneBlast, ProjectileID.TerraBeam, ProjectileID.LightBeam, ProjectileID.NightBeam, ProjectileID.EnchantedBeam, ProjectileID.FrostBeam, ProjectileID.EyeBeam, ProjectileID.Skull, ProjectileID.DeathSickle, ProjectileID.LostSoulFriendly, ProjectileID.LostSoulHostile, ProjectileID.Shadowflames, ProjectileID.VampireKnife, ProjectileID.SpectreWrath, ProjectileID.CrystalVileShardHead, ProjectileID.CrystalVileShardShaft, ProjectileID.CrystalPulse, ProjectileID.CrystalPulse2, ProjectileID.MedusaHeadRay, ProjectileID.MedusaHead, ProjectileID.StardustSoldierLaser, ProjectileID.Twinkle, ProjectileID.NebulaLaser, ProjectileID.ClothiersCurse, ProjectileID.TerrarianBeam, ProjectileID.Terrarian, ProjectileID.NebulaArcanum, ProjectileID.NebulaArcanumExplosionShot, ProjectileID.NebulaArcanumExplosionShotShard, ProjectileID.StardustGuardianExplosion, ProjectileID.StardustCellMinion, ProjectileID.StardustCellMinionShot, ProjectileID.StardustDragon1, ProjectileID.StardustDragon2, ProjectileID.StardustDragon3, ProjectileID.StardustDragon4, ProjectileID.PhantasmArrow, ProjectileID.LastPrismLaser, ProjectileID.LastPrism, ProjectileID.NebulaBlaze1, ProjectileID.NebulaBlaze2, ProjectileID.MoonlordTurret, ProjectileID.LunarFlare, ProjectileID.SkyFracture, ProjectileID.DD2DarkMageBolt, ProjectileID.BookOfSkullsSkull, ProjectileID.SparkleGuitar, ProjectileID.TitaniumStormShard, ProjectileID.StardustPunch, ProjectileID.NebulaDrill, ProjectileID.StardustDrill, ProjectileID.JestersArrow, ProjectileID.MonkStaffT2Ghast, ProjectileID.AbigailMinion, ProjectileID.AbigailCounter, ProjectileID.Trimarang, ProjectileID.WandOfFrostingFrost, ProjectileID.VilethornBase, ProjectileID.VilethornTip, ProjectileID.BallofFire, ProjectileID.WaterBolt, ProjectileID.Flamelash, ProjectileID.DemonSickle, ProjectileID.DemonScythe, ProjectileID.IceBlock, ProjectileID.UnholyTridentFriendly, ProjectileID.UnholyTridentHostile, ProjectileID.FrostBlastHostile, ProjectileID.NettleBurstEnd, ProjectileID.NettleBurstLeft, ProjectileID.NettleBurstRight, ProjectileID.CrystalLeafShot, ProjectileID.RainbowBack, ProjectileID.RainbowFront, ProjectileID.BallofFrost, ProjectileID.MagnetSphereBall, ProjectileID.MagnetSphereBolt, ProjectileID.GoldenShowerFriendly, ProjectileID.ShadowBeamHostile, ProjectileID.ShadowBeamFriendly, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoFriendlyBolt, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoHostileBolt, ProjectileID.PaladinsHammerHostile, ProjectileID.PaladinsHammerFriendly, ProjectileID.FlamingScythe, ProjectileID.Blizzard, ProjectileID.FrostBoltStaff, ProjectileID.ImpFireball, ProjectileID.Typhoon, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.CultistBossIceMist, ProjectileID.CultistBossLightningOrb, ProjectileID.CultistBossLightningOrbArc, ProjectileID.CultistBossFireBall, ProjectileID.CultistBossFireBallClone, ProjectileID.ShadowFlame, ProjectileID.StarWrath, ProjectileID.AncientDoomProjectile, ProjectileID.DesertDjinnCurse, ProjectileID.SpiritFlame, ProjectileID.RainbowCrystalExplosion, ProjectileID.ManaCloakStar, ProjectileID.BeeCloakStar, ProjectileID.StarVeilStar, ProjectileID.StarCloakStar, ProjectileID.DD2ApprenticeStorm, ProjectileID.BookStaffShot, ProjectileID.SuperStar, ProjectileID.SuperStarSlash, ProjectileID.BatOfLight, ProjectileID.SharpTears, ProjectileID.HallowBossLastingRainbow, ProjectileID.HallowBossRainbowStreak, ProjectileID.FairyQueenLance, ProjectileID.FairyQueenSunDance, ProjectileID.FairyQueenHymn, ProjectileID.PiercingStarlight, ProjectileID.FairyQueenMagicItemShot, ProjectileID.FairyQueenRangedItemShot, ProjectileID.PrincessWeapon, ProjectileID.WandOfSparkingSpark, ProjectileID.InsanityShadowHostile, ProjectileID.InsanityShadowFriendly);
 
-        public static bool[] ProjFire = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.FireArrow, ProjectileID.BallofFire, ProjectileID.Flamarang, ProjectileID.Flamelash, ProjectileID.Sunfury, ProjectileID.HellfireArrow, ProjectileID.FlamingArrow, ProjectileID.Flames, ProjectileID.CursedFlameFriendly, ProjectileID.CursedFlameHostile, ProjectileID.EyeFire, ProjectileID.CursedArrow, ProjectileID.CursedBullet, ProjectileID.RuneBlast, ProjectileID.FrostburnArrow, ProjectileID.FlamethrowerTrap, ProjectileID.FlamesTrap, ProjectileID.Fireball, ProjectileID.HeatRay, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoFriendlyBolt, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoHostileBolt, ProjectileID.JackOLantern, ProjectileID.FlamingJack, ProjectileID.FlamingWood, ProjectileID.GreekFire1, ProjectileID.GreekFire2, ProjectileID.GreekFire3, ProjectileID.FlamingScythe, ProjectileID.ImpFireball, ProjectileID.MolotovCocktail, ProjectileID.MolotovFire, ProjectileID.MolotovFire2, ProjectileID.MolotovFire3, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.CultistBossFireBall, ProjectileID.CursedDart, ProjectileID.CursedDartFlame, ProjectileID.ClingerStaff, ProjectileID.Hellwing, ProjectileID.ShadowFlameArrow, ProjectileID.ShadowFlame, ProjectileID.ShadowFlameKnife, ProjectileID.Spark, ProjectileID.HelFire, ProjectileID.ClothiersCurse, ProjectileID.DesertDjinnCurse, ProjectileID.SolarFlareRay, ProjectileID.SolarCounter, ProjectileID.SolarWhipSword, ProjectileID.SolarWhipSwordExplosion, ProjectileID.Daybreak, ProjectileID.DaybreakExplosion, ProjectileID.GeyserTrap, ProjectileID.SpiritFlame, ProjectileID.DD2FlameBurstTowerT1Shot, ProjectileID.DD2FlameBurstTowerT2Shot, ProjectileID.DD2FlameBurstTowerT3Shot, ProjectileID.DD2SquireSonicBoom, ProjectileID.DD2BetsyFireball, ProjectileID.DD2BetsyFlameBreath, ProjectileID.DD2ExplosiveTrapT1Explosion, ProjectileID.DD2ExplosiveTrapT2Explosion, ProjectileID.DD2ExplosiveTrapT3Explosion, ProjectileID.DD2ExplosiveTrapT1, ProjectileID.DD2ExplosiveTrapT2, ProjectileID.DD2ExplosiveTrapT3, ProjectileID.MonkStaffT2, ProjectileID.MonkStaffT2Ghast, ProjectileID.DD2PhoenixBowShot, ProjectileID.DD2BetsyArrow, ProjectileID.ApprenticeStaffT3Shot, ProjectileID.FireWhipProj, ProjectileID.FireWhip, ProjectileID.FlamingMace, ProjectileID.TorchGod, ProjectileID.WandOfSparkingSpark, ProjectileID.SolarFlareDrill, ProjectileID.Flare, ProjectileID.BlueFlare, ProjectileID.FlyingImp, ProjectileID.Cascade, ProjectileID.DD2FlameBurstTowerT1, ProjectileID.DD2FlameBurstTowerT2, ProjectileID.DD2FlameBurstTowerT3, ProjectileID.DD2FlameBurstTowerT3, ProjectileID.Volcano, ProjectileID.TheHorsemansBlade, ProjectileID.HorsemanPumpkin, ProjectileID.CursedFlare, ProjectileID.RainbowFlare, ProjectileID.ShimmerFlare);
-        public static bool[] ItemFire = ItemID.Sets.Factory.CreateBoolSet(ItemID.FieryGreatsword, ItemID.TheHorsemansBlade, ItemID.DD2SquireBetsySword, ItemID.MoltenPickaxe, ItemID.SolarFlarePickaxe, ItemID.MeteorHamaxe, ItemID.MoltenHamaxe, ItemID.LunarHamaxeSolar, ItemID.DD2PhoenixBow, ItemID.BluePhaseblade, ItemID.BluePhasesaber, ItemID.GreenPhaseblade, ItemID.GreenPhasesaber, ItemID.OrangePhaseblade, ItemID.OrangePhasesaber, ItemID.PurplePhaseblade, ItemID.PurplePhasesaber, ItemID.RedPhaseblade, ItemID.RedPhasesaber, ItemID.WhitePhaseblade, ItemID.WhitePhasesaber, ItemID.YellowPhaseblade, ItemID.YellowPhasesaber, ItemID.TheHorsemansBlade);
-        public static bool[] NPCFire = NPCID.Sets.Factory.CreateBoolSet(NPCID.BlazingWheel, NPCID.FireImp, NPCID.Demon, NPCID.VoodooDemon, NPCID.Hellbat, NPCID.LavaSlime, NPCID.MeteorHead, NPCID.BurningSphere, NPCID.HellArmoredBones, NPCID.HellArmoredBonesMace, NPCID.HellArmoredBonesSpikeShield, NPCID.HellArmoredBonesSword, NPCID.HoppinJack, NPCID.Lavabat, NPCID.RedDevil, NPCID.RuneWizard, NPCID.SolarCorite, NPCID.SolarCrawltipedeTail, NPCID.SolarCrawltipedeHead, NPCID.SolarCrawltipedeBody, NPCID.SolarDrakomire, NPCID.SolarDrakomireRider, NPCID.SolarFlare, NPCID.SolarSolenian, NPCID.SolarSpearman, NPCID.SolarSroller, NPCID.DD2Betsy);
+        public static bool[] ItemArcane = ItemID.Sets.Factory.CreateBoolSet(
+            ItemID.EnchantedSword, ItemID.SpectrePickaxe, ItemID.NebulaPickaxe, ItemID.StardustPickaxe, ItemID.SpectreHamaxe, ItemID.LunarHamaxeNebula, ItemID.LunarHamaxeStardust, ItemID.MonkStaffT2, ItemID.OpticStaff, ItemID.Phantasm);
 
-        public static bool[] ProjWater = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.WaterStream, ProjectileID.WaterBolt, ProjectileID.BlueMoon, ProjectileID.HolyWater, ProjectileID.UnholyWater, ProjectileID.IcewaterSpit, ProjectileID.RainFriendly, ProjectileID.BloodRain, ProjectileID.RainNimbus, ProjectileID.RainCloudMoving, ProjectileID.RainCloudRaining, ProjectileID.WaterGun, ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.FlaironBubble, ProjectileID.SlimeGun, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.Bubble, ProjectileID.Xenopopper, ProjectileID.ToxicBubble, ProjectileID.Kraken, ProjectileID.BloodWater, ProjectileID.Ale, ProjectileID.DD2OgreSpit, ProjectileID.QueenSlimeGelAttack, ProjectileID.GelBalloon, ProjectileID.VolatileGelatinBall, ProjectileID.Flairon, ProjectileID.MaceWhip, ProjectileID.Trident, ProjectileID.PainterPaintball, ProjectileID.MechanicalPiranha, ProjectileID.GoldenShowerFriendly, ProjectileID.GoldenShowerHostile, ProjectileID.BloodCloudMoving, ProjectileID.BloodCloudRaining, ProjectileID.Swordfish, ProjectileID.Muramasa);
-        public static bool[] ItemWater = ItemID.Sets.Factory.CreateBoolSet(ItemID.Muramasa, ItemID.PurpleClubberfish, ItemID.BloodRainBow, ItemID.VolatileGelatin, ItemID.Rockfish);
-        public static bool[] NPCWater = NPCID.Sets.Factory.CreateBoolSet(NPCID.SlimedZombie, NPCID.SlimeMasked, NPCID.Slimer, NPCID.SlimeRibbonGreen, NPCID.SlimeRibbonRed, NPCID.SlimeRibbonWhite, NPCID.SlimeRibbonYellow, NPCID.SlimeSpiked, NPCID.ArmedZombieSlimed, NPCID.BlueSlime, NPCID.CorruptSlime, NPCID.DungeonSlime, NPCID.GoldenSlime, NPCID.IceSlime, NPCID.IlluminantSlime, NPCID.KingSlime, NPCID.MotherSlime, NPCID.QueenSlimeBoss, NPCID.QueenSlimeMinionBlue, NPCID.QueenSlimeMinionPink, NPCID.QueenSlimeMinionPurple, NPCID.RainbowSlime, NPCID.SandSlime, NPCID.SpikedIceSlime, NPCID.SpikedJungleSlime, NPCID.UmbrellaSlime, NPCID.Crimslime, NPCID.SeaSnail, NPCID.Shark, NPCID.BloodJelly, NPCID.BlueJellyfish, NPCID.GreenJellyfish, NPCID.PinkJellyfish, NPCID.Squid, NPCID.WaterSphere, NPCID.Piranha, NPCID.AnglerFish, NPCID.Arapaima, NPCID.BloodFeeder, NPCID.FungoFish, NPCID.FloatyGross, NPCID.IcyMerman, NPCID.PigronCorruption, NPCID.PigronCrimson, NPCID.PigronHallow, NPCID.BloodSquid, NPCID.GoblinShark, NPCID.Drippler, NPCID.BloodZombie, NPCID.CorruptGoldfish, NPCID.CrimsonGoldfish, NPCID.ZombieMerman, NPCID.FlyingFish, NPCID.AngryNimbus, NPCID.CreatureFromTheDeep, NPCID.SwampThing, NPCID.DukeFishron, NPCID.Sharkron, NPCID.Sharkron2);
+        public static bool[] NPCArcane = NPCID.Sets.Factory.CreateBoolSet(
+            NPCID.CursedSkull, NPCID.GiantCursedSkull, NPCID.GraniteFlyer, NPCID.Tim, NPCID.ChaosBallTim, NPCID.ChaosBall, NPCID.WaterSphere, NPCID.ChaosElemental, NPCID.CursedHammer, NPCID.CrimsonAxe, NPCID.EnchantedSword, NPCID.DungeonSpirit, NPCID.ShadowFlameApparition, NPCID.PirateGhost, NPCID.Poltergeist, NPCID.NebulaBeast, NPCID.NebulaBrain, NPCID.NebulaHeadcrab, NPCID.NebulaSoldier, NPCID.StardustCellBig, NPCID.StardustCellSmall, NPCID.StardustJellyfishBig, NPCID.StardustJellyfishSmall, NPCID.StardustSoldier, NPCID.StardustSpiderBig, NPCID.StardustSpiderSmall, NPCID.StardustWormBody, NPCID.StardustWormHead, NPCID.StardustWormTail, NPCID.CultistDragonBody1, NPCID.CultistDragonBody2, NPCID.CultistDragonBody3, NPCID.CultistDragonBody4, NPCID.CultistDragonHead, NPCID.CultistDragonTail);
+        // Fire
+        public static bool[] ProjFire = ProjectileID.Sets.Factory.CreateBoolSet(
+            ProjectileID.FireArrow, ProjectileID.BallofFire, ProjectileID.Flamarang, ProjectileID.Flamelash, ProjectileID.Sunfury, ProjectileID.HellfireArrow, ProjectileID.FlamingArrow, ProjectileID.Flames, ProjectileID.CursedFlameFriendly, ProjectileID.CursedFlameHostile, ProjectileID.EyeFire, ProjectileID.CursedArrow, ProjectileID.CursedBullet, ProjectileID.RuneBlast, ProjectileID.FrostburnArrow, ProjectileID.FlamethrowerTrap, ProjectileID.FlamesTrap, ProjectileID.Fireball, ProjectileID.HeatRay, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoFriendlyBolt, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoHostileBolt, ProjectileID.JackOLantern, ProjectileID.FlamingJack, ProjectileID.FlamingWood, ProjectileID.GreekFire1, ProjectileID.GreekFire2, ProjectileID.GreekFire3, ProjectileID.FlamingScythe, ProjectileID.ImpFireball, ProjectileID.MolotovCocktail, ProjectileID.MolotovFire, ProjectileID.MolotovFire2, ProjectileID.MolotovFire3, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.CultistBossFireBall, ProjectileID.CursedDart, ProjectileID.CursedDartFlame, ProjectileID.ClingerStaff, ProjectileID.Hellwing, ProjectileID.ShadowFlameArrow, ProjectileID.ShadowFlame, ProjectileID.ShadowFlameKnife, ProjectileID.Spark, ProjectileID.HelFire, ProjectileID.ClothiersCurse, ProjectileID.DesertDjinnCurse, ProjectileID.SolarFlareRay, ProjectileID.SolarCounter, ProjectileID.SolarWhipSword, ProjectileID.SolarWhipSwordExplosion, ProjectileID.Daybreak, ProjectileID.DaybreakExplosion, ProjectileID.GeyserTrap, ProjectileID.SpiritFlame, ProjectileID.DD2FlameBurstTowerT1Shot, ProjectileID.DD2FlameBurstTowerT2Shot, ProjectileID.DD2FlameBurstTowerT3Shot, ProjectileID.DD2SquireSonicBoom, ProjectileID.DD2BetsyFireball, ProjectileID.DD2BetsyFlameBreath, ProjectileID.DD2ExplosiveTrapT1Explosion, ProjectileID.DD2ExplosiveTrapT2Explosion, ProjectileID.DD2ExplosiveTrapT3Explosion, ProjectileID.DD2ExplosiveTrapT1, ProjectileID.DD2ExplosiveTrapT2, ProjectileID.DD2ExplosiveTrapT3, ProjectileID.MonkStaffT2, ProjectileID.MonkStaffT2Ghast, ProjectileID.DD2PhoenixBowShot, ProjectileID.DD2BetsyArrow, ProjectileID.ApprenticeStaffT3Shot, ProjectileID.FireWhipProj, ProjectileID.FireWhip, ProjectileID.FlamingMace, ProjectileID.TorchGod, ProjectileID.WandOfSparkingSpark, ProjectileID.SolarFlareDrill, ProjectileID.Flare, ProjectileID.BlueFlare, ProjectileID.FlyingImp, ProjectileID.Cascade, ProjectileID.DD2FlameBurstTowerT1, ProjectileID.DD2FlameBurstTowerT2, ProjectileID.DD2FlameBurstTowerT3, ProjectileID.DD2FlameBurstTowerT3, ProjectileID.Volcano, ProjectileID.TheHorsemansBlade, ProjectileID.HorsemanPumpkin, ProjectileID.CursedFlare, ProjectileID.RainbowFlare, ProjectileID.ShimmerFlare);
 
-        public static bool[] ProjIce = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.IceBlock, ProjectileID.IceBoomerang, ProjectileID.IceBolt, ProjectileID.FrostBoltSword, ProjectileID.FrostArrow, ProjectileID.FrostBlastHostile, ProjectileID.SnowBallFriendly, ProjectileID.FrostburnArrow, ProjectileID.IceSpike, ProjectileID.IcewaterSpit, ProjectileID.BallofFrost, ProjectileID.FrostBeam, ProjectileID.IceSickle, ProjectileID.FrostBlastFriendly, ProjectileID.Blizzard, ProjectileID.NorthPoleWeapon, ProjectileID.NorthPoleSpear, ProjectileID.NorthPoleSnowflake, ProjectileID.FrostWave, ProjectileID.FrostShard, ProjectileID.FrostBoltStaff, ProjectileID.CultistBossIceMist, ProjectileID.FrostDaggerfish, ProjectileID.Amarok, ProjectileID.CoolWhip, ProjectileID.CoolWhipProj, ProjectileID.DeerclopsIceSpike, ProjectileID.DeerclopsRangedProjectile, ProjectileID.FlinxMinion, ProjectileID.FrostHydra, ProjectileID.WandOfFrostingFrost);
-        public static bool[] ItemIce = ItemID.Sets.Factory.CreateBoolSet(ItemID.IceBlade, ItemID.IceSickle, ItemID.Frostbrand);
-        public static bool[] NPCIce = NPCID.Sets.Factory.CreateBoolSet(NPCID.ZombieEskimo, NPCID.ArmedZombieEskimo, NPCID.IceBat, NPCID.IceSlime, NPCID.SpikedIceSlime, NPCID.IceElemental, NPCID.IceMimic, NPCID.IceTortoise, NPCID.IcyMerman, NPCID.IceGolem, NPCID.SnowBalla, NPCID.MisterStabby, NPCID.SnowmanGangsta, NPCID.Flocko, NPCID.SnowFlinx, NPCID.Yeti, NPCID.Deerclops, NPCID.IceQueen);
+        public static bool[] ItemFire = ItemID.Sets.Factory.CreateBoolSet(
+            ItemID.FieryGreatsword, ItemID.TheHorsemansBlade, ItemID.DD2SquireBetsySword, ItemID.MoltenPickaxe, ItemID.SolarFlarePickaxe, ItemID.MeteorHamaxe, ItemID.MoltenHamaxe, ItemID.LunarHamaxeSolar, ItemID.DD2PhoenixBow, ItemID.BluePhaseblade, ItemID.BluePhasesaber, ItemID.GreenPhaseblade, ItemID.GreenPhasesaber, ItemID.OrangePhaseblade, ItemID.OrangePhasesaber, ItemID.PurplePhaseblade, ItemID.PurplePhasesaber, ItemID.RedPhaseblade, ItemID.RedPhasesaber, ItemID.WhitePhaseblade, ItemID.WhitePhasesaber, ItemID.YellowPhaseblade, ItemID.YellowPhasesaber, ItemID.TheHorsemansBlade);
 
-        public static bool[] ProjEarth = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.Boulder, ProjectileID.BoulderStaffOfEarth, ProjectileID.GolemFist, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2OgreStomp, ProjectileID.DD2OgreSmash, ProjectileID.MonkStaffT1Explosion, ProjectileID.RollingCactus, ProjectileID.RockGolemRock, ProjectileID.BoneDagger, ProjectileID.BoneJavelin, ProjectileID.SandBallGun, ProjectileID.PearlSandBallGun, ProjectileID.CrimsandBallGun, ProjectileID.EbonsandBallGun, ProjectileID.SharpTears, ProjectileID.MonkStaffT1, ProjectileID.MoonBoulder, ProjectileID.BouncyBoulder, ProjectileID.MiniBoulder);
-        public static bool[] ItemEarth = ItemID.Sets.Factory.CreateBoolSet(ItemID.Seedler, ItemID.FossilPickaxe, ItemID.Picksaw, ItemID.AntlionClaw, ItemID.AcornAxe, ItemID.Rockfish);
-        public static bool[] NPCEarth = NPCID.Sets.Factory.CreateBoolSet(NPCID.GraniteFlyer, NPCID.GraniteGolem, NPCID.SandSlime, NPCID.DesertBeast, NPCID.GiantTortoise, NPCID.IceTortoise, NPCID.RockGolem, NPCID.DesertScorpionWalk, NPCID.DesertScorpionWall, NPCID.Tumbleweed, NPCID.SandElemental, NPCID.SandShark, NPCID.SandsharkCorrupt, NPCID.SandsharkCrimson, NPCID.SandsharkHallow, NPCID.Golem, NPCID.GolemFistLeft, NPCID.GolemFistRight, NPCID.GolemHead, NPCID.Golem);
+        public static bool[] NPCFire = NPCID.Sets.Factory.CreateBoolSet(
+            NPCID.BlazingWheel, NPCID.FireImp, NPCID.Demon, NPCID.VoodooDemon, NPCID.Hellbat, NPCID.LavaSlime, NPCID.MeteorHead, NPCID.BurningSphere, NPCID.HellArmoredBones, NPCID.HellArmoredBonesMace, NPCID.HellArmoredBonesSpikeShield, NPCID.HellArmoredBonesSword, NPCID.HoppinJack, NPCID.Lavabat, NPCID.RedDevil, NPCID.RuneWizard, NPCID.SolarCorite, NPCID.SolarCrawltipedeTail, NPCID.SolarCrawltipedeHead, NPCID.SolarCrawltipedeBody, NPCID.SolarDrakomire, NPCID.SolarDrakomireRider, NPCID.SolarFlare, NPCID.SolarSolenian, NPCID.SolarSpearman, NPCID.SolarSroller, NPCID.DD2Betsy);
+        // Water
+        public static bool[] ProjWater = ProjectileID.Sets.Factory.CreateBoolSet(
+            ProjectileID.WaterStream, ProjectileID.WaterBolt, ProjectileID.BlueMoon, ProjectileID.HolyWater, ProjectileID.UnholyWater, ProjectileID.IcewaterSpit, ProjectileID.RainFriendly, ProjectileID.BloodRain, ProjectileID.RainNimbus, ProjectileID.RainCloudMoving, ProjectileID.RainCloudRaining, ProjectileID.WaterGun, ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.FlaironBubble, ProjectileID.SlimeGun, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.Bubble, ProjectileID.Xenopopper, ProjectileID.ToxicBubble, ProjectileID.Kraken, ProjectileID.BloodWater, ProjectileID.Ale, ProjectileID.DD2OgreSpit, ProjectileID.QueenSlimeGelAttack, ProjectileID.GelBalloon, ProjectileID.VolatileGelatinBall, ProjectileID.Flairon, ProjectileID.MaceWhip, ProjectileID.Trident, ProjectileID.PainterPaintball, ProjectileID.MechanicalPiranha, ProjectileID.GoldenShowerFriendly, ProjectileID.GoldenShowerHostile, ProjectileID.BloodCloudMoving, ProjectileID.BloodCloudRaining, ProjectileID.Swordfish, ProjectileID.Muramasa, ProjectileID.FrostDaggerfish);
 
-        public static bool[] ProjWind = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2SquireSonicBoom, ProjectileID.DD2ApprenticeStorm, ProjectileID.BookStaffShot, ProjectileID.WeatherPainShot, ProjectileID.RainNimbus, ProjectileID.RainCloudMoving, ProjectileID.RainCloudRaining, ProjectileID.LightDisc, ProjectileID.FlyingKnife);
+        public static bool[] ItemWater = ItemID.Sets.Factory.CreateBoolSet(
+            ItemID.Muramasa, ItemID.PurpleClubberfish, ItemID.BloodRainBow, ItemID.VolatileGelatin, ItemID.Rockfish);
+
+        public static bool[] NPCWater = NPCID.Sets.Factory.CreateBoolSet(
+            NPCID.SlimedZombie, NPCID.SlimeMasked, NPCID.Slimer, NPCID.SlimeRibbonGreen, NPCID.SlimeRibbonRed, NPCID.SlimeRibbonWhite, NPCID.SlimeRibbonYellow, NPCID.SlimeSpiked, NPCID.ArmedZombieSlimed, NPCID.BlueSlime, NPCID.CorruptSlime, NPCID.DungeonSlime, NPCID.GoldenSlime, NPCID.IceSlime, NPCID.IlluminantSlime, NPCID.KingSlime, NPCID.MotherSlime, NPCID.QueenSlimeBoss, NPCID.QueenSlimeMinionBlue, NPCID.QueenSlimeMinionPink, NPCID.QueenSlimeMinionPurple, NPCID.RainbowSlime, NPCID.SandSlime, NPCID.SpikedIceSlime, NPCID.SpikedJungleSlime, NPCID.UmbrellaSlime, NPCID.Crimslime, NPCID.SeaSnail, NPCID.Shark, NPCID.BloodJelly, NPCID.BlueJellyfish, NPCID.GreenJellyfish, NPCID.PinkJellyfish, NPCID.Squid, NPCID.WaterSphere, NPCID.Piranha, NPCID.AnglerFish, NPCID.Arapaima, NPCID.BloodFeeder, NPCID.FungoFish, NPCID.FloatyGross, NPCID.IcyMerman, NPCID.PigronCorruption, NPCID.PigronCrimson, NPCID.PigronHallow, NPCID.BloodSquid, NPCID.GoblinShark, NPCID.Drippler, NPCID.BloodZombie, NPCID.CorruptGoldfish, NPCID.CrimsonGoldfish, NPCID.ZombieMerman, NPCID.FlyingFish, NPCID.AngryNimbus, NPCID.CreatureFromTheDeep, NPCID.SwampThing, NPCID.DukeFishron, NPCID.Sharkron, NPCID.Sharkron2);
+        // Ice
+        public static bool[] ProjIce = ProjectileID.Sets.Factory.CreateBoolSet(
+            ProjectileID.IceBlock, ProjectileID.IceBoomerang, ProjectileID.IceBolt, ProjectileID.FrostBoltSword, ProjectileID.FrostArrow, ProjectileID.FrostBlastHostile, ProjectileID.SnowBallFriendly, ProjectileID.FrostburnArrow, ProjectileID.IceSpike, ProjectileID.IcewaterSpit, ProjectileID.BallofFrost, ProjectileID.FrostBeam, ProjectileID.IceSickle, ProjectileID.FrostBlastFriendly, ProjectileID.Blizzard, ProjectileID.NorthPoleWeapon, ProjectileID.NorthPoleSpear, ProjectileID.NorthPoleSnowflake, ProjectileID.FrostWave, ProjectileID.FrostShard, ProjectileID.FrostBoltStaff, ProjectileID.CultistBossIceMist, ProjectileID.FrostDaggerfish, ProjectileID.Amarok, ProjectileID.CoolWhip, ProjectileID.CoolWhipProj, ProjectileID.DeerclopsIceSpike, ProjectileID.DeerclopsRangedProjectile, ProjectileID.FlinxMinion, ProjectileID.FrostHydra, ProjectileID.WandOfFrostingFrost);
+
+        public static bool[] ItemIce = ItemID.Sets.Factory.CreateBoolSet(
+            ItemID.IceBlade, ItemID.IceSickle, ItemID.Frostbrand);
+
+        public static bool[] NPCIce = NPCID.Sets.Factory.CreateBoolSet(
+            NPCID.ZombieEskimo, NPCID.ArmedZombieEskimo, NPCID.IceBat, NPCID.IceSlime, NPCID.SpikedIceSlime, NPCID.IceElemental, NPCID.IceMimic, NPCID.IceTortoise, NPCID.IcyMerman, NPCID.IceGolem, NPCID.SnowBalla, NPCID.MisterStabby, NPCID.SnowmanGangsta, NPCID.Flocko, NPCID.SnowFlinx, NPCID.Yeti, NPCID.Deerclops, NPCID.IceQueen);
+        // Earth
+        public static bool[] ProjEarth = ProjectileID.Sets.Factory.CreateBoolSet(
+            ProjectileID.Boulder, ProjectileID.BoulderStaffOfEarth, ProjectileID.GolemFist, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2OgreStomp, ProjectileID.DD2OgreSmash, ProjectileID.MonkStaffT1Explosion, ProjectileID.RollingCactus, ProjectileID.RockGolemRock, ProjectileID.BoneDagger, ProjectileID.BoneJavelin, ProjectileID.SandBallGun, ProjectileID.PearlSandBallGun, ProjectileID.CrimsandBallGun, ProjectileID.EbonsandBallGun, ProjectileID.SharpTears, ProjectileID.MonkStaffT1, ProjectileID.MoonBoulder, ProjectileID.BouncyBoulder, ProjectileID.MiniBoulder);
+
+        public static bool[] ItemEarth = ItemID.Sets.Factory.CreateBoolSet(
+            ItemID.Seedler, ItemID.FossilPickaxe, ItemID.Picksaw, ItemID.AntlionClaw, ItemID.AcornAxe, ItemID.Rockfish);
+
+        public static bool[] NPCEarth = NPCID.Sets.Factory.CreateBoolSet(
+            NPCID.GraniteFlyer, NPCID.GraniteGolem, NPCID.SandSlime, NPCID.DesertBeast, NPCID.GiantTortoise, NPCID.IceTortoise, NPCID.RockGolem, NPCID.DesertScorpionWalk, NPCID.DesertScorpionWall, NPCID.Tumbleweed, NPCID.SandElemental, NPCID.SandShark, NPCID.SandsharkCorrupt, NPCID.SandsharkCrimson, NPCID.SandsharkHallow, NPCID.Golem, NPCID.GolemFistLeft, NPCID.GolemFistRight, NPCID.GolemHead, NPCID.Golem);
+        // Wind
+        public static bool[] ProjWind = ProjectileID.Sets.Factory.CreateBoolSet(
+            ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2SquireSonicBoom, ProjectileID.DD2ApprenticeStorm, ProjectileID.BookStaffShot, ProjectileID.WeatherPainShot, ProjectileID.RainNimbus, ProjectileID.RainCloudMoving, ProjectileID.RainCloudRaining, ProjectileID.LightDisc, ProjectileID.FlyingKnife);
+
         public static bool[] ItemWind = ItemID.Sets.Factory.CreateBoolSet();
-        public static bool[] NPCWind = NPCID.Sets.Factory.CreateBoolSet(NPCID.Harpy, NPCID.Dandelion, NPCID.AngryNimbus, NPCID.Tumbleweed);
 
-        public static bool[] ProjThunder = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.RuneBlast, ProjectileID.MagnetSphereBall, ProjectileID.MagnetSphereBolt, ProjectileID.UFOLaser, ProjectileID.ScutlixLaser, ProjectileID.ScutlixLaserFriendly, ProjectileID.MartianTurretBolt, ProjectileID.BrainScramblerBolt, ProjectileID.GigaZapperSpear, ProjectileID.RayGunnerLaser, ProjectileID.LaserMachinegunLaser, ProjectileID.Electrosphere, ProjectileID.ElectrosphereMissile, ProjectileID.SaucerDeathray, ProjectileID.SaucerLaser, ProjectileID.InfluxWaver, ProjectileID.ChargedBlasterLaser, ProjectileID.ChargedBlasterOrb, ProjectileID.PhantasmalBolt, ProjectileID.CultistBossLightningOrb, ProjectileID.CultistBossLightningOrbArc, ProjectileID.DeadlySphere, ProjectileID.VortexVortexLightning, ProjectileID.VortexLightning, ProjectileID.MartianWalkerLaser, ProjectileID.VortexBeaterRocket, ProjectileID.DD2LightningBugZap, ProjectileID.DD2LightningAuraT1, ProjectileID.DD2LightningAuraT2, ProjectileID.DD2LightningAuraT3, ProjectileID.MonkStaffT3, ProjectileID.MonkStaffT3_Alt, ProjectileID.MonkStaffT3_AltShot, ProjectileID.ThunderSpear, ProjectileID.ThunderStaffShot, ProjectileID.ThunderSpearShot, ProjectileID.ZapinatorLaser, ProjectileID.VortexDrill, ProjectileID.InfluxWaver, ProjectileID.LaserMachinegun, ProjectileID.ChargedBlasterCannon, ProjectileID.UFOMinion, ProjectileID.MoonlordTurret, ProjectileID.MoonlordTurretLaser, ProjectileID.PulseBolt);
-        public static bool[] ItemThunder = ItemID.Sets.Factory.CreateBoolSet(ItemID.InfluxWaver, ItemID.VortexPickaxe, ItemID.LunarHamaxeVortex, ItemID.BrainScrambler, ItemID.PulseBow, ItemID.VortexBeater);
-        public static bool[] NPCThunder = NPCID.Sets.Factory.CreateBoolSet(NPCID.BloodJelly, NPCID.BlueJellyfish, NPCID.GreenJellyfish, NPCID.PinkJellyfish, NPCID.DD2LightningBugT3, NPCID.DeadlySphere, NPCID.MartianDrone, NPCID.MartianWalker, NPCID.MartianTurret, NPCID.VortexHornet, NPCID.VortexHornetQueen, NPCID.VortexLarva, NPCID.VortexRifleman, NPCID.VortexSoldier, NPCID.MartianSaucer, NPCID.MartianSaucerCannon, NPCID.MartianSaucerCore, NPCID.MartianSaucerTurret);
+        public static bool[] NPCWind = NPCID.Sets.Factory.CreateBoolSet(
+            NPCID.Harpy, NPCID.Dandelion, NPCID.AngryNimbus, NPCID.Tumbleweed);
+        // Thunder
+        public static bool[] ProjThunder = ProjectileID.Sets.Factory.CreateBoolSet(
+            ProjectileID.RuneBlast, ProjectileID.MagnetSphereBall, ProjectileID.MagnetSphereBolt, ProjectileID.UFOLaser, ProjectileID.ScutlixLaser, ProjectileID.ScutlixLaserFriendly, ProjectileID.MartianTurretBolt, ProjectileID.BrainScramblerBolt, ProjectileID.GigaZapperSpear, ProjectileID.RayGunnerLaser, ProjectileID.LaserMachinegunLaser, ProjectileID.Electrosphere, ProjectileID.ElectrosphereMissile, ProjectileID.SaucerDeathray, ProjectileID.SaucerLaser, ProjectileID.InfluxWaver, ProjectileID.ChargedBlasterLaser, ProjectileID.ChargedBlasterOrb, ProjectileID.PhantasmalBolt, ProjectileID.CultistBossLightningOrb, ProjectileID.CultistBossLightningOrbArc, ProjectileID.DeadlySphere, ProjectileID.VortexVortexLightning, ProjectileID.VortexLightning, ProjectileID.MartianWalkerLaser, ProjectileID.VortexBeaterRocket, ProjectileID.DD2LightningBugZap, ProjectileID.DD2LightningAuraT1, ProjectileID.DD2LightningAuraT2, ProjectileID.DD2LightningAuraT3, ProjectileID.MonkStaffT3, ProjectileID.MonkStaffT3_Alt, ProjectileID.MonkStaffT3_AltShot, ProjectileID.ThunderSpear, ProjectileID.ThunderStaffShot, ProjectileID.ThunderSpearShot, ProjectileID.ZapinatorLaser, ProjectileID.VortexDrill, ProjectileID.InfluxWaver, ProjectileID.LaserMachinegun, ProjectileID.ChargedBlasterCannon, ProjectileID.UFOMinion, ProjectileID.MoonlordTurret, ProjectileID.MoonlordTurretLaser, ProjectileID.PulseBolt, ProjectileID.MiniRetinaLaser, ProjectileID.VortexLaser, ProjectileID.MinecartMechLaser, ProjectileID.GreenLaser, ProjectileID.DeathLaser, ProjectileID.EyeLaser, ProjectileID.PinkLaser, ProjectileID.PurpleLaser);
 
-        public static bool[] ProjHoly = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.TheDaoofPow, ProjectileID.HolyWater, ProjectileID.HolyArrow, ProjectileID.HallowStar, ProjectileID.LightBeam, ProjectileID.Hamdrax, ProjectileID.PaladinsHammerHostile, ProjectileID.PaladinsHammerFriendly, ProjectileID.SkyFracture, ProjectileID.ManaCloakStar, ProjectileID.BeeCloakStar, ProjectileID.StarVeilStar, ProjectileID.StarCloakStar, ProjectileID.BatOfLight, ProjectileID.HallowBossLastingRainbow, ProjectileID.HallowBossRainbowStreak, ProjectileID.HallowJoustingLance, ProjectileID.RainbowWhip, ProjectileID.FairyQueenLance, ProjectileID.FairyQueenSunDance, ProjectileID.FairyQueenHymn, ProjectileID.PiercingStarlight, ProjectileID.LightDisc, ProjectileID.SwordWhip, ProjectileID.Gungnir, ProjectileID.PearlSandBallGun, ProjectileID.Chik, ProjectileID.VolatileGelatinBall, ProjectileID.Excalibur, ProjectileID.TrueExcalibur);
-        public static bool[] ItemHoly = ItemID.Sets.Factory.CreateBoolSet(ItemID.Excalibur, ItemID.TrueExcalibur, ItemID.PickaxeAxe, ItemID.Pwnhammer, ItemID.Keybrand, ItemID.StarCloak, ItemID.BeeCloak, ItemID.ManaCloak, ItemID.StarVeil, ItemID.VolatileGelatin);
-        public static bool[] NPCHoly = NPCID.Sets.Factory.CreateBoolSet(NPCID.ChaosElemental, NPCID.DesertGhoulHallow, NPCID.EnchantedSword, NPCID.BigMimicHallow, NPCID.IlluminantBat, NPCID.IlluminantSlime, NPCID.LightMummy, NPCID.Pixie, NPCID.Paladin, NPCID.Unicorn, NPCID.RainbowSlime, NPCID.SandsharkHallow, NPCID.HallowBoss, NPCID.QueenSlimeBoss, NPCID.QueenSlimeMinionBlue, NPCID.QueenSlimeMinionPink, NPCID.QueenSlimeMinionPurple);
+        public static bool[] ItemThunder = ItemID.Sets.Factory.CreateBoolSet(
+            ItemID.InfluxWaver, ItemID.VortexPickaxe, ItemID.LunarHamaxeVortex, ItemID.BrainScrambler, ItemID.PulseBow, ItemID.VortexBeater);
 
-        public static bool[] ProjShadow = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.UnholyArrow, ProjectileID.VilethornBase, ProjectileID.VilethornTip, ProjectileID.BallOHurt, ProjectileID.DemonSickle, ProjectileID.DemonScythe, ProjectileID.DarkLance, ProjectileID.TheDaoofPow, ProjectileID.UnholyWater, ProjectileID.CursedFlameFriendly, ProjectileID.CursedFlameHostile, ProjectileID.EyeFire, ProjectileID.CursedArrow, ProjectileID.CursedBullet, ProjectileID.UnholyTridentFriendly, ProjectileID.UnholyTridentHostile, ProjectileID.NightBeam, ProjectileID.DeathSickle, ProjectileID.ShadowBeamHostile, ProjectileID.ShadowBeamFriendly, ProjectileID.Shadowflames, ProjectileID.EatersBite, ProjectileID.TinyEater, ProjectileID.CultistBossFireBallClone, ProjectileID.CursedDart, ProjectileID.CursedDartFlame, ProjectileID.ClingerStaff, ProjectileID.ShadowFlameArrow, ProjectileID.ShadowFlame, ProjectileID.ShadowFlameKnife, ProjectileID.CorruptYoyo, ProjectileID.ClothiersCurse, ProjectileID.AncientDoomProjectile, ProjectileID.DesertDjinnCurse, ProjectileID.SpiritFlame, ProjectileID.BlackBolt, ProjectileID.DD2DrakinShot, ProjectileID.DD2DarkMageBolt, ProjectileID.ShadowJoustingLance, ProjectileID.ScytheWhipProj, ProjectileID.InsanityShadowHostile, ProjectileID.InsanityShadowFriendly, ProjectileID.EbonsandBallGun, ProjectileID.CrimsandBallGun, ProjectileID.BookOfSkullsSkull, ProjectileID.Bat, ProjectileID.Raven, ProjectileID.ScytheWhip, ProjectileID.HoundiusShootius, ProjectileID.HoundiusShootiusFireball, ProjectileID.NightsEdge, ProjectileID.TrueNightsEdge, ProjectileID.LightsBane, ProjectileID.CursedFlare);
-        public static bool[] ItemShadow = ItemID.Sets.Factory.CreateBoolSet(ItemID.LightsBane, ItemID.PurpleClubberfish, ItemID.NightsEdge, ItemID.TrueNightsEdge, ItemID.DeathSickle, ItemID.NightmarePickaxe, ItemID.WarAxeoftheNight, ItemID.TheBreaker, ItemID.OnyxBlaster, ItemID.BoneHelm);
-        public static bool[] NPCShadow = NPCID.Sets.Factory.CreateBoolSet(NPCID.DarkCaster, NPCID.DungeonSlime, NPCID.EaterofSouls, NPCID.DevourerBody, NPCID.DevourerHead, NPCID.DevourerTail, NPCID.Clinger, NPCID.BigMimicCorruption, NPCID.CorruptSlime, NPCID.Corruptor, NPCID.CursedHammer, NPCID.DarkMummy, NPCID.DesertDjinn, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.RaggedCaster, NPCID.RaggedCasterOpenCoat, NPCID.PossessedArmor, NPCID.DesertGhoulCorruption, NPCID.Slimer, NPCID.Wraith, NPCID.SeekerHead, NPCID.SeekerBody, NPCID.SeekerTail, NPCID.CorruptBunny, NPCID.CorruptGoldfish, NPCID.CorruptPenguin, NPCID.SandsharkCorrupt, NPCID.GoblinSummoner, NPCID.ShadowFlameApparition, NPCID.Reaper, NPCID.ThePossessed, NPCID.Vampire, NPCID.Hellhound, NPCID.HeadlessHorseman, NPCID.Splinterling, NPCID.Krampus, NPCID.EaterofWorldsBody, NPCID.EaterofWorldsHead, NPCID.EaterofWorldsTail, NPCID.DD2DarkMageT1, NPCID.DD2DarkMageT3, NPCID.MourningWood, NPCID.Pumpking, NPCID.Ghost, NPCID.MotherSlime, NPCID.Tim, NPCID.ChaosBallTim, NPCID.ChaosBall, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.ShadowFlameApparition, NPCID.GoblinSummoner, NPCID.Poltergeist);
+        public static bool[] NPCThunder = NPCID.Sets.Factory.CreateBoolSet(
+            NPCID.BloodJelly, NPCID.BlueJellyfish, NPCID.GreenJellyfish, NPCID.PinkJellyfish, NPCID.DD2LightningBugT3, NPCID.DeadlySphere, NPCID.MartianDrone, NPCID.MartianWalker, NPCID.MartianTurret, NPCID.VortexHornet, NPCID.VortexHornetQueen, NPCID.VortexLarva, NPCID.VortexRifleman, NPCID.VortexSoldier, NPCID.MartianSaucer, NPCID.MartianSaucerCannon, NPCID.MartianSaucerCore, NPCID.MartianSaucerTurret);
+        // Holy
+        public static bool[] ProjHoly = ProjectileID.Sets.Factory.CreateBoolSet(
+            ProjectileID.TheDaoofPow, ProjectileID.HolyWater, ProjectileID.HolyArrow, ProjectileID.HallowStar, ProjectileID.LightBeam, ProjectileID.Hamdrax, ProjectileID.PaladinsHammerHostile, ProjectileID.PaladinsHammerFriendly, ProjectileID.SkyFracture, ProjectileID.ManaCloakStar, ProjectileID.BeeCloakStar, ProjectileID.StarVeilStar, ProjectileID.StarCloakStar, ProjectileID.BatOfLight, ProjectileID.HallowBossLastingRainbow, ProjectileID.HallowBossRainbowStreak, ProjectileID.HallowJoustingLance, ProjectileID.RainbowWhip, ProjectileID.FairyQueenLance, ProjectileID.FairyQueenSunDance, ProjectileID.FairyQueenHymn, ProjectileID.PiercingStarlight, ProjectileID.LightDisc, ProjectileID.SwordWhip, ProjectileID.Gungnir, ProjectileID.PearlSandBallGun, ProjectileID.Chik, ProjectileID.VolatileGelatinBall, ProjectileID.Excalibur, ProjectileID.TrueExcalibur);
 
-        public static bool[] ProjNature = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.ThornChakram, ProjectileID.Seed, ProjectileID.Mushroom, ProjectileID.TerraBeam, ProjectileID.NettleBurstEnd, ProjectileID.NettleBurstLeft, ProjectileID.NettleBurstRight, ProjectileID.JungleSpike, ProjectileID.Leaf, ProjectileID.FlowerPetal, ProjectileID.CrystalLeafShot, ProjectileID.SporeCloud, ProjectileID.ChlorophyteOrb, ProjectileID.FlowerPow, ProjectileID.FlowerPowPetal, ProjectileID.SeedPlantera, ProjectileID.PoisonSeedPlantera, ProjectileID.ThornBall, ProjectileID.JackOLantern, ProjectileID.FlamingJack, ProjectileID.PineNeedleFriendly, ProjectileID.PineNeedleHostile, ProjectileID.SeedlerNut, ProjectileID.SeedlerThorn, ProjectileID.JungleYoyo, ProjectileID.SporeTrap, ProjectileID.SporeTrap2, ProjectileID.SporeGas, ProjectileID.SporeGas2, ProjectileID.SporeGas3, ProjectileID.TruffleSpore, ProjectileID.Terrarian, ProjectileID.TerrarianBeam, ProjectileID.Terragrim, ProjectileID.DandelionSeed, ProjectileID.Shroomerang, ProjectileID.ThornWhip, ProjectileID.BabyBird, ProjectileID.MushroomSpear, ProjectileID.ChlorophyteArrow, ProjectileID.ChlorophyteBullet, ProjectileID.ChlorophyteChainsaw, ProjectileID.ChlorophyteJackhammer, ProjectileID.ChlorophyteDrill, ProjectileID.ChlorophytePartisan, ProjectileID.Bee, ProjectileID.BeeArrow, ProjectileID.GiantBee, ProjectileID.MechanicalPiranha, ProjectileID.Wasp, ProjectileID.Yelets, ProjectileID.BladeOfGrass, ProjectileID.TerraBlade2, ProjectileID.TerraBlade2Shot, ProjectileID.HiveFive, ProjectileID.Beenade);
-        public static bool[] ItemNature = ItemID.Sets.Factory.CreateBoolSet(ItemID.CactusSword, ItemID.BladeofGrass, ItemID.Seedler, ItemID.ChlorophyteSaber, ItemID.ChristmasTreeSword, ItemID.ChlorophyteClaymore, ItemID.TerraBlade, ItemID.CactusPickaxe, ItemID.ChlorophytePickaxe, ItemID.ChlorophyteGreataxe, ItemID.Hammush, ItemID.ChlorophyteWarhammer, ItemID.SporeSac, ItemID.AcornAxe, ItemID.BeeKeeper, ItemID.HoneyComb, ItemID.BeeCloak, ItemID.HoneyBalloon, ItemID.StingerNecklace, ItemID.SweetheartNecklace);
-        public static bool[] NPCNature = NPCID.Sets.Factory.CreateBoolSet(NPCID.AnomuraFungus, NPCID.GiantFungiBulb, NPCID.FungiBulb, NPCID.SpikedJungleSlime, NPCID.JungleBat, NPCID.ManEater, NPCID.JungleBat, NPCID.JungleBat, NPCID.JungleBat, NPCID.JungleBat, NPCID.MushiLadybug, NPCID.Snatcher, NPCID.SporeBat, NPCID.SporeSkeleton, NPCID.ZombieMushroom, NPCID.ZombieMushroomHat, NPCID.AngryTrapper, NPCID.JungleCreeper, NPCID.JungleCreeperWall, NPCID.Lihzahrd, NPCID.LihzahrdCrawler, NPCID.Moth, NPCID.Pixie, NPCID.Dandelion, NPCID.Plantera, NPCID.PlanterasHook, NPCID.PlanterasTentacle, NPCID.Splinterling, NPCID.MourningWood, NPCID.Everscream);
+        public static bool[] ItemHoly = ItemID.Sets.Factory.CreateBoolSet(
+            ItemID.Excalibur, ItemID.TrueExcalibur, ItemID.PickaxeAxe, ItemID.Pwnhammer, ItemID.Keybrand, ItemID.StarCloak, ItemID.BeeCloak, ItemID.ManaCloak, ItemID.StarVeil, ItemID.VolatileGelatin);
 
-        public static bool[] ProjPoison = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.ThornChakram, ProjectileID.PoisonedKnife, ProjectileID.Stinger, ProjectileID.PoisonDart, ProjectileID.JungleSpike, ProjectileID.PoisonDartTrap, ProjectileID.PygmySpear, ProjectileID.PoisonFang, ProjectileID.PoisonDartBlowgun, ProjectileID.PoisonSeedPlantera, ProjectileID.VenomArrow, ProjectileID.VenomBullet, ProjectileID.VenomFang, ProjectileID.HornetStinger, ProjectileID.Hornet, ProjectileID.VenomSpider, ProjectileID.ToxicFlask, ProjectileID.ToxicCloud, ProjectileID.ToxicCloud2, ProjectileID.ToxicCloud3, ProjectileID.ToxicBubble, ProjectileID.SalamanderSpit, ProjectileID.VortexAcid, ProjectileID.DD2OgreSpit, ProjectileID.QueenBeeStinger, ProjectileID.RollingCactusSpike, ProjectileID.SpiderHiver, ProjectileID.SpiderEgg, ProjectileID.BabySpider, ProjectileID.VenomDartTrap, ProjectileID.HiveFive);
-        public static bool[] ItemPoison = ItemID.Sets.Factory.CreateBoolSet(ItemID.BeeKeeper, ItemID.Flymeal, ItemID.PygmyStaff);
-        public static bool[] NPCPoison = NPCID.Sets.Factory.CreateBoolSet(NPCID.Bee, NPCID.BeeSmall, NPCID.Hornet, NPCID.HornetFatty, NPCID.HornetHoney, NPCID.HornetLeafy, NPCID.HornetSpikey, NPCID.MossHornet, NPCID.ToxicSludge, NPCID.SwampThing, NPCID.QueenBee);
+        public static bool[] NPCHoly = NPCID.Sets.Factory.CreateBoolSet(
+            NPCID.ChaosElemental, NPCID.DesertGhoulHallow, NPCID.EnchantedSword, NPCID.BigMimicHallow, NPCID.IlluminantBat, NPCID.IlluminantSlime, NPCID.LightMummy, NPCID.Pixie, NPCID.Paladin, NPCID.Unicorn, NPCID.RainbowSlime, NPCID.SandsharkHallow, NPCID.HallowBoss, NPCID.QueenSlimeBoss, NPCID.QueenSlimeMinionBlue, NPCID.QueenSlimeMinionPink, NPCID.QueenSlimeMinionPurple);
+        // Shadow
+        public static bool[] ProjShadow = ProjectileID.Sets.Factory.CreateBoolSet(
+            ProjectileID.UnholyArrow, ProjectileID.VilethornBase, ProjectileID.VilethornTip, ProjectileID.BallOHurt, ProjectileID.DemonSickle, ProjectileID.DemonScythe, ProjectileID.DarkLance, ProjectileID.TheDaoofPow, ProjectileID.UnholyWater, ProjectileID.CursedFlameFriendly, ProjectileID.CursedFlameHostile, ProjectileID.EyeFire, ProjectileID.CursedArrow, ProjectileID.CursedBullet, ProjectileID.UnholyTridentFriendly, ProjectileID.UnholyTridentHostile, ProjectileID.NightBeam, ProjectileID.DeathSickle, ProjectileID.ShadowBeamHostile, ProjectileID.ShadowBeamFriendly, ProjectileID.Shadowflames, ProjectileID.EatersBite, ProjectileID.TinyEater, ProjectileID.CultistBossFireBallClone, ProjectileID.CursedDart, ProjectileID.CursedDartFlame, ProjectileID.ClingerStaff, ProjectileID.ShadowFlameArrow, ProjectileID.ShadowFlame, ProjectileID.ShadowFlameKnife, ProjectileID.CorruptYoyo, ProjectileID.ClothiersCurse, ProjectileID.AncientDoomProjectile, ProjectileID.DesertDjinnCurse, ProjectileID.SpiritFlame, ProjectileID.BlackBolt, ProjectileID.DD2DrakinShot, ProjectileID.DD2DarkMageBolt, ProjectileID.ShadowJoustingLance, ProjectileID.ScytheWhipProj, ProjectileID.InsanityShadowHostile, ProjectileID.InsanityShadowFriendly, ProjectileID.EbonsandBallGun, ProjectileID.CrimsandBallGun, ProjectileID.BookOfSkullsSkull, ProjectileID.Bat, ProjectileID.Raven, ProjectileID.ScytheWhip, ProjectileID.HoundiusShootius, ProjectileID.HoundiusShootiusFireball, ProjectileID.NightsEdge, ProjectileID.TrueNightsEdge, ProjectileID.LightsBane, ProjectileID.CursedFlare);
 
-        public static bool[] ProjBlood = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.TheRottedFork, ProjectileID.TheMeatball, ProjectileID.BloodRain, ProjectileID.IchorArrow, ProjectileID.IchorBullet, ProjectileID.GoldenShowerFriendly, ProjectileID.GoldenShowerHostile, ProjectileID.VampireKnife, ProjectileID.SoulDrain, ProjectileID.IchorDart, ProjectileID.IchorSplash, ProjectileID.CrimsonYoyo, ProjectileID.BloodWater, ProjectileID.BatOfLight, ProjectileID.SharpTears, ProjectileID.DripplerFlail, ProjectileID.VampireFrog, ProjectileID.BloodShot, ProjectileID.BloodNautilusTears, ProjectileID.BloodNautilusShot, ProjectileID.BloodArrow, ProjectileID.DripplerFlailExtraBall, ProjectileID.BloodCloudRaining, ProjectileID.ButchersChainsaw, ProjectileID.BloodCloudMoving, ProjectileID.BloodyMachete, ProjectileID.TheEyeOfCthulhu, ProjectileID.BloodButcherer);
-        public static bool[] ItemBlood = ItemID.Sets.Factory.CreateBoolSet(ItemID.BloodButcherer, ItemID.Bladetongue, ItemID.DeathbringerPickaxe, ItemID.BloodLustCluster, ItemID.BloodHamaxe, ItemID.FleshGrinder, ItemID.PsychoKnife, ItemID.ZombieArm, ItemID.FetidBaghnakhs, ItemID.BladedGlove, ItemID.BloodRainBow);
-        public static bool[] NPCBlood = NPCID.Sets.Factory.CreateBoolSet(NPCID.BloodCrawler, NPCID.BloodCrawlerWall, NPCID.Crimera, NPCID.EyeballFlyingFish, NPCID.CataractEye, NPCID.DemonEye, NPCID.DemonEyeOwl, NPCID.DemonEyeSpaceship, NPCID.DialatedEye, NPCID.GreenEye, NPCID.PurpleEye, NPCID.WanderingEye, NPCID.FaceMonster, NPCID.BloodMummy, NPCID.BloodJelly, NPCID.BloodFeeder, NPCID.Crimslime, NPCID.CrimsonAxe, NPCID.BigMimicCrimson, NPCID.FloatyGross, NPCID.Herpling, NPCID.IchorSticker, NPCID.DesertGhoulCrimson, NPCID.BloodEelBody, NPCID.BloodEelHead, NPCID.BloodEelTail, NPCID.BloodSquid, NPCID.BloodZombie, NPCID.BloodNautilus, NPCID.Drippler, NPCID.GoblinShark, NPCID.CrimsonBunny, NPCID.CrimsonGoldfish, NPCID.CrimsonPenguin, NPCID.SandsharkCrimson, NPCID.Vampire, NPCID.BrainofCthulhu, NPCID.EyeofCthulhu, NPCID.WallofFlesh, NPCID.WallofFleshEye, NPCID.Creeper, NPCID.LeechBody, NPCID.LeechHead, NPCID.LeechTail, NPCID.TheHungry, NPCID.TheHungryII, NPCID.ServantofCthulhu, NPCID.Butcher);
+        public static bool[] ItemShadow = ItemID.Sets.Factory.CreateBoolSet(
+            ItemID.LightsBane, ItemID.PurpleClubberfish, ItemID.NightsEdge, ItemID.TrueNightsEdge, ItemID.DeathSickle, ItemID.NightmarePickaxe, ItemID.WarAxeoftheNight, ItemID.TheBreaker, ItemID.OnyxBlaster, ItemID.BoneHelm);
 
-        public static bool[] ProjPsychic = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.BrainScramblerBolt, ProjectileID.MedusaHeadRay, ProjectileID.BookStaffShot, ProjectileID.InsanityShadowHostile, ProjectileID.InsanityShadowFriendly, ProjectileID.MedusaHead, ProjectileID.DeadlySphere, ProjectileID.AbigailMinion, ProjectileID.AbigailCounter, ProjectileID.StardustCellMinion, ProjectileID.StardustCellMinionShot);
-        public static bool[] ItemPsychic = ItemID.Sets.Factory.CreateBoolSet(ItemID.BoneHelm, ItemID.BrainScrambler, NPCID.NebulaHeadcrab);
-        public static bool[] NPCPsychic = NPCID.Sets.Factory.CreateBoolSet();
+        public static bool[] NPCShadow = NPCID.Sets.Factory.CreateBoolSet(
+            NPCID.DarkCaster, NPCID.DungeonSlime, NPCID.EaterofSouls, NPCID.DevourerBody, NPCID.DevourerHead, NPCID.DevourerTail, NPCID.Clinger, NPCID.BigMimicCorruption, NPCID.CorruptSlime, NPCID.Corruptor, NPCID.CursedHammer, NPCID.DarkMummy, NPCID.DesertDjinn, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.RaggedCaster, NPCID.RaggedCasterOpenCoat, NPCID.PossessedArmor, NPCID.DesertGhoulCorruption, NPCID.Slimer, NPCID.Wraith, NPCID.SeekerHead, NPCID.SeekerBody, NPCID.SeekerTail, NPCID.CorruptBunny, NPCID.CorruptGoldfish, NPCID.CorruptPenguin, NPCID.SandsharkCorrupt, NPCID.GoblinSummoner, NPCID.ShadowFlameApparition, NPCID.Reaper, NPCID.ThePossessed, NPCID.Vampire, NPCID.Hellhound, NPCID.HeadlessHorseman, NPCID.Splinterling, NPCID.Krampus, NPCID.EaterofWorldsBody, NPCID.EaterofWorldsHead, NPCID.EaterofWorldsTail, NPCID.DD2DarkMageT1, NPCID.DD2DarkMageT3, NPCID.MourningWood, NPCID.Pumpking, NPCID.Ghost, NPCID.MotherSlime, NPCID.Tim, NPCID.ChaosBallTim, NPCID.ChaosBall, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.ShadowFlameApparition, NPCID.GoblinSummoner, NPCID.Poltergeist);
+        // Nature
+        public static bool[] ProjNature = ProjectileID.Sets.Factory.CreateBoolSet(
+            ProjectileID.ThornChakram, ProjectileID.Seed, ProjectileID.Mushroom, ProjectileID.TerraBeam, ProjectileID.NettleBurstEnd, ProjectileID.NettleBurstLeft, ProjectileID.NettleBurstRight, ProjectileID.JungleSpike, ProjectileID.Leaf, ProjectileID.FlowerPetal, ProjectileID.CrystalLeafShot, ProjectileID.SporeCloud, ProjectileID.ChlorophyteOrb, ProjectileID.FlowerPow, ProjectileID.FlowerPowPetal, ProjectileID.SeedPlantera, ProjectileID.PoisonSeedPlantera, ProjectileID.ThornBall, ProjectileID.JackOLantern, ProjectileID.FlamingJack, ProjectileID.PineNeedleFriendly, ProjectileID.PineNeedleHostile, ProjectileID.SeedlerNut, ProjectileID.SeedlerThorn, ProjectileID.JungleYoyo, ProjectileID.SporeTrap, ProjectileID.SporeTrap2, ProjectileID.SporeGas, ProjectileID.SporeGas2, ProjectileID.SporeGas3, ProjectileID.TruffleSpore, ProjectileID.Terrarian, ProjectileID.TerrarianBeam, ProjectileID.Terragrim, ProjectileID.DandelionSeed, ProjectileID.Shroomerang, ProjectileID.ThornWhip, ProjectileID.BabyBird, ProjectileID.MushroomSpear, ProjectileID.ChlorophyteArrow, ProjectileID.ChlorophyteBullet, ProjectileID.ChlorophyteChainsaw, ProjectileID.ChlorophyteJackhammer, ProjectileID.ChlorophyteDrill, ProjectileID.ChlorophytePartisan, ProjectileID.Bee, ProjectileID.BeeArrow, ProjectileID.GiantBee, ProjectileID.MechanicalPiranha, ProjectileID.Wasp, ProjectileID.Yelets, ProjectileID.BladeOfGrass, ProjectileID.TerraBlade2, ProjectileID.TerraBlade2Shot, ProjectileID.HiveFive, ProjectileID.Beenade);
 
-        public static bool[] ProjCelestial = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.Starfury, ProjectileID.FallingStar, ProjectileID.RainbowRodBullet, ProjectileID.HallowStar, ProjectileID.RainbowBack, ProjectileID.RainbowFront, ProjectileID.PhantasmalEye, ProjectileID.PhantasmalSphere, ProjectileID.PhantasmalDeathray, ProjectileID.Meowmere, ProjectileID.StarWrath, ProjectileID.StardustSoldierLaser, ProjectileID.Twinkle, ProjectileID.NebulaBolt, ProjectileID.NebulaEye, ProjectileID.NebulaSphere, ProjectileID.NebulaLaser, ProjectileID.NebulaArcanum, ProjectileID.NebulaArcanumExplosionShot, ProjectileID.NebulaArcanumExplosionShotShard, ProjectileID.LastPrismLaser, ProjectileID.NebulaBlaze1, ProjectileID.NebulaBlaze2, ProjectileID.MoonlordTurretLaser, ProjectileID.RainbowCrystalExplosion, ProjectileID.ManaCloakStar, ProjectileID.BeeCloakStar, ProjectileID.StarVeilStar, ProjectileID.StarCloakStar, ProjectileID.SuperStar, ProjectileID.SuperStarSlash, ProjectileID.SparkleGuitar, ProjectileID.HallowBossLastingRainbow, ProjectileID.HallowBossRainbowStreak, ProjectileID.FairyQueenLance, ProjectileID.FairyQueenSunDance, ProjectileID.FairyQueenHymn, ProjectileID.PiercingStarlight, ProjectileID.FairyQueenMagicItemShot, ProjectileID.FairyQueenRangedItemShot, ProjectileID.FinalFractal, ProjectileID.EmpressBlade, ProjectileID.PrincessWeapon, ProjectileID.StarCannonStar, ProjectileID.SolarFlareDrill, ProjectileID.NebulaDrill, ProjectileID.VortexDrill, ProjectileID.StardustDrill, ProjectileID.MoonlordArrow, ProjectileID.MoonlordBullet, ProjectileID.StardustCellMinion, ProjectileID.StardustCellMinionShot, ProjectileID.StardustDragon1, ProjectileID.StardustDragon2, ProjectileID.StardustDragon3, ProjectileID.StardustDragon4, ProjectileID.SolarFlareRay, ProjectileID.SolarCounter, ProjectileID.SolarWhipSword, ProjectileID.SolarWhipSwordExplosion, ProjectileID.Daybreak, ProjectileID.DaybreakExplosion, ProjectileID.LastPrism, ProjectileID.RainbowCrystal, ProjectileID.MoonlordTurret, ProjectileID.MoonlordTurretLaser, ProjectileID.ShimmerArrow, ProjectileID.ShimmerFlare, ProjectileID.MoonBoulder);
-        public static bool[] ItemCelestial = ItemID.Sets.Factory.CreateBoolSet(ItemID.Starfury, ItemID.PiercingStarlight, ItemID.StarWrath, ItemID.Meowmere, ItemID.SolarFlarePickaxe, ItemID.NebulaPickaxe, ItemID.VortexPickaxe, ItemID.StardustPickaxe, ItemID.LunarHamaxeNebula, ItemID.LunarHamaxeSolar, ItemID.LunarHamaxeStardust, ItemID.LunarHamaxeVortex, ItemID.FairyQueenRangedItem, ItemID.HolyArrow, ItemID.StarCloak, ItemID.BeeCloak, ItemID.ManaCloak, ItemID.StarVeil);
-        public static bool[] NPCCelestial = NPCID.Sets.Factory.CreateBoolSet(NPCID.MeteorHead, NPCID.NebulaBeast, NPCID.NebulaBrain, NPCID.NebulaHeadcrab, NPCID.NebulaSoldier, NPCID.SolarCorite, NPCID.SolarCrawltipedeTail, NPCID.SolarCrawltipedeHead, NPCID.SolarCrawltipedeBody, NPCID.SolarDrakomire, NPCID.SolarDrakomireRider, NPCID.SolarFlare, NPCID.SolarSolenian, NPCID.SolarSpearman, NPCID.SolarSroller, NPCID.StardustCellBig, NPCID.StardustCellSmall, NPCID.StardustJellyfishBig, NPCID.StardustJellyfishSmall, NPCID.StardustSoldier, NPCID.StardustSpiderBig, NPCID.StardustSpiderSmall, NPCID.StardustWormBody, NPCID.StardustWormHead, NPCID.StardustWormTail, NPCID.VortexHornet, NPCID.VortexHornetQueen, NPCID.VortexLarva, NPCID.VortexRifleman, NPCID.VortexSoldier, NPCID.HallowBoss, NPCID.MoonLordCore, NPCID.MoonLordFreeEye, NPCID.MoonLordHand, NPCID.MoonLordHead, NPCID.ShimmerSlime);
+        public static bool[] ItemNature = ItemID.Sets.Factory.CreateBoolSet(
+            ItemID.CactusSword, ItemID.BladeofGrass, ItemID.Seedler, ItemID.ChlorophyteSaber, ItemID.ChristmasTreeSword, ItemID.ChlorophyteClaymore, ItemID.TerraBlade, ItemID.CactusPickaxe, ItemID.ChlorophytePickaxe, ItemID.ChlorophyteGreataxe, ItemID.Hammush, ItemID.ChlorophyteWarhammer, ItemID.SporeSac, ItemID.AcornAxe, ItemID.BeeKeeper, ItemID.HoneyComb, ItemID.BeeCloak, ItemID.HoneyBalloon, ItemID.StingerNecklace, ItemID.SweetheartNecklace);
 
-        public static bool[] ProjExplosive = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.Bomb, ProjectileID.BombFish, ProjectileID.Grenade, ProjectileID.Dynamite, ProjectileID.StickyBomb, ProjectileID.StickyDynamite, ProjectileID.StickyGrenade, ProjectileID.HellfireArrow, ProjectileID.HappyBomb, ProjectileID.BombSkeletronPrime, ProjectileID.Explosives, ProjectileID.GrenadeI, ProjectileID.GrenadeII, ProjectileID.GrenadeIII, ProjectileID.GrenadeIV, ProjectileID.RocketI, ProjectileID.RocketII, ProjectileID.RocketIII, ProjectileID.RocketIV, ProjectileID.ProximityMineI, ProjectileID.ProximityMineII, ProjectileID.ProximityMineIII, ProjectileID.ProximityMineIV, ProjectileID.Landmine, ProjectileID.Beenade, ProjectileID.ExplosiveBunny, ProjectileID.ExplosiveBullet, ProjectileID.RocketSkeleton, ProjectileID.JackOLantern, ProjectileID.OrnamentFriendly, ProjectileID.OrnamentStar, ProjectileID.RocketSnowmanI, ProjectileID.RocketSnowmanII, ProjectileID.RocketSnowmanIII, ProjectileID.RocketSnowmanIV, ProjectileID.Missile, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.ElectrosphereMissile, ProjectileID.SaucerMissile, ProjectileID.SeedlerNut, ProjectileID.BouncyBomb, ProjectileID.BouncyDynamite, ProjectileID.BouncyGrenade, ProjectileID.PartyGirlGrenade, ProjectileID.SolarWhipSwordExplosion, ProjectileID.VortexBeaterRocket, ProjectileID.LunarFlare, ProjectileID.DD2GoblinBomb, ProjectileID.DD2ExplosiveTrapT1Explosion, ProjectileID.DD2ExplosiveTrapT2Explosion, ProjectileID.DD2ExplosiveTrapT3Explosion, ProjectileID.ScarabBomb, ProjectileID.ClusterRocketI, ProjectileID.ClusterRocketII, ProjectileID.ClusterGrenadeI, ProjectileID.ClusterGrenadeII, ProjectileID.ClusterMineI, ProjectileID.ClusterMineII, ProjectileID.MiniNukeRocketI, ProjectileID.MiniNukeRocketII, ProjectileID.MiniNukeGrenadeI, ProjectileID.MiniNukeGrenadeII, ProjectileID.MiniNukeMineI, ProjectileID.MiniNukeMineII, ProjectileID.ClusterSnowmanRocketI, ProjectileID.ClusterSnowmanRocketII, ProjectileID.MiniNukeSnowmanRocketI, ProjectileID.MiniNukeSnowmanRocketII, ProjectileID.SantankMountRocket, ProjectileID.DaybreakExplosion, ProjectileID.NailFriendly, ProjectileID.Nail, ProjectileID.Celeb2Rocket, ProjectileID.Celeb2RocketExplosive, ProjectileID.Celeb2RocketExplosiveLarge, ProjectileID.Celeb2RocketLarge, ProjectileID.Celeb2Weapon, ProjectileID.Stynger, ProjectileID.MolotovCocktail, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoFriendlyBolt, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoHostileBolt, ProjectileID.MonkStaffT1Explosion, ProjectileID.FireWhipProj, ProjectileID.FireWhip, ProjectileID.DD2ExplosiveTrapT1, ProjectileID.DD2ExplosiveTrapT2, ProjectileID.DD2ExplosiveTrapT3, ProjectileID.TNTBarrel, ProjectileID.Volcano);
+        public static bool[] NPCNature = NPCID.Sets.Factory.CreateBoolSet(
+            NPCID.AnomuraFungus, NPCID.GiantFungiBulb, NPCID.FungiBulb, NPCID.SpikedJungleSlime, NPCID.JungleBat, NPCID.ManEater, NPCID.JungleBat, NPCID.JungleBat, NPCID.JungleBat, NPCID.JungleBat, NPCID.MushiLadybug, NPCID.Snatcher, NPCID.SporeBat, NPCID.SporeSkeleton, NPCID.ZombieMushroom, NPCID.ZombieMushroomHat, NPCID.AngryTrapper, NPCID.JungleCreeper, NPCID.JungleCreeperWall, NPCID.Lihzahrd, NPCID.LihzahrdCrawler, NPCID.Moth, NPCID.Pixie, NPCID.Dandelion, NPCID.Plantera, NPCID.PlanterasHook, NPCID.PlanterasTentacle, NPCID.Splinterling, NPCID.MourningWood, NPCID.Everscream);
+        // Poison
+        public static bool[] ProjPoison = ProjectileID.Sets.Factory.CreateBoolSet(
+            ProjectileID.ThornChakram, ProjectileID.PoisonedKnife, ProjectileID.Stinger, ProjectileID.PoisonDart, ProjectileID.JungleSpike, ProjectileID.PoisonDartTrap, ProjectileID.PygmySpear, ProjectileID.PoisonFang, ProjectileID.PoisonDartBlowgun, ProjectileID.PoisonSeedPlantera, ProjectileID.VenomArrow, ProjectileID.VenomBullet, ProjectileID.VenomFang, ProjectileID.HornetStinger, ProjectileID.Hornet, ProjectileID.VenomSpider, ProjectileID.ToxicFlask, ProjectileID.ToxicCloud, ProjectileID.ToxicCloud2, ProjectileID.ToxicCloud3, ProjectileID.ToxicBubble, ProjectileID.SalamanderSpit, ProjectileID.VortexAcid, ProjectileID.DD2OgreSpit, ProjectileID.QueenBeeStinger, ProjectileID.RollingCactusSpike, ProjectileID.SpiderHiver, ProjectileID.SpiderEgg, ProjectileID.BabySpider, ProjectileID.VenomDartTrap, ProjectileID.HiveFive);
+
+        public static bool[] ItemPoison = ItemID.Sets.Factory.CreateBoolSet(
+            ItemID.BeeKeeper, ItemID.Flymeal, ItemID.PygmyStaff);
+
+        public static bool[] NPCPoison = NPCID.Sets.Factory.CreateBoolSet(
+            NPCID.Bee, NPCID.BeeSmall, NPCID.Hornet, NPCID.HornetFatty, NPCID.HornetHoney, NPCID.HornetLeafy, NPCID.HornetSpikey, NPCID.MossHornet, NPCID.ToxicSludge, NPCID.SwampThing, NPCID.QueenBee);
+        // Blood
+        public static bool[] ProjBlood = ProjectileID.Sets.Factory.CreateBoolSet(
+            ProjectileID.TheRottedFork, ProjectileID.TheMeatball, ProjectileID.BloodRain, ProjectileID.IchorArrow, ProjectileID.IchorBullet, ProjectileID.GoldenShowerFriendly, ProjectileID.GoldenShowerHostile, ProjectileID.VampireKnife, ProjectileID.SoulDrain, ProjectileID.IchorDart, ProjectileID.IchorSplash, ProjectileID.CrimsonYoyo, ProjectileID.BloodWater, ProjectileID.BatOfLight, ProjectileID.SharpTears, ProjectileID.DripplerFlail, ProjectileID.VampireFrog, ProjectileID.BloodShot, ProjectileID.BloodNautilusTears, ProjectileID.BloodNautilusShot, ProjectileID.BloodArrow, ProjectileID.DripplerFlailExtraBall, ProjectileID.BloodCloudRaining, ProjectileID.ButchersChainsaw, ProjectileID.BloodCloudMoving, ProjectileID.BloodyMachete, ProjectileID.TheEyeOfCthulhu, ProjectileID.BloodButcherer);
+
+        public static bool[] ItemBlood = ItemID.Sets.Factory.CreateBoolSet(
+            ItemID.BloodButcherer, ItemID.Bladetongue, ItemID.DeathbringerPickaxe, ItemID.BloodLustCluster, ItemID.BloodHamaxe, ItemID.FleshGrinder, ItemID.PsychoKnife, ItemID.ZombieArm, ItemID.FetidBaghnakhs, ItemID.BladedGlove, ItemID.BloodRainBow);
+
+        public static bool[] NPCBlood = NPCID.Sets.Factory.CreateBoolSet(
+            NPCID.BloodCrawler, NPCID.BloodCrawlerWall, NPCID.Crimera, NPCID.EyeballFlyingFish, NPCID.CataractEye, NPCID.DemonEye, NPCID.DemonEyeOwl, NPCID.DemonEyeSpaceship, NPCID.DialatedEye, NPCID.GreenEye, NPCID.PurpleEye, NPCID.WanderingEye, NPCID.FaceMonster, NPCID.BloodMummy, NPCID.BloodJelly, NPCID.BloodFeeder, NPCID.Crimslime, NPCID.CrimsonAxe, NPCID.BigMimicCrimson, NPCID.FloatyGross, NPCID.Herpling, NPCID.IchorSticker, NPCID.DesertGhoulCrimson, NPCID.BloodEelBody, NPCID.BloodEelHead, NPCID.BloodEelTail, NPCID.BloodSquid, NPCID.BloodZombie, NPCID.BloodNautilus, NPCID.Drippler, NPCID.GoblinShark, NPCID.CrimsonBunny, NPCID.CrimsonGoldfish, NPCID.CrimsonPenguin, NPCID.SandsharkCrimson, NPCID.Vampire, NPCID.BrainofCthulhu, NPCID.EyeofCthulhu, NPCID.WallofFlesh, NPCID.WallofFleshEye, NPCID.Creeper, NPCID.LeechBody, NPCID.LeechHead, NPCID.LeechTail, NPCID.TheHungry, NPCID.TheHungryII, NPCID.ServantofCthulhu, NPCID.Butcher);
+        // Psychic
+        public static bool[] ProjPsychic = ProjectileID.Sets.Factory.CreateBoolSet(
+            ProjectileID.BrainScramblerBolt, ProjectileID.MedusaHeadRay, ProjectileID.BookStaffShot, ProjectileID.InsanityShadowHostile, ProjectileID.InsanityShadowFriendly, ProjectileID.MedusaHead, ProjectileID.DeadlySphere, ProjectileID.AbigailMinion, ProjectileID.AbigailCounter, ProjectileID.StardustCellMinion, ProjectileID.StardustCellMinionShot);
+
+        public static bool[] ItemPsychic = ItemID.Sets.Factory.CreateBoolSet(ItemID.BoneHelm, ItemID.BrainScrambler);
+
+        public static bool[] NPCPsychic = NPCID.Sets.Factory.CreateBoolSet(NPCID.NebulaHeadcrab);
+        // Celestial
+        public static bool[] ProjCelestial = ProjectileID.Sets.Factory.CreateBoolSet(
+            ProjectileID.Starfury, ProjectileID.FallingStar, ProjectileID.RainbowRodBullet, ProjectileID.HallowStar, ProjectileID.RainbowBack, ProjectileID.RainbowFront, ProjectileID.PhantasmalEye, ProjectileID.PhantasmalSphere, ProjectileID.PhantasmalDeathray, ProjectileID.Meowmere, ProjectileID.StarWrath, ProjectileID.StardustSoldierLaser, ProjectileID.Twinkle, ProjectileID.NebulaBolt, ProjectileID.NebulaEye, ProjectileID.NebulaSphere, ProjectileID.NebulaLaser, ProjectileID.NebulaArcanum, ProjectileID.NebulaArcanumExplosionShot, ProjectileID.NebulaArcanumExplosionShotShard, ProjectileID.LastPrismLaser, ProjectileID.NebulaBlaze1, ProjectileID.NebulaBlaze2, ProjectileID.MoonlordTurretLaser, ProjectileID.RainbowCrystalExplosion, ProjectileID.ManaCloakStar, ProjectileID.BeeCloakStar, ProjectileID.StarVeilStar, ProjectileID.StarCloakStar, ProjectileID.SuperStar, ProjectileID.SuperStarSlash, ProjectileID.SparkleGuitar, ProjectileID.HallowBossLastingRainbow, ProjectileID.HallowBossRainbowStreak, ProjectileID.FairyQueenLance, ProjectileID.FairyQueenSunDance, ProjectileID.FairyQueenHymn, ProjectileID.PiercingStarlight, ProjectileID.FairyQueenMagicItemShot, ProjectileID.FairyQueenRangedItemShot, ProjectileID.FinalFractal, ProjectileID.EmpressBlade, ProjectileID.PrincessWeapon, ProjectileID.StarCannonStar, ProjectileID.SolarFlareDrill, ProjectileID.NebulaDrill, ProjectileID.VortexDrill, ProjectileID.StardustDrill, ProjectileID.MoonlordArrow, ProjectileID.MoonlordBullet, ProjectileID.StardustCellMinion, ProjectileID.StardustCellMinionShot, ProjectileID.StardustDragon1, ProjectileID.StardustDragon2, ProjectileID.StardustDragon3, ProjectileID.StardustDragon4, ProjectileID.SolarFlareRay, ProjectileID.SolarCounter, ProjectileID.SolarWhipSword, ProjectileID.SolarWhipSwordExplosion, ProjectileID.Daybreak, ProjectileID.DaybreakExplosion, ProjectileID.LastPrism, ProjectileID.RainbowCrystal, ProjectileID.MoonlordTurret, ProjectileID.ShimmerArrow, ProjectileID.ShimmerFlare, ProjectileID.MoonBoulder);
+
+        public static bool[] ItemCelestial = ItemID.Sets.Factory.CreateBoolSet(
+            ItemID.Starfury, ItemID.PiercingStarlight, ItemID.StarWrath, ItemID.Meowmere, ItemID.SolarFlarePickaxe, ItemID.NebulaPickaxe, ItemID.VortexPickaxe, ItemID.StardustPickaxe, ItemID.LunarHamaxeNebula, ItemID.LunarHamaxeSolar, ItemID.LunarHamaxeStardust, ItemID.LunarHamaxeVortex, ItemID.FairyQueenRangedItem, ItemID.HolyArrow, ItemID.StarCloak, ItemID.BeeCloak, ItemID.ManaCloak, ItemID.StarVeil);
+
+        public static bool[] NPCCelestial = NPCID.Sets.Factory.CreateBoolSet(
+            NPCID.MeteorHead, NPCID.NebulaBeast, NPCID.NebulaBrain, NPCID.NebulaHeadcrab, NPCID.NebulaSoldier, NPCID.SolarCorite, NPCID.SolarCrawltipedeTail, NPCID.SolarCrawltipedeHead, NPCID.SolarCrawltipedeBody, NPCID.SolarDrakomire, NPCID.SolarDrakomireRider, NPCID.SolarFlare, NPCID.SolarSolenian, NPCID.SolarSpearman, NPCID.SolarSroller, NPCID.StardustCellBig, NPCID.StardustCellSmall, NPCID.StardustJellyfishBig, NPCID.StardustJellyfishSmall, NPCID.StardustSoldier, NPCID.StardustSpiderBig, NPCID.StardustSpiderSmall, NPCID.StardustWormBody, NPCID.StardustWormHead, NPCID.StardustWormTail, NPCID.VortexHornet, NPCID.VortexHornetQueen, NPCID.VortexLarva, NPCID.VortexRifleman, NPCID.VortexSoldier, NPCID.HallowBoss, NPCID.MoonLordCore, NPCID.MoonLordFreeEye, NPCID.MoonLordHand, NPCID.MoonLordHead, NPCID.ShimmerSlime);
+        // Explosive
+        public static bool[] ProjExplosive = ProjectileID.Sets.Factory.CreateBoolSet(
+            ProjectileID.Bomb, ProjectileID.BombFish, ProjectileID.Grenade, ProjectileID.Dynamite, ProjectileID.StickyBomb, ProjectileID.StickyDynamite, ProjectileID.StickyGrenade, ProjectileID.HellfireArrow, ProjectileID.HappyBomb, ProjectileID.BombSkeletronPrime, ProjectileID.Explosives, ProjectileID.GrenadeI, ProjectileID.GrenadeII, ProjectileID.GrenadeIII, ProjectileID.GrenadeIV, ProjectileID.RocketI, ProjectileID.RocketII, ProjectileID.RocketIII, ProjectileID.RocketIV, ProjectileID.ProximityMineI, ProjectileID.ProximityMineII, ProjectileID.ProximityMineIII, ProjectileID.ProximityMineIV, ProjectileID.Landmine, ProjectileID.Beenade, ProjectileID.ExplosiveBunny, ProjectileID.ExplosiveBullet, ProjectileID.RocketSkeleton, ProjectileID.JackOLantern, ProjectileID.OrnamentFriendly, ProjectileID.OrnamentStar, ProjectileID.RocketSnowmanI, ProjectileID.RocketSnowmanII, ProjectileID.RocketSnowmanIII, ProjectileID.RocketSnowmanIV, ProjectileID.Missile, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.ElectrosphereMissile, ProjectileID.SaucerMissile, ProjectileID.SeedlerNut, ProjectileID.BouncyBomb, ProjectileID.BouncyDynamite, ProjectileID.BouncyGrenade, ProjectileID.PartyGirlGrenade, ProjectileID.SolarWhipSwordExplosion, ProjectileID.VortexBeaterRocket, ProjectileID.LunarFlare, ProjectileID.DD2GoblinBomb, ProjectileID.DD2ExplosiveTrapT1Explosion, ProjectileID.DD2ExplosiveTrapT2Explosion, ProjectileID.DD2ExplosiveTrapT3Explosion, ProjectileID.ScarabBomb, ProjectileID.ClusterRocketI, ProjectileID.ClusterRocketII, ProjectileID.ClusterGrenadeI, ProjectileID.ClusterGrenadeII, ProjectileID.ClusterMineI, ProjectileID.ClusterMineII, ProjectileID.MiniNukeRocketI, ProjectileID.MiniNukeRocketII, ProjectileID.MiniNukeGrenadeI, ProjectileID.MiniNukeGrenadeII, ProjectileID.MiniNukeMineI, ProjectileID.MiniNukeMineII, ProjectileID.ClusterSnowmanRocketI, ProjectileID.ClusterSnowmanRocketII, ProjectileID.MiniNukeSnowmanRocketI, ProjectileID.MiniNukeSnowmanRocketII, ProjectileID.SantankMountRocket, ProjectileID.DaybreakExplosion, ProjectileID.NailFriendly, ProjectileID.Nail, ProjectileID.Celeb2Rocket, ProjectileID.Celeb2RocketExplosive, ProjectileID.Celeb2RocketExplosiveLarge, ProjectileID.Celeb2RocketLarge, ProjectileID.Celeb2Weapon, ProjectileID.Stynger, ProjectileID.MolotovCocktail, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoFriendlyBolt, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoHostileBolt, ProjectileID.MonkStaffT1Explosion, ProjectileID.FireWhipProj, ProjectileID.FireWhip, ProjectileID.DD2ExplosiveTrapT1, ProjectileID.DD2ExplosiveTrapT2, ProjectileID.DD2ExplosiveTrapT3, ProjectileID.TNTBarrel, ProjectileID.Volcano);
+
         public static bool[] ItemExplosive = ItemID.Sets.Factory.CreateBoolSet(ItemID.DayBreak, ItemID.SantankMountItem, ItemID.VortexBeater);
-        public static bool[] NPCExplosive = NPCID.Sets.Factory.CreateBoolSet(NPCID.ChatteringTeethBomb);
 
-        public static bool HasElement(this Projectile proj, int ID = 0)
+        public static bool[] NPCExplosive = NPCID.Sets.Factory.CreateBoolSet(NPCID.ChatteringTeethBomb, NPCID.ExplosiveBunny);
+        //
+
+        public static bool[] ProjectilesInheritElements = ItemID.Sets.Factory.CreateBoolSet();
+
+        private static int HasElementPlayerEffect(Terraria.Player player, Entity entity)
         {
+            if (player.RedemptionPlayerBuff().eldritchRoot)
+            {
+                if (entity is Projectile proj && proj.friendly && proj.HasElement(Nature, false))
+                    return Shadow;
+                else if (entity is Item item && item.HasElementItem(Nature, false))
+                    return Shadow;
+            }
+            if (player.GetModPlayer<ExplosiveEnchantPlayer>().explosiveWeaponImbue)
+            {
+                if (entity is Projectile proj && proj.friendly && (proj.DamageType.CountsAsClass<MeleeDamageClass>() || ProjectileID.Sets.IsAWhip[proj.type]) && !proj.noEnchantments)
+                    return Explosive;
+                else if (entity is Item item && item.DamageType.CountsAsClass<MeleeDamageClass>())
+                    return Explosive;
+            }
+            return 0;
+        }
+        public static bool HasElement(this Projectile proj, int ID = 0, bool checkPlayerEffects = true)
+        {
+            if (checkPlayerEffects && ID == HasElementPlayerEffect(Main.player[proj.owner], proj))
+                return true;
             if (proj.GetGlobalProjectile<ElementalProjectile>().OverrideElement[ID] is AddElement)
                 return true;
             if (proj.GetGlobalProjectile<ElementalProjectile>().OverrideElement[ID] is RemoveElement)
@@ -104,6 +204,9 @@ namespace Redemption.Globals
             bool[] array = new bool[16];
             for (int i = 0; i < 15; i++)
             {
+                if (i + 1 == HasElementPlayerEffect(Main.player[proj.owner], proj))
+                    return i + 1;
+
                 if (proj.GetGlobalProjectile<ElementalProjectile>().OverrideElement[i + 1] is AddElement)
                     return i + 1;
                 if (proj.GetGlobalProjectile<ElementalProjectile>().OverrideElement[i + 1] is RemoveElement)
@@ -155,7 +258,7 @@ namespace Redemption.Globals
                 _ => false,
             };
         }
-        public static bool HasElement(int ID = 0, params int[] types)
+        public static bool HasElementFromProj(int ID = 0, params int[] types)
         {
             var b = false;
             for (int j = 0; j < types.Length; j++)
@@ -186,6 +289,9 @@ namespace Redemption.Globals
         }
         public static bool HasElement(this Item item, int ID = 0)
         {
+            if (ID == HasElementPlayerEffect(Main.LocalPlayer, item))
+                return true;
+
             if (item.TryGetGlobalItem(out ElementalItem elemItem))
             {
                 if (elemItem.OverrideElement[ID] is AddElement)
@@ -218,6 +324,9 @@ namespace Redemption.Globals
             bool[] array = new bool[16];
             for (int i = 0; i < 15; i++)
             {
+                if (i + 1 == HasElementPlayerEffect(Main.LocalPlayer, item))
+                    return i + 1;
+
                 if (item.TryGetGlobalItem(out ElementalItem elemItem))
                 {
                     if (elemItem.OverrideElement[i + 1] is AddElement)
@@ -249,7 +358,7 @@ namespace Redemption.Globals
             }
             return 0;
         }
-        public static bool HasElementItem(this Item item, int ID = 0)
+        public static bool HasElementItem(this Item item, int ID = 0, bool checkAccessories = true)
         {
             bool itemTrue = ID switch
             {
@@ -270,6 +379,10 @@ namespace Redemption.Globals
                 15 => ItemExplosive[item.type],
                 _ => false,
             };
+
+            if (checkAccessories && ID == HasElementPlayerEffect(Main.LocalPlayer, item))
+                itemTrue = true;
+
             if (item.TryGetGlobalItem(out ElementalItem elemItem))
             {
                 if (elemItem.OverrideElement[ID] is AddElement)
@@ -278,7 +391,7 @@ namespace Redemption.Globals
                     itemTrue = false;
                 if (itemTrue)
                     return true;
-                return HasElement(ID, item.shoot, elemItem.ItemShootExtra[0], elemItem.ItemShootExtra[1]);
+                return HasElementFromProj(ID, item.shoot, elemItem.ItemShootExtra[0], elemItem.ItemShootExtra[1]);
             }
             return false;
         }
@@ -332,8 +445,8 @@ namespace Redemption.Globals
         public const short Psychic = 13;
         public const short Celestial = 14;
         public const short Explosive = 15;
-        public const short AddElement = 1;
-        public const short RemoveElement = -1;
+        public const sbyte AddElement = 1;
+        public const sbyte RemoveElement = -1;
 
         public static string ArcaneS = Language.GetTextValue("Mods.Redemption.Items.Arcane.DisplayName");
         public static string FireS = Language.GetTextValue("Mods.Redemption.Items.Fire.DisplayName");
@@ -355,7 +468,120 @@ namespace Redemption.Globals
     public class ElementalProjectile : GlobalProjectile
     {
         public override bool InstancePerEntity => true;
-        public int[] OverrideElement = new int[16];
+
+        public sbyte[] OverrideElement = new sbyte[16];
+        public bool[] InheritElement = new bool[16]; //Only known to the client
+
+        public override GlobalProjectile Clone(Projectile from, Projectile to)
+        {
+            var clone = (ElementalProjectile)base.Clone(from, to);
+
+            clone.OverrideElement = new sbyte[OverrideElement.Length];
+            Array.Copy(OverrideElement, clone.OverrideElement, clone.OverrideElement.Length);
+
+            clone.InheritElement = new bool[InheritElement.Length];
+            Array.Copy(InheritElement, clone.InheritElement, clone.InheritElement.Length);
+
+            return clone;
+        }
+
+        public override void OnSpawn(Projectile projectile, IEntitySource source)
+        {
+            if (projectile.GetFirstElement() > 0)
+                return;
+            if (source is EntitySource_ItemUse_WithAmmo itemAmmo && ElementID.ProjectilesInheritElements[itemAmmo.Item.type])
+            {
+                for (int i = ElementID.Arcane; i <= ElementID.Explosive; i++)
+                {
+                    if (itemAmmo.Item.HasElement(i))
+                    {
+                        InheritElement[i] = true;
+                        OverrideElement[i] = ElementID.AddElement;
+                    }
+                }
+            }
+            else if (source is EntitySource_ItemUse item && ElementID.ProjectilesInheritElements[item.Item.type])
+            {
+                for (int i = ElementID.Arcane; i <= ElementID.Explosive; i++)
+                {
+                    if (item.Item.HasElement(i))
+                    {
+                        InheritElement[i] = true;
+                        OverrideElement[i] = ElementID.AddElement;
+                    }
+                }
+            }
+            /*if (source is EntitySource_Parent inheritEntity)
+            {
+                if (inheritEntity.Entity is Terraria.Player player)
+                {
+                    Item inheritItem = player.HeldItem;
+                    if (ElementID.ProjectilesInheritElements[inheritItem.type])
+                    {
+                        for (int i = ElementID.Arcane; i <= ElementID.Explosive; i++)
+                        {
+                            if (inheritItem.HasElement(i))
+                            {
+                                InheritElement[i] = true;
+                                OverrideElement[i] = ElementID.AddElement;
+                            }
+                        }
+                    }
+                }
+            }*/
+        }
+
+        #region Element Syncing
+        public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter)
+        {
+            //Send all inherited elements
+            List<byte> elements = new();
+            for (sbyte i = 0; i <= ElementID.Explosive; i++)
+            {
+                if (InheritElement[i])
+                {
+                    elements.Add((byte)i);
+                }
+            }
+
+            int count = elements.Count;
+            bitWriter.WriteBit(count == 0);
+            if (count == 0)
+            {
+                return;
+            }
+
+            binaryWriter.Write7BitEncodedInt(count);
+            foreach (var e in elements)
+            {
+                //16 elements fit into 4 bits (2^4 = 16) from 0000 to 1111
+                BitsByte bits = e;
+                bitWriter.WriteBit(bits[0]);
+                bitWriter.WriteBit(bits[1]);
+                bitWriter.WriteBit(bits[2]);
+                bitWriter.WriteBit(bits[3]);
+            }
+        }
+
+        public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader)
+        {
+            bool empty = bitReader.ReadBit();
+            if (empty)
+                return;
+
+            int count = binaryReader.Read7BitEncodedInt();
+            for (int i = 0; i < count; i++)
+            {
+                BitsByte bits = 0;
+                bits[0] = bitReader.ReadBit();
+                bits[1] = bitReader.ReadBit();
+                bits[2] = bitReader.ReadBit();
+                bits[3] = bitReader.ReadBit();
+                OverrideElement[bits] = ElementID.AddElement;
+            }
+        }
+        #endregion
+
         public override void ModifyHitNPC(Projectile projectile, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (!RedeConfigClient.Instance.ElementDisable)
@@ -369,24 +595,16 @@ namespace Redemption.Globals
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (Main.player[projectile.owner].RedemptionPlayerBuff().hydraCorrosion && projectile.HasElement(ElementID.Poison))
-                    target.AddBuff(ModContent.BuffType<HydraAcidDebuff>(), 240);
+                    target.AddBuff(BuffType<HydraAcidDebuff>(), 240);
             }
-        }
-        public override bool PreAI(Projectile projectile)
-        {
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (Main.player[projectile.owner].RedemptionPlayerBuff().eldritchRoot && projectile.HasElement(ElementID.Nature))
-                    OverrideElement[ElementID.Shadow] = 1;
-            }
-            return base.PreAI(projectile);
         }
     }
     public class ElementalItem : GlobalItem
     {
         public override bool InstancePerEntity => true;
-        public int[] OverrideElement = new int[16];
+        [CloneByReference] public sbyte[] OverrideElement = new sbyte[16];
         public int[] ItemShootExtra = new int[2];
+
         public override void ModifyWeaponCrit(Item item, Terraria.Player player, ref float crit)
         {
             BuffPlayer modPlayer = player.RedemptionPlayerBuff();
@@ -414,14 +632,12 @@ namespace Redemption.Globals
                     crit += 6;
             }
         }
-        public override void ModifyWeaponDamage(Item item, Terraria.Player player, ref StatModifier damage)
+        public override void ModifyHitNPC(Item item, Terraria.Player player, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (!RedeConfigClient.Instance.ElementDisable)
             {
-                if (player.RedemptionPlayerBuff().eldritchRoot && item.HasElementItem(ElementID.Nature))
-                    OverrideElement[ElementID.Shadow] = 1;
-                else
-                    OverrideElement[ElementID.Shadow] = 0;
+                if (item.HasElement(ElementID.Explosive))
+                    modifiers.ScalingArmorPenetration += .2f;
             }
         }
         public override void OnHitNPC(Item item, Terraria.Player player, Terraria.NPC target, Terraria.NPC.HitInfo hit, int damageDone)
@@ -429,14 +645,14 @@ namespace Redemption.Globals
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (player.RedemptionPlayerBuff().hydraCorrosion && item.HasElementItem(ElementID.Poison))
-                    target.AddBuff(ModContent.BuffType<HydraAcidDebuff>(), 240);
+                    target.AddBuff(BuffType<HydraAcidDebuff>(), 240);
             }
         }
     }
     public class ElementalNPC : GlobalNPC
     {
         public override bool InstancePerEntity => true;
-        public int[] OverrideElement = new int[16];
+        public sbyte[] OverrideElement = new sbyte[16];
         public float[] OverrideMultiplier = new float[16] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
         public float[] elementDmg = new float[16] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
@@ -516,6 +732,35 @@ namespace Redemption.Globals
                 #endregion
             }
         }
+        public override void ModifyHitNPC(Terraria.NPC npc, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
+        {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                #region Elemental Attributes
+                float multiplier = 1;
+                ElementalEffects(target, npc, ref multiplier, ref modifiers);
+                for (int j = 0; j < target.GetGlobalNPC<ElementalNPC>().elementDmg.Length; j++)
+                {
+                    if (target.GetGlobalNPC<ElementalNPC>().elementDmg[j] is 1 || !npc.HasElement(j))
+                        continue;
+                    multiplier *= target.GetGlobalNPC<ElementalNPC>().elementDmg[j];
+                }
+                multiplier = (int)Math.Round(multiplier * 100);
+                multiplier /= 100;
+                if (target.boss)
+                    multiplier = MathHelper.Clamp(multiplier, .75f, 1.25f);
+
+                if (multiplier >= 1.1f)
+                    CombatText.NewText(target.getRect(), Color.CornflowerBlue, multiplier + "x", true, true);
+                else if (multiplier <= 0.9f)
+                    CombatText.NewText(target.getRect(), Color.IndianRed, multiplier + "x", true, true);
+
+                modifiers.FinalDamage *= multiplier;
+
+                SetElementalMultipliers(target, ref target.GetGlobalNPC<ElementalNPC>().elementDmg);
+                #endregion
+            }
+        }
         public static void SetElementalMultipliers(Terraria.NPC npc, ref float[] multiplier)
         {
             for (int j = 0; j < npc.GetGlobalNPC<ElementalNPC>().OverrideMultiplier.Length; j++)
@@ -540,7 +785,7 @@ namespace Redemption.Globals
             if (NPCLists.Demon.Contains(npc.type))
             {
                 multiplier[ElementID.Holy] *= 1.3f;
-                multiplier[ElementID.Celestial] *= 1.3f;
+                multiplier[ElementID.Celestial] *= 1.2f;
                 multiplier[ElementID.Fire] *= 0.5f;
                 multiplier[ElementID.Water] *= 1.15f;
                 multiplier[ElementID.Ice] *= 1.15f;
@@ -549,7 +794,7 @@ namespace Redemption.Globals
             {
                 multiplier[ElementID.Holy] *= 1.15f;
                 multiplier[ElementID.Celestial] *= 1.15f;
-                multiplier[ElementID.Arcane] *= 1.15f;
+                multiplier[ElementID.Arcane] *= 1.25f;
             }
             if (NPCLists.IsSlime.Contains(npc.type))
             {
@@ -567,7 +812,7 @@ namespace Redemption.Globals
             }
             if (NPCLists.Hot.Contains(npc.type))
             {
-                multiplier[ElementID.Fire] *= 0.5f;
+                multiplier[ElementID.Fire] *= 0.8f;
                 multiplier[ElementID.Ice] *= 1.25f;
                 multiplier[ElementID.Water] *= 1.1f;
                 multiplier[ElementID.Wind] *= 1.1f;
@@ -578,7 +823,7 @@ namespace Redemption.Globals
                 multiplier[ElementID.Fire] *= 0.75f;
                 multiplier[ElementID.Ice] *= 1.25f;
                 multiplier[ElementID.Poison] *= 1.25f;
-                multiplier[ElementID.Water] *= 0.5f;
+                multiplier[ElementID.Water] *= 0.75f;
             }
             if (NPCLists.Infected.Contains(npc.type))
             {
@@ -616,7 +861,7 @@ namespace Redemption.Globals
             {
                 multiplier[ElementID.Holy] *= 1.1f;
                 multiplier[ElementID.Ice] *= 1.1f;
-                multiplier[ElementID.Poison] *= 1.1f;
+                multiplier[ElementID.Poison] *= 1.25f;
                 multiplier[ElementID.Shadow] *= 0.9f;
                 multiplier[ElementID.Blood] *= 0.75f;
             }
@@ -656,6 +901,25 @@ namespace Redemption.Globals
             if (proj.HasElement(ElementID.Poison) && (npc.poisoned || npc.venom || npc.RedemptionNPCBuff().dirtyWound))
                 multiplier *= 1.1f;
             if (proj.HasElement(ElementID.Wind) && (npc.noGravity || !npc.collideY))
+            {
+                knockback.Knockback *= 1.25f;
+                if (npc.knockBackResist > 0)
+                    knockback.Knockback.Flat += 2;
+            }
+
+            multiplier = (int)Math.Round(multiplier * 100);
+            multiplier /= 100;
+        }
+        public static void ElementalEffects(Terraria.NPC npc, Terraria.NPC attacker, ref float multiplier, ref Terraria.NPC.HitModifiers knockback)
+        {
+            if (attacker.HasElement(ElementID.Thunder) && ((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet) || NPCLists.Wet.Contains(npc.type)))
+                multiplier *= 1.1f;
+            if (attacker.HasElement(ElementID.Earth) && !npc.noTileCollide && npc.collideY)
+                multiplier *= 1.1f;
+
+            if (attacker.HasElement(ElementID.Poison) && (npc.poisoned || npc.venom || npc.RedemptionNPCBuff().dirtyWound))
+                multiplier *= 1.1f;
+            if (attacker.HasElement(ElementID.Wind) && (npc.noGravity || !npc.collideY))
             {
                 knockback.Knockback *= 1.25f;
                 if (npc.knockBackResist > 0)

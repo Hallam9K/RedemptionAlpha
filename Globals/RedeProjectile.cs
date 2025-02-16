@@ -38,18 +38,6 @@ namespace Redemption.Globals
             if (ProjectileLists.IsTechnicallyMelee.Contains(projectile.type))
                 TechnicallyMelee = true;
         }
-        public override bool PreAI(Projectile projectile)
-        {
-            if ((projectile.DamageType == DamageClass.Melee || projectile.DamageType == DamageClass.SummonMeleeSpeed) && Main.player[projectile.owner].HasBuff<ExplosiveFlaskBuff>())
-            {
-                if (Main.rand.NextBool(3))
-                    Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Smoke);
-                if (Main.rand.NextBool(10))
-                    Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.InfernoFork);
-                projectile.GetGlobalProjectile<ElementalProjectile>().OverrideElement[ElementID.Explosive] = 1;
-            }
-            return base.PreAI(projectile);
-        }
         public override void ModifyHitNPC(Projectile projectile, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (ReflectDamageIncrease is 0)

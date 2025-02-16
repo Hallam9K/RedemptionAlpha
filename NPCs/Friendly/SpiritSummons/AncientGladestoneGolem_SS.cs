@@ -31,7 +31,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Threatened,
             PillarAttack,
             PillarJump,
-            SoulMove
+            SoulMove = 10
         }
         public ActionState AIState
         {
@@ -86,7 +86,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 modifiers.DisableCrit();
-                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.DD2_WitherBeastCrystalImpact, .1f, false, DustID.DungeonSpirit, default, 20, 2, 10);
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.DD2_WitherBeastCrystalImpact, .25f, false, DustID.DungeonSpirit, default, 20, 2, 10);
             }
             else
                 modifiers.FinalDamage *= 2;
@@ -115,8 +115,6 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public int runCooldown;
         public override void OnSpawn(IEntitySource source)
         {
-            Player player = Main.player[(int)NPC.ai[3]];
-            NPC.damage = (int)(NPC.damage * player.GetTotalDamage(DamageClass.Summon).Additive);
             TimerRand = Main.rand.Next(120, 280);
             NPC.netUpdate = true;
         }

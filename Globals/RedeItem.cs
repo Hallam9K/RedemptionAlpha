@@ -50,6 +50,11 @@ namespace Redemption.Globals
         }
         public bool TechnicallyHammer;
         public bool TechnicallyAxe;
+        public bool[] HideElementTooltip = new bool[16];
+
+        // Crux Cards
+        public float CruxHealthPrefix = 1f;
+        public float CruxDefensePrefix = 1f;
 
         public override void ModifyShootStats(Item item, Terraria.Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
@@ -66,17 +71,6 @@ namespace Redemption.Globals
         public override void MeleeEffects(Item item, Terraria.Player player, Rectangle hitbox)
         {
             player.Redemption().meleeHitbox = hitbox;
-            if (player.RedemptionPlayerBuff().eldritchRoot && item.HasElementItem(ElementID.Nature))
-                item.GetGlobalItem<ElementalItem>().OverrideElement[ElementID.Shadow] = 1;
-
-            if (item.DamageType == DamageClass.Melee && player.HasBuff<ExplosiveFlaskBuff>())
-            {
-                if (Main.rand.NextBool(3))
-                    Dust.NewDust(item.position, item.width, item.height, DustID.Smoke);
-                if (Main.rand.NextBool(10))
-                    Dust.NewDust(item.position, item.width, item.height, DustID.InfernoFork);
-                item.GetGlobalItem<ElementalItem>().OverrideElement[ElementID.Explosive] = 1;
-            }
         }
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
@@ -401,7 +395,7 @@ namespace Redemption.Globals
                 TooltipLine hammerLine = new(Mod, "HammerBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.HammerBonus")) { OverrideColor = Colors.RarityOrange };
                 tooltips.Add(hammerLine);
             }
-            if (!RedeConfigClient.Instance.ElementDisable && item.HasElementItem(ElementID.Explosive))
+            if (!RedeConfigClient.Instance.ElementDisable && item.HasElementItem(ElementID.Explosive) && !HideElementTooltip[ElementID.Explosive])
             {
                 TooltipLine explodeLine = new(Mod, "ExplodeBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ExplodeBonus")) { OverrideColor = Colors.RarityOrange };
                 tooltips.Add(explodeLine);
@@ -409,73 +403,72 @@ namespace Redemption.Globals
 
             if (!RedeConfigClient.Instance.ElementDisable && !ItemLists.NoElement.Contains(item.type) && !ProjectileLists.NoElement.Contains(item.shoot))
             {
-                if (item.HasElementItem(ElementID.Arcane))
+                if (item.HasElementItem(ElementID.Arcane) && !HideElementTooltip[ElementID.Arcane])
                 {
                     TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ArcaneBonus")) { OverrideColor = Color.LightBlue };
                     tooltips.Add(line);
                 }
-                if (item.HasElementItem(ElementID.Blood))
+                if (item.HasElementItem(ElementID.Blood) && !HideElementTooltip[ElementID.Blood])
                 {
                     TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.BloodBonus")) { OverrideColor = Color.IndianRed };
-
                     tooltips.Add(line);
                 }
-                if (item.HasElementItem(ElementID.Celestial))
+                if (item.HasElementItem(ElementID.Celestial) && !HideElementTooltip[ElementID.Celestial])
                 {
                     TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.CelestialBonus")) { OverrideColor = Color.Pink };
                     tooltips.Add(line);
                 }
-                if (item.HasElementItem(ElementID.Earth))
+                if (item.HasElementItem(ElementID.Earth) && !HideElementTooltip[ElementID.Earth])
                 {
                     TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.EarthBonus")) { OverrideColor = Color.SandyBrown };
                     tooltips.Add(line);
                 }
-                if (item.HasElementItem(ElementID.Fire))
+                if (item.HasElementItem(ElementID.Fire) && !HideElementTooltip[ElementID.Fire])
                 {
                     TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.FireBonus")) { OverrideColor = Color.Orange };
                     tooltips.Add(line);
                 }
-                if (item.HasElementItem(ElementID.Holy))
+                if (item.HasElementItem(ElementID.Holy) && !HideElementTooltip[ElementID.Holy])
                 {
                     TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.HolyBonus")) { OverrideColor = Color.LightGoldenrodYellow };
                     tooltips.Add(line);
                 }
-                if (item.HasElementItem(ElementID.Ice))
+                if (item.HasElementItem(ElementID.Ice) && !HideElementTooltip[ElementID.Ice])
                 {
                     TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.IceBonus")) { OverrideColor = Color.LightCyan };
                     tooltips.Add(line);
                 }
-                if (item.HasElementItem(ElementID.Nature))
+                if (item.HasElementItem(ElementID.Nature) && !HideElementTooltip[ElementID.Nature])
                 {
                     TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.NatureBonus")) { OverrideColor = Color.LawnGreen };
                     tooltips.Add(line);
                 }
-                if (item.HasElementItem(ElementID.Poison))
+                if (item.HasElementItem(ElementID.Poison) && !HideElementTooltip[ElementID.Poison])
                 {
                     TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.PoisonBonus")) { OverrideColor = Color.MediumPurple };
                     tooltips.Add(line);
                 }
-                if (item.HasElementItem(ElementID.Psychic))
+                if (item.HasElementItem(ElementID.Psychic) && !HideElementTooltip[ElementID.Psychic])
                 {
                     TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.PsychicBonus")) { OverrideColor = Color.LightPink };
                     tooltips.Add(line);
                 }
-                if (item.HasElementItem(ElementID.Shadow))
+                if (item.HasElementItem(ElementID.Shadow) && !HideElementTooltip[ElementID.Shadow])
                 {
                     TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ShadowBonus")) { OverrideColor = Color.MediumSlateBlue };
                     tooltips.Add(line);
                 }
-                if (item.HasElementItem(ElementID.Thunder))
+                if (item.HasElementItem(ElementID.Thunder) && !HideElementTooltip[ElementID.Thunder])
                 {
                     TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ThunderBonus")) { OverrideColor = Color.LightYellow };
                     tooltips.Add(line);
                 }
-                if (item.HasElementItem(ElementID.Water))
+                if (item.HasElementItem(ElementID.Water) && !HideElementTooltip[ElementID.Water])
                 {
                     TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.WaterBonus")) { OverrideColor = Color.SkyBlue };
                     tooltips.Add(line);
                 }
-                if (item.HasElementItem(ElementID.Wind))
+                if (item.HasElementItem(ElementID.Wind) && !HideElementTooltip[ElementID.Wind])
                 {
                     TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.WindBonus")) { OverrideColor = Color.LightGray };
                     tooltips.Add(line);

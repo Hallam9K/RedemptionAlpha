@@ -1,9 +1,9 @@
-using System;
-using Terraria.ModLoader;
-using Terraria;
-using Redemption.Globals.World;
-using Terraria.ID;
+using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Globals.World;
+using System;
+using Terraria;
+using Terraria.ID;
 
 namespace Redemption
 {
@@ -80,6 +80,15 @@ namespace Redemption
                             throw new Exception($"Expected an argument of type int when setting element ID, but got type {args[1].GetType().Name} instead.");
                         if (args[2] is not int itemID)
                             throw new Exception($"Expected an argument of type int when setting Item type, but got type {args[2].GetType().Name} instead.");
+
+                        if (args.Length > 3)
+                        {
+                            if (args[3] is bool projInheritsFromItem)
+                                ElementID.ProjectilesInheritElements[itemID] = projInheritsFromItem;
+                            else
+                                throw new Exception($"Expected an argument of type bool when setting projectile inheriting, but got type {args[3].GetType().Name} instead.");
+                        }
+
                         return elementID2 switch
                         {
                             1 => ElementID.ItemArcane[itemID] = true,
@@ -123,6 +132,56 @@ namespace Redemption
                             15 => ElementID.ProjExplosive[projID] = true,
                             _ => false,
                         };
+                    case "elementOverrideItem":
+                        if (args[1] is not Item item)
+                            throw new Exception($"Expected an argument of type Item, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not int elementID4)
+                            throw new Exception($"Expected an argument of type int when setting Elemental type, but got type {args[2].GetType().Name} instead.");
+                        if (args[3] is not sbyte overrideID)
+                            throw new Exception($"Expected an argument of type sbyte when setting override behaviour, but got type {args[3].GetType().Name} instead. (1 = Add Element, -1 = Remove Element)");
+
+                        item.GetGlobalItem<ElementalItem>().OverrideElement[elementID4] = overrideID;
+                        break;
+                    case "elementOverrideNPC":
+                        if (args[1] is not NPC npc)
+                            throw new Exception($"Expected an argument of type NPC, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not int elementID5)
+                            throw new Exception($"Expected an argument of type int when setting Elemental type, but got type {args[2].GetType().Name} instead.");
+                        if (args[3] is not sbyte overrideID2)
+                            throw new Exception($"Expected an argument of type sbyte when setting override behaviour, but got type {args[3].GetType().Name} instead. (1 = Add Element, -1 = Remove Element)");
+
+                        npc.GetGlobalNPC<ElementalNPC>().OverrideElement[elementID5] = overrideID2;
+                        break;
+                    case "elementOverrideProj":
+                        if (args[1] is not Projectile proj)
+                            throw new Exception($"Expected an argument of type Projectile, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not int elementID6)
+                            throw new Exception($"Expected an argument of type int when setting Elemental type, but got type {args[2].GetType().Name} instead.");
+                        if (args[3] is not sbyte overrideID3)
+                            throw new Exception($"Expected an argument of type sbyte when setting override behaviour, but got type {args[3].GetType().Name} instead. (1 = Add Element, -1 = Remove Element)");
+
+                        proj.GetGlobalProjectile<ElementalProjectile>().OverrideElement[elementID6] = overrideID3;
+                        break;
+                    case "elementMultiplier":
+                        if (args[1] is not NPC npc2)
+                            throw new Exception($"Expected an argument of type NPC, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not int elementID7)
+                            throw new Exception($"Expected an argument of type int when setting Elemental type, but got type {args[2].GetType().Name} instead.");
+                        if (args[3] is not float multiplier)
+                            throw new Exception($"Expected an argument of type float when setting multiplier value, but got type {args[3].GetType().Name} instead.");
+
+                        npc2.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[elementID7] = multiplier;
+                        break;
+                    case "hideElementIcon":
+                        if (args[1] is not Item item2)
+                            throw new Exception($"Expected an argument of type Item, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not int elementID8)
+                            throw new Exception($"Expected an argument of type int when setting Elemental type, but got type {args[2].GetType().Name} instead.");
+                        if (args[3] is not bool hidden)
+                            throw new Exception($"Expected an argument of type bool when setting if hidden or not, but got type {args[3].GetType().Name} instead.");
+
+                        item2.Redemption().HideElementTooltip[elementID8] = hidden;
+                        break;
                     case "addItemToBluntSwing": // Disables automatic Slash Bonus
                         if (args[1] is not int ItemID)
                             throw new Exception($"Expected an argument of type int when setting Projectile type, but got type {args[1].GetType().Name} instead.");
@@ -191,6 +250,8 @@ namespace Redemption
                                 break;
                         }
                         break;
+                    case "RaveyardActive":
+                        return RedeWorld.SkeletonInvasion;
                 }
             }
             /*

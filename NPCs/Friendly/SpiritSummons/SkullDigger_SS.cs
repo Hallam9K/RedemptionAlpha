@@ -30,7 +30,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Idle,
             Alert,
             Attacks,
-            SoulMove
+            SoulMove = 10
         }
 
         public ActionState AIState
@@ -57,7 +57,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             NPC.width = 60;
             NPC.height = 92;
-            NPC.damage = 28;
+            NPC.damage = 30;
             NPC.defense = 0;
             NPC.lifeMax = 2400;
             NPC.HitSound = SoundID.NPCHit3;
@@ -127,8 +127,6 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public int ID;
         public override void OnSpawn(IEntitySource source)
         {
-            Player player = Main.player[(int)NPC.ai[3]];
-            NPC.damage = (int)(NPC.damage * player.GetTotalDamage(DamageClass.Summon).Additive);
             NPC.localAI[0] = Main.rand.Next(80, 120);
             NPC.netUpdate = true;
         }
@@ -603,7 +601,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             }
             return false;
         }
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= NPCHelper.HostileProjDamageMultiplier();
         public override bool? CanHitNPC(NPC target)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];

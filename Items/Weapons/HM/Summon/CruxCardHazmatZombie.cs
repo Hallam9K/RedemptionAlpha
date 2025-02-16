@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+/*using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs;
@@ -21,10 +21,10 @@ namespace Redemption.Items.Weapons.HM.Summon
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Crux Card: Hazmat Zombie");
-            /* Tooltip.SetDefault("Summons the spirit of a Hazmat Zombie\n" +
+             Tooltip.SetDefault("Summons the spirit of a Hazmat Zombie\n" +
                 "Right-click to tug the spirit back to your position, consuming 1 [i:" + ModContent.ItemType<LostSoul>() + "]\n" +
                 "Consumes 15 [i:" + ModContent.ItemType<LostSoul>() + "] on use\n" +
-                "Can only use one Spirit Card at a time"); */
+                "Can only use one Spirit Card at a time"); 
             Item.ResearchUnlockCount = 1;
         }
 
@@ -166,4 +166,4 @@ namespace Redemption.Items.Weapons.HM.Summon
             return false;
         }
     }
-}
+}*/

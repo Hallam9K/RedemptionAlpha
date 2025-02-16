@@ -2706,7 +2706,7 @@ Mods: {
 		Prefixes: {
 			CruxHealthTooltip: "{0:+0;-#}% health"
 			CruxDefenseTooltip: "{0:+0;-#}% defense"
-			SpiritExtractTooltip: "{0:+0;-#}% spirit extraction chance"
+			SpiritExtractTooltip: "{0:+0;-#}% spirit extraction scale"
 			HealthyPrefix.DisplayName: Healthy
 			DepressedPrefix.DisplayName: Depressed
 			CrestfallenPrefix.DisplayName: Crestfallen
@@ -4404,7 +4404,7 @@ Mods: {
 			}
 
 			NebuleusVanity2: {
-				DisplayName: Bygone Nebuleus Vanity
+				DisplayName: Bygone Nebuleus Robes
 				Tooltip: ""
 			}
 
@@ -9307,9 +9307,11 @@ Mods: {
 				Tooltip:
 					'''
 					Summons the spirits of a Skeleton Warden, Flagbearer, and Noble
-					Right-click to tug the spirits back to your position, consuming 2 [i:Redemption/LostSoul]
-					Consumes 14 [i:Redemption/LostSoul] on use
-					Can only use one Spirit Card at a time
+					Consumes {0} [i:Redemption/LostSoul]Lost Souls on use
+					Right-click to return the spirits back to your position
+					Can only use one Crux Card at a time
+					[c/99D4FF:'A balanced team of offense, defense, and support. The warden stands between foe and friend,]
+					[c/99D4FF:warding the noble with a tower shield from oncoming attacks, as the flagbearer boosts their abilities.']
 					'''
 			}
 
@@ -9318,9 +9320,11 @@ Mods: {
 				Tooltip:
 					'''
 					Summons the spirit of a Forest Nymph
-					Right-click to tug the spirit back to your position, consuming 1 [i:Redemption/LostSoul]
-					Consumes 12 [i:Redemption/LostSoul] on use
-					Can only use one Spirit Card at a time
+					Consumes {0} [i:Redemption/LostSoul]Lost Souls on use
+					Right-click to return the spirit back to your position
+					Can only use one Crux Card at a time
+					[c/99D4FF:'A cautious fighter with high vitality. The Nymph's spirit will slash at foes with her sickle,]
+					[c/99D4FF:a deadly weapon against dark creatures. Nearing defeat, she will flee, piercing foes with roots from afar.']
 					'''
 			}
 
@@ -9328,10 +9332,12 @@ Mods: {
 				DisplayName: Crux Card: Gathic Soldiers
 				Tooltip:
 					'''
-					Summons the spirits of 2 Skeleton Wanderers and a Duelist
-					Right-click to tug the spirits back to your position, consuming 1 [i:Redemption/LostSoul]
-					Consumes 10 [i:Redemption/LostSoul] on use
-					Can only use one Spirit Card at a time
+					Summons the spirits of 2 Skeleton Wanderers and 2 Duelists
+					Consumes {0} [i:Redemption/LostSoul]Lost Souls on use
+					Right-click to return the spirits back to your position
+					Can only use one Crux Card at a time
+					[c/99D4FF:'A team of pure and quick offense. These spirits will pierce and slice foes in an almost primitive]
+					[c/99D4FF:display of tactics. At least the duelists are smart enough to try dodging incoming projectiles.']
 					'''
 			}
 
@@ -9340,9 +9346,11 @@ Mods: {
 				Tooltip:
 					'''
 					Summons the spirits of 2 Ancient Gladestone Golems
-					Right-click to tug the spirits back to your position, consuming 3 [i:Redemption/LostSoul]
-					Consumes 18 [i:Redemption/LostSoul] on use
-					Can only use one Spirit Card at a time
+					Consumes {0} [i:Redemption/LostSoul]Lost Souls on use
+					Right-click to return the spirits back to your position
+					Can only use one Crux Card at a time
+					[c/99D4FF:'A durable duo of the inanimate. Beneath their rocky exterior lies a rusted revelation.]
+					[c/99D4FF:These spirits will launch themselves or their foes with stone pillars.']
 					'''
 			}
 
@@ -9351,9 +9359,11 @@ Mods: {
 				Tooltip:
 					'''
 					Summons the great spirit of a Mossy Goliath
-					Right-click to tug the spirits back to your position, consuming 5 [i:Redemption/LostSoul]
-					Consumes 30 [i:Redemption/LostSoul] on use
-					Can only use one Spirit Card at a time
+					Consumes {0} [i:Redemption/LostSoul]Lost Souls on use
+					Right-click to return the spirit back to your position
+					Can only use one Crux Card at a time
+					[c/99D4FF:'A grounded beast from muddy rainforests. The Goliath's stomp can stun foes, and its roar disorients.]
+					[c/99D4FF:Along with its fierce dashes, it can also breathe a toxic breath.']
 					'''
 			}
 
@@ -9362,9 +9372,11 @@ Mods: {
 				Tooltip:
 					'''
 					Summons the spirits of 2 Epidotrian Skeletons
-					Right-click to tug the spirits back to your position, consuming 1 [i:Redemption/LostSoul]
-					Consumes 6 [i:Redemption/LostSoul] on use
-					Can only use one Spirit Card at a time
+					Consumes {0} [i:Redemption/LostSoul]Lost Souls on use
+					Right-click to return the spirits back to your position
+					Can only use one Crux Card at a time
+					[c/99D4FF:'A short-sighted duo of skeletal friends. They don't know exactly what's going on, but are happy to be here.]
+					[c/99D4FF:Upon seeing an enemy, they will rush to bash them with their boney heads.']
 					'''
 			}
 
@@ -9373,9 +9385,11 @@ Mods: {
 				Tooltip:
 					'''
 					Summons the spirits of 3 Skeleton Assassins
-					Right-click to tug the spirits back to your position, consuming 1 [i:Redemption/LostSoul]
-					Consumes 10 [i:Redemption/LostSoul] on use
-					Can only use one Spirit Card at a time
+					Consumes {0} [i:Redemption/LostSoul]Lost Souls on use
+					Right-click to return the spirits back to your position
+					Can only use one Crux Card at a time
+					[c/99D4FF:'A cruel trio of stealthy spirits. This gang of bones will shroud themselves in shadow,]
+					[c/99D4FF:stalking foes to give them a nasty stab.']
 					'''
 			}
 
@@ -9384,9 +9398,11 @@ Mods: {
 				Tooltip:
 					'''
 					Summons the great spirit of Skull Digger
-					Right-click to tug the spirits back to your position, consuming 2 [i:Redemption/LostSoul]
-					Consumes 30 [i:Redemption/LostSoul] on use
-					Can only use one Spirit Card at a time
+					Consumes {0} [i:Redemption/LostSoul]Lost Souls on use
+					Right-click to return the spirit back to your position
+					Can only use one Crux Card at a time
+					[c/99D4FF:'A loyal protector. Skull Digger has always tried to remain merciful to even his greatest foes,]
+					[c/99D4FF:but to those who threaten the ones he loves, he is willing to reap.']
 					'''
 			}
 
@@ -9395,9 +9411,11 @@ Mods: {
 				Tooltip:
 					'''
 					Summons the spirit of Asher
-					Right-click to tug the spirit back to your position, consuming 1 [i:Redemption/LostSoul]
-					Consumes 14 [i:Redemption/LostSoul] on use
-					Can only use one Spirit Card at a time
+					Consumes {0} [i:Redemption/LostSoul]Lost Souls on use
+					Right-click to return the spirit back to your position
+					Can only use one Crux Card at a time
+					[c/99D4FF:'A nimble figher and friend. Asher's past is a mystery to all but one.]
+					[c/99D4FF:His spirit will slice and dice foes, and try to dodge incoming projectiles.']
 					'''
 			}
 
@@ -9972,9 +9990,11 @@ Mods: {
 				Tooltip:
 					'''
 					Summons the great spirit of Kyretha, Blade of the Mountain
-					Right-click to tug the spirit back to your position, consuming 3 [i:Redemption/LostSoul]
-					Consumes 30 [i:Redemption/LostSoul] on use
-					Can only use one Spirit Card at a time
+					Consumes {0} [i:Redemption/LostSoul]Lost Souls on use
+					Right-click to return the spirit back to your position
+					Can only use one Crux Card at a time
+					[c/99D4FF:'A proud warrior unshackled. Kyretha's spirit slashes and stabs foes with her famed blade of ice.]
+					[c/99D4FF:Calavia's agility pales in comparison to the original Blade of the Mountain.']
 					'''
 			}
 
