@@ -152,6 +152,7 @@ namespace Redemption.Globals
         //
 
         public static bool[] ProjectilesInheritElements = ItemID.Sets.Factory.CreateBoolSet();
+        public static bool[] ProjectilesInheritElementsFromThis = ProjectileID.Sets.Factory.CreateBoolSet();
 
         private static int HasElementPlayerEffect(Terraria.Player player, Entity entity)
         {
@@ -429,6 +430,42 @@ namespace Redemption.Globals
                 _ => false,
             };
         }
+        public static int GetFirstElement(this Terraria.NPC npc, bool ignoreExplosive = false)
+        {
+            bool[] array = new bool[16];
+            for (int i = 0; i < 15; i++)
+            {
+                if (npc.TryGetGlobalNPC(out ElementalNPC elemNPC))
+                {
+                    if (elemNPC.OverrideElement[i + 1] is AddElement)
+                        return i + 1;
+                    if (elemNPC.OverrideElement[i + 1] is RemoveElement)
+                        array[i + 1] = true;
+                }
+                bool hasElement = (i + 1) switch
+                {
+                    1 => ItemArcane[npc.type],
+                    2 => ItemFire[npc.type],
+                    3 => ItemWater[npc.type],
+                    4 => ItemIce[npc.type],
+                    5 => ItemEarth[npc.type],
+                    6 => ItemWind[npc.type],
+                    7 => ItemThunder[npc.type],
+                    8 => ItemHoly[npc.type],
+                    9 => ItemShadow[npc.type],
+                    10 => ItemNature[npc.type],
+                    11 => ItemPoison[npc.type],
+                    12 => ItemBlood[npc.type],
+                    13 => ItemPsychic[npc.type],
+                    14 => ItemCelestial[npc.type],
+                    15 => !ignoreExplosive && ItemExplosive[npc.type],
+                    _ => false,
+                };
+                if (hasElement && hasElement != array[i + 1])
+                    return i + 1;
+            }
+            return 0;
+        }
 
         public const short Arcane = 1;
         public const short Fire = 2;
@@ -511,24 +548,17 @@ namespace Redemption.Globals
                     }
                 }
             }
-            /*if (source is EntitySource_Parent inheritEntity)
+            if (source is EntitySource_Parent parent && parent.Entity is Projectile proj && ElementID.ProjectilesInheritElementsFromThis[proj.type])
             {
-                if (inheritEntity.Entity is Terraria.Player player)
+                for (int i = ElementID.Arcane; i <= ElementID.Explosive; i++)
                 {
-                    Item inheritItem = player.HeldItem;
-                    if (ElementID.ProjectilesInheritElements[inheritItem.type])
+                    if (proj.HasElement(i))
                     {
-                        for (int i = ElementID.Arcane; i <= ElementID.Explosive; i++)
-                        {
-                            if (inheritItem.HasElement(i))
-                            {
-                                InheritElement[i] = true;
-                                OverrideElement[i] = ElementID.AddElement;
-                            }
-                        }
+                        InheritElement[i] = true;
+                        OverrideElement[i] = ElementID.AddElement;
                     }
                 }
-            }*/
+            }
         }
 
         #region Element Syncing
@@ -655,6 +685,7 @@ namespace Redemption.Globals
         public sbyte[] OverrideElement = new sbyte[16];
         public float[] OverrideMultiplier = new float[16] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
         public float[] elementDmg = new float[16] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public bool uncappedBossMultiplier;
 
         public override void SetDefaults(Terraria.NPC npc)
         {
@@ -682,7 +713,7 @@ namespace Redemption.Globals
                 }
                 multiplier = (int)Math.Round(multiplier * 100);
                 multiplier /= 100;
-                if (npc.boss)
+                if (npc.boss && !uncappedBossMultiplier)
                     multiplier = MathHelper.Clamp(multiplier, .75f, 1.25f);
 
                 if (multiplier >= 1.1f)
@@ -718,7 +749,7 @@ namespace Redemption.Globals
                 }
                 multiplier = (int)Math.Round(multiplier * 100);
                 multiplier /= 100;
-                if (npc.boss)
+                if (npc.boss && !uncappedBossMultiplier)
                     multiplier = MathHelper.Clamp(multiplier, .75f, 1.25f);
 
                 if (multiplier >= 1.1f)
@@ -747,7 +778,7 @@ namespace Redemption.Globals
                 }
                 multiplier = (int)Math.Round(multiplier * 100);
                 multiplier /= 100;
-                if (target.boss)
+                if (target.boss && !uncappedBossMultiplier)
                     multiplier = MathHelper.Clamp(multiplier, .75f, 1.25f);
 
                 if (multiplier >= 1.1f)

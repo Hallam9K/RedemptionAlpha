@@ -113,6 +113,15 @@ namespace Redemption
                             throw new Exception($"Expected an argument of type int when setting element ID, but got type {args[1].GetType().Name} instead.");
                         if (args[2] is not int projID)
                             throw new Exception($"Expected an argument of type int when setting Projectile type, but got type {args[2].GetType().Name} instead.");
+
+                        if (args.Length > 3)
+                        {
+                            if (args[3] is bool projInheritsFromProj)
+                                ElementID.ProjectilesInheritElementsFromThis[projID] = projInheritsFromProj;
+                            else
+                                throw new Exception($"Expected an argument of type bool when setting projectile inheriting, but got type {args[3].GetType().Name} instead.");
+                        }
+
                         return elementID3 switch
                         {
                             1 => ElementID.ProjArcane[projID] = true,
@@ -162,6 +171,48 @@ namespace Redemption
 
                         proj.GetGlobalProjectile<ElementalProjectile>().OverrideElement[elementID6] = overrideID3;
                         break;
+                    case "hasElementItem":
+                        if (args[1] is not Item item3)
+                            throw new Exception($"Expected an argument of type Item, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not int elementID9)
+                            throw new Exception($"Expected an argument of type int when setting Elemental type, but got type {args[2].GetType().Name} instead.");
+
+                        return ElementID.HasElementItem(item3, elementID9);
+                    case "hasElementNPC":
+                        if (args[1] is not NPC npc3)
+                            throw new Exception($"Expected an argument of type NPC, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not int elementID10)
+                            throw new Exception($"Expected an argument of type int when setting Elemental type, but got type {args[2].GetType().Name} instead.");
+
+                        return ElementID.HasElement(npc3, elementID10);
+                    case "hasElementProj":
+                        if (args[1] is not Projectile proj1)
+                            throw new Exception($"Expected an argument of type Projectile, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not int elementID11)
+                            throw new Exception($"Expected an argument of type int when setting Elemental type, but got type {args[2].GetType().Name} instead.");
+
+                        return ElementID.HasElement(proj1, elementID11);
+                    case "getFirstElementItem":
+                        if (args[1] is not Item item4)
+                            throw new Exception($"Expected an argument of type Item, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not bool ignoreExplosive)
+                            throw new Exception($"Expected an argument of type bool when setting if to ignore explosive, but got type {args[2].GetType().Name} instead.");
+
+                        return ElementID.GetFirstElement(item4, ignoreExplosive);
+                    case "getFirstElementNPC":
+                        if (args[1] is not NPC npc5)
+                            throw new Exception($"Expected an argument of type NPC, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not bool ignoreExplosive2)
+                            throw new Exception($"Expected an argument of type bool when setting if to ignore explosive, but got type {args[2].GetType().Name} instead.");
+
+                        return ElementID.GetFirstElement(npc5, ignoreExplosive2);
+                    case "getFirstElementProj":
+                        if (args[1] is not Projectile proj2)
+                            throw new Exception($"Expected an argument of type Projectile, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not bool ignoreExplosive3)
+                            throw new Exception($"Expected an argument of type bool when setting if to ignore explosive, but got type {args[2].GetType().Name} instead.");
+
+                        return ElementID.GetFirstElement(proj2, ignoreExplosive3);
                     case "elementMultiplier":
                         if (args[1] is not NPC npc2)
                             throw new Exception($"Expected an argument of type NPC, but got type {args[1].GetType().Name} instead.");
@@ -170,8 +221,18 @@ namespace Redemption
                         if (args[3] is not float multiplier)
                             throw new Exception($"Expected an argument of type float when setting multiplier value, but got type {args[3].GetType().Name} instead.");
 
-                        npc2.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[elementID7] = multiplier;
+                        if (npc2.TryGetGlobalNPC<ElementalNPC>(out ElementalNPC elementNPC))
+                            elementNPC.OverrideMultiplier[elementID7] *= multiplier;
                         break;
+                    case "uncapBossElementMultiplier":
+                        if (args[1] is not NPC npc4)
+                            throw new Exception($"Expected an argument of type NPC, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not bool uncapped)
+                            throw new Exception($"Expected an argument of type bool when setting uncapped multiplier for boss, but got type {args[2].GetType().Name} instead.");
+
+                        if (npc4.TryGetGlobalNPC<ElementalNPC>(out ElementalNPC elementNPC2))
+                            return elementNPC2.uncappedBossMultiplier = uncapped;
+                        return false;
                     case "hideElementIcon":
                         if (args[1] is not Item item2)
                             throw new Exception($"Expected an argument of type Item, but got type {args[1].GetType().Name} instead.");

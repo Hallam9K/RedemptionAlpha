@@ -1,10 +1,9 @@
-using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
 using System;
-using Terraria.GameContent.Bestiary;
-using Terraria.UI;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace Redemption.Globals.NPC
 {
@@ -56,7 +55,7 @@ namespace Redemption.Globals.NPC
 
                 elementDmg[i] = (int)Math.Round(elementDmg[i] * 100);
                 elementDmg[i] /= 100;
-                if (npc.boss)
+                if (npc.boss && !npc.GetGlobalNPC<ElementalNPC>().uncappedBossMultiplier)
                     elementDmg[i] = MathHelper.Clamp(elementDmg[i], .75f, 1.25f);
 
                 if (elementDmg[i] > .9f && elementDmg[i] < 1.1f)

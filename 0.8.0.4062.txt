@@ -1,0 +1,5 @@
+=== 0.8 Beta .4062 === (Element Cross-Mod Patch 2)
+- Added Mod Calls for checking if an entity has an Element, getting the first element ID of an entity, and uncapping the Elemental Multiplier limit for bosses
+- Fixed Element Multipliers Mod Call setting the values instead of multiplying
+- Added optional bool in "addElementProj" Mod Call for making projectiles inherit the elements of the projectile it came from automatically, similar to the one added to "addElementItem"
+===============
