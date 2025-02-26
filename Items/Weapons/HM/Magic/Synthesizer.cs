@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Materials.HM;
@@ -17,6 +16,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             // Tooltip.SetDefault("Shoots a wave of notes along the ground");
             Item.ResearchUnlockCount = 1;
+            ElementID.ItemArcane[Type] = true;
         }
 
         public override void SetDefaults()
@@ -31,8 +31,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.knockBack = 1f;
             Item.rare = ItemRarityID.Pink;
             Item.damage = 48;
-            Item.shoot = ModContent.ProjectileType<Synthesizer_Proj>();
-            Item.ExtraItemShoot(ModContent.ProjectileType<SynthNote_Proj>());
+            Item.shoot = ProjectileType<Synthesizer_Proj>();
             Item.shootSpeed = 0;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 15;
@@ -66,8 +65,8 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Xenomite>(), 16)
-                .AddIngredient(ModContent.ItemType<ToxicBile>(), 4)
+                .AddIngredient(ItemType<Xenomite>(), 16)
+                .AddIngredient(ItemType<ToxicBile>(), 4)
                 .AddIngredient(ItemID.SoulofSight, 15)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
@@ -117,7 +116,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                     if (numtries >= 20)
                         break;
 
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), origin + new Vector2(0, 18), new Vector2(0, -14), ModContent.ProjectileType<SynthNote_Proj>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), origin + new Vector2(0, 18), new Vector2(0, -14), ProjectileType<SynthNote_Proj>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
                 }
             }
         }

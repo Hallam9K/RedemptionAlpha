@@ -1,24 +1,17 @@
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
+using Redemption.Globals;
 using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Globals;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.PreHM
 {
     public class HeartInsignia : ModItem
     {
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ShadowS, ElementID.BloodS);
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Heart Insignia");
-            /* Tooltip.SetDefault("Picking up hearts give a short boost to life regen" +
-                "\n15% increased " + ElementID.ShadowS + " and " + ElementID.BloodS + " elemental damage and resistance"); */
-            Item.ResearchUnlockCount = 1;
-        }
 
         public override void SetDefaults()
         {
@@ -29,7 +22,7 @@ namespace Redemption.Items.Accessories.PreHM
             Item.expert = true;
             Item.accessory = true;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {

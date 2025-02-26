@@ -1,3 +1,4 @@
+using Redemption.BaseExtension;
 using Redemption.NPCs.Friendly.SpiritSummons;
 using Terraria;
 using Terraria.ID;
@@ -16,6 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Item.knockBack = 6;
             Item.rare = ItemRarityID.Green;
             Item.value = Item.sellPrice(0, 2, 66, 0);
+            Item.Redemption().CanSwordClash = true;
         }
         public override void SpawnSpirits(Player player)
         {

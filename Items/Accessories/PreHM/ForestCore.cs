@@ -11,14 +11,6 @@ namespace Redemption.Items.Accessories.PreHM
     public class ForestCore : ModItem
     {
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.NatureS);
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Forest Core");
-            /* Tooltip.SetDefault("Increased chance of Nature Boons to drop from the " + ElementID.NatureS + " elemental bonus\n" +
-                "Nature Boons additionally increase critical strike chance for " + ElementID.NatureS + " weapons by 10%\n" +
-                "Increased duration of Nature Boons' effect"); */
-            Item.ResearchUnlockCount = 1;
-        }
 
         public override void SetDefaults()
         {

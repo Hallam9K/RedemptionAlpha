@@ -1489,10 +1489,10 @@ namespace Redemption.NPCs.Bosses.Neb
                     NPC.ai[2]++;
                     if (!Main.dedServ && NPC.ai[2] == 30)
                     {
-                        float dialogueWait = (2f + RedeConfigClient.Instance.DialogueWaitTime) * 60;
+                        float dialogueWait = (2f + RedeConfigServer.Instance.DialogueWaitTime) * 60;
                         transitionMusicTimer += 24 + 37 + 57 + 34;
                         transitionMusicPauseTimer += 6 + (dialogueWait * 4);
-                        float dialogueSpeed = .03f - RedeConfigClient.Instance.DialogueSpeed;
+                        float dialogueSpeed = .03f - RedeConfigServer.Instance.DialogueSpeed;
                         dialogueSpeed = MathHelper.Max(dialogueSpeed, 0.01f);
                         transitionMusicTimer *= dialogueSpeed * 60;
                         transitionMusicTimer += transitionMusicPauseTimer + 30;

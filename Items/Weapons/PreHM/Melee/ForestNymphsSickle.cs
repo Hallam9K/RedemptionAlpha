@@ -1,4 +1,5 @@
-using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
+using Redemption.Globals;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -46,7 +47,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<ForestNymphsSickle_Proj>();
+            Item.shoot = ProjectileType<ForestNymphsSickle_Proj>();
         }
         private bool MagicMode;
         public override bool AltFunctionUse(Player player) => true;
@@ -67,6 +68,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 }
                 SoundEngine.PlaySound(SoundID.DD2_DarkMageCastHeal);
                 MagicMode = !MagicMode;
+
+                if (MagicMode)
+                    Item.GetGlobalItem<ElementalItem>().OverrideElement[ElementID.Arcane] = ElementID.AddElement;
+                else
+                    Item.GetGlobalItem<ElementalItem>().OverrideElement[ElementID.Arcane] = 0;
                 return false;
             }
             if (MagicMode)
@@ -80,7 +86,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             damage = damage.CombineWith(player.GetTotalDamage(MagicMode ? DamageClass.Magic : DamageClass.Melee));
             if (MagicMode)
-                damage *= .7f;
+                damage *= .85f;
         }
         public override void ModifyWeaponCrit(Player player, ref float crit)
         {
@@ -93,6 +99,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             knockback = knockback.CombineWith(player.GetTotalKnockback(MagicMode ? DamageClass.Magic : DamageClass.Melee));
         }
+        public override bool WeaponPrefix() => true;
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine tt = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.Mod == "Terraria");
@@ -100,11 +107,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 string[] splitText = tt.Text.Split(' ');
                 string damageValue = splitText.First();
-                string damageWord = splitText.Last();
-                string damageType = " melee ";
+                string damageType = Lang.tip[2].Value;
                 if (MagicMode)
-                    damageType = " magic ";
-                tt.Text = damageValue + damageType + damageWord;
+                    damageType = Lang.tip[4].Value;
+                tt.Text = damageValue + damageType;
             }
             int tooltipLocation = tooltips.FindIndex(TooltipLine => TooltipLine.Name.Equals("Tooltip0"));
             if (tooltipLocation != -1)
@@ -115,10 +121,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     tooltips.Insert(tooltipLocation, new TooltipLine(Mod, "Tooltip", Language.GetTextValue("Mods.Redemption.Items.ForestNymphsSickle.MagicText")));
             }
             if (!MagicMode)
-            {
-                TooltipLine slashLine = new(Mod, "SharpBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
-                tooltips.Add(slashLine);
-            }
+                Item.Redemption().TechnicallySlash = true;
+            else
+                Item.Redemption().TechnicallySlash = false;
         }
     }
 }

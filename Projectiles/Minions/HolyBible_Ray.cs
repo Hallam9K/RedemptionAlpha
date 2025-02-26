@@ -1,11 +1,11 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.GameContent;
-using Redemption.NPCs.Bosses.Erhan;
+using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.NPCs.Bosses.Erhan;
+using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Minions
 {
@@ -15,8 +15,9 @@ namespace Redemption.Projectiles.Minions
         private new const float FirstSegmentDrawDist = 7;
         public override void SetSafeStaticDefaults()
         {
-            // DisplayName.SetDefault("Holy Ray");
+            ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ElementID.ProjHoly[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetSafeDefaults()
@@ -40,7 +41,7 @@ namespace Redemption.Projectiles.Minions
         {
             Projectile proj = Main.projectile[(int)Projectile.ai[0]];
             Projectile.rotation = Projectile.velocity.ToRotation();
-            if (proj.type == ModContent.ProjectileType<Erhan_Bible>())
+            if (proj.type == ProjectileType<Erhan_Bible>())
             {
                 MaxLaserLength = 77;
                 Projectile.hostile = true;
@@ -108,12 +109,12 @@ namespace Redemption.Projectiles.Minions
         public override bool PreDraw(ref Color lightColor)
         {
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Color.White, (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
         #endregion

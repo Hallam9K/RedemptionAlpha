@@ -224,6 +224,14 @@ namespace Redemption.NPCs.PreHM
 
         public override bool? CanBeHitByItem(Player player, Item item) => RedeHelper.CanHitSpiritCheck(player, item);
         public override bool? CanBeHitByProjectile(Projectile projectile) => RedeHelper.CanHitSpiritCheck(projectile);
+        public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
+        {
+            RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Arcane);
+        }
+        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
+        {
+            RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Arcane);
+        }
 
         public override void OnKill()
         {

@@ -63,6 +63,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             //DisplayName.SetDefault("Shard Shot");
             Main.projFrames[Projectile.type] = 3;
             ElementID.ProjPoison[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

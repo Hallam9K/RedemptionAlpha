@@ -1,14 +1,13 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
+using Redemption.Effects;
 using Redemption.Globals;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Effects;
-using System.Collections.Generic;
 
 namespace Redemption.Projectiles.Melee
 {
@@ -19,6 +18,7 @@ namespace Redemption.Projectiles.Melee
         {
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ElementID.ProjHoly[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -32,14 +32,20 @@ namespace Redemption.Projectiles.Melee
             Projectile.timeLeft = 180;
             Projectile.scale = Main.rand.NextFloat(0.5f, 1);
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 0;
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (Projectile.ai[1] == 1)
+            {
+                Projectile.DamageType = DamageClass.Generic;
+                modifiers.ScalingArmorPenetration += 1f;
+            }
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             FakeKill();
-            Projectile.localNPCImmunity[target.whoAmI] = 20;
-            target.immune[Projectile.owner] = 0;
         }
-
         private readonly int NUMPOINTS = 20;
         public Color baseColor = new(255, 255, 120);
         public Color endColor = Color.White;
@@ -49,7 +55,6 @@ namespace Redemption.Projectiles.Melee
         private DanTrail trail;
         private DanTrail trail2;
         private float thickness = 1f;
-
         public override void AI()
         {
             if (Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
@@ -112,7 +117,6 @@ namespace Redemption.Projectiles.Melee
                 Projectile.Kill();
         }
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.timeLeft <= 150 ? null : false;
-
         public override bool PreDraw(ref Color lightColor)
         {
             Main.spriteBatch.End();
@@ -123,7 +127,7 @@ namespace Redemption.Projectiles.Melee
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 
@@ -136,12 +140,12 @@ namespace Redemption.Projectiles.Melee
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(new Color(255, 255, 120)), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
         public override void OnKill(int timeLeft)

@@ -22,6 +22,7 @@ namespace Redemption.Projectiles.Hostile
             Main.projFrames[Projectile.type] = 5;
             ElementID.ProjFire[Type] = true;
             ElementID.ProjNature[Type] = true;
+            ElementID.ProjArcane[Type] = true;
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
         }
 

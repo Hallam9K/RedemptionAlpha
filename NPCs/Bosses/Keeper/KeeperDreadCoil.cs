@@ -19,6 +19,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjShadow[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

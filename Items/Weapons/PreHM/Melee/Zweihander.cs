@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using System;
@@ -48,7 +48,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<Zweihander_SlashProj>();
+            Item.shoot = ProjectileType<Zweihander_SlashProj>();
+
+            Item.Redemption().TechnicallySlash = true;
+            Item.Redemption().CanSwordClash = true;
         }
         public override bool MeleePrefix() => true;
 
@@ -65,8 +68,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<ZweihanderFragment1>())
-                .AddIngredient(ModContent.ItemType<ZweihanderFragment2>())
+                .AddIngredient(ItemType<ZweihanderFragment1>())
+                .AddIngredient(ItemType<ZweihanderFragment2>())
                 .AddCondition(RedeConditions.RepairedByFallen)
                 .Register();
         }
@@ -95,8 +98,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 };
                 tooltips.Add(line);
             }
-            TooltipLine slashLine = new(Mod, "SharpBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
-            tooltips.Add(slashLine);
         }
     }
 }

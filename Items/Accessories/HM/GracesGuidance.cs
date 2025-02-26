@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
@@ -27,7 +26,7 @@ namespace Redemption.Items.Accessories.HM
                 "Increases length of invincibility after taking damage"); */
             Item.ResearchUnlockCount = 1;
             ElementID.ItemHoly[Type] = true;
-            ElementID.ItemFire[Type] = true;
+            ElementID.ItemArcane[Type] = true;
         }
 
         public override void SetDefaults()
@@ -75,13 +74,13 @@ namespace Redemption.Items.Accessories.HM
                     if (!npc.active || !npc.CanBeChasedBy() || NPCLoader.CanBeHitByItem(npc, player, Item) is false || player.DistanceSQ(npc.Center) > 280 * 280)
                         continue;
 
-                    npc.AddBuff(ModContent.BuffType<HolyFireDebuff>(), 4);
+                    npc.AddBuff(BuffType<HolyFireDebuff>(), 4);
                 }
             }
         }
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
-            if (equippedItem.type == ModContent.ItemType<PowerCellWristband>() || equippedItem.type == ModContent.ItemType<SacredCross>())
+            if (equippedItem.type == ItemType<PowerCellWristband>() || equippedItem.type == ItemType<SacredCross>())
                 return false;
             return true;
         }

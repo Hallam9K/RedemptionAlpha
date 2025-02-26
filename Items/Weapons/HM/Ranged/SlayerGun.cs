@@ -1,5 +1,8 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
+using Redemption.Globals;
+using Redemption.Globals.Player;
+using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Bosses.KSIII;
 using System.Collections.Generic;
 using Terraria;
@@ -7,10 +10,6 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Items.Materials.HM;
-using Redemption.Globals.Player;
-using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -18,16 +17,12 @@ namespace Redemption.Items.Weapons.HM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Hyper-Tech Blaster");
-            /* Tooltip.SetDefault("\n(2-6[i:" + ModContent.ItemType<EnergyPack>() + "]) Replaces normal bullets with Energy Bolts"
-                + "\nRight-clicking changes type of fire\n" +
-                "Requires an Energy Pack to be in your inventory"); */
-            Item.ResearchUnlockCount = 1;
+            ElementID.ItemThunder[Type] = true;
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 78;
+            Item.damage = 120;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 62;
             Item.height = 26;
@@ -45,7 +40,6 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.useAmmo = AmmoID.Bullet;
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
-            Item.ExtraItemShoot(ModContent.ProjectileType<KS3_EnergyBolt>());
         }
 
         public int AttackMode;
@@ -110,12 +104,14 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 {
                     case 0:
                         player.GetModPlayer<EnergyPlayer>().statEnergy -= 2;
-                        int proj = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<KS3_EnergyBolt>(), damage, knockback, player.whoAmI);
+                        int proj = Projectile.NewProjectile(source, position, velocity, ProjectileType<KS3_EnergyBolt>(), damage, knockback, player.whoAmI);
                         Main.projectile[proj].hostile = false;
                         Main.projectile[proj].friendly = true;
                         Main.projectile[proj].DamageType = DamageClass.Ranged;
                         Main.projectile[proj].tileCollide = true;
                         Main.projectile[proj].netUpdate = true;
+                        Main.projectile[proj].extraUpdates = 3;
+                        Main.projectile[proj].velocity /= 3;
                         break;
                     case 1:
                         player.itemAnimationMax = Item.useTime * 3;
@@ -123,7 +119,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         player.itemAnimation = Item.useTime * 3;
                         damage = (int)(damage * 1.5f);
 
-                        float numberProjectiles = 3;
+                        float numberProjectiles = 5;
                         float rotation = MathHelper.ToRadians(15);
                         for (int i = 0; i < numberProjectiles; i++)
                         {
@@ -137,12 +133,14 @@ namespace Redemption.Items.Weapons.HM.Ranged
                             Main.projectile[proj3].netUpdate = true;
                         }
                         player.GetModPlayer<EnergyPlayer>().statEnergy -= 6;
-                        int proj2 = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<KS3_EnergyBolt>(), damage, knockback, player.whoAmI);
+                        int proj2 = Projectile.NewProjectile(source, position, velocity, ProjectileType<KS3_EnergyBolt>(), damage, knockback, player.whoAmI);
                         Main.projectile[proj2].hostile = false;
                         Main.projectile[proj2].friendly = true;
                         Main.projectile[proj2].DamageType = DamageClass.Ranged;
                         Main.projectile[proj2].tileCollide = true;
                         Main.projectile[proj2].netUpdate = true;
+                        Main.projectile[proj2].extraUpdates = 3;
+                        Main.projectile[proj2].velocity /= 3;
                         break;
                     case 2:
                         damage = (int)(damage * 1.4f);
@@ -150,10 +148,11 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         player.itemTime = Item.useTime * 2;
                         player.itemAnimation = Item.useTime * 2;
                         player.GetModPlayer<EnergyPlayer>().statEnergy -= 2;
-                        int proj4 = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<ReboundShot>(), damage, knockback, player.whoAmI);
+                        int proj4 = Projectile.NewProjectile(source, position, velocity, ProjectileType<ReboundShot>(), damage, knockback, player.whoAmI);
                         Main.projectile[proj4].hostile = false;
                         Main.projectile[proj4].friendly = true;
                         Main.projectile[proj4].DamageType = DamageClass.Ranged;
+                        Main.projectile[proj4].penetrate = 10;
                         Main.projectile[proj4].netUpdate = true;
                         break;
 
@@ -164,8 +163,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<CyberPlating>(), 6)
-                .AddIngredient(ModContent.ItemType<Capacitor>(), 2)
+                .AddIngredient(ItemType<CyberPlating>(), 6)
+                .AddIngredient(ItemType<Capacitor>(), 2)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

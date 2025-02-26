@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
@@ -21,7 +20,8 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            Item.ResearchUnlockCount = 1;
+            ElementID.ItemThunder[Type] = true;
+            ElementID.ItemEarth[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -70,8 +70,8 @@ namespace Redemption.Items.Accessories.PostML
                 if (ireCharge >= 200)
                 {
                     Main.NewLightning();
-                    Player.AddBuff(ModContent.BuffType<VasaraPendantCooldown>(), 900);
-                    Projectile.NewProjectile(Player.GetSource_Accessory(new Item(ModContent.ItemType<VasaraPendant>())), Player.Center, Vector2.Zero, ModContent.ProjectileType<VasaraPendant_Proj>(), (int)(200 * Player.GetDamage<GenericDamageClass>().Multiplicative), 0, Main.myPlayer);
+                    Player.AddBuff(BuffType<VasaraPendantCooldown>(), 900);
+                    Projectile.NewProjectile(Player.GetSource_Accessory(new Item(ItemType<VasaraPendant>())), Player.Center, Vector2.Zero, ProjectileType<VasaraPendant_Proj>(), (int)(200 * Player.GetDamage<GenericDamageClass>().Multiplicative), 0, Main.myPlayer);
                     ireCharge = 0;
                 }
             }
@@ -122,7 +122,7 @@ namespace Redemption.Items.Accessories.PostML
             Projectile.Center = player.MountedCenter;
             if (Main.myPlayer == Projectile.owner && Projectile.localAI[0] % 10 == 0)
             {
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<VasaraRock_Proj>(), Projectile.damage, 8, player.whoAmI);
+                Projectile.NewProjectile(player.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileType<VasaraRock_Proj>(), Projectile.damage, 8, player.whoAmI);
             }
             if (Projectile.localAI[0] % 6 == 0)
             {
@@ -265,7 +265,7 @@ namespace Redemption.Items.Accessories.PostML
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.SpreadUp(7), ModContent.ProjectileType<RockslidePebble_Proj>(), Projectile.damage / 2, 1, Main.myPlayer);
+                    int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.SpreadUp(7), ProjectileType<RockslidePebble_Proj>(), Projectile.damage / 2, 1, Main.myPlayer);
                     Main.projectile[p].DamageType = DamageClass.Generic;
                 }
             }
@@ -298,7 +298,7 @@ namespace Redemption.Items.Accessories.PostML
                 }
             }
 
-            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.LightGoldenrodYellow, Projectile.rotation, drawOrigin, Projectile.scale, 0);
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.LightGoldenrodYellow, Projectile.rotation, drawOrigin, Projectile.scale);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             return false;
         }

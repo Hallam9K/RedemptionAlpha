@@ -1,15 +1,14 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using Redemption.Globals;
-using Terraria.Audio;
-using Redemption.Buffs.NPCBuffs;
-using System.Collections.Generic;
-using Redemption.NPCs.Bosses.SeedOfInfection;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
-using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs.NPCBuffs;
+using Redemption.Globals;
+using Redemption.NPCs.Bosses.SeedOfInfection;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -21,6 +20,7 @@ namespace Redemption.Projectiles.Magic
             // DisplayName.SetDefault("Xenomite Shard");
             Main.projFrames[Projectile.type] = 7;
             ElementID.ProjPoison[Type] = true;
+            ElementID.ProjArcane[Type] = true;
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -116,7 +116,7 @@ namespace Redemption.Projectiles.Magic
             TargetWhoAmI = target.whoAmI;
             Projectile.velocity = (target.Center - Projectile.Center) * 0.75f;
             Projectile.netUpdate = true;
-            target.AddBuff(ModContent.BuffType<ContagionShardDebuff>(), 900);
+            target.AddBuff(BuffType<ContagionShardDebuff>(), 900);
             int maxStickingJavelins = 6;
             Point[] stickingJavelins = new Point[maxStickingJavelins];
             int javelinIndex = 0;
@@ -186,13 +186,7 @@ namespace Redemption.Projectiles.Magic
                         for (int i = 0; i < 5; i++)
                         {
                             int rot = spread * i;
-                            int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(10, Projectile.rotation + MathHelper.PiOver2 + MathHelper.ToRadians(rot - spread)), ModContent.ProjectileType<SoI_ShardShot>(), Projectile.damage / 4, Projectile.knockBack / 2, Main.myPlayer, 2, projTargetIndex);
-                            Main.projectile[p].timeLeft = 80;
-                            Main.projectile[p].hostile = false;
-                            Main.projectile[p].friendly = true;
-                            Main.projectile[p].tileCollide = true;
-                            Main.projectile[p].DamageType = DamageClass.Magic;
-                            Main.projectile[p].netUpdate = true;
+                            int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(10, Projectile.rotation + MathHelper.PiOver2 + MathHelper.ToRadians(rot - spread)), ProjectileType<SoI_ShardShot_Friendly>(), Projectile.damage / 4, Projectile.knockBack / 2, Main.myPlayer, 0, projTargetIndex);
                         }
                     }
                     Projectile.Kill();

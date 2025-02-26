@@ -1,3 +1,4 @@
+using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
 using System.Collections.Generic;
 using Terraria;
@@ -43,22 +44,19 @@ namespace Redemption.Items.Weapons.HM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<TinyCleaver_Proj>();
+            Item.shoot = ProjectileType<TinyCleaver_Proj>();
+
+            Item.Redemption().TechnicallySlash = true;
         }
         public override bool MeleePrefix() => true;
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<CorruptedXenomite>(), 4)
-                .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 8)
-                .AddIngredient(ModContent.ItemType<Plating>(), 2)
+                .AddIngredient(ItemType<CorruptedXenomite>(), 4)
+                .AddIngredient(ItemType<CarbonMyofibre>(), 8)
+                .AddIngredient(ItemType<Plating>(), 2)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
-        }
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
-        {
-            TooltipLine slashLine = new(Mod, "SharpBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
-            tooltips.Add(slashLine);
         }
     }
 }

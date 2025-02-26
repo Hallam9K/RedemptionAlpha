@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts;
 using Redemption.Globals;
@@ -20,6 +19,7 @@ namespace Redemption.Projectiles.Ranged
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjShadow[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -47,7 +47,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.alpha -= 5;
 
             if (Main.rand.NextBool(4))
-                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<VoidFlame>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
+                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustType<VoidFlame>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
@@ -60,7 +60,7 @@ namespace Redemption.Projectiles.Ranged
             if (Projectile.owner == Main.myPlayer)
             {
                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, Projectile.velocity / 20, ModContent.ProjectileType<DarkSteelArrow_Tendril>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, Projectile.velocity / 20, ProjectileType<DarkSteelArrow_Tendril>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
             }
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -78,8 +78,8 @@ namespace Redemption.Projectiles.Ranged
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
@@ -87,13 +87,13 @@ namespace Redemption.Projectiles.Ranged
                 Main.EntitySpriteDraw(texture, drawPos, null, color, oldrot[k], drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
         public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 18; i++)
-                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<VoidFlame>(), Projectile.velocity.X * 0.1f, Projectile.velocity.Y * 0.1f, Scale: 2);
+                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustType<VoidFlame>(), Projectile.velocity.X * 0.1f, Projectile.velocity.Y * 0.1f, Scale: 2);
         }
     }
 }

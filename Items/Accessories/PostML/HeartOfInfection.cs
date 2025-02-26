@@ -1,10 +1,10 @@
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Terraria.DataStructures;
 using Redemption.Globals;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.PostML
 {
@@ -19,7 +19,6 @@ namespace Redemption.Items.Accessories.PostML
                  "\n10% increased " + ElementID.PoisonS + " elemental damage"); */
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 6));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
-            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

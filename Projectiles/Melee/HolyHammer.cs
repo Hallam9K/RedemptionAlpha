@@ -1,10 +1,8 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
-using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -22,6 +20,7 @@ namespace Redemption.Projectiles.Melee
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ElementID.ProjHoly[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -41,7 +40,7 @@ namespace Redemption.Projectiles.Melee
             SoundEngine.PlaySound(CustomSounds.EarthBoom with { Pitch = -.1f }, Projectile.Center);
             Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 5;
-            target.AddBuff(ModContent.BuffType<HolyFireDebuff>(), 120);
+            target.AddBuff(BuffType<HolyFireDebuff>(), 120);
         }
         NPC target;
         public float opacityAlt;
@@ -54,7 +53,7 @@ namespace Redemption.Projectiles.Melee
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    int dust = Dust.NewDust(Projectile.Center + Projectile.velocity - Vector2.One, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 3f);
+                    int dust = Dust.NewDust(Projectile.Center + Projectile.velocity - Vector2.One, 1, 1, DustType<GlowDust>(), 0, 0, 0, default, 3f);
                     Main.dust[dust].noGravity = true;
                     Main.dust[dust].velocity *= 0;
                     Color dustColor = new(250, 245, 106) { A = 0 };
@@ -90,7 +89,9 @@ namespace Redemption.Projectiles.Melee
         {
             RedeDraw.SpawnExplosion(Projectile.Center * 0.5f + Projectile.Center * 0.5f, Color.LightYellow, scale: 1.25f, noDust: true, rot: Projectile.rotation - MathHelper.PiOver4, shakeAmount: 0, tex: "Redemption/Textures/HolyGlow3");
             RedeDraw.SpawnExplosion(Projectile.Center * 0.5f + Projectile.Center * 0.5f, Color.LightYellow, scale: 1.25f, noDust: true, rot: Projectile.rotation + MathHelper.PiOver4, shakeAmount: 0, tex: "Redemption/Textures/HolyGlow3");
-
+            if (Projectile.timeLeft > 2 && !Main.dedServ)
+            {
+            }
             for (int i = 0; i < 8; i++)
             {
                 int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.YellowStarDust, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f);
@@ -101,16 +102,22 @@ namespace Redemption.Projectiles.Melee
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Asset<Texture2D> texture = TextureAssets.Projectile[Type];
-            Vector2 origin = new(texture.Width() / 2f, texture.Height() / 2f);
-            Main.EntitySpriteDraw(texture.Value, Projectile.Center - Projectile.velocity.SafeNormalize(default) * 25f - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Projectile.velocity.SafeNormalize(default) * 25f - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.BeginAdditive();
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
                 Vector2 drawPos = Projectile.oldPos[k] - (Projectile.velocity.SafeNormalize(default) * 25f) + new Vector2(Projectile.width / 2, Projectile.height / 2) - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
-                Color color = Color.White with { A = 0 } * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture.Value, drawPos, null, Projectile.GetAlpha(color) * opacityAlt, Projectile.rotation, origin, Projectile.scale * 1.5f, spriteEffects, 0);
+                Color color = Color.White * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(texture, drawPos, null, Projectile.GetAlpha(color) * opacityAlt, Projectile.rotation, origin, Projectile.scale * 1.5f, spriteEffects, 0);
             }
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.BeginDefault();
 
             return false;
         }

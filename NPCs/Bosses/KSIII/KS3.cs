@@ -2375,7 +2375,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     if (AITimer == 30 && !Main.dedServ)
                     {
-                        float dialogueWait = (2f + RedeConfigClient.Instance.DialogueWaitTime) * 60;
+                        float dialogueWait = (2f + RedeConfigServer.Instance.DialogueWaitTime) * 60;
                         HeadType = 2;
                         string line1;
                         if (RedeBossDowned.slayerDeath >= 8)
@@ -2421,7 +2421,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         }
                         overclockMusicTimer += 12;
                         overclockMusicPauseTimer += dialogueWait;
-                        float dialogueSpeed = .03f - RedeConfigClient.Instance.DialogueSpeed;
+                        float dialogueSpeed = .03f - RedeConfigServer.Instance.DialogueSpeed;
                         dialogueSpeed = MathHelper.Max(dialogueSpeed, 0.01f);
                         overclockMusicTimer *= dialogueSpeed * 60;
                         overclockMusicTimer += overclockMusicPauseTimer + 30;

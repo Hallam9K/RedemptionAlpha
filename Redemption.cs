@@ -3,7 +3,6 @@ global using static Terraria.ModLoader.ModContent;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Redemption.Backgrounds.Skies;
-using Redemption.Biomes;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
@@ -17,11 +16,22 @@ using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.PostML.Shinkite;
 using Redemption.Items.Armor.PostML.Vorti;
 using Redemption.Items.Armor.PreHM.DragonLead;
+using Redemption.Items.Armor.Vanity.Dev;
 using Redemption.Items.Donator.Arche;
+using Redemption.Items.Donator.BLT;
 using Redemption.Items.Donator.Uncon;
 using Redemption.Items.Usable;
+using Redemption.Items.Usable.Summons;
+using Redemption.NPCs.Friendly;
+using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.NPCs.Lab;
+using Redemption.NPCs.Lab.Janitor;
+using Redemption.NPCs.Lab.Volt;
+using Redemption.NPCs.Minibosses.Calavia;
 using Redemption.UI;
 using Redemption.UI.ChatUI;
+using Redemption.WorldGeneration.Misc;
+using Redemption.WorldGeneration.Soulless;
 using ReLogic.Content;
 using SubworldLibrary;
 using System;
@@ -31,6 +41,7 @@ using System.Linq;
 using Terraria;
 using Terraria.Chat;
 using Terraria.GameContent;
+using Terraria.GameContent.Shaders;
 using Terraria.GameContent.UI;
 using Terraria.Graphics;
 using Terraria.Graphics.Effects;
@@ -41,17 +52,6 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
 using static Redemption.Globals.RedeNet;
-using Redemption.WorldGeneration.Misc;
-using Redemption.Items.Usable.Summons;
-using Redemption.Helpers;
-using Redemption.Items.Donator.BLT;
-using Terraria.GameContent.Shaders;
-using Redemption.NPCs.Friendly.TownNPCs;
-using Redemption.NPCs.Friendly;
-using Redemption.NPCs.Lab.Janitor;
-using Redemption.NPCs.Lab.Volt;
-using Redemption.NPCs.Lab;
-using Redemption.NPCs.Minibosses.Calavia;
 
 namespace Redemption
 {
@@ -90,19 +90,6 @@ namespace Redemption
         public static int unconMaleLeg2ID;
         public static int halmFemLegID;
         public static int halmMaleLegID;
-
-        public static Asset<Texture2D> Circle;
-        public static Asset<Texture2D> SoftGlow;
-        public static Asset<Texture2D> EmberParticle;
-        public static Asset<Texture2D> GlowParticle;
-        public static Asset<Texture2D> WhiteGlow;
-        public static Asset<Texture2D> WhiteFlare;
-        public static Asset<Texture2D> WhiteOrb;
-        public static Asset<Texture2D> IceMist;
-        public static Asset<Texture2D> HolyGlow2;
-        public static Asset<Texture2D> HolyGlow3;
-
-        public static Asset<Texture2D> GlowTrail;
 
         public Redemption()
         {
@@ -152,30 +139,19 @@ namespace Redemption
                 TrailManager = new TrailManager(this);
                 AdditiveCallManager.Load();
 
-                Circle = ModContent.Request<Texture2D>("Redemption/Textures/Circle");
-                SoftGlow = ModContent.Request<Texture2D>("Redemption/Textures/SoftGlow");
-                EmberParticle = ModContent.Request<Texture2D>("Redemption/Particles/EmberParticle");
-                GlowParticle = ModContent.Request<Texture2D>("Redemption/Particles/GlowParticle");
-                WhiteGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow");
-                WhiteFlare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare");
-                WhiteOrb = ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb");
-                IceMist = ModContent.Request<Texture2D>("Redemption/Textures/IceMist");
-                HolyGlow2 = ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2");
-                HolyGlow3 = ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3");
-
-                GlowTrail = ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail", AssetRequestMode.ImmediateLoad);
-
-                dragonLeadCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back", EquipType.Back, ModContent.GetInstance<DragonLeadRibplate>());
-                shinkiteCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PostML/Shinkite/ShinkiteChestplate_Back", EquipType.Back, ModContent.GetInstance<ShinkiteChestplate>());
-                mercenaryCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/BLT/MercenarysChestplate_Back", EquipType.Back, ModContent.GetInstance<MercenarysChestplate>());
-                archeMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()));
-                archeFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()));
-                unconMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_Legs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs>()));
-                unconFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_FemaleLegs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs>()));
-                unconMaleLeg2ID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs2_Legs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()));
-                unconFemLeg2ID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs2_FemaleLegs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()));
-                halmMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_Legs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()));
-                halmFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_FemaleLegs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()));
+                #region Add Equip Textures
+                dragonLeadCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back", EquipType.Back, GetInstance<DragonLeadRibplate>());
+                shinkiteCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PostML/Shinkite/ShinkiteChestplate_Back", EquipType.Back, GetInstance<ShinkiteChestplate>());
+                mercenaryCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/BLT/MercenarysChestplate_Back", EquipType.Back, GetInstance<MercenarysChestplate>());
+                archeMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs", EquipType.Legs, GetModItem(ItemType<ArchePatreonVanityLegs>()));
+                archeFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs", EquipType.Legs, GetModItem(ItemType<ArchePatreonVanityLegs>()));
+                unconMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_Legs", EquipType.Legs, GetModItem(ItemType<UnconLegs>()));
+                unconFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_FemaleLegs", EquipType.Legs, GetModItem(ItemType<UnconLegs>()));
+                unconMaleLeg2ID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs2_Legs", EquipType.Legs, GetModItem(ItemType<UnconLegs2>()));
+                unconFemLeg2ID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs2_FemaleLegs", EquipType.Legs, GetModItem(ItemType<UnconLegs2>()));
+                halmMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_Legs", EquipType.Legs, GetModItem(ItemType<HallamLeggings>()));
+                halmFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_FemaleLegs", EquipType.Legs, GetModItem(ItemType<HallamLeggings>()));
+                #endregion
 
                 int width = Main.graphics.GraphicsDevice.Viewport.Width;
                 int height = Main.graphics.GraphicsDevice.Viewport.Height;
@@ -192,72 +168,77 @@ namespace Redemption
                         View = view,
                         Projection = projection
                     };
-                    Texture2D bubbleTex = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield", immLoad).Value;
+                    #region PremultiplyTextures
+                    Texture2D bubbleTex = Request<Texture2D>("Redemption/Textures/BubbleShield", immLoad).Value;
                     PremultiplyTexture(ref bubbleTex);
-                    Texture2D portalTex = ModContent.Request<Texture2D>("Redemption/Textures/PortalTex", immLoad).Value;
+                    Texture2D portalTex = Request<Texture2D>("Redemption/Textures/PortalTex", immLoad).Value;
                     PremultiplyTexture(ref portalTex);
-                    Texture2D soullessPortal = ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/SoullessPortal", immLoad).Value;
+                    Texture2D soullessPortal = Request<Texture2D>("Redemption/NPCs/Friendly/SoullessPortal", immLoad).Value;
                     PremultiplyTexture(ref soullessPortal);
-                    Texture2D holyGlowTex = ModContent.Request<Texture2D>("Redemption/" + WhiteGlow.Name, immLoad).Value;
+                    Texture2D holyGlowTex = Request<Texture2D>("Redemption/Textures/WhiteGlow", immLoad).Value;
                     PremultiplyTexture(ref holyGlowTex);
-                    Texture2D whiteFlareTex = ModContent.Request<Texture2D>("Redemption/" + WhiteFlare.Name, immLoad).Value;
+                    Texture2D whiteFlareTex = Request<Texture2D>("Redemption/Textures/WhiteFlare", immLoad).Value;
                     PremultiplyTexture(ref whiteFlareTex);
-                    Texture2D whiteOrbTex = ModContent.Request<Texture2D>("Redemption/" + WhiteOrb.Name, immLoad).Value;
+                    Texture2D whiteOrbTex = Request<Texture2D>("Redemption/Textures/WhiteOrb", immLoad).Value;
                     PremultiplyTexture(ref whiteOrbTex);
-                    Texture2D whiteLightBeamTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteLightBeam", immLoad).Value;
+                    Texture2D whiteLightBeamTex = Request<Texture2D>("Redemption/Textures/WhiteLightBeam", immLoad).Value;
                     PremultiplyTexture(ref whiteLightBeamTex);
-                    Texture2D transitionTex = ModContent.Request<Texture2D>("Redemption/Textures/TransitionTex", immLoad).Value;
+                    Texture2D transitionTex = Request<Texture2D>("Redemption/Textures/TransitionTex", immLoad).Value;
                     PremultiplyTexture(ref transitionTex);
-                    Texture2D staticBallTex = ModContent.Request<Texture2D>("Redemption/Textures/StaticBall", immLoad).Value;
+                    Texture2D staticBallTex = Request<Texture2D>("Redemption/Textures/StaticBall", immLoad).Value;
                     PremultiplyTexture(ref staticBallTex);
-                    Texture2D iceMistTex = ModContent.Request<Texture2D>("Redemption/" + IceMist.Name, immLoad).Value;
+                    Texture2D iceMistTex = Request<Texture2D>("Redemption/Textures/IceMist", immLoad).Value;
                     PremultiplyTexture(ref iceMistTex);
-                    Texture2D glowDustTex = ModContent.Request<Texture2D>("Redemption/Dusts/GlowDust", immLoad).Value;
+                    Texture2D glowDustTex = Request<Texture2D>("Redemption/Dusts/GlowDust", immLoad).Value;
                     PremultiplyTexture(ref glowDustTex);
-                    Texture2D AkkaHealingSpiritTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/AkkaHealingSpirit", immLoad).Value;
+                    Texture2D AkkaHealingSpiritTex = Request<Texture2D>("Redemption/NPCs/Bosses/ADD/AkkaHealingSpirit", immLoad).Value;
                     PremultiplyTexture(ref AkkaHealingSpiritTex);
-                    Texture2D AkkaIslandWarningTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/AkkaIslandWarning", immLoad).Value;
+                    Texture2D AkkaIslandWarningTex = Request<Texture2D>("Redemption/NPCs/Bosses/ADD/AkkaIslandWarning", immLoad).Value;
                     PremultiplyTexture(ref AkkaIslandWarningTex);
-                    Texture2D SunTex = ModContent.Request<Texture2D>("Redemption/Textures/Sun", immLoad).Value;
+                    Texture2D SunTex = Request<Texture2D>("Redemption/Textures/Sun", immLoad).Value;
                     PremultiplyTexture(ref SunTex);
-                    Texture2D DarkSoulTex = ModContent.Request<Texture2D>("Redemption/Textures/DarkSoulTex", immLoad).Value;
+                    Texture2D DarkSoulTex = Request<Texture2D>("Redemption/Textures/DarkSoulTex", immLoad).Value;
                     PremultiplyTexture(ref DarkSoulTex);
-                    Texture2D TornadoTex = ModContent.Request<Texture2D>("Redemption/Textures/TornadoTex", immLoad).Value;
+                    Texture2D TornadoTex = Request<Texture2D>("Redemption/Textures/TornadoTex", immLoad).Value;
                     PremultiplyTexture(ref TornadoTex);
-                    Texture2D SpiritPortalTex = ModContent.Request<Texture2D>("Redemption/Textures/SpiritPortalTex", immLoad).Value;
+                    Texture2D SpiritPortalTex = Request<Texture2D>("Redemption/Textures/SpiritPortalTex", immLoad).Value;
                     PremultiplyTexture(ref SpiritPortalTex);
-                    Texture2D BigFlare = ModContent.Request<Texture2D>("Redemption/Textures/BigFlare", immLoad).Value;
+                    Texture2D BigFlare = Request<Texture2D>("Redemption/Textures/BigFlare", immLoad).Value;
                     PremultiplyTexture(ref BigFlare);
+                    Texture2D BubbleShield2 = Request<Texture2D>("Redemption/Textures/BubbleShield2", immLoad).Value;
+                    PremultiplyTexture(ref BubbleShield2);
 
-                    Texture2D purityWastelandBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", immLoad).Value;
+                    Texture2D purityWastelandBG3Tex = Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", immLoad).Value;
                     PremultiplyTexture(ref purityWastelandBG3Tex);
-                    Texture2D wastelandCrimsonBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCrimsonBG3", immLoad).Value;
+                    Texture2D wastelandCrimsonBG3Tex = Request<Texture2D>("Redemption/Backgrounds/WastelandCrimsonBG3", immLoad).Value;
                     PremultiplyTexture(ref wastelandCrimsonBG3Tex);
-                    Texture2D wastelandCorruptionBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCorruptionBG3", immLoad).Value;
+                    Texture2D wastelandCorruptionBG3Tex = Request<Texture2D>("Redemption/Backgrounds/WastelandCorruptionBG3", immLoad).Value;
                     PremultiplyTexture(ref wastelandCorruptionBG3Tex);
-                    Texture2D ruinedKingdomSurfaceClose_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceClose_Menu", immLoad).Value;
+                    Texture2D ruinedKingdomSurfaceClose_MenuTex = Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceClose_Menu", immLoad).Value;
                     PremultiplyTexture(ref ruinedKingdomSurfaceClose_MenuTex);
-                    Texture2D ruinedKingdomSurfaceFar_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceFar_Menu", immLoad).Value;
+                    Texture2D ruinedKingdomSurfaceFar_MenuTex = Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceFar_Menu", immLoad).Value;
                     PremultiplyTexture(ref ruinedKingdomSurfaceFar_MenuTex);
-                    Texture2D ruinedKingdomSurfaceMid_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceMid_Menu", immLoad).Value;
+                    Texture2D ruinedKingdomSurfaceMid_MenuTex = Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceMid_Menu", immLoad).Value;
                     PremultiplyTexture(ref ruinedKingdomSurfaceMid_MenuTex);
-                    Texture2D UkkoCloudsTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoClouds", immLoad).Value;
+                    Texture2D UkkoCloudsTex = Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoClouds", immLoad).Value;
                     PremultiplyTexture(ref UkkoCloudsTex);
-                    Texture2D UkkoSkyBeamTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyBeam", immLoad).Value;
+                    Texture2D UkkoSkyBeamTex = Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyBeam", immLoad).Value;
                     PremultiplyTexture(ref UkkoSkyBeamTex);
-                    Texture2D UkkoSkyBoltTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyBolt", immLoad).Value;
+                    Texture2D UkkoSkyBoltTex = Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyBolt", immLoad).Value;
                     PremultiplyTexture(ref UkkoSkyBoltTex);
-                    Texture2D UkkoSkyFlashTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyFlash", immLoad).Value;
+                    Texture2D UkkoSkyFlashTex = Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyFlash", immLoad).Value;
                     PremultiplyTexture(ref UkkoSkyFlashTex);
-                    Texture2D SkyTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/SkyTex", immLoad).Value;
+                    Texture2D SkyTex = Request<Texture2D>("Redemption/Backgrounds/Skies/SkyTex", immLoad).Value;
                     PremultiplyTexture(ref SkyTex);
-                    Texture2D SkyTex2 = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/SkyTex2", immLoad).Value;
+                    Texture2D SkyTex2 = Request<Texture2D>("Redemption/Backgrounds/Skies/SkyTex2", immLoad).Value;
                     PremultiplyTexture(ref SkyTex2);
-                    Texture2D WastelandCorruptSkyTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/WastelandCorruptSkyTex", immLoad).Value;
+                    Texture2D WastelandCorruptSkyTex = Request<Texture2D>("Redemption/Backgrounds/Skies/WastelandCorruptSkyTex", immLoad).Value;
                     PremultiplyTexture(ref WastelandCorruptSkyTex);
-                    Texture2D WastelandCrimsonSkyTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/WastelandCrimsonSkyTex", immLoad).Value;
+                    Texture2D WastelandCrimsonSkyTex = Request<Texture2D>("Redemption/Backgrounds/Skies/WastelandCrimsonSkyTex", immLoad).Value;
                     PremultiplyTexture(ref WastelandCrimsonSkyTex);
+                    #endregion
                 });
+
                 Filters.Scene["MoR:OOSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0f).UseOpacity(0.2f), EffectPriority.VeryHigh);
                 SkyManager.Instance["MoR:OOSky"] = new OOSky();
                 Filters.Scene["MoR:NebP1"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0.3f).UseOpacity(0.5f), EffectPriority.VeryHigh);
@@ -276,7 +257,7 @@ namespace Redemption
             Filters.Scene["MoR:SpiritSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.4f, 0.8f, 0.8f), EffectPriority.VeryHigh);
             Filters.Scene["MoR:IslandEffect"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.4f, 0.4f, 0.4f).UseOpacity(0.5f), EffectPriority.VeryHigh);
             SkyManager.Instance["MoR:RuinedKingdomSky"] = new RuinedKingdomSky();
-            Filters.Scene["MoR:SoullessSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0.55f), EffectPriority.High);
+            Filters.Scene["MoR:SoullessSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0.35f), EffectPriority.High);
             Filters.Scene["MoR:FowlMorningSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.7f, 0.3f, 0.02f).UseOpacity(0.3f), EffectPriority.High);
             Filters.Scene["MoR:ThornSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0.25f, 0.15f).UseOpacity(0.7f), EffectPriority.High);
 
@@ -285,22 +266,19 @@ namespace Redemption
             RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "Special Ability Key", Keys.F);
             RedeSpiritwalkerAbility = KeybindLoader.RegisterKeybind(this, "Spirit Walker Key", Keys.K);
             RedeSkipDialogue = KeybindLoader.RegisterKeybind(this, "Skip Dialogue Key", Keys.Back);
-            AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
+            AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
         }
         public override void Unload()
         {
-            Circle = null;
-            SoftGlow = null;
-            EmberParticle = null;
-            GlowParticle = null;
-            WhiteGlow = null;
-            WhiteFlare = null;
-            WhiteOrb = null;
-            IceMist = null;
-            HolyGlow2 = null;
-            HolyGlow3 = null;
+            if (_loadCache != null)
+            {
+                foreach (ILoadable loadable in _loadCache)
+                    loadable.Unload();
 
-            GlowTrail = null;
+                _loadCache = null;
+            }
+            else
+                Logger.Warn("load cache was null, ILoadable's may not have been unloaded...");
 
             TrailManager = null;
             AdditiveCallManager.Unload();
@@ -332,13 +310,10 @@ namespace Redemption
         private void LoadCache()
         {
             _loadCache = new List<ILoadable>();
-
             foreach (Type type in Code.GetTypes())
             {
                 if (!type.IsAbstract && type.GetInterfaces().Contains(typeof(ILoadable)))
-                {
                     _loadCache.Add(Activator.CreateInstance(type) as ILoadable);
-                }
             }
 
             _loadCache.Sort((x, y) => x.Priority > y.Priority ? 1 : -1);
@@ -346,9 +321,7 @@ namespace Redemption
             for (int i = 0; i < _loadCache.Count; ++i)
             {
                 if (Main.dedServ && !_loadCache[i].LoadOnDedServer)
-                {
                     continue;
-                }
 
                 _loadCache[i].Load();
             }
@@ -468,7 +441,6 @@ namespace Redemption
                     break;
             }
         }
-
         public static void SpawnBossFromClient(byte whoAmI, int type, int x, int y) => WriteToPacket(Instance.GetPacket(), (byte)ModMessageType.BossSpawnFromClient, whoAmI, type, x, y).Send();
     }
     public class RedeSystem : ModSystem
@@ -480,8 +452,7 @@ namespace Redemption
         }
 
         public static bool Silence;
-
-        public override void PostUpdatePlayers()
+        public override void PreUpdateNPCs()
         {
             Silence = false;
         }
@@ -515,6 +486,9 @@ namespace Redemption
 
         public UserInterface SpiritWalkerButtonUILayer;
         public SpiritWalkerButton SpiritWalkerButtonUIElement;
+
+        public UserInterface ElementPanelUILayer;
+        public ElementPanelUI ElementPanelUIElement;
 
         public override void Load()
         {
@@ -560,11 +534,19 @@ namespace Redemption
                 SpiritWalkerButtonUILayer = new UserInterface();
                 SpiritWalkerButtonUIElement = new SpiritWalkerButton();
                 SpiritWalkerButtonUILayer.SetState(SpiritWalkerButtonUIElement);
+
+                ElementPanelUILayer = new UserInterface();
+                ElementPanelUIElement = new ElementPanelUI();
+                ElementPanelUILayer.SetState(ElementPanelUIElement);
             }
+        }
+        public override void Unload()
+        {
+            RedeDetours.Uninitialize();
         }
         public override void ModifyLightingBrightness(ref float scale)
         {
-            if (ModContent.GetInstance<RedeTileCount>().WastelandCrimsonTileCount >= 50 || ModContent.GetInstance<RedeTileCount>().WastelandCorruptTileCount >= 50)
+            if (GetInstance<RedeTileCount>().WastelandCrimsonTileCount >= 50 || GetInstance<RedeTileCount>().WastelandCorruptTileCount >= 50)
                 scale = .9f;
         }
         public override void PreUpdateItems()
@@ -574,7 +556,7 @@ namespace Redemption
         }
         public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
         {
-            RedeTileCount tileCount = ModContent.GetInstance<RedeTileCount>();
+            RedeTileCount tileCount = GetInstance<RedeTileCount>();
             if (NPC.downedMechBossAny && tileCount.WastelandTileCount > 0)
             {
                 float Strength = tileCount.WastelandTileCount / 200f;
@@ -616,16 +598,16 @@ namespace Redemption
                 float lerpAmount = MathHelper.Lerp(0, MathHelper.PiOver2, screenPlayer.timedZoomTime / screenPlayer.timedZoomTimeMax);
 
                 Vector2 idealScreenZoom = screenPlayer.timedZoom;
-                Transform.Zoom = Vector2.Lerp(new Vector2(1), idealScreenZoom, (float)Math.Sin(lerpAmount));
+                Transform.Zoom = Vector2.Lerp(new Vector2(Main.GameViewMatrix.Zoom.X), idealScreenZoom, (float)Math.Sin(lerpAmount));
             }
-            if (screenPlayer.customZoom > 0)
-                Transform.Zoom = new Vector2(screenPlayer.customZoom);
+            if (screenPlayer.customZoom > 1)
+                Transform.Zoom = new Vector2(screenPlayer.customZoom * Main.GameViewMatrix.Zoom.X);
         }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
             BuffPlayer bP = Main.LocalPlayer.GetModPlayer<BuffPlayer>();
-            if (Main.LocalPlayer.HasBuff<StunnedDebuff>())
+            if (Main.LocalPlayer.active && !Main.LocalPlayer.dead && Main.LocalPlayer.HasBuff<StunnedDebuff>())
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
                 LegacyGameInterfaceLayer StunUI = new("Redemption: Stun UI",
@@ -634,10 +616,10 @@ namespace Redemption
                         DrawStunStars(Main.spriteBatch);
                         return true;
                     },
-                    InterfaceScaleType.UI);
+                    InterfaceScaleType.Game);
                 layers.Insert(index, StunUI);
             }
-            if (BasePlayer.HasAccessory(Main.LocalPlayer, ModContent.ItemType<PocketShieldGenerator>(), true, true))
+            if (Main.LocalPlayer.active && !Main.LocalPlayer.dead && BasePlayer.HasAccessory(Main.LocalPlayer, ItemType<PocketShieldGenerator>(), true, true))
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
                 LegacyGameInterfaceLayer ShieldGaugeUI = new("Redemption: Shield Gauge UI",
@@ -646,11 +628,11 @@ namespace Redemption
                         DrawShieldGenGauge(Main.spriteBatch);
                         return true;
                     },
-                    InterfaceScaleType.UI);
+                    InterfaceScaleType.Game);
                 layers.Insert(index, ShieldGaugeUI);
             }
             EnergyPlayer eP = Main.LocalPlayer.GetModPlayer<EnergyPlayer>();
-            if (eP.statEnergy < eP.energyMax)
+            if (Main.LocalPlayer.active && !Main.LocalPlayer.dead && eP.statEnergy < eP.energyMax)
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
                 LegacyGameInterfaceLayer EnergyGaugeUI = new("Redemption: Energy Gauge UI",
@@ -659,10 +641,10 @@ namespace Redemption
                         DrawEnergyGauge(Main.spriteBatch);
                         return true;
                     },
-                    InterfaceScaleType.UI);
+                    InterfaceScaleType.Game);
                 layers.Insert(index, EnergyGaugeUI);
             }
-            if (Main.LocalPlayer.HeldItem.CountsAsClass<DamageClasses.RitualistClass>())
+            if (Main.LocalPlayer.active && !Main.LocalPlayer.dead && Main.LocalPlayer.HeldItem.CountsAsClass<DamageClasses.RitualistClass>())
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
                 LegacyGameInterfaceLayer SpiritGaugeUI = new("Redemption: Spirit Gauge UI",
@@ -671,10 +653,10 @@ namespace Redemption
                         DrawSpiritGauge(Main.spriteBatch);
                         return true;
                     },
-                    InterfaceScaleType.UI);
+                    InterfaceScaleType.Game);
                 layers.Insert(index, SpiritGaugeUI);
             }
-            if (NPC.downedGolemBoss && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<OmegaTransmitter>())
+            if (Main.LocalPlayer.active && !Main.LocalPlayer.dead && NPC.downedGolemBoss && Main.LocalPlayer.HeldItem.type == ItemType<OmegaTransmitter>())
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
                 LegacyGameInterfaceLayer OmegaTransmitterUI = new("Redemption: Omega Transmitter UI",
@@ -683,7 +665,7 @@ namespace Redemption
                         DrawOmegaTransmitterText(Main.spriteBatch);
                         return true;
                     },
-                    InterfaceScaleType.UI);
+                    InterfaceScaleType.Game);
                 layers.Insert(index, OmegaTransmitterUI);
             }
             if (YesNoUI.Visible && (!Main.playerInventory || YesNoUIElement.Player.whoAmI != Main.myPlayer))
@@ -756,6 +738,7 @@ namespace Redemption
                 AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 5, ChatUI.Visible, "Text Bubble");
                 AddInterfaceLayer(layers, YesNoUILayer, YesNoUIElement, MouseTextIndex + 6, YesNoUI.Visible, "Yes No Choice");
                 AddInterfaceLayer(layers, TradeUILayer, TradeUIElement, MouseTextIndex + 7, TradeUI.Visible, "Trade");
+                AddInterfaceLayer(layers, ElementPanelUILayer, ElementPanelUIElement, MouseTextIndex + 8, ElementPanelUI.Visible, "Element Panel");
                 AddInterfaceLayer(layers, SpiritWalkerButtonUILayer, SpiritWalkerButtonUIElement, MouseTextIndex + 8, Main.LocalPlayer.RedemptionAbility().Spiritwalker && Main.playerInventory, "Spirit Walker Button");
                 AddInterfaceLayer(layers, AlignmentButtonUILayer, AlignmentButtonUIElement, MouseTextIndex + 8, RedeWorld.alignmentGiven && Main.playerInventory, "Alignment Button");
             }
@@ -764,6 +747,8 @@ namespace Redemption
         {
             if (AMemoryUILayer?.CurrentState != null && AMemoryUIState.Visible)
                 AMemoryUILayer.Update(gameTime);
+            if (ElementPanelUILayer?.CurrentState != null && ElementPanelUI.Visible)
+                ElementPanelUILayer.Update(gameTime);
             if (NukeUILayer?.CurrentState != null && NukeDetonationUI.Visible)
                 NukeUILayer.Update(gameTime);
             if (TradeUILayer?.CurrentState != null && TradeUI.Visible)
@@ -833,23 +818,28 @@ namespace Redemption
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Texture2D timerBar = ModContent.Request<Texture2D>("Redemption/UI/ShieldGauge").Value;
-            Texture2D timerBarInner = ModContent.Request<Texture2D>("Redemption/UI/ShieldGauge_Fill").Value;
-            Texture2D timerBarInner2 = ModContent.Request<Texture2D>("Redemption/UI/ShieldGauge_Fill2").Value;
+            Texture2D timerBar = Request<Texture2D>("Redemption/UI/ShieldGauge").Value;
+            Texture2D timerBarInner = Request<Texture2D>("Redemption/UI/ShieldGauge_Fill").Value;
+            Texture2D timerBarInner2 = Request<Texture2D>("Redemption/UI/ShieldGauge_Fill2").Value;
             float timerMax = 200;
             int timerProgress = (int)(timerBarInner.Width * (bP.shieldGeneratorLife / timerMax));
             int timerProgress2 = (int)(timerBarInner.Width * (bP.shieldGeneratorCD / 3600f));
-            Vector2 drawPos = player.Center - new Vector2(0, 60) - Main.screenPosition;
+            Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter, true);
+            Vector2 drawPos = playerCenter - new Vector2(0, 60) - Main.screenPosition;
             spriteBatch.Draw(timerBar, drawPos, null, Color.White, 0f, timerBar.Size() / 2f, 1f, SpriteEffects.None, 0f);
             if (bP.shieldGeneratorCD <= 0)
                 spriteBatch.Draw(timerBarInner, drawPos, new Rectangle?(new Rectangle(0, 0, timerProgress, timerBarInner.Height)), Color.White, 0f, timerBarInner.Size() / 2f, 1f, SpriteEffects.None, 0f);
             spriteBatch.Draw(timerBarInner2, drawPos, new Rectangle?(new Rectangle(0, 0, timerProgress2, timerBarInner.Height)), Color.White * .5f, 0f, timerBarInner.Size() / 2f, 1f, SpriteEffects.None, 0f);
 
-            Texture2D shieldTex = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield").Value;
+            Texture2D shieldTex = Request<Texture2D>("Redemption/Textures/BubbleShield").Value;
+            Texture2D overlay = Request<Texture2D>("Redemption/Textures/BubbleShield_Overlay").Value;
             Vector2 drawOrigin = new(shieldTex.Width / 2, shieldTex.Height / 2);
 
             if (bP.shieldGeneratorCD <= 0)
-                spriteBatch.Draw(shieldTex, player.Center - Main.screenPosition, null, Color.White * ((float)bP.shieldGeneratorLife / 200) * (bP.shieldGeneratorAlpha + 0.3f), 0, drawOrigin, 0.5f, 0, 0);
+            {
+                spriteBatch.Draw(overlay, playerCenter - Main.screenPosition, null, RedeColor.FadeColour1 with { A = 0 } * ((float)bP.shieldGeneratorLife / 200) * (bP.shieldGeneratorAlpha + 0.3f), 0, drawOrigin, .5f, 0, 0);
+                spriteBatch.Draw(shieldTex, playerCenter - Main.screenPosition, null, Color.White * ((float)bP.shieldGeneratorLife / 200) * (bP.shieldGeneratorAlpha + 0.3f), 0, drawOrigin, .5f, 0, 0);
+            }
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
@@ -862,15 +852,16 @@ namespace Redemption
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Texture2D timerBar = ModContent.Request<Texture2D>("Redemption/UI/EnergyGauge").Value;
-            Texture2D timerBarInner = ModContent.Request<Texture2D>("Redemption/UI/EnergyGauge_Fill").Value;
+            Texture2D timerBar = Request<Texture2D>("Redemption/UI/EnergyGauge").Value;
+            Texture2D timerBarInner = Request<Texture2D>("Redemption/UI/EnergyGauge_Fill").Value;
             float timerMax = eP.energyMax;
             int timerProgress = (int)(timerBarInner.Height * (eP.statEnergy / timerMax));
-            Vector2 drawPos = player.Center + new Vector2(40, 0) - Main.screenPosition;
+            Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter, true);
+            Vector2 drawPos = playerCenter + new Vector2(40, 0) - Main.screenPosition;
             spriteBatch.Draw(timerBar, drawPos, null, Color.White * 0.75f, 0f, timerBar.Size() / 2f, 1f, SpriteEffects.None, 0f);
             spriteBatch.Draw(timerBarInner, drawPos, new Rectangle?(new Rectangle(0, 0, timerBarInner.Width, timerProgress)), RedeColor.EnergyPulse * 0.75f, MathHelper.Pi, timerBarInner.Size() / 2f, 1f, SpriteEffects.None, 0f);
 
-            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, ((int)(eP.statEnergy / timerMax * 100)).ToString() + "%", player.Center + new Vector2(30, -36) - Main.screenPosition, Color.White * 0.75f, 0, Vector2.Zero, Vector2.One * 0.75f);
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, ((int)(eP.statEnergy / timerMax * 100)).ToString() + "%", playerCenter + new Vector2(30, -36) - Main.screenPosition, Color.White * 0.75f, 0, Vector2.Zero, Vector2.One * 0.75f);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
@@ -881,7 +872,7 @@ namespace Redemption
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Texture2D starTex = ModContent.Request<Texture2D>("Redemption/Textures/StunVisual").Value;
+            Texture2D starTex = Request<Texture2D>("Redemption/Textures/StunVisual").Value;
             int height = starTex.Height / 4;
             int y = height * player.RedemptionPlayerBuff().stunFrame;
             Vector2 drawOrigin = new(starTex.Width / 2, height / 2);
@@ -904,7 +895,7 @@ namespace Redemption
         }
         public static void DrawSlayerCursor(SpriteBatch spriteBatch)
         {
-            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Textures/SlayerCursor").Value;
+            Texture2D texture = Request<Texture2D>("Redemption/Textures/SlayerCursor").Value;
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1f, 0.9f, 1f);
 
@@ -916,7 +907,7 @@ namespace Redemption
             float alpha = .5f;
             Texture2D backGround1 = TextureAssets.ColorBar.Value;
             Texture2D progressColor = TextureAssets.ColorBar.Value;
-            Texture2D InvIcon = ModContent.Request<Texture2D>("Redemption/Items/Armor/Vanity/EpidotrianSkull").Value;
+            Texture2D InvIcon = Request<Texture2D>("Redemption/Items/Armor/Vanity/EpidotrianSkull").Value;
             float scmp = .875f;
             Color descColor = new(77, 39, 135);
             Color waveColor = new(255, 241, 51);
@@ -951,7 +942,7 @@ namespace Redemption
             float alpha = .5f;
             Texture2D backGround1 = TextureAssets.ColorBar.Value;
             Texture2D progressColor = TextureAssets.ColorBar.Value;
-            Texture2D InvIcon = ModContent.Request<Texture2D>("Redemption/Gores/Boss/FowlEmperor_Crown").Value;
+            Texture2D InvIcon = Request<Texture2D>("Redemption/Gores/Boss/FowlEmperor_Crown").Value;
             float scmp = .875f;
             Color descColor = new(104, 70, 6);
             Color waveColor = new(255, 241, 51);

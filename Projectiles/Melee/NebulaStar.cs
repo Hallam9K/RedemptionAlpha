@@ -24,6 +24,7 @@ namespace Redemption.Projectiles.Melee
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ElementID.ProjShadow[Type] = true;
             ElementID.ProjCelestial[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

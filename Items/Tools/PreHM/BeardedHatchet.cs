@@ -1,11 +1,9 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.Projectiles.Melee;
-using Steamworks;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -45,7 +43,7 @@ namespace Redemption.Items.Tools.PreHM
             Item.channel = true;
             Item.shootSpeed = 5f;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<BeardedHatchet_Proj>();
+            Item.shoot = ProjectileType<BeardedHatchet_Proj>();
             Item.Redemption().TechnicallyAxe = true;
         }
     }
@@ -114,7 +112,7 @@ namespace Redemption.Items.Tools.PreHM
                 Projectile.Kill();
                 return;
             }
-            if (npc != null && (!npc.active || npc.type != ModContent.NPCType<Fallen>() || npc.ai[1] <= 5))
+            if (npc != null && (!npc.active || npc.type != NPCType<Fallen>() || npc.ai[1] <= 5))
             {
                 Projectile.Kill();
                 return;
@@ -158,7 +156,7 @@ namespace Redemption.Items.Tools.PreHM
                         SoundEngine.PlaySound(SoundID.Item71 with { Volume = .5f }, Owner.position);
                     }
 
-                    int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, vel, ModContent.ProjectileType<UkonvasaraSword_Wave>(), 0, 0, Projectile.owner);
+                    int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, vel, ProjectileType<UkonvasaraSword_Wave>(), 0, 0, Projectile.owner);
                     Main.projectile[p].scale = .3f;
                 }
 
@@ -194,7 +192,8 @@ namespace Redemption.Items.Tools.PreHM
             if (Timer > 1)
                 Projectile.alpha = 0;
 
-            Projectile.Center = (player != null ? player.MountedCenter : Owner.Center) + vector;
+            Projectile.Center = player != null ? player.RotatedRelativePoint(player.MountedCenter, true) + vector : Owner.Center + vector;
+
             if (Projectile.spriteDirection == 1)
                 Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation() + MathHelper.PiOver4;
             else
@@ -220,7 +219,7 @@ namespace Redemption.Items.Tools.PreHM
             pauseTimer = 4;
 
             Vector2 directionTo = target.DirectionTo(Owner.Center);
-            Dust.NewDustPerfect(target.Center + directionTo * 5 + new Vector2(0, 70) + Owner.velocity, ModContent.DustType<DustSpark2>(), directionTo.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f) + 3.14f) * Main.rand.NextFloat(4f, 5f) + (Owner.velocity / 2), 0, Color.White * .8f, 2.5f);
+            Dust.NewDustPerfect(target.Center + directionTo * 5 + new Vector2(0, 70) + Owner.velocity, DustType<DustSpark2>(), directionTo.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f) + 3.14f) * Main.rand.NextFloat(4f, 5f) + (Owner.velocity / 2), 0, Color.White * .8f, 2.5f);
 
             bool skele = NPCLists.SkeletonHumanoid.Contains(target.type);
             bool humanoid = skele || NPCLists.Humanoid.Contains(target.type);
@@ -232,6 +231,9 @@ namespace Redemption.Items.Tools.PreHM
                     target.Redemption().decapitated = true;
                     hit.Crit = true;
                     target.StrikeInstantKill();
+
+                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Slash, false);
+                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Axe);
                 }
             }
 

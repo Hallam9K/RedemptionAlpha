@@ -1,10 +1,10 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using System;
 using Terraria;
-using Terraria.ModLoader;
-using Redemption.Globals;
 using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Minions
 {
@@ -15,8 +15,9 @@ namespace Redemption.Projectiles.Minions
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeStaticDefaults()
         {
-            // DisplayName.SetDefault("Cosmic Ray");
+            ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ElementID.ProjCelestial[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetSafeDefaults()
         {
@@ -95,12 +96,21 @@ namespace Redemption.Projectiles.Minions
         public override bool PreDraw(ref Color lightColor)
         {
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(RedeColor.NebColour), (int)FirstSegmentDrawDist);
 
+            Texture2D flare = Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Rectangle rect = new(0, 0, flare.Width, flare.Height);
+            Vector2 origin = new(flare.Width / 2, flare.Height / 2);
+            Vector2 position = Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * (LaserLength + 20) - Main.screenPosition;
+            Color colour = RedeColor.NebColour;
+
+            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), Projectile.GetAlpha(colour) * Main.rand.NextFloat(1f, 0.7f), 0, origin, Projectile.scale + Main.rand.NextFloat(.4f, .6f), SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), Projectile.GetAlpha(colour) * Main.rand.NextFloat(1f, 0.7f), 0, origin, Projectile.scale + Main.rand.NextFloat(.5f, .8f), SpriteEffects.None, 0);
+
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
         #endregion

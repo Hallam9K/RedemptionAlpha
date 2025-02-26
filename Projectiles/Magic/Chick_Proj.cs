@@ -1,5 +1,5 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -12,6 +12,7 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Chick");
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -45,7 +46,7 @@ namespace Redemption.Projectiles.Magic
         }
         public override void PostDraw(Color lightColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
+            Texture2D glow = Request<Texture2D>(Texture + "_Glow").Value;
             Vector2 drawOrigin = new(glow.Width / 2, Projectile.height / 2);
             var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 

@@ -24,6 +24,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             // DisplayName.SetDefault("Ray of Guidance");
             ElementID.ProjFire[Type] = true;
             ElementID.ProjHoly[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetSafeDefaults()

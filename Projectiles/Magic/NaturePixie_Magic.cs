@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Redemption.NPCs.PreHM;
 using Terraria;
@@ -18,6 +17,8 @@ namespace Redemption.Projectiles.Magic
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+            ElementID.ProjArcane[Type] = true;
+            ElementID.ProjNature[Type] = true;
         }
 
         public override void SetDefaults()
@@ -45,7 +46,7 @@ namespace Redemption.Projectiles.Magic
         }
 
         public override bool? CanCutTiles() => false;
-        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.timeLeft <= 261 && target.type != ModContent.NPCType<ForestNymph>() ? null : false;
+        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.timeLeft <= 261 && target.type != NPCType<ForestNymph>() ? null : false;
         NPC target;
         public override void AI()
         {
@@ -73,7 +74,7 @@ namespace Redemption.Projectiles.Magic
                 Projectile.velocity = Projectile.velocity.RotatedBy(Main.rand.NextFloat(-.1f, .1f));
                 return;
             }
-            if (RedeHelper.ClosestNPC(ref target, 600, Projectile.Center, false) && target.type != ModContent.NPCType<ForestNymph>())
+            if (RedeHelper.ClosestNPC(ref target, 600, Projectile.Center, false) && target.type != NPCType<ForestNymph>())
             {
                 Projectile.timeLeft++;
                 if (Projectile.localAI[0] == 0)
@@ -117,7 +118,7 @@ namespace Redemption.Projectiles.Magic
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
@@ -126,7 +127,7 @@ namespace Redemption.Projectiles.Magic
                 Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), color, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             }
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.White * Projectile.Opacity, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
         }

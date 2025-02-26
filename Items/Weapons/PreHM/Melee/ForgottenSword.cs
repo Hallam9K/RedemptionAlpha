@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -42,8 +42,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<ForgottenSword_Proj>();
+            Item.shoot = ProjectileType<ForgottenSword_Proj>();
+
+            Item.Redemption().TechnicallySlash = true;
         }
+        public override bool MeleePrefix() => true;
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             if (Main.keyState.PressingShift())
@@ -62,8 +65,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 };
                 tooltips.Add(line);
             }
-            TooltipLine slashLine = new(Mod, "SharpBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
-            tooltips.Add(slashLine);
         }
     }
 }

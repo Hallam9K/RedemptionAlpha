@@ -75,7 +75,7 @@ namespace Redemption.Globals.NPC
                     11 => "[i:Redemption/Poison] ",
                     12 => "[i:Redemption/Blood] ",
                     13 => "[i:Redemption/Psychic] ",
-                    14 => "[i:Redemption/Celestial] ",
+                    14 => "[i:Redemption/Cosmic] ",
                     _ => "[i:Redemption/Arcane] ",
                 };
                 entry += "\n" + s + ((int)(elementDmg[i] * 100)).ToString() + "%";
@@ -92,7 +92,7 @@ namespace Redemption.Globals.NPC
 
         public new UIElement ProvideUIElement(BestiaryUICollectionInfo info)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
+            if (!RedeConfigServer.Instance.ElementDisable)
                 return base.ProvideUIElement(info);
             return null;
         }

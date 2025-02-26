@@ -178,7 +178,7 @@ namespace Redemption.Globals
                             check = true;
                             break;
                         }
-                        if (check && Main.rand.NextBool(3))
+                        if (check && Main.rand.NextBool(4))
                         {
                             spawnKeeper = true;
 

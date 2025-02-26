@@ -322,7 +322,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             switch (AIState)
             {
                 case ActionState.Begin:
-                    if (AITimer++ >= 978 || RedeConfigClient.Instance.NoPZBuildUp || Main.musicVolume <= 0)
+                    if (AITimer++ >= 978 || RedeConfigServer.Instance.NoPZBuildUp || Main.musicVolume <= 0)
                     {
                         TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.PZ.Name"), 60, 90, 0.8f, Color.Green, NetworkText.FromKey("Mods.Redemption.TitleCard.PZ.Modifier")); AITimer = 0;
                         OpenEye = true;

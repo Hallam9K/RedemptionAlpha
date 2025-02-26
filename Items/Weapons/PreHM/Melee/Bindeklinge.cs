@@ -1,7 +1,7 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Globals.Player;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Projectiles.Melee;
 using ReLogic.Content;
@@ -20,12 +20,14 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 {
     public class Bindeklinge : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.HolyS, ElementID.ArcaneS);
         public override void SetStaticDefaults()
         {
             // Tooltip.SetDefault("Critical strikes release homing lightmass");
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<HallowedHandGrenade>();
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<HallowedHandGrenade>();
             Item.ResearchUnlockCount = 1;
             ElementID.ItemHoly[Type] = true;
+            ElementID.ItemArcane[Type] = true;
         }
 
         public override void SetDefaults()
@@ -43,16 +45,18 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
             Item.useTurn = false;
-            Item.shoot = ModContent.ProjectileType<Bindeklinge_Slash>();
+            Item.shoot = ProjectileType<Bindeklinge_Slash>();
             Item.rare = ItemRarityID.Blue;
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+
+            Item.Redemption().HideElementTooltip[ElementID.Arcane] = true;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             float adjustedItemScale2 = player.GetAdjustedItemScale(Item);
-            Projectile.NewProjectile(source, player.MountedCenter, new Vector2(player.direction, 0f), ModContent.ProjectileType<Bindeklinge_Slash>(), damage, knockback, player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax, adjustedItemScale2);
+            Projectile.NewProjectile(source, player.MountedCenter, new Vector2(player.direction, 0f), ProjectileType<Bindeklinge_Slash>(), damage, knockback, player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax, adjustedItemScale2);
             NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, player.whoAmI);
             return false;
         }
@@ -63,7 +67,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 SoundEngine.PlaySound(SoundID.Item101, player.Center);
                 for (int i = 0; i < Main.rand.Next(4, 7); i++)
-                    Projectile.NewProjectile(player.GetSource_ItemUse(Item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<Lightmass>(), 7, hit.Knockback / 2, player.whoAmI);
+                    Projectile.NewProjectile(player.GetSource_ItemUse(Item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ProjectileType<Lightmass>(), 7, hit.Knockback / 2, player.whoAmI);
             }
         }
 
@@ -175,7 +179,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 SoundEngine.PlaySound(SoundID.Item101, player.Center);
                 for (int i = 0; i < Main.rand.Next(4, 7); i++)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<Lightmass>(), 7, hit.Knockback / 2, player.whoAmI);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ProjectileType<Lightmass>(), 7, hit.Knockback / 2, player.whoAmI);
             }
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

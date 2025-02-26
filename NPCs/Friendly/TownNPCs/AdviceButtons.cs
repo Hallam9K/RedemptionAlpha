@@ -1,6 +1,8 @@
 using BetterDialogue.UI;
 using Redemption.Globals;
+using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Quest;
 using Redemption.UI.Dialect;
 using Terraria;
 using Terraria.Audio;
@@ -130,11 +132,37 @@ namespace Redemption.NPCs.Friendly.TownNPCs
 
             if (locked || ForceHidden)
                 return;
+
+            bool isDaerel = npc.type == NPCType<Daerel>();
+            string extraLine = "";
+            string wayfarer = isDaerel ? "Daerel" : "Zephos";
+            Main.npcChatCornerItem = 0;
+
+            switch (AdviceName)
+            {
+                case "Spirits":
+                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Arcane, false);
+                    break;
+                case "Slimes":
+                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Fire, false);
+                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Ice, false);
+                    break;
+                case "GuardPoints":
+                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Hammer, false);
+                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Explosive, false);
+                    break;
+                case "Elements":
+                    if (RedeQuest.adviceSeen[AdviceType] || player.HasItemInAnyInventory(ItemType<BookOfBonuses>()))
+                        break;
+                    player.QuickSpawnItem(npc.GetSource_GiftOrReward(), ItemType<BookOfBonuses>());
+                    Main.npcChatCornerItem = ItemType<BookOfBonuses>();
+                    extraLine = Language.GetTextValue("Mods.Redemption.Dialogue." + wayfarer + ".Advice.ElementsBook");
+                    break;
+            }
             RedeQuest.adviceSeen[AdviceType] = true;
             RedeQuest.SyncData();
             SoundEngine.PlaySound(SoundID.Chat);
 
-            bool isDaerel = npc.type == NPCType<Daerel>();
             object arg0 = null;
             object arg1 = null;
             switch (ArgsID)
@@ -155,7 +183,6 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                     break;
                 case 3:
                     arg0 = ElementID.ArcaneS;
-                    arg1 = ElementID.HolyS;
                     break;
                 case 4:
                     if (isDaerel)
@@ -192,8 +219,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                     break;
             }
 
-            string wayfarer = isDaerel ? "Daerel" : "Zephos";
-            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue." + wayfarer + ".Advice." + AdviceName, arg0, arg1);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue." + wayfarer + ".Advice." + AdviceName, arg0, arg1) + extraLine;
         }
     }
     public class AdviceButton_Erhan : AdviceButtonBase

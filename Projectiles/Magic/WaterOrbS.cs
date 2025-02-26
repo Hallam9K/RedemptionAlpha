@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using System;
@@ -15,6 +14,7 @@ namespace Redemption.Projectiles.Magic
             // DisplayName.SetDefault("Water Orb");
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ElementID.ProjWater[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetDefaults()

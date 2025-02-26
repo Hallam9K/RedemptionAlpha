@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Projectiles.Melee;
@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<DepletedCrossbow>();
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<DepletedCrossbow>();
         }
 
         public override void SetDefaults()
@@ -43,7 +43,9 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             // Projectile Properties
             Item.shootSpeed = 10f;
-            Item.shoot = ModContent.ProjectileType<Hacksaw_Proj>();
+            Item.shoot = ProjectileType<Hacksaw_Proj>();
+
+            Item.Redemption().HideElementTooltip[ElementID.Fire] = true;
         }
 
         public int AttackMode;
@@ -75,12 +77,15 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 switch (AttackMode)
                 {
                     case 0:
+                        Item.GetGlobalItem<ElementalItem>().OverrideElement[ElementID.Fire] = 0;
                         CombatText.NewText(player.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.Items.Hacksaw.Mode1"), true, false);
                         break;
                     case 1:
+                        Item.GetGlobalItem<ElementalItem>().OverrideElement[ElementID.Fire] = ElementID.AddElement;
                         CombatText.NewText(player.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.Items.Hacksaw.Mode2"), true, false);
                         break;
                     case 2:
+                        Item.GetGlobalItem<ElementalItem>().OverrideElement[ElementID.Fire] = 0;
                         CombatText.NewText(player.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.Items.Hacksaw.Mode3"), true, false);
                         break;
                 }
@@ -106,10 +111,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             string shotType = "";
-            if (AttackMode is 1)
-                Item.ExtraItemShoot(ModContent.ProjectileType<Hacksaw_Heat_Proj>());
-            else
-                Item.ExtraItemShoot();
             switch (AttackMode)
             {
                 case 0:

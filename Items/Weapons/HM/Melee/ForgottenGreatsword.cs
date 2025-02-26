@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Weapons.PreHM.Melee;
@@ -17,12 +17,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.WindS);
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Ophos' Forgotten Greatsword");
-            /* Tooltip.SetDefault("Spins the blade around the player and sets ablaze\n" +
-                "Forms a firestorm that engulfs the player, dealing " + ElementID.WindS + " damage" +
-                "\nRelease left-click to disperse it, launching nearby enemies away"); */
-
-            Item.ResearchUnlockCount = 1;
+            ElementID.ItemFire[Type] = true;
+            ElementID.ItemWind[Type] = true;
         }
 
         public override void SetDefaults()
@@ -50,14 +46,16 @@ namespace Redemption.Items.Weapons.HM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<ForgottenGreatsword_Proj>();
-            Item.ExtraItemShoot(ModContent.ProjectileType<Firestorm_Proj>());
+            Item.shoot = ProjectileType<ForgottenGreatsword_Proj>();
+
+            Item.Redemption().TechnicallySlash = true;
+            Item.Redemption().HideElementTooltip[ElementID.Wind] = true;
         }
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<ForgottenSword>())
-                .AddIngredient(ModContent.ItemType<OphosNotes>())
+                .AddIngredient(ItemType<ForgottenSword>())
+                .AddIngredient(ItemType<OphosNotes>())
                 .AddCondition(RedeConditions.RepairedByFallen)
                 .Register();
         }
@@ -87,8 +85,6 @@ namespace Redemption.Items.Weapons.HM.Melee
                 };
                 tooltips.Add(line);
             }
-            TooltipLine slashLine = new(Mod, "SharpBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
-            tooltips.Add(slashLine);
         }
     }
 }

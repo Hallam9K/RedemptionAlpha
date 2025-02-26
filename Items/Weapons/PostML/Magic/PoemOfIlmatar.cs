@@ -1,21 +1,25 @@
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Projectiles.Magic;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PostML.Magic
 {
     public class PoemOfIlmatar : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.EarthS);
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Poem of Ilmatar");
-            // Tooltip.SetDefault("Hold left-click to create a tornado that picks up enemies and juggles them");
             ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<Ukonvasara>();
-            Item.ResearchUnlockCount = 1;
+
+            ElementID.ItemWind[Type] = true;
+            ElementID.ItemEarth[Type] = true;
+            ElementID.ItemArcane[Type] = true;
         }
 
         public override void SetDefaults()
@@ -36,8 +40,9 @@ namespace Redemption.Items.Weapons.PostML.Magic
             Item.rare = RarityType<TurquoiseRarity>();
             Item.shootSpeed = 0;
             Item.shoot = ProjectileType<PoemTornado_Proj>();
-            Item.ExtraItemShoot(ProjectileType<PoemTornado_Rock>());
             Item.UseSound = CustomSounds.WindLong;
+
+            Item.Redemption().HideElementTooltip[ElementID.Earth] = true;
         }
         public override bool CanUseItem(Player player)
         {

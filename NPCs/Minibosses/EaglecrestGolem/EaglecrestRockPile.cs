@@ -6,6 +6,7 @@ using Redemption.Globals.NPC;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.Localization;
@@ -44,7 +45,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             NPC.lifeMax = 120;
             NPC.damage = 26;
             NPC.defense = 15;
-            NPC.knockBackResist = 0.1f;
+            NPC.knockBackResist = 0.4f;
             NPC.aiStyle = -1;
             NPC.width = 42;
             NPC.height = 54;
@@ -54,7 +55,15 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Earth] *= .75f;
         }
-
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
+        {
+            if (item.pick > 0)
+            {
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.StoneHit, NPC.position);
+                modifiers.FlatBonusDamage += item.pick / 2;
+            }
+        }
         public override void AI()
         {
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)

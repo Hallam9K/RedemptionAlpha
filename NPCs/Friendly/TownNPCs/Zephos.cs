@@ -2,10 +2,12 @@ using BetterDialogue.UI;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs;
 using Redemption.Globals;
+using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Quest;
 using Redemption.Items.Tools.PreHM;
 using Redemption.Items.Usable;
 using Redemption.Items.Usable.Summons;
@@ -206,7 +208,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 Rectangle rect = unconsciousTexture.Frame(3, 4, Level, starsFrame);
                 Vector2 origin = rect.Size() / 2;
 
-                spriteBatch.Draw(unconsciousTexture.Value, NPC.Center + new Vector2(0, 7) - screenPos, rect, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+                spriteBatch.Draw(unconsciousTexture.Value, NPC.Center + new Vector2(0, 7) - screenPos, rect, NPC.ColorTintedAndOpacity(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
                 return false;
             }
             return base.PreDraw(spriteBatch, screenPos, drawColor);
@@ -249,6 +251,25 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 return Language.GetTextValue("Mods.Redemption.Dialogue.General.UnconsciousStatus2", NPC.FullName, (int)MathHelper.Lerp(43200 / 3600, 0, Unconscious / 43200f));
             }
 
+            if (!RedeQuest.bonusQuestComplete)
+            {
+                bool incomplete = false;
+                for (int i = 0; i < (int)RedeQuest.Bonuses.Count; i++)
+                {
+                    if (!RedeQuest.bonusDiscovered[i] && i != (int)RedeQuest.Bonuses.Clash)
+                        incomplete = true;
+                }
+                if (!incomplete)
+                {
+                    Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_GiftOrReward(), ItemType<CrystallizedKnowledge>());
+                    Main.npcChatCornerItem = ItemType<CrystallizedKnowledge>();
+
+                    RedeQuest.bonusQuestComplete = true;
+                    RedeQuest.SyncData();
+                    return Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.BookQuestComplete");
+                }
+            }
+
             WeightedRandom<string> chat = new(Main.rand);
             if (RedeQuest.wayfarerVars[0] < 4)
             {
@@ -282,12 +303,14 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 .Add<CantripStaff>()
                 .Add<LeatherSheath>()
                 .Add<Archcloth>()
+                .Add<BookOfBonuses>(RedeConditions.ElementBookObtained)
                 .Add<SilverRapier>(Condition.DownedEarlygameBoss)
                 .Add<EaglecrestSpelltome>(Condition.DownedEowOrBoc)
                 .Add<SwordSlicer>(Condition.DownedEowOrBoc)
                 .Add<GolemEye>(RedeConditions.DownedEaglecrestGolem)
                 .Add<ChaliceFragments>()
                 .Add<GildedSeaEmblem>(Condition.InBeach)
+                .Add<CrystallizedKnowledge>(RedeConditions.ElementBookQuest)
                 .Add<OphosNotes>(Condition.DownedGolem)
                 .Add<KingChickenPainting>()
                 .Add<FowlEmperorPainting>(RedeConditions.DownedFowlEmperor)

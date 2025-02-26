@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
@@ -55,6 +54,8 @@ namespace Redemption.Globals.Player
         public bool galaxyHeart;
         public int heartStyle;
 
+        public bool elementStatsUISeen;
+
         public float musicVolume;
         public int slayerStarRating;
         public bool contactImmune;
@@ -103,6 +104,7 @@ namespace Redemption.Globals.Player
             omegaGiftGiven = false;
             medKit = false;
             galaxyHeart = false;
+            elementStatsUISeen = false;
             heartStyle = 0;
         }
         public override void UpdateDead()
@@ -140,7 +142,7 @@ namespace Redemption.Globals.Player
         }
         public override void OnHitNPCWithProj(Projectile proj, Terraria.NPC target, Terraria.NPC.HitInfo hit, int damageDone)
         {
-            if (Player.RedemptionPlayerBuff().hardlightBonus == 3 && proj.DamageType == DamageClass.Melee && proj.type != ModContent.ProjectileType<MiniSpaceship_Laser>())
+            if (Player.RedemptionPlayerBuff().hardlightBonus == 3 && proj.DamageType == DamageClass.Melee && proj.type != ProjectileType<MiniSpaceship_Laser>())
             {
                 hitTarget = target.whoAmI;
                 hitTarget2 = target.whoAmI;
@@ -148,7 +150,7 @@ namespace Redemption.Globals.Player
         }
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            if (Player.HasItem(ModContent.ItemType<Taikasauva>()) && !Main.dedServ)
+            if (Player.HasItem(ItemType<Taikasauva>()) && !Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.NoitaDeath);
             if (BasePlayer.HasArmorSet(Mod, Player, "Springlock", true) && !Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.AftonScream);
@@ -164,7 +166,7 @@ namespace Redemption.Globals.Player
             if (!LabSearch() || !AnglonPortalSearch() || !GathPortalSearch() || !HallOfHeroesSearch() || !ShipSearch())
                 Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Warning2"), Colors.RarityRed);
 
-            if (RedeConfigClient.Instance.FunniAllWasteland || RedeConfigClient.Instance.FunniJanitor || RedeConfigClient.Instance.FunniSpiders || RedeConfigClient.Instance.FunniWasteland)
+            if (RedeConfigServer.Instance.FunniAllWasteland || RedeConfigServer.Instance.FunniJanitor || RedeConfigServer.Instance.FunniSpiders || RedeConfigServer.Instance.FunniWasteland)
                 Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Caution"), Colors.RarityOrange);
 
             localNukeTimer = RedeWorld.nukeTimer;
@@ -179,7 +181,7 @@ namespace Redemption.Globals.Player
                     for (int y = 20; y < Main.maxTilesY - 20; y++)
                     {
                         Tile tile = Framing.GetTileSafely(x, y);
-                        if (!tile.HasTile || tile.TileType != ModContent.TileType<KariBedTile>())
+                        if (!tile.HasTile || tile.TileType != TileType<KariBedTile>())
                             continue;
                         RedeGen.LabVector = new Vector2(x - 142, y - 209);
                         return true;
@@ -198,7 +200,7 @@ namespace Redemption.Globals.Player
                     for (int y = 20; y < Main.maxTilesY - 20; y++)
                     {
                         Tile tile = Framing.GetTileSafely(x, y);
-                        if (!tile.HasTile || tile.TileType != ModContent.TileType<GathuramPortalTile>())
+                        if (!tile.HasTile || tile.TileType != TileType<GathuramPortalTile>())
                             continue;
                         RedeGen.gathicPortalVector = new Vector2(x - 45, y - 11);
                         return true;
@@ -217,7 +219,7 @@ namespace Redemption.Globals.Player
                     for (int y = 20; y < Main.maxTilesY - 20; y++)
                     {
                         Tile tile = Framing.GetTileSafely(x, y);
-                        if (!tile.HasTile || tile.TileType != ModContent.TileType<AncientAltarTile>())
+                        if (!tile.HasTile || tile.TileType != TileType<AncientAltarTile>())
                             continue;
                         RedeGen.HallOfHeroesVector = new Vector2(x - 39, y - 25);
                         return true;
@@ -236,7 +238,7 @@ namespace Redemption.Globals.Player
                     for (int y = 20; y < Main.maxTilesY - 20; y++)
                     {
                         Tile tile = Framing.GetTileSafely(x, y);
-                        if (!tile.HasTile || tile.TileType != ModContent.TileType<AnglonPortalTile>())
+                        if (!tile.HasTile || tile.TileType != TileType<AnglonPortalTile>())
                             continue;
                         RedeGen.newbCaveVector = new Vector2(x - 29, y);
                         return true;
@@ -255,7 +257,7 @@ namespace Redemption.Globals.Player
                     for (int y = 20; y < Main.maxTilesY - 20; y++)
                     {
                         Tile tile = Framing.GetTileSafely(x, y);
-                        if (!tile.HasTile || tile.TileType != ModContent.TileType<SlayerChairTile>())
+                        if (!tile.HasTile || tile.TileType != TileType<SlayerChairTile>())
                             continue;
                         RedeGen.slayerShipVector = new Vector2(x - 90, y - 23);
                         return true;
@@ -277,11 +279,11 @@ namespace Redemption.Globals.Player
         {
             if (Main.netMode != NetmodeID.Server && Player.whoAmI == Main.myPlayer)
             {
-                Asset<Texture2D> emptyTex = ModContent.Request<Texture2D>("Redemption/Empty");
-                Asset<Texture2D> cursor0 = ModContent.Request<Texture2D>("Terraria/Images/UI/Cursor_0");
-                Asset<Texture2D> cursor1 = ModContent.Request<Texture2D>("Terraria/Images/UI/Cursor_1");
-                Asset<Texture2D> cursor11 = ModContent.Request<Texture2D>("Terraria/Images/UI/Cursor_11");
-                Asset<Texture2D> cursor12 = ModContent.Request<Texture2D>("Terraria/Images/UI/Cursor_12");
+                Asset<Texture2D> emptyTex = Request<Texture2D>("Redemption/Empty");
+                Asset<Texture2D> cursor0 = Request<Texture2D>("Terraria/Images/UI/Cursor_0");
+                Asset<Texture2D> cursor1 = Request<Texture2D>("Terraria/Images/UI/Cursor_1");
+                Asset<Texture2D> cursor11 = Request<Texture2D>("Terraria/Images/UI/Cursor_11");
+                Asset<Texture2D> cursor12 = Request<Texture2D>("Terraria/Images/UI/Cursor_12");
                 if (slayerCursor)
                 {
                     TextureAssets.Cursors[0] = emptyTex;
@@ -310,6 +312,7 @@ namespace Redemption.Globals.Player
                 Player.RedemptionScreen().ScreenFocusPosition = new Vector2(100, 99) * 16;
                 Player.RedemptionScreen().interpolantTimer = 100;
             }
+
             UpdateFilterEffects();
             UpdateNukeCountdown();
         }
@@ -332,7 +335,7 @@ namespace Redemption.Globals.Player
                 }
             }
 
-            int PalebatImpID = Terraria.NPC.FindFirstNPC(ModContent.NPCType<PalebatImp>());
+            int PalebatImpID = Terraria.NPC.FindFirstNPC(NPCType<PalebatImp>());
             if (PalebatImpID >= 0)
             {
                 if ((Main.npc[PalebatImpID].ModNPC as PalebatImp).shakeTimer > 0)
@@ -408,15 +411,15 @@ namespace Redemption.Globals.Player
                 if (Player.InModBiome<LabBiome>() && Terraria.NPC.downedMechBoss1 && Terraria.NPC.downedMechBoss2 && Terraria.NPC.downedMechBoss3)
                 {
                     if (Terraria.NPC.downedMoonlord)
-                        itemDrop = ModContent.ItemType<LabCrate2>();
+                        itemDrop = ItemType<LabCrate2>();
                     else
-                        itemDrop = ModContent.ItemType<LabCrate>();
+                        itemDrop = ItemType<LabCrate>();
                     return;
                 }
             }
             if (Player.InModBiome<WastelandPurityBiome>())
             {
-                int blinky = ModContent.ItemType<Blinky>();
+                int blinky = ItemType<Blinky>();
                 if (attempt.questFish == blinky && attempt.uncommon)
                 {
                     itemDrop = blinky;
@@ -424,7 +427,7 @@ namespace Redemption.Globals.Player
                 }
                 if (attempt.crate && !attempt.veryrare && !attempt.legendary && attempt.rare)
                 {
-                    itemDrop = ModContent.ItemType<PetrifiedCrate>();
+                    itemDrop = ItemType<PetrifiedCrate>();
                     return;
                 }
                 else
@@ -436,16 +439,16 @@ namespace Redemption.Globals.Player
                         choice.Add(ItemID.FishingSeaweed, 1);
                         choice.Add(ItemID.OldShoe, 1);
                         choice.Add(ItemID.Bone, .5);
-                        choice.Add(ModContent.ItemType<BloatedTrout>(), 2);
+                        choice.Add(ItemType<BloatedTrout>(), 2);
                     }
                     else if (attempt.uncommon)
-                        choice.Add(ModContent.ItemType<ToxicGlooper>(), 1);
+                        choice.Add(ItemType<ToxicGlooper>(), 1);
                     else if (attempt.rare)
-                        choice.Add(ModContent.ItemType<ScrapMetal>(), 1);
+                        choice.Add(ItemType<ScrapMetal>(), 1);
                     else if (attempt.veryrare)
                     {
                         choice.Add(ItemID.AdhesiveBandage, 1);
-                        choice.Add(ModContent.ItemType<GasMask>(), 1);
+                        choice.Add(ItemType<GasMask>(), 1);
                     }
                     else if (attempt.legendary)
                         choice.Add(ItemID.FartinaJar, 1);
@@ -460,17 +463,17 @@ namespace Redemption.Globals.Player
             if (!mediumCoreDeath && (Player.name.Contains("Liz") || Player.name.Contains("Lizzy") || Player.name.Contains("Elizabeth")))
             {
                 return new[] {
-                    new Item(ModContent.ItemType<LizzyCookie>())
+                    new Item(ItemType<LizzyCookie>())
                 };
             }
             if (!mediumCoreDeath && (Player.name == "Uncon" || Player.name == "Dahlia"))
             {
                 return new[] {
-                    new Item(ModContent.ItemType<UnconHead>()),
-                    new Item(ModContent.ItemType<UnconBody>()),
-                    new Item(ModContent.ItemType<UnconLegs>()),
-                    new Item(ModContent.ItemType<UnconPatreon_CapeAcc>()),
-                    new Item(ModContent.ItemType<UnconPetItem>())
+                    new Item(ItemType<UnconHead>()),
+                    new Item(ItemType<UnconBody>()),
+                    new Item(ItemType<UnconLegs>()),
+                    new Item(ItemType<UnconPatreon_CapeAcc>()),
+                    new Item(ItemType<UnconPetItem>())
                 };
             }
             return base.AddStartingItems(mediumCoreDeath);
@@ -521,6 +524,7 @@ namespace Redemption.Globals.Player
             if (omegaGiftGiven) saveS.Add("omegaGiftGiven");
             if (medKit) saveS.Add("medKit");
             if (galaxyHeart) saveS.Add("galaxyHeart");
+            if (elementStatsUISeen) saveS.Add("elementStatsUISeen");
 
             tag["saveS"] = saveS;
             tag["heartStyle"] = heartStyle;
@@ -534,6 +538,7 @@ namespace Redemption.Globals.Player
             omegaGiftGiven = saveS.Contains("omegaGiftGiven");
             medKit = saveS.Contains("medKit");
             galaxyHeart = saveS.Contains("galaxyHeart");
+            elementStatsUISeen = saveS.Contains("elementStatsUISeen");
 
             heartStyle = tag.GetInt("heartStyle");
         }

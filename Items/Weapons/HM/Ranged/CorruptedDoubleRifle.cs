@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
@@ -19,6 +18,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ThunderS);
         public override void SetStaticDefaults()
         {
+            ElementID.ItemThunder[Type] = true;
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
         }
 
@@ -42,9 +42,10 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.shootSpeed = 90;
             Item.shoot = ItemID.PurificationPowder;
             Item.useAmmo = AmmoID.Bullet;
-            Item.ExtraItemShoot(ModContent.ProjectileType<CorruptedDoubleRifle_Beam>());
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = Request<Texture2D>(Texture + "_Glow").Value;
+
+            Item.Redemption().HideElementTooltip[ElementID.Thunder] = true;
         }
         public int Count;
         public bool Charged;
@@ -64,10 +65,10 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<DoubleRifle>())
-                .AddIngredient(ModContent.ItemType<CorruptedXenomite>(), 4)
-                .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 3)
-                .AddIngredient(ModContent.ItemType<Plating>(), 2)
+                .AddIngredient(ItemType<DoubleRifle>())
+                .AddIngredient(ItemType<CorruptedXenomite>(), 4)
+                .AddIngredient(ItemType<CarbonMyofibre>(), 3)
+                .AddIngredient(ItemType<Plating>(), 2)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
@@ -84,7 +85,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             {
                 laser = 1;
             }
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CorruptedDoubleRifle_Proj>(), damage, knockback, player.whoAmI, laser);
+            Projectile.NewProjectile(source, position, velocity, ProjectileType<CorruptedDoubleRifle_Proj>(), damage, knockback, player.whoAmI, laser);
             return false;
         }
         public override Vector2? HoldoutOffset()

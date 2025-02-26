@@ -138,7 +138,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
+            if (!RedeConfigServer.Instance.ElementDisable)
             {
                 if (item.HasElement(ElementID.Psychic))
                 {
@@ -149,7 +149,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
+            if (!RedeConfigServer.Instance.ElementDisable)
             {
                 if (projectile.HasElement(ElementID.Psychic))
                 {

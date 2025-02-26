@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
@@ -12,29 +11,30 @@ using Terraria.ModLoader;
 namespace Redemption.Items.Weapons.PreHM.Ammo
 {
     public class MoonflareArrow_Proj : ModProjectile
-	{
+    {
         public override string Texture => "Redemption/Items/Weapons/PreHM/Ammo/MoonflareArrow";
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Moonflare Arrow");
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjArcane[Type] = true;
             ElementID.ProjFire[Type] = true;
             ElementID.ProjNature[Type] = true;
         }
-		public override void SetDefaults()
-		{
-			Projectile.width = 14;
-			Projectile.height = 14;
-			Projectile.friendly = true;
-			Projectile.hostile = false;
-			Projectile.DamageType = DamageClass.Ranged;
-			Projectile.penetrate = 1;
-			Projectile.timeLeft = 600;
-			Projectile.light = 0.1f;
-			Projectile.ignoreWater = false;
-			Projectile.tileCollide = true;
-			AIType = ProjectileID.WoodenArrowFriendly;
+        public override void SetDefaults()
+        {
+            Projectile.width = 14;
+            Projectile.height = 14;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.penetrate = 1;
+            Projectile.timeLeft = 600;
+            Projectile.light = 0.1f;
+            Projectile.ignoreWater = false;
+            Projectile.tileCollide = true;
+            AIType = ProjectileID.WoodenArrowFriendly;
             Projectile.arrow = true;
         }
         public override void AI()
@@ -47,7 +47,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
             if (!Main.rand.NextBool(3) || Main.dayTime || Main.moonPhase == 4)
                 return;
 
-            target.AddBuff(ModContent.BuffType<MoonflareDebuff>(), 360);
+            target.AddBuff(BuffType<MoonflareDebuff>(), 360);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
@@ -58,11 +58,11 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D textureGlow = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PreHM/Ammo/MoonflareArrow_Glow").Value;
+            Texture2D textureGlow = Request<Texture2D>("Redemption/Items/Weapons/PreHM/Ammo/MoonflareArrow_Glow").Value;
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
@@ -72,7 +72,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
             }
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             Main.EntitySpriteDraw(textureGlow, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
@@ -82,7 +82,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
         public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 4; i++)
-                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<MoonflareDust>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
+                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustType<MoonflareDust>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
         }
     }
 }

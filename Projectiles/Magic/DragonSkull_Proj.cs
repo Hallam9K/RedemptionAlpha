@@ -1,5 +1,6 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using System;
 using Terraria;
@@ -7,8 +8,6 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Base;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -18,6 +17,7 @@ namespace Redemption.Projectiles.Magic
         {
             // DisplayName.SetDefault("Dragon Skull");
             ElementID.ProjFire[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -83,7 +83,7 @@ namespace Redemption.Projectiles.Magic
                     SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, Projectile.position);
                 if (Projectile.ai[0] >= 40 && Projectile.ai[0] % 3 == 0 && Projectile.ai[0] <= 180)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + RedeHelper.PolarVector(6, Projectile.rotation + MathHelper.PiOver2), RedeHelper.PolarVector(5, Projectile.rotation + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0)), ModContent.ProjectileType<DragonSkullFlames_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + RedeHelper.PolarVector(6, Projectile.rotation + MathHelper.PiOver2), RedeHelper.PolarVector(5, Projectile.rotation + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0)), ProjectileType<DragonSkullFlames_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                 }
 
                 if (Projectile.ai[0] == 180)
@@ -94,7 +94,7 @@ namespace Redemption.Projectiles.Magic
                         DustHelper.DrawCircle(Projectile.Center, DustID.Torch, 2, 4, 4, 1, 2, nogravity: true);
                         SoundEngine.PlaySound(SoundID.Item122, Projectile.position);
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + RedeHelper.PolarVector(6, Projectile.rotation + MathHelper.PiOver2),
-                            RedeHelper.PolarVector(0, Projectile.rotation + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0)), ModContent.ProjectileType<HeatRay>(),
+                            RedeHelper.PolarVector(0, Projectile.rotation + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0)), ProjectileType<HeatRay>(),
                             Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
                     }
                     else
@@ -114,7 +114,7 @@ namespace Redemption.Projectiles.Magic
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D jawTex = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Jaw").Value;
+            Texture2D jawTex = Request<Texture2D>(Texture + "_Jaw").Value;
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 

@@ -22,6 +22,7 @@ namespace Redemption.Projectiles.Magic
             // DisplayName.SetDefault("Ember");
             ProjectileID.Sets.DontCancelChannelOnKill[Type] = true;
             ElementID.ProjFire[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

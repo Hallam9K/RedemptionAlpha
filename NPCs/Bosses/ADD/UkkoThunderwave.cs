@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Globals;
@@ -17,6 +16,7 @@ namespace Redemption.NPCs.Bosses.ADD
             // DisplayName.SetDefault("Ukko's Thunderwave");
             Main.projFrames[Projectile.type] = 8;
             ElementID.ProjThunder[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -32,7 +32,7 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public void DoTrailCreation(TrailManager tManager)
         {
-            tManager.CreateTrail(Projectile, new StandardColorTrail(Color.White), new RoundCap(), new ZigZagTrailPosition(6), 80f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.1f, 1f, 1f));
+            tManager.CreateTrail(Projectile, new StandardColorTrail(Color.White), new RoundCap(), new ZigZagTrailPosition(6), 80f, 250f, new ImageShader(Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.1f, 1f, 1f));
         }
 
         private float drawTimer;

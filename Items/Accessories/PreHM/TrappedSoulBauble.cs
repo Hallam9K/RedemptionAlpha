@@ -1,11 +1,11 @@
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Terraria.DataStructures;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Globals;
+using Redemption.Items.Materials.PreHM;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.PreHM
 {
@@ -18,7 +18,6 @@ namespace Redemption.Items.Accessories.PreHM
                 "\n10% increased " + ElementID.ArcaneS + " elemental damage and resistance" +
                  "\n+20 max mana"); */
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 10));
-            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

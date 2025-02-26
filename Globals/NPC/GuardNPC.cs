@@ -1,7 +1,7 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
+using Redemption.Items.Accessories.PostML;
 using Redemption.NPCs.Friendly.SpiritSummons;
 using Redemption.NPCs.Minibosses.Calavia;
 using Redemption.NPCs.PreHM;
@@ -77,12 +77,13 @@ namespace Redemption.Globals.NPC
             if (damage > 0)
                 BaseAI.DamageNPC(npc, damage, 0, Main.LocalPlayer, true, true);
 
-            if (npc.type == ModContent.NPCType<SkeletonWarden>())
+            #region Unique NPC Effects
+            if (npc.type == NPCType<SkeletonWarden>())
             {
                 if (Main.netMode != NetmodeID.Server)
-                    Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, ModContent.Find<ModGore>("Redemption/SkeletonWardenGore2").Type, 1);
+                    Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, Find<ModGore>("Redemption/SkeletonWardenGore2").Type, 1);
             }
-            else if (npc.type == ModContent.NPCType<SkeletonWarden_SS>())
+            else if (npc.type == NPCType<SkeletonWarden_SS>())
             {
                 for (int i = 0; i < 4; i++)
                 {
@@ -92,23 +93,24 @@ namespace Redemption.Globals.NPC
                     Main.dust[dust].noGravity = true;
                 }
             }
-            else if (npc.type == ModContent.NPCType<Calavia>())
+            else if (npc.type == NPCType<Calavia>())
             {
                 if (Main.netMode != NetmodeID.Server)
                 {
-                    Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, ModContent.Find<ModGore>("Redemption/CalaviaShieldGore1").Type, 1);
-                    Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, ModContent.Find<ModGore>("Redemption/CalaviaShieldGore2").Type, 1);
+                    Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, Find<ModGore>("Redemption/CalaviaShieldGore1").Type, 1);
+                    Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, Find<ModGore>("Redemption/CalaviaShieldGore2").Type, 1);
                 }
                 EmoteBubble.NewBubble(1, new WorldUIAnchor(npc), 120);
                 if (!Main.dedServ)
                 {
-                    Texture2D bubble = !Main.dedServ ? ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value : null;
+                    Texture2D bubble = !Main.dedServ ? Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value : null;
                     SoundStyle voice = CustomSounds.Voice1 with { Pitch = 0.6f };
                     Dialogue d1 = new(npc, "Oru'takh!", Color.White, Color.Gray, voice, 0.01f, 1f, .5f, true, bubble: bubble);
                     ChatUI.Visible = true;
                     ChatUI.Add(d1);
                 }
             }
+            #endregion
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref Terraria.NPC.HitModifiers modifiers)
         {
@@ -117,16 +119,28 @@ namespace Redemption.Globals.NPC
             GuardDamage = 1;
             if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned)
                 GuardPierce = true;
+            else if (ItemID.Sets.Spears[item.type])
+            {
+                GuardPierce = true;
+                RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Spear);
+            }
             if (item.HasElement(ElementID.Psychic))
+            {
                 IgnoreArmour = true;
+                RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Psychic);
+            }
             if (player.RedemptionPlayerBuff().wardbreaker && (item.HasElement(ElementID.Arcane) || item.DamageType == DamageClass.Magic))
                 GuardDamage += 1;
             if (item.HasElement(ElementID.Explosive))
+            {
                 GuardDamage += 1;
+                RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Explosive);
+            }
             if (item.hammer > 0 || item.Redemption().TechnicallyHammer)
             {
                 GuardHammer = true;
                 GuardDamage += 3;
+                RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Hammer);
             }
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)
@@ -135,26 +149,41 @@ namespace Redemption.Globals.NPC
                 return;
             GuardDamage = 1;
             if (projectile.HasElement(ElementID.Psychic))
+            {
                 IgnoreArmour = true;
+                RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Psychic);
+            }
             if (projectile.Redemption().IsHammer || projectile.type == ProjectileID.PaladinsHammerFriendly)
             {
                 GuardHammer = true;
                 GuardDamage += 3;
+                RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Hammer);
             }
 
+            bool isSpear = projectile.Redemption().IsSpear || ProjectileLists.ProjSpear[projectile.type];
+            if (Main.player[projectile.owner].HeldItem.shoot == projectile.type)
+                isSpear |= ItemID.Sets.Spears[Main.player[projectile.owner].HeldItem.type];
             if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned || projectile.Redemption().EnergyBased)
                 GuardPierce = true;
+            else if (isSpear)
+            {
+                GuardPierce = true;
+                RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Spear);
+            }
 
             if (Main.player[projectile.owner].RedemptionPlayerBuff().wardbreaker && (projectile.HasElement(ElementID.Arcane) || projectile.DamageType == DamageClass.Magic))
                 GuardDamage += 1;
 
             if (projectile.HasElement(ElementID.Explosive))
+            {
                 GuardDamage += 1;
+                RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Explosive);
+            }
         }
         public override void SetDefaults(Terraria.NPC npc)
         {
             base.SetDefaults(npc);
-            if (RedeConfigClient.Instance.VanillaGuardPointsDisable)
+            if (RedeConfigServer.Instance.VanillaGuardPointsDisable)
                 return;
             if (npc.type is NPCID.GreekSkeleton or NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.GoblinWarrior)
                 GuardPoints = 25;
@@ -167,8 +196,9 @@ namespace Redemption.Globals.NPC
         }
         public override void ModifyIncomingHit(Terraria.NPC npc, ref Terraria.NPC.HitModifiers modifiers)
         {
-            if (RedeConfigClient.Instance.VanillaGuardPointsDisable)
+            if (RedeConfigServer.Instance.VanillaGuardPointsDisable)
                 return;
+
             if (npc.type is NPCID.GreekSkeleton)
             {
                 if (GuardPoints >= 0)

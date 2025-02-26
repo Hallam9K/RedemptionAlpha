@@ -1,13 +1,12 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -23,6 +22,7 @@ namespace Redemption.Projectiles.Magic
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjHoly[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetDefaults()
@@ -66,7 +66,7 @@ namespace Redemption.Projectiles.Magic
             if (Projectile.localAI[0] >= 20 && Projectile.localAI[0] < 40)
             {
                 Vector2 move = Vector2.Zero;
-                float distance = 70f;
+                float distance = 100f;
                 bool targetted = false;
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {

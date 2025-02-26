@@ -17,6 +17,7 @@ namespace Redemption.Projectiles.Hostile
             // DisplayName.SetDefault("Mutated Living Root");
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
             ElementID.ProjNature[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

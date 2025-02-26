@@ -11,14 +11,6 @@ namespace Redemption.Items.Accessories.PreHM
     public class EldritchRoot : ModItem
     {
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.NatureS, ElementID.ShadowS);
-        public override void SetStaticDefaults()
-        {
-            /*Tooltip.SetDefault("All " + ElementID.NatureS + " elemental weapons gain the " + ElementID.ShadowS + " element\n" +
-                "Your " + ElementID.ShadowS + " weapons are more effective against Dark enemies" +
-                "\n12% increased " + ElementID.ShadowS + " elemental resistance\n" +
-                "'Nature can reap, too.'");*/
-            ElementID.ItemShadow[Type] = true;
-        }
 
         public override void SetDefaults()
         {

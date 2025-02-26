@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria;
 using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -13,8 +14,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Noble's Halberd");
-		}
+            ProjectileLists.ProjSpear[Type] = true;
+        }
 
 		public override void SetDefaults()
 		{

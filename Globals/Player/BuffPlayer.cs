@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
 using Redemption.Base;
@@ -12,19 +11,15 @@ using Redemption.Dusts;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Accessories.PreHM;
-using Redemption.Items.Armor.PostML.Vorti;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Critters;
-using Redemption.NPCs.Friendly;
-using Redemption.NPCs.PostML;
 using Redemption.Particles;
 using Redemption.Projectiles.Magic;
 using Redemption.Projectiles.Melee;
 using Redemption.Projectiles.Minions;
 using Redemption.Projectiles.Misc;
 using Redemption.Projectiles.Ranged;
-using Redemption.Projectiles.Ritualist;
 using ReLogic.Content;
 using System;
 using Terraria;
@@ -178,23 +173,24 @@ namespace Redemption.Globals.Player
             crystalKnowledge = false;
             pureChill = false;
             seaEmblem = false;
-            hydraCorrosion = false;
             skirmish = false;
+            hydraCorrosion = false;
             wardbreaker = false;
             erleasFlower = false;
             spiderFriendly = false;
+
             Player.RedemptionRad().protectionLevel = 0;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
                 ElementalResistance[k] = 0;
             for (int k = 0; k < ElementalDamage.Length; k++)
                 ElementalDamage[k] = 0;
-            if (!Player.HasBuff(ModContent.BuffType<InfestedDebuff>()))
+            if (!Player.HasBuff(BuffType<InfestedDebuff>()))
             {
                 infested = false;
                 infestedTime = 0;
             }
-            if (!Player.HasBuff(ModContent.BuffType<DirtyWoundDebuff>()))
+            if (!Player.HasBuff(BuffType<DirtyWoundDebuff>()))
             {
                 dirtyWound = false;
                 dirtyWoundTime = 0;
@@ -223,65 +219,65 @@ namespace Redemption.Globals.Player
             badtime = false;
             infectionHeart = false;
             infectionHeartTimer = 0;
-            hydraCorrosion = false;
             skirmish = false;
+            hydraCorrosion = false;
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
             if (Redemption.RedeSpecialAbility.JustPressed && Player.active && !Player.dead)
             {
-                if (xeniumBonus && !Player.HasBuff(ModContent.BuffType<XeniumCooldown>()))
+                if (xeniumBonus && !Player.HasBuff(BuffType<XeniumCooldown>()))
                 {
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.GrenadeLauncher, Player.position);
-                    Player.AddBuff(ModContent.BuffType<XeniumCooldown>(), 20 * 60);
+                    Player.AddBuff(BuffType<XeniumCooldown>(), 20 * 60);
                     Vector2 spawn = new(Player.Center.X, Player.Center.Y - 10);
 
-                    Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, RedeHelper.PolarVector(15, (Main.MouseWorld - Player.Center).ToRotation()), ModContent.ProjectileType<GasCanister>(), 0, 0, Main.myPlayer);
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, RedeHelper.PolarVector(15, (Main.MouseWorld - Player.Center).ToRotation()), ProjectileType<GasCanister>(), 0, 0, Main.myPlayer);
                 }
 
-                if (xenomiteBonus && !Player.HasBuff(ModContent.BuffType<XenomiteCooldown>()))
+                if (xenomiteBonus && !Player.HasBuff(BuffType<XenomiteCooldown>()))
                 {
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.Gas1, Player.position);
-                    Player.AddBuff(ModContent.BuffType<XenomiteCooldown>(), 20 * 60);
-                    Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<XenomiteGas_Proj>(), 100, 0, Main.myPlayer);
+                    Player.AddBuff(BuffType<XenomiteCooldown>(), 20 * 60);
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ProjectileType<XenomiteGas_Proj>(), 100, 0, Main.myPlayer);
                 }
-                if (hardlightBonus != 0 && !Player.HasBuff(ModContent.BuffType<HardlightCooldown>()))
+                if (hardlightBonus != 0 && !Player.HasBuff(BuffType<HardlightCooldown>()))
                 {
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.Alarm2, Player.position);
 
-                    Player.AddBuff(ModContent.BuffType<HardlightCooldown>(), 60 * 60);
+                    Player.AddBuff(BuffType<HardlightCooldown>(), 60 * 60);
                     Vector2 spawn = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
                     switch (hardlightBonus)
                     {
                         case 1: // Ritualist
                             break;
                         case 2: // Magic
-                            Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, Vector2.Zero, ModContent.ProjectileType<Hardlight_ManaDrone>(), 0, 0, Main.myPlayer);
+                            Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, Vector2.Zero, ProjectileType<Hardlight_ManaDrone>(), 0, 0, Main.myPlayer);
                             break;
                         case 3: // Melee
                             for (int i = 0; i < 2; i++)
                             {
                                 spawn = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
 
-                                Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, Vector2.Zero, ModContent.ProjectileType<MiniSpaceship>(), 50, 1, Main.myPlayer, i);
+                                Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, Vector2.Zero, ProjectileType<MiniSpaceship>(), 50, 1, Main.myPlayer, i);
                             }
                             break;
                         case 4: // Summoner
-                            Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, Vector2.Zero, ModContent.ProjectileType<Hardlight_Magnet>(), 0, 0, Main.myPlayer);
+                            Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, Vector2.Zero, ProjectileType<Hardlight_Magnet>(), 0, 0, Main.myPlayer);
 
                             for (int i = 0; i < 2; i++)
                             {
                                 spawn = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
 
-                                Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileDrone>(), 0, 0, Main.myPlayer);
+                                Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, Vector2.Zero, ProjectileType<Hardlight_MissileDrone>(), 0, 0, Main.myPlayer);
                             }
                             break;
                         case 5: // Ranger
                             if (Player.whoAmI == Main.myPlayer)
-                                Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<Hardlight_SoSCrosshair>(), 400, 8, Main.myPlayer);
+                                Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld, Vector2.Zero, ProjectileType<Hardlight_SoSCrosshair>(), 400, 8, Main.myPlayer);
                             break;
 
                     }
@@ -299,7 +295,7 @@ namespace Redemption.Globals.Player
                 if (Player.wingTime > Player.wingTimeMax)
                     Player.wingTime = Player.wingTimeMax;
             }
-            if (Terraria.NPC.AnyNPCs(ModContent.NPCType<Nebuleus2>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<Nebuleus2_Clone>()))
+            if (Terraria.NPC.AnyNPCs(NPCType<Nebuleus2>()) || Terraria.NPC.AnyNPCs(NPCType<Nebuleus2_Clone>()))
                 Player.wingTime = Player.wingTimeMax;
         }
         public override void PostUpdateEquips()
@@ -309,7 +305,7 @@ namespace Redemption.Globals.Player
                 if (trappedSoulTimer++ >= 600)
                 {
                     trappedSoulBoost = 0;
-                    Projectile.NewProjectile(Player.GetSource_Accessory(new Item(ModContent.ItemType<TrappedSoulBauble>())), Player.Center, Vector2.Zero, ModContent.ProjectileType<SoulShockwave_Proj>(), 0, 0, Main.myPlayer);
+                    Projectile.NewProjectile(Player.GetSource_Accessory(new Item(ItemType<TrappedSoulBauble>())), Player.Center, Vector2.Zero, ProjectileType<SoulShockwave_Proj>(), 0, 0, Main.myPlayer);
                     trappedSoulTimer = 0;
                 }
             }
@@ -317,7 +313,7 @@ namespace Redemption.Globals.Player
             {
                 if (infectionHeartTimer++ >= 300)
                 {
-                    Projectile.NewProjectile(Player.GetSource_Accessory(new Item(ModContent.ItemType<HeartOfInfection>())), Player.Center, Vector2.Zero, ModContent.ProjectileType<InfectionShockwave_Proj>(), 0, 0, Main.myPlayer);
+                    Projectile.NewProjectile(Player.GetSource_Accessory(new Item(ItemType<HeartOfInfection>())), Player.Center, Vector2.Zero, ProjectileType<InfectionShockwave_Proj>(), 0, 0, Main.myPlayer);
                     infectionHeartTimer = 0;
                 }
             }
@@ -330,13 +326,13 @@ namespace Redemption.Globals.Player
                 infectionTimer++;
                 if (antibodiesBuff)
                 {
-                    Player.ClearBuff(ModContent.BuffType<GreenRashesDebuff>());
+                    Player.ClearBuff(BuffType<GreenRashesDebuff>());
                     infectionTimer = 0;
                 }
                 if (infectionTimer >= 3600)
                 {
-                    Player.ClearBuff(ModContent.BuffType<GreenRashesDebuff>());
-                    Player.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 10000);
+                    Player.ClearBuff(BuffType<GreenRashesDebuff>());
+                    Player.AddBuff(BuffType<GlowingPustulesDebuff>(), 10000);
                     infectionTimer = 0;
                 }
             }
@@ -345,8 +341,8 @@ namespace Redemption.Globals.Player
                 infectionTimer++;
                 if (infectionTimer >= 3600)
                 {
-                    Player.ClearBuff(ModContent.BuffType<GlowingPustulesDebuff>());
-                    Player.AddBuff(ModContent.BuffType<FleshCrystalsDebuff>(), 10000);
+                    Player.ClearBuff(BuffType<GlowingPustulesDebuff>());
+                    Player.AddBuff(BuffType<FleshCrystalsDebuff>(), 10000);
                     infectionTimer = 0;
                 }
             }
@@ -355,21 +351,21 @@ namespace Redemption.Globals.Player
                 infectionTimer++;
                 if (infectionTimer >= 3600)
                 {
-                    Player.AddBuff(ModContent.BuffType<ShockDebuff>(), 10000);
+                    Player.AddBuff(BuffType<ShockDebuff>(), 10000);
                     infectionTimer = 0;
                 }
             }
             else
             {
                 if (infectionTimer >= 3000)
-                    Player.AddBuff(ModContent.BuffType<AntibodiesDebuff>(), 18000);
+                    Player.AddBuff(BuffType<AntibodiesDebuff>(), 18000);
                 infectionTimer = 0;
             }
 
             if (shockDebuff)
             {
                 Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.3f).UseIntensity(1f)
-                    .UseColor(Color.DarkOliveGreen).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Perlin", AssetRequestMode.ImmediateLoad).Value);
+                    .UseColor(Color.DarkOliveGreen).UseImage(Request<Texture2D>("Redemption/Effects/Perlin", AssetRequestMode.ImmediateLoad).Value);
                 Player.ManageSpecialBiomeVisuals("MoR:FogOverlay", shockDebuff);
             }
             #endregion
@@ -392,7 +388,7 @@ namespace Redemption.Globals.Player
                 {
                     for (int i = 0; i < Main.rand.Next(2, 6); i++)
                     {
-                        Projectile.NewProjectile(source, position, RedeHelper.PolarVector(Main.rand.NextFloat(7, 13), (Main.MouseWorld - Player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<StingerFriendly>(), damage, knockback, Main.myPlayer);
+                        Projectile.NewProjectile(source, position, RedeHelper.PolarVector(Main.rand.NextFloat(7, 13), (Main.MouseWorld - Player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ProjectileType<StingerFriendly>(), damage, knockback, Main.myPlayer);
                     }
                     thornCircletCounter = 0;
                 }
@@ -406,7 +402,7 @@ namespace Redemption.Globals.Player
         }
         public override void ModifyHitByProjectile(Projectile proj, ref Terraria.Player.HurtModifiers modifiers)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
+            if (!RedeConfigServer.Instance.ElementDisable)
             {
                 #region Elemental Resistances
                 float multiplier = 1;
@@ -439,6 +435,11 @@ namespace Redemption.Globals.Player
                 if (proj.HasElement(ElementID.Celestial))
                     multiplier *= 1 - ElementalResistance[ElementID.Celestial];
 
+                ElementalNPC.ElementalEffects(Player, proj, ref multiplier, ref modifiers);
+
+                if (multiplier == 1)
+                    return;
+
                 multiplier = (int)Math.Round(multiplier * 100);
                 multiplier /= 100;
 
@@ -459,7 +460,7 @@ namespace Redemption.Globals.Player
         }
         public override void ModifyHitByNPC(Terraria.NPC npc, ref Terraria.Player.HurtModifiers modifiers)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
+            if (!RedeConfigServer.Instance.ElementDisable)
             {
                 #region Elemental Resistances
                 float multiplier = 1;
@@ -492,6 +493,11 @@ namespace Redemption.Globals.Player
                 if (npc.HasElement(ElementID.Celestial))
                     multiplier *= 1 - ElementalResistance[ElementID.Celestial];
 
+                ElementalNPC.ElementalEffects(Player, npc, ref multiplier, ref modifiers);
+
+                if (multiplier == 1)
+                    return;
+
                 multiplier = (int)Math.Round(multiplier * 100);
                 multiplier /= 100;
 
@@ -512,8 +518,6 @@ namespace Redemption.Globals.Player
         }
         public override void ModifyHitNPCWithItem(Item item, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
         {
-            if (Player.HasBuff(ModContent.BuffType<BileFlaskBuff>()))
-                target.AddBuff(ModContent.BuffType<BileDebuff>(), 900);
             if (leatherSheath && target.life >= target.lifeMax && target.type != NPCID.TargetDummy)
                 modifiers.SetCrit();
 
@@ -525,8 +529,6 @@ namespace Redemption.Globals.Player
         {
             if (proj.Redemption().TechnicallyMelee)
             {
-                if (Player.HasBuff(ModContent.BuffType<BileFlaskBuff>()))
-                    target.AddBuff(ModContent.BuffType<BileDebuff>(), 900);
                 if (leatherSheath && target.life >= target.lifeMax && target.type != NPCID.TargetDummy)
                     modifiers.SetCrit();
 
@@ -543,52 +545,54 @@ namespace Redemption.Globals.Player
             if (charisma)
                 target.AddBuff(BuffID.Midas, 300);
             if (pureIronBonus && Main.rand.NextBool(3))
-                target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
+                target.AddBuff(BuffType<PureChillDebuff>(), 300);
             if (dragonLeadBonus && Main.rand.NextBool(3))
-                target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
+                target.AddBuff(BuffType<DragonblazeDebuff>(), 300);
             if (mechSheath && proj.Redemption().TechnicallyMelee && Player.ownedProjectileCounts[ModContent.ProjectileType<PhantomCleaver_F2>()] == 0 && RedeHelper.Chance(0.1f))
             {
-                Projectile.NewProjectile(proj.GetSource_FromAI(), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), proj.damage * 3, proj.knockBack, Main.myPlayer, target.whoAmI);
+                if (proj.DamageType == DamageClass.Melee || proj.DamageType == DamageClass.SummonMeleeSpeed)
+                    Projectile.NewProjectile(proj.GetSource_FromAI(), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ProjectileType<PhantomCleaver_F2>(), proj.damage * 3, proj.knockBack, Main.myPlayer, target.whoAmI);
             }
-            if ((sacredCross || gracesGuidance) && hit.Crit && Main.rand.NextBool(2) && proj.type != ModContent.ProjectileType<Lightmass>() && proj.HasElement(ElementID.Holy))
+            if ((sacredCross || gracesGuidance) && hit.Crit && Main.rand.NextBool(2) && proj.type != ProjectileType<Lightmass>() && proj.HasElement(ElementID.Holy))
             {
                 SoundEngine.PlaySound(SoundID.Item101, Player.Center);
                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
-                    Projectile.NewProjectile(proj.GetSource_FromThis(), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<Lightmass>(), 15, proj.knockBack / 4, Main.myPlayer);
+                    Projectile.NewProjectile(proj.GetSource_FromThis(), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ProjectileType<Lightmass>(), 15, proj.knockBack / 4, Main.myPlayer, 0, 1);
             }
-            if (crystalKnowledge && Main.rand.NextBool(4) && proj.type != ModContent.ProjectileType<ElementalCrystal>() && proj.GetFirstElement(true) != 0 && Player.ownedProjectileCounts[ModContent.ProjectileType<ElementalCrystal>()] < 6)
+            if (crystalKnowledge && Main.rand.NextBool(4) && proj.type != ProjectileType<ElementalCrystal>() && proj.GetFirstElement(true) != 0 && Player.ownedProjectileCounts[ProjectileType<ElementalCrystal>()] < 6)
             {
-                Player.AddBuff(ModContent.BuffType<CrystalKnowledgeBuff>(), 10);
-                Projectile.NewProjectile(proj.GetSource_FromAI(), Player.Center, Vector2.Zero, ModContent.ProjectileType<ElementalCrystal>(), 40, 1, Main.myPlayer, 0, proj.GetFirstElement(true));
+                Player.AddBuff(BuffType<CrystalKnowledgeBuff>(), 10);
+                Projectile.NewProjectile(proj.GetSource_FromAI(), Player.Center, Vector2.Zero, ProjectileType<ElementalCrystal>(), 40, 1, Main.myPlayer, 0, proj.GetFirstElement(true));
             }
             if (seaEmblem && Main.rand.NextBool(3) && proj.HasElement(ElementID.Water))
-                target.AddBuff(ModContent.BuffType<SoakedDebuff>(), 600);
+                target.AddBuff(BuffType<SoakedDebuff>(), 600);
         }
         public override void OnHitNPCWithItem(Item item, Terraria.NPC target, Terraria.NPC.HitInfo hit, int damageDone)
         {
             if (charisma)
                 target.AddBuff(BuffID.Midas, 300);
             if (pureIronBonus && Main.rand.NextBool(3))
-                target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
+                target.AddBuff(BuffType<PureChillDebuff>(), 300);
             if (dragonLeadBonus && Main.rand.NextBool(3))
-                target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
-            if (mechSheath && Player.ownedProjectileCounts[ModContent.ProjectileType<PhantomCleaver_F2>()] == 0 && RedeHelper.Chance(0.1f))
+                target.AddBuff(BuffType<DragonblazeDebuff>(), 300);
+            if (mechSheath && Player.ownedProjectileCounts[ProjectileType<PhantomCleaver_F2>()] == 0 && RedeHelper.Chance(0.1f))
             {
-                Projectile.NewProjectile(Player.GetSource_ItemUse(item), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), item.damage * 3, item.knockBack, Main.myPlayer, target.whoAmI);
+                if (item.DamageType == DamageClass.Melee || item.DamageType == DamageClass.SummonMeleeSpeed)
+                    Projectile.NewProjectile(Player.GetSource_ItemUse(item), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ProjectileType<PhantomCleaver_F2>(), item.damage * 3, item.knockBack, Main.myPlayer, target.whoAmI);
             }
             if ((sacredCross || gracesGuidance) && hit.Crit && Main.rand.NextBool(2) && item.HasElement(ElementID.Holy))
             {
                 SoundEngine.PlaySound(SoundID.Item101, Player.Center);
                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
-                    Projectile.NewProjectile(Player.GetSource_ItemUse(item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<Lightmass>(), 15, item.knockBack / 4, Main.myPlayer);
+                    Projectile.NewProjectile(Player.GetSource_ItemUse(item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ProjectileType<Lightmass>(), 15, item.knockBack / 4, Main.myPlayer);
             }
-            if (crystalKnowledge && Main.rand.NextBool(4) && item.GetFirstElement(true) != 0 && Player.ownedProjectileCounts[ModContent.ProjectileType<ElementalCrystal>()] < 6)
+            if (crystalKnowledge && Main.rand.NextBool(4) && item.GetFirstElement(true) != 0 && Player.ownedProjectileCounts[ProjectileType<ElementalCrystal>()] < 6)
             {
-                Player.AddBuff(ModContent.BuffType<CrystalKnowledgeBuff>(), 10);
-                Projectile.NewProjectile(Player.GetSource_ItemUse(item), Player.Center, Vector2.Zero, ModContent.ProjectileType<ElementalCrystal>(), 40, 1, Main.myPlayer, 0, item.GetFirstElement(true));
+                Player.AddBuff(BuffType<CrystalKnowledgeBuff>(), 10);
+                Projectile.NewProjectile(Player.GetSource_ItemUse(item), Player.Center, Vector2.Zero, ProjectileType<ElementalCrystal>(), 40, 1, Main.myPlayer, 0, item.GetFirstElement(true));
             }
             if (seaEmblem && Main.rand.NextBool(3) && item.HasElement(ElementID.Water))
-                target.AddBuff(ModContent.BuffType<SoakedDebuff>(), 600);
+                target.AddBuff(BuffType<SoakedDebuff>(), 600);
         }
         public override void UpdateBadLifeRegen()
         {
@@ -613,7 +617,7 @@ namespace Redemption.Globals.Player
                 Player.lifeRegen -= dirtyWoundTime / 500;
 
                 if (Player.wet && !Player.lavaWet)
-                    Player.ClearBuff(ModContent.BuffType<DirtyWoundDebuff>());
+                    Player.ClearBuff(BuffType<DirtyWoundDebuff>());
             }
             if (spiderSwarmed)
                 Player.lifeRegen -= 4;
@@ -687,12 +691,12 @@ namespace Redemption.Globals.Player
             {
                 if (Main.rand.NextBool(10) && drawInfo.shadow == 0f)
                 {
-                    int dust = Dust.NewDust(drawInfo.Position, Player.width, Player.height, ModContent.DustType<SpiderSwarmerDust>(), Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f);
+                    int dust = Dust.NewDust(drawInfo.Position, Player.width, Player.height, DustType<SpiderSwarmerDust>(), Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f);
                     Main.dust[dust].noGravity = true;
                     drawInfo.DustCache.Add(dust);
                 }
             }
-            if (Player.HasBuff(ModContent.BuffType<StaticStunDebuff>()))
+            if (Player.HasBuff(BuffType<StaticStunDebuff>()))
             {
                 if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
                 {
@@ -732,7 +736,7 @@ namespace Redemption.Globals.Player
                 b = MathHelper.Lerp(b, .85f, 0.3f);
                 if (Main.rand.NextBool(14))
                 {
-                    int sparkle = Dust.NewDust(drawInfo.Position, Player.width, Player.height, ModContent.DustType<SnowflakeDust>(), newColor: Color.White);
+                    int sparkle = Dust.NewDust(drawInfo.Position, Player.width, Player.height, DustType<SnowflakeDust>(), newColor: Color.White);
                     Main.dust[sparkle].velocity *= 0.5f;
                     Main.dust[sparkle].noGravity = true;
                 }
@@ -745,7 +749,7 @@ namespace Redemption.Globals.Player
         }
         public override void ModifyHurt(ref Terraria.Player.HurtModifiers modifiers)
         {
-            if (BasePlayer.HasAccessory(Player, ModContent.ItemType<EggShield>(), true, false))
+            if (BasePlayer.HasAccessory(Player, ItemType<EggShield>(), true, false))
                 modifiers.Knockback *= 0.75f;
 
             if (shieldGenerator && shieldGeneratorCD <= 0)
@@ -819,7 +823,7 @@ namespace Redemption.Globals.Player
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < MathHelper.Clamp(larvaCount, 1, 8); i++)
-                        Projectile.NewProjectile(Player.GetSource_Buff(Player.FindBuffIndex(ModContent.BuffType<InfestedDebuff>())), Player.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
+                        Projectile.NewProjectile(Player.GetSource_Buff(Player.FindBuffIndex(BuffType<InfestedDebuff>())), Player.Center, RedeHelper.SpreadUp(8), ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
                 }
             }
             if (dirtyWound && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
@@ -831,13 +835,13 @@ namespace Redemption.Globals.Player
             if ((fleshCrystals || shockDebuff) && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
                 damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Xenomite"));
 
-            if (Player.FindBuffIndex(ModContent.BuffType<RadiationDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+            if (Player.FindBuffIndex(BuffType<RadiationDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
                 damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Radiation"));
 
-            if (Player.FindBuffIndex(ModContent.BuffType<HolyFireDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+            if (Player.FindBuffIndex(BuffType<HolyFireDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
                 damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Incandesence"));
 
-            if (Player.FindBuffIndex(ModContent.BuffType<EnsnaredDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+            if (Player.FindBuffIndex(BuffType<EnsnaredDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
                 damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Ensnared"));
 
             return true;

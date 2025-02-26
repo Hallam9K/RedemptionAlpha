@@ -419,30 +419,33 @@ Mods: {
 				NothingHappens: Nothing happens...
 				Decapitated: Decapitated!
 				NoTargets: No targets found!
+				BloodLoss: BLOOD LOSS!
 			}
 		}
 
 		GenericTooltips: {
 			Bonuses: {
-				AxeBonus: "[i:Redemption/Axe] 3x critical strike damage, increased chance to decapitate humanoid enemies"
-				SlashBonus: "[i:Redemption/Slash] Small chance to decapitate most humanoid enemies, killing them instantly"
-				HammerBonus: "[i:Redemption/Hammer] Deals quadruple damage to Guard Points and ignores their knockback resistance"
 				ChaliceLine: "[i:Redemption/RedemptionRoute]The chalice has something to say about this item"
-				ExplodeBonus: "[i:Redemption/Explosive] Deals double damage to Guard Points and penetrates through defense"
-				ArcaneBonus: "[i:Redemption/Arcane] Can hit enemies from the spirit realm"
-				BloodBonus: "[i:Redemption/Blood] Increased damage to organic enemies, but decreased to robotic"
-				CelestialBonus: "[i:Redemption/Celestial] Hitting foes can create stars around them, restoring life and mana once the foe is slain"
-				EarthBonus: "[i:Redemption/Earth] Deals extra damage and has a chance to stun grounded enemies"
-				FireBonus: "[i:Redemption/Fire] Chance to inflict a strong 'On Fire!' debuff on flammable enemies"
-				HolyBonus: "[i:Redemption/Holy] Increased damage to undead and demons"
-				IceBonus: "[i:Redemption/Ice] Chance to freeze slimes and slow down infected enemies"
-				NatureBonus: "[i:Redemption/Nature] Has a chance to drop a defence-increasing Nature Boon upon hitting enemies inflicted with a non-fire debuff"
-				PoisonBonus: "[i:Redemption/Poison] Increased damage to poisoned enemies"
-				PsychicBonus: "[i:Redemption/Psychic] Ignores enemy Guard Points"
-				ShadowBonus: "[i:Redemption/Shadow] Slain enemies have a chance to drop a pickup which increases Shadow damage"
-				ThunderBonus: "[i:Redemption/Thunder] Electrifies and deals extra damage if the target is in water"
-				WaterBonus: "[i:Redemption/Water] Increased damage to demons and can electrify robotic targets"
-				WindBonus: "[i:Redemption/Wind] Deals extra knockback to airborne targets"
+				AxeBonus: 3x critical strike damage, increased chance to decapitate humanoid enemies
+				SlashBonus: Small chance to decapitate most humanoid enemies, killing them instantly
+				HammerBonus: Deals quadruple damage to Guard Points and ignores their knockback resistance
+				SpearBonus: Penetrates through Guard Points
+				ClashBonus: Can clash with hostile slash attacks if well-timed, granting a 'Striking Moment'
+				ExplodeBonus: Deals double damage to Guard Points and penetrates through defense
+				ArcaneBonus: Can hit enemies from the spirit realm
+				BloodBonus: Blood Loss accumulates on continuous hits, causing a burst of damage
+				CelestialBonus: Hitting foes can create stars around them, restoring life and mana once the foe is slain
+				EarthBonus: Deals extra damage and has a chance to stun grounded enemies
+				FireBonus: Chance to burn flammable enemies more intensely
+				HolyBonus: Increased damage to undead and demons, chance to set demons ablaze in holy flame
+				IceBonus: Chance to freeze slimes and slow down infected enemies
+				NatureBonus: Chance to drop a defence-increasing Nature Boon upon hitting enemies inflicted with a non-fire debuff
+				PoisonBonus: Increased damage to poisoned enemies
+				PsychicBonus: Ignores enemy Guard Points
+				ShadowBonus: Slain enemies have a chance to drop a pickup which increases Shadow damage
+				ThunderBonus: Electrifies and deals extra damage if the target is in water
+				WaterBonus: Increased damage to demons and can electrify robotic targets
+				WindBonus: Deals extra knockback to airborne targets
 			}
 
 			RodOfHarmonyLine: Causes the chaos state while a Redemption boss is active
@@ -467,7 +470,11 @@ Mods: {
 						'''
 				}
 
-				LivingWood: Immune to poison, increases your max number of minions
+				LivingWood:
+					'''
+					Immune to poison, increased summon damage by 1
+					15% increased {0} elemental damage and resistance
+					'''
 				CommonGuardHelm1: 12% increased melee speed
 				CommonGuardHelm2: Reduces damage taken by 6%
 				PureIron.Bonus:
@@ -531,6 +538,7 @@ Mods: {
 
 		SpecialTooltips: {
 			Viewer: Hold [Shift] to view lore
+			Viewer2: Hold [Shift] to view contents
 			SunkenCaptainViewer: On the backside there's a note, hold [Shift] to read
 			Unbreakable: "[c/ff0000:Unbreakable]"
 			Unbreakable5000: "[c/ff0000:Unbreakable (5000% Pickaxe Power)]"
@@ -1562,6 +1570,15 @@ Mods: {
 					While in the Spirit Realm, Spirit Currents can spawn, giving you a way to transport near soulful remains to [i:Redemption/DeadRinger]Dead Ring.
 					'''
 			}
+
+			ElementPanelUI: {
+				Button: Show Elemental Stats
+				Title: Elemental Stats
+				Resistance: Elemental Resistance
+				Damage: Elemental Damage
+			}
+
+			BookOfBonusesInGameNotification: New bonus effect discovered: {0}
 		}
 
 		DialogueBox: {
@@ -2247,7 +2264,7 @@ Mods: {
 
 			EvilJellyBuff: {
 				DisplayName: Devilishly Delicious
-				Description: Increased drop rate of Shadow Fuel
+				Description: Increased Shadow damage and drop rate of Shadow Fuel
 			}
 
 			ExplosiveFlaskBuff: {
@@ -2873,6 +2890,11 @@ Mods: {
 				Dialogue15: There are zombies here? Not that I'm surprised, there are many types of undead on the mainland too.
 				NoMoneyDialogue1: You're as poor as me?
 				NoMoneyDialogue2: You really don't have enough money? Ah whatever, not like I can complain.
+				BookQuestComplete:
+					'''
+					Hey looks like you filled out that [i:Redemption/BookOfBonuses]book I gave you! How long did that take? Let me have a look...
+					Hmm... interesting... .. ...Nice work! Oh, and as promised - your reward! I found it in some abandoned wizard's rise, hope it helps.
+					'''
 
 				Advice: {
 					StarSerpent: Honestly, I'm surprised you still come to me for advice. You seem like a smart person, far more than I. But anyway, I've recently been seeing interesting wyverns in the sky - purple and gold. Give it a check if you wish.
@@ -2881,13 +2903,9 @@ Mods: {
 					ForestNymph: The dryad, {0}, says she's seen a Forest Nymph on this island at one point. They're rarely seen, usually nearby giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?
 					UGPortal: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs in Gathuram. He's told of some rather intriguing things lying by the portal, might be an cool find."
 					EaglecrestGolem: While I was having a walk I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I shot it from a safe distance. Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another foe to face.
-					Spirits:
-						'''
-						Ever see tiny lights dancing from a slain skeleton? Or a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
-						{0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
-						'''
+					Spirits: Ever see tiny lights dancing from a slain skeleton? Or a lantern-carrying ghost underground? Those are lost souls, and I believe only {0} weapons may bring them harm. Not that I'd suggest harming those helpless things.
 					Insects: Wanna know about some insects? If you wanna find tree bugs, then chop down some trees. They live on tree tops, with their green shell camouflaging them in the foliage. Coast Scarabs can also be found on palm trees at the beach, their shells sparkle when wet. Grand larvae are, well, rather gross - though they can make excellent bait. That is, if you're brave enough to get close to one.
-					Undead: When encountering skeletons and undead, its logical to assume {0} weapons aren't effective against them, while {1} weapons are. I used to like exploring the caves, until me and Zephos encountered a skeleton Vex...
+					Undead: When encountering skeletons and undead, a {0} weapon won't help as much as a {1} weapon. I used to like exploring the caves, until me and Zephos encountered a skeleton Vex...
 					Slimes: Best way to deal with slimes? Burn them. Alternatively, {0} weapons can freeze them in their place, THEN you can burn them!
 					Invisibility: If you ever wanna sneak up on the Epidotrian skeletons or chickens, invisibility potions are real handy for the job. Though I wonder how the native creatures of this island always seem to know where you are...
 					DirtyWound: The weapons skeletons can wield are very rusty, so it'd be bad to be wounded by them. If you do, take a dip in some water and the dirty wound will disappear.
@@ -2896,6 +2914,12 @@ Mods: {
 					Erhan: I noticed a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.
 					Chalice: Did I drop something on my way back into the portal? Oh, those glowing fragments? It seems to be guiding you somewhere important, I'd follow it before taking on any major foes.
 					Elements: Weapons or foes may have elements tied to them. Certain ones are more effective against others, like {0} against {1}. Keep it in mind when choosing your weapons of choice. You have a bestiary, right? It'll show which elements a foe is weak or resistant to.
+					ElementsBook:
+						'''
+
+
+						I don't know everything, so when you discover new things about elements, write it down in this book. If you fill it all in, I'll reward you with something worth your time.
+						'''
 				}
 
 				Revived1: Did I just get knocked out? Thanks for waking me.
@@ -2923,6 +2947,7 @@ Mods: {
 				Dialogue11: You never told me there'd be undead here! What, they're called zombies? There's also a few skeletons out here, normally they like to stay underground. This place is pretty weird. How do you live here?
 				NoMoneyDialogue1: "{$Mods.Redemption.Dialogue.Daerel.NoMoneyDialogue1}"
 				NoMoneyDialogue2: "{$Mods.Redemption.Dialogue.Daerel.NoMoneyDialogue2}"
+				BookQuestComplete: Wow! You really filled out that [i:Redemption/BookOfBonuses]book I gave you! How long did it take? I can't read, but my friend would love to see it.. once I find him. Here's something cool as a reward, hope it helps!
 
 				Advice: {
 					StarSerpent: Honestly, I'm surprised you still come to me for advice! I know I certainly ain't the smartest fella out there. But anyway, I've recently been seeing peculiar lookin' wyverns in the sky - purple and gold. Give it a check!
@@ -2931,13 +2956,9 @@ Mods: {
 					ForestNymph: Ya know {0}? She's seen a Forest Nymph on this island at one point. Super rare creatures those are, you'd only find them near giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?
 					UGPortal: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs. He's told of some rather cool things lying by the portal, I'd give it a search if I were you!"
 					EaglecrestGolem: While I was having a stroll I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I gave it a WHAM with my sword! Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another challenge to face!
-					Spirits:
-						'''
-						Ever see tiny lights skitterin' from a slain skeleton? Or a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
-						{0} or {1} weapons may bring them harm.
-						'''
+					Spirits: Ever see tiny lights skitterin' from a slain skeleton? Or a lantern-carrying ghost underground? Those are lost souls, only {0} weapons can harm them.
 					Insects: Insects? Why do you want me to tell you about insects? That's more Daerel's thing, he'll yap to you for ages about random bugs. If only he were here.
-					Undead: When encountering skeletons and undead, {0} weapons are the best against them. On the other hand, {1} weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.
+					Undead: When dealin' with skeletons and undead, {0} weapons smite them hard! On the other hand, {1} weapons won't do as well. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.
 					Slimes: If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies{0}. Or, you could use {1} weapons to freeze them, but that isn't as fun.
 					Invisibility: Ever want to sneak up on an Epidotrian skeleton? Or perhaps a chicken? Well invisibility potions are real handy for the job!
 					DirtyWound: Skeletons can wield some super rusty weapons, not something you'd wanna get cut by. If you do get a dirty wound, take a dip in some water and it'll disappear!
@@ -2946,6 +2967,12 @@ Mods: {
 					Erhan: I saw a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.
 					Chalice: Did I drop something on my way back into the portal? Oh, those glowing fragments? Looks like it's guiding you somewhere important, I'd follow it before taking on any major foes!
 					Elements: Weapons or foes may have elements tied to them. Certain ones are more effective against others, like {0} against {1}. Keep it in mind when choosing your weapons of choice. You got a bestiary, right? It'll show which elements a foe is weak or resistant to.
+					ElementsBook:
+						'''
+
+
+						I don't know everything, so take this book and write down your discoveries of what all the elements do! If you fill it all in, I'll give you something cool!
+						'''
 				}
 
 				Revived1: *Yawn* Why'd ya wake me up? I was havin' a dream about... being cool and famous.
@@ -3543,7 +3570,7 @@ Mods: {
 				DisplayName: Holoshield
 				Tooltip:
 					'''
-					6% damage reduction
+					6% damage reduction, 16% against non-elemental damage
 					Double tap a direction to dash
 					Dashing into projectiles will reflect them
 					Can't reflect projectiles exceeding 200 damage
@@ -4243,7 +4270,7 @@ Mods: {
 
 			LivingWoodHelmet: {
 				DisplayName: Living Wood Helmet
-				Tooltip: +1 increased summon damage
+				Tooltip: Increases your max number of sentries
 			}
 
 			LivingWoodLeggings: {
@@ -7531,7 +7558,11 @@ Mods: {
 
 			EvilJelly: {
 				DisplayName: Evil Jelly
-				Tooltip: Greatly increased chance of Shadow Fuel to drop upon slaying enemies with {0} weapons
+				Tooltip:
+					'''
+					Greatly increased chance of Shadow Fuel to drop upon slaying enemies with {0} weapons
+					8% increased {0} elemental damage
+					'''
 			}
 
 			FirstAidKit: {
@@ -8158,15 +8189,11 @@ Mods: {
 				Tooltip:
 					'''
 					Hold left-click while airborne to launch downwards
-					Slamming the ground will cause Holy Hammers to appear based on how many times you've bounced off an enemy
+					Slamming the ground will cause {0} Hammers to appear based on how many times you've bounced off an enemy
+					The Holy Hammers additionally deal {1} damage
 					Increases the user's fall speed while held
 					Stuns enemies if falling above a certain speed
 					'''
-			}
-
-			Hammer: {
-				DisplayName: Hammer
-				Tooltip: ""
 			}
 
 			InfectiousGlaive: {
@@ -8515,7 +8542,11 @@ Mods: {
 
 			PoemOfIlmatar: {
 				DisplayName: Poem of Ilmatar
-				Tooltip: Hold left-click to create a tornado that picks up enemies and juggles them
+				Tooltip:
+					'''
+					Hold left-click to create a tornado that picks up enemies and juggles them
+					Builds up a spiral of rocks to launch at nearby enemies, dealing {0} damage
+					'''
 			}
 
 			TeslaCoil: {
@@ -8930,7 +8961,7 @@ Mods: {
 
 			Bindeklinge: {
 				DisplayName: Bindeklinge
-				Tooltip: Critical strikes release homing lightmass
+				Tooltip: Critical strikes release homing lightmass, dealing {0} and {1} damage
 				Lore:
 					'''
 					'A broadsword once wielded by the leader of Lighthelm's forgotten Oracles of Rebirth.
@@ -9069,7 +9100,7 @@ Mods: {
 				DisplayName: Noble's Halberd
 				Tooltip:
 					'''
-					Right-click to thrust the halberd
+					Right-click to thrust the halberd like a {0}
 					'One of the primary weapons used by Anglon's Common Guard'
 					'''
 			}
@@ -9195,7 +9226,7 @@ Mods: {
 				DisplayName: Lunar Shot
 				Tooltip:
 					'''
-					Replaces Wooden Arrows with Lunar Bolts, dealing {0} and {1} damage
+					Replaces Wooden Arrows with Lunar Bolts, dealing {0}, {1}, and {2} damage
 					Lunar Bolts summon bats while the moon is out
 					Summons an extra bat while it's a full moon
 					'''
@@ -9896,87 +9927,122 @@ Mods: {
 			}
 
 			Ice: {
-				DisplayName: "[i:Redemption/Ice][c/E0FFFF:Ice]"
+				DisplayName: "[i:Redemption/Ice][c/B7FFFF:Ice]"
+				PlainName: Ice
 				Tooltip: ""
 			}
 
 			Earth: {
-				DisplayName: "[i:Redemption/Earth][c/f4a460:Earth]"
+				DisplayName: "[i:Redemption/Earth][c/A97D5D:Earth]"
+				PlainName: Earth
 				Tooltip: ""
 			}
 
 			Shadow: {
-				DisplayName: "[i:Redemption/Shadow][c/7b68ee:Shadow]"
+				DisplayName: "[i:Redemption/Shadow][c/7B68EE:Shadow]"
+				PlainName: Shadow
 				Tooltip: ""
 			}
 
 			Nature: {
-				DisplayName: "[i:Redemption/Nature][c/7cfc00:Nature]"
+				DisplayName: "[i:Redemption/Nature][c/87CC00:Nature]"
+				PlainName: Nature
 				Tooltip: ""
 			}
 
 			Holy: {
-				DisplayName: "[i:Redemption/Holy][c/fafad2:Holy]"
+				DisplayName: "[i:Redemption/Holy][c/FFED7C:Holy]"
+				PlainName: Holy
 				Tooltip: ""
 			}
 
 			Blood: {
-				DisplayName: "[i:Redemption/Blood][c/cd5c5c:Blood]"
+				DisplayName: "[i:Redemption/Blood][c/CC4141:Blood]"
+				PlainName: Blood
 				Tooltip: ""
 			}
 
 			Fire: {
-				DisplayName: "[i:Redemption/Fire][c/FFA500:Fire]"
+				DisplayName: "[i:Redemption/Fire][c/F57E19:Fire]"
+				PlainName: Fire
 				Tooltip: ""
 			}
 
 			Arcane: {
-				DisplayName: "[i:Redemption/Arcane][c/ADD8E6:Arcane]"
+				DisplayName: "[i:Redemption/Arcane][c/D0CEFF:Arcane]"
+				PlainName: Arcane
 				Tooltip: ""
 			}
 
 			Axe: {
-				DisplayName: Axe
+				DisplayName: "[i:Redemption/Axe][c/FFC896:Axe]"
+				PlainName: Axe
 				Tooltip: ""
 			}
 
-			Celestial: {
-				DisplayName: "[i:Redemption/Celestial][c/ffc0cb:Celestial]"
+			Cosmic: {
+				DisplayName: "[i:Redemption/Cosmic][c/FEBEF3:Celestial]"
+				PlainName: Celestial
 				Tooltip: ""
 			}
 
 			Explosive: {
 				DisplayName: "[i:Redemption/Explosive][c/FFC896:Explosive]"
+				PlainName: Explosive
 				Tooltip: ""
 			}
 
 			Poison: {
-				DisplayName: "[i:Redemption/Poison][c/9370db:Poison]"
+				DisplayName: "[i:Redemption/Poison][c/4D7F69:Poison]"
+				PlainName: Poison
 				Tooltip: ""
 			}
 
 			Psychic: {
-				DisplayName: "[i:Redemption/Psychic][c/ffb6c1:Psychic]"
+				DisplayName: "[i:Redemption/Psychic][c/C888F5:Psychic]"
+				PlainName: Psychic
 				Tooltip: ""
 			}
 
 			Slash: {
-				DisplayName: Slash
+				DisplayName: "[i:Redemption/Slash][c/FFC896:Slash]"
+				PlainName: Slash
+				Tooltip: ""
+			}
+
+			Spear: {
+				DisplayName: "[i:Redemption/Spear][c/FFC896:Spear]"
+				PlainName: Spear
+				Tooltip: ""
+			}
+
+			Hammer: {
+				DisplayName: "[i:Redemption/Hammer][c/FFC896:Hammer]"
+				PlainName: Hammer
+				Tooltip: ""
+			}
+
+			Clash: {
+				DisplayName: "[i:Redemption/Clash][c/FFC896:Clash]"
+				PlainName: Clash
 				Tooltip: ""
 			}
 
 			Thunder: {
-				DisplayName: "[i:Redemption/Thunder][c/ffffe0:Thunder]"
+				DisplayName: "[i:Redemption/Thunder][c/FFFFE0:Thunder]"
+				PlainName: Thunder
 				Tooltip: ""
 			}
 
 			Water: {
-				DisplayName: "[i:Redemption/Water][c/87CEEB:Water]"
+				DisplayName: "[i:Redemption/Water][c/329AEF:Water]"
+				PlainName: Water
 				Tooltip: ""
 			}
 
 			Wind: {
 				DisplayName: "[i:Redemption/Wind][c/B4B4B4:Wind]"
+				PlainName: Wind
 				Tooltip: ""
 			}
 
@@ -10363,7 +10429,7 @@ Mods: {
 				Tooltip:
 					'''
 					Summons an Ukkonen to pour rain down on enemies
-					Whipping enemies will cause Ukkonen to strike them with lightning
+					Whipping enemies will cause Ukkonen to strike them with lightning, dealing {0} damage
 					'An ancient poem for Ukko to cause rain and bless crops'
 					'''
 			}
@@ -10680,6 +10746,11 @@ Mods: {
 			TreeBugCage: {
 				DisplayName: Tree Bug Cage
 				Tooltip: ""
+			}
+
+			BookOfBonuses: {
+				DisplayName: Book of Bonuses
+				Tooltip: Discover what bonuses do by triggering their effects
 			}
 		}
 
@@ -12170,11 +12241,41 @@ Mods: {
 			InSoullessCaverns: While in the Soulless Caverns
 			ForestNymphTrust: While having a Forest Nymph's trust
 			OldTophat: While the hanging skeleton is gone
+			ElementBookObtained: After being given the book by the Wayfarer
+			ElementBookQuest: After filling out the Book of Bonuses
 		}
 
 		Configs: {
 			RedeConfigClient: {
-				DisplayName: Redemption Config Client
+				DisplayName: Personal Config
+
+				NoBossIntroText: {
+					Label: Disable Zelda-Styled Boss Titles
+					Tooltip: Disables the Legend of Zelda-style boss introduction text for bosses.
+				}
+
+				CameraLockDisable: {
+					Label: Disable Camera Lock
+					Tooltip:
+						'''
+						Disables the locked camera during cutscenes, along with the invincibility and vignette effect
+						Not recommended, at least on a first playthrough, as it can ruin the feel of things.
+						'''
+				}
+
+				ShakeIntensity: {
+					Label: Screen Shake Intensity
+					Tooltip: Reduce to decrease the intensity of screen shaking effects, 0 will disable it entirely
+				}
+
+				ElementalDamageTooltipStyle: {
+					Label: Elemental Damage Tooltip Style
+					Tooltip: Change how the appearance of elemental damage increases appear in weapon tooltips, or disable it
+				}
+			}
+
+			RedeConfigServer: {
+				DisplayName: Global Config
 
 				DialogueWaitTime: {
 					Label: Extra Dialogue Wait Time
@@ -12195,20 +12296,6 @@ Mods: {
 						'''
 				}
 
-				NoBossIntroText: {
-					Label: Disable Zelda-Styled Boss Titles
-					Tooltip: Disables the Legend of Zelda-style boss introduction text for bosses.
-				}
-
-				CameraLockDisable: {
-					Label: Disable Camera Lock
-					Tooltip:
-						'''
-						Disables the locked camera during cutscenes, along with the invincibility and vignette effect
-						Not recommended, at least on a first playthrough, as it can ruin the feel of things.
-						'''
-				}
-
 				ElementDisable: {
 					Label: Disable Elements
 					Tooltip: Disables elemental resistances and damage
@@ -12219,14 +12306,19 @@ Mods: {
 					Tooltip: Disables vanilla enemies from having Guard Points
 				}
 
-				ShakeIntensity: {
-					Label: Screen Shake Intensity
-					Tooltip: Reduce to decrease the intensity of screen shaking effects, 0 will disable it entirely
-				}
-
 				NoPZBuildUp: {
 					Label: No Patient Zero Build-Up
 					Tooltip: Makes the boss begin the fight instantly, mainly for no-hitters. (This will cause the boss's pulse effect to not sync well with the music)
+				}
+
+				FindNewStructureCoords: {
+					Label: Reset Structure Coords
+					Tooltip:
+						'''
+						Upon entering the world, the game will search for important tiles of structures to set their coordinates
+						Only necessary if you want to relocate structures, e.g. destroying the surface portal and placing the portal frame elsewhere
+						While off, the coords are set and won't be changed
+						'''
 				}
 
 				FunniHeader: The Funnies (Remember to disable these before intending to generate a normal world!)
@@ -12255,6 +12347,13 @@ Mods: {
 					Label: Ancient World
 					Tooltip: Generating a new world will convert tiles to their ancient or gathic version, and gathic tombs will gen more frequently
 				}
+			}
+
+			ElementDamageTooltipEnum: {
+				Tooltip: ""
+				Disabled.Label: Disabled
+				ShowAdded.Label: Show Added
+				ShowTotalled.Label: Show Totalled
 			}
 		}
 

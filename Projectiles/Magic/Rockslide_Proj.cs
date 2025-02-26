@@ -1,8 +1,7 @@
-using System;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -22,6 +21,7 @@ namespace Redemption.Projectiles.Magic
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjEarth[Type] = true;
             ElementID.ProjPsychic[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -101,7 +101,7 @@ namespace Redemption.Projectiles.Magic
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.SpreadUp(7), ModContent.ProjectileType<RockslidePebble_Proj>(), Projectile.damage / 2, 1, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.SpreadUp(7), ProjectileType<RockslidePebble_Proj>(), Projectile.damage / 2, 1, Main.myPlayer);
                 }
             }
             SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
@@ -133,7 +133,7 @@ namespace Redemption.Projectiles.Magic
                 }
             }
 
-            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.Pink, Projectile.rotation, drawOrigin, Projectile.scale, 0);
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.Pink, Projectile.rotation, drawOrigin, Projectile.scale);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             return false;
         }
@@ -146,6 +146,7 @@ namespace Redemption.Projectiles.Magic
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjEarth[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

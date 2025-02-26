@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Effects;
 using Redemption.Globals;
@@ -16,6 +15,7 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             ElementID.ProjWater[Type] = true;
+            ElementID.ProjArcane[Type] = true;
             ProjectileID.Sets.DontCancelChannelOnKill[Type] = true;
         }
         public override void SetDefaults()
@@ -110,7 +110,7 @@ namespace Redemption.Projectiles.Magic
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/Trail_1").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 

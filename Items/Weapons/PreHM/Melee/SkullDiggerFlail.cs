@@ -1,16 +1,15 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
+using Redemption.Globals;
 using Redemption.NPCs.Minibosses.SkullDigger;
 using Redemption.Projectiles;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Terraria.Audio;
-using Redemption.Globals;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -19,12 +18,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ArcaneS);
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Skull Digger's Skull Digger");
-            /* Tooltip.SetDefault("Spinning the weapon around you will conjure " + ElementID.ArcaneS + " mirages\n" +
-                "'Yes, he did name his weapon after himself...'"); */
-
             ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
-            Item.ResearchUnlockCount = 1;
+            ElementID.ItemArcane[Type] = true;
         }
 
         public override void SetDefaults()
@@ -45,9 +40,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = false;
             Item.channel = true;
-            Item.shoot = ModContent.ProjectileType<SkullDiggerFlail_Proj>();
-            Item.ExtraItemShoot(ModContent.ProjectileType<SkullDigger_FlailBlade_ProjF>());
+            Item.shoot = ProjectileType<SkullDiggerFlail_Proj>();
             Item.shootSpeed = 32f;
+
+            Item.Redemption().HideElementTooltip[ElementID.Arcane] = true;
         }
     }
 
@@ -89,7 +85,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             if (Projectile.ai[0] != 0 && Projectile.localAI[0] == 0)
             {
-                SoundEngine.PlaySound(CustomSounds.ChainSwing, Projectile.position);
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.ChainSwing, Projectile.position);
                 Projectile.localAI[0] = 1;
             }
 
@@ -97,7 +94,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 if (++timer % 30 == 0 && Main.myPlayer == player.whoAmI)
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero,
-                        ModContent.ProjectileType<SkullDigger_FlailBlade_ProjF>(), Projectile.damage, 0, Projectile.owner, Projectile.whoAmI);
+                        ProjectileType<SkullDigger_FlailBlade_ProjF>(), Projectile.damage, 0, Projectile.owner, Projectile.whoAmI);
             }
         }
 
@@ -106,7 +103,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Player player = Main.player[Projectile.owner];
             Texture2D ballTexture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 anchorPos = Projectile.Center;
-            Texture2D chainTexture = ModContent.Request<Texture2D>("Redemption/NPCs/Minibosses/SkullDigger/SkullDigger_Chain").Value;
+            Texture2D chainTexture = Request<Texture2D>("Redemption/NPCs/Minibosses/SkullDigger/SkullDigger_Chain").Value;
             Vector2 HeadPos = player.MountedCenter;
             Rectangle sourceRectangle = new(0, 0, chainTexture.Width, chainTexture.Height);
             Vector2 origin = new(chainTexture.Width * 0.5f, chainTexture.Height * 0.5f);

@@ -1,16 +1,15 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
+using Redemption.Globals;
+using Redemption.Globals.Player;
+using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
-using Redemption.BaseExtension;
-using Redemption.Globals.Player;
-using Redemption.Globals;
-using Redemption.Items.Weapons.HM.Summon;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -18,7 +17,10 @@ namespace Redemption.Items.Weapons.HM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<TeslaGenerator>();
+            ElementID.ItemFire[Type] = true;
+            ElementID.ItemExplosive[Type] = true;
+
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<TeslaGenerator>();
         }
 
         public override void SetDefaults()
@@ -37,8 +39,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.UseSound = CustomSounds.PlasmaShot;
 
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<PlasmaRound>();
-            Item.ExtraItemShoot(ModContent.ProjectileType<PlasmaRound_Blast>());
+            Item.shoot = ProjectileType<PlasmaRound>();
             Item.shootSpeed = 12;
             Item.useAmmo = AmmoID.Bullet;
             if (!Main.dedServ)
@@ -57,7 +58,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             player.GetModPlayer<EnergyPlayer>().statEnergy -= 4;
-            int proj = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<PlasmaRound>(), damage, knockback, player.whoAmI);
+            int proj = Projectile.NewProjectile(source, position, velocity, ProjectileType<PlasmaRound>(), damage, knockback, player.whoAmI);
             Main.projectile[proj].hostile = false;
             Main.projectile[proj].friendly = true;
             Main.projectile[proj].DamageType = DamageClass.Ranged;

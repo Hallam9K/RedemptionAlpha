@@ -1,18 +1,10 @@
 using Redemption.BaseExtension;
 using Redemption.Buffs;
-using Redemption.Buffs.Debuffs;
-using Redemption.Globals.Player;
-using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Textures.Elements;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 
 namespace Redemption.Globals
 {
@@ -154,18 +146,20 @@ namespace Redemption.Globals
         public static bool[] ProjectilesInheritElements = ItemID.Sets.Factory.CreateBoolSet();
         public static bool[] ProjectilesInheritElementsFromThis = ProjectileID.Sets.Factory.CreateBoolSet();
 
+        #endregion
+
         private static int HasElementPlayerEffect(Terraria.Player player, Entity entity)
         {
             if (player.RedemptionPlayerBuff().eldritchRoot)
             {
-                if (entity is Projectile proj && proj.friendly && proj.HasElement(Nature, false))
+                if (entity is Projectile proj && proj.HasElement(Nature, false))
                     return Shadow;
                 else if (entity is Item item && item.HasElementItem(Nature, false))
                     return Shadow;
             }
             if (player.GetModPlayer<ExplosiveEnchantPlayer>().explosiveWeaponImbue)
             {
-                if (entity is Projectile proj && proj.friendly && (proj.DamageType.CountsAsClass<MeleeDamageClass>() || ProjectileID.Sets.IsAWhip[proj.type]) && !proj.noEnchantments)
+                if (entity is Projectile proj && (proj.DamageType.CountsAsClass<MeleeDamageClass>() || ProjectileID.Sets.IsAWhip[proj.type]) && !proj.noEnchantments)
                     return Explosive;
                 else if (entity is Item item && item.DamageType.CountsAsClass<MeleeDamageClass>())
                     return Explosive;
@@ -174,7 +168,7 @@ namespace Redemption.Globals
         }
         public static bool HasElement(this Projectile proj, int ID = 0, bool checkPlayerEffects = true)
         {
-            if (checkPlayerEffects && ID == HasElementPlayerEffect(Main.player[proj.owner], proj))
+            if (checkPlayerEffects && proj.friendly && ID == HasElementPlayerEffect(Main.player[proj.owner], proj))
                 return true;
             if (proj.GetGlobalProjectile<ElementalProjectile>().OverrideElement[ID] is AddElement)
                 return true;
@@ -205,7 +199,7 @@ namespace Redemption.Globals
             bool[] array = new bool[16];
             for (int i = 0; i < 15; i++)
             {
-                if (i + 1 == HasElementPlayerEffect(Main.player[proj.owner], proj))
+                if (proj.friendly && i + 1 == HasElementPlayerEffect(Main.player[proj.owner], proj))
                     return i + 1;
 
                 if (proj.GetGlobalProjectile<ElementalProjectile>().OverrideElement[i + 1] is AddElement)
@@ -392,17 +386,9 @@ namespace Redemption.Globals
                     itemTrue = false;
                 if (itemTrue)
                     return true;
-                return HasElementFromProj(ID, item.shoot, elemItem.ItemShootExtra[0], elemItem.ItemShootExtra[1]);
+                return HasElementFromProj(ID, item.shoot);
             }
             return false;
-        }
-        public static void ExtraItemShoot(this Item item, int a = 0, int b = 0)
-        {
-            if (item.TryGetGlobalItem(out ElementalItem elemItem))
-            {
-                elemItem.ItemShootExtra[0] = a;
-                elemItem.ItemShootExtra[1] = b;
-            }
         }
         public static bool HasElement(this Terraria.NPC npc, int ID = 0)
         {
@@ -467,6 +453,153 @@ namespace Redemption.Globals
             return 0;
         }
 
+        public static string ElementIconFromID(int ID)
+        {
+            return ID switch
+            {
+                Fire => "[i:Redemption/Fire]",
+                Water => "[i:Redemption/Water]",
+                Ice => "[i:Redemption/Ice]",
+                Earth => "[i:Redemption/Earth]",
+                Wind => "[i:Redemption/Wind]",
+                Thunder => "[i:Redemption/Thunder]",
+                Holy => "[i:Redemption/Holy]",
+                Shadow => "[i:Redemption/Shadow]",
+                Nature => "[i:Redemption/Nature]",
+                Poison => "[i:Redemption/Poison]",
+                Blood => "[i:Redemption/Blood]",
+                Psychic => "[i:Redemption/Psychic]",
+                Celestial => "[i:Redemption/Cosmic]",
+                Explosive => "[i:Redemption/Explosive]",
+                _ => "[i:Redemption/Arcane]",
+            };
+        }
+        public static string ElementColorCodeFromID(int ID)
+        {
+            return ID switch
+            {
+                Fire => "[c/F57E19:",
+                Water => "[c/329AEF:",
+                Ice => "[c/B7FFFF:",
+                Earth => "[c/A97D5D:",
+                Wind => "[c/B4B4B4:",
+                Thunder => "[c/FFFFE0:",
+                Holy => "[c/FFED7C:",
+                Shadow => "[c/7B68EE:",
+                Nature => "[c/87CC00:",
+                Poison => "[c/4D7F69:",
+                Blood => "[c/CC4141:",
+                Psychic => "[c/C888F5:",
+                Celestial => "[c/FEBEF3:",
+                Explosive => "[c/FFC896:",
+                _ => "[c/D0CEFF:",
+            };
+        }
+        public static int BonusItemFromID(int ID)
+        {
+            return ID switch
+            {
+                1 => ItemType<Axe>(),
+                2 => ItemType<Spear>(),
+                3 => ItemType<Hammer>(),
+                4 => ItemType<Clash>(),
+                5 => ItemType<Explosive>(),
+                6 => ItemType<Arcane>(),
+                7 => ItemType<Fire>(),
+                8 => ItemType<Water>(),
+                9 => ItemType<Ice>(),
+                10 => ItemType<Earth>(),
+                11 => ItemType<Wind>(),
+                12 => ItemType<Thunder>(),
+                13 => ItemType<Holy>(),
+                14 => ItemType<Shadow>(),
+                15 => ItemType<Nature>(),
+                16 => ItemType<Poison>(),
+                17 => ItemType<Blood>(),
+                18 => ItemType<Psychic>(),
+                19 => ItemType<Cosmic>(),
+                _ => ItemType<Slash>(),
+            };
+        }
+        public static string BonusPlainNameFromID(int ID)
+        {
+            return ID switch
+            {
+                1 => AxeS_Plain,
+                2 => SpearS_Plain,
+                3 => HammerS_Plain,
+                4 => ClashS_Plain,
+                5 => ExplosiveS_Plain,
+                6 => ArcaneS_Plain,
+                7 => FireS_Plain,
+                8 => WaterS_Plain,
+                9 => IceS_Plain,
+                10 => EarthS_Plain,
+                11 => WindS_Plain,
+                12 => ThunderS_Plain,
+                13 => HolyS_Plain,
+                14 => ShadowS_Plain,
+                15 => NatureS_Plain,
+                16 => PoisonS_Plain,
+                17 => BloodS_Plain,
+                18 => PsychicS_Plain,
+                19 => CelestialS_Plain,
+                _ => SlashS_Plain,
+            };
+        }
+        public static string BonusNameFromID(int ID)
+        {
+            return ID switch
+            {
+                1 => AxeS,
+                2 => SpearS,
+                3 => HammerS,
+                4 => ClashS,
+                5 => ExplosiveS,
+                6 => ArcaneS,
+                7 => FireS,
+                8 => WaterS,
+                9 => IceS,
+                10 => EarthS,
+                11 => WindS,
+                12 => ThunderS,
+                13 => HolyS,
+                14 => ShadowS,
+                15 => NatureS,
+                16 => PoisonS,
+                17 => BloodS,
+                18 => PsychicS,
+                19 => CelestialS,
+                _ => SlashS,
+            };
+        }
+        public static string BonusDescFromID(int ID)
+        {
+            return ID switch
+            {
+                1 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.AxeBonus"),
+                2 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SpearBonus"),
+                3 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.HammerBonus"),
+                4 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ClashBonus"),
+                5 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ExplodeBonus"),
+                6 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ArcaneBonus"),
+                7 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.FireBonus"),
+                8 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.WaterBonus"),
+                9 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.IceBonus"),
+                10 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.EarthBonus"),
+                11 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.WindBonus"),
+                12 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ThunderBonus"),
+                13 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.HolyBonus"),
+                14 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ShadowBonus"),
+                15 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.NatureBonus"),
+                16 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.PoisonBonus"),
+                17 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.BloodBonus"),
+                18 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.PsychicBonus"),
+                19 => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.CelestialBonus"),
+                _ => Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus"),
+            };
+        }
+
         public const short Arcane = 1;
         public const short Fire = 2;
         public const short Water = 3;
@@ -498,467 +631,35 @@ namespace Redemption.Globals
         public static string PoisonS = Language.GetTextValue("Mods.Redemption.Items.Poison.DisplayName");
         public static string BloodS = Language.GetTextValue("Mods.Redemption.Items.Blood.DisplayName");
         public static string PsychicS = Language.GetTextValue("Mods.Redemption.Items.Psychic.DisplayName");
-        public static string CelestialS = Language.GetTextValue("Mods.Redemption.Items.Celestial.DisplayName");
+        public static string CelestialS = Language.GetTextValue("Mods.Redemption.Items.Cosmic.DisplayName");
         public static string ExplosiveS = Language.GetTextValue("Mods.Redemption.Items.Explosive.DisplayName");
-        #endregion
-    }
-    public class ElementalProjectile : GlobalProjectile
-    {
-        public override bool InstancePerEntity => true;
 
-        public sbyte[] OverrideElement = new sbyte[16];
-        public bool[] InheritElement = new bool[16]; //Only known to the client
+        public static string SlashS = Language.GetTextValue("Mods.Redemption.Items.Slash.DisplayName");
+        public static string AxeS = Language.GetTextValue("Mods.Redemption.Items.Axe.DisplayName");
+        public static string HammerS = Language.GetTextValue("Mods.Redemption.Items.Hammer.DisplayName");
+        public static string SpearS = Language.GetTextValue("Mods.Redemption.Items.Spear.DisplayName");
+        public static string ClashS = Language.GetTextValue("Mods.Redemption.Items.Clash.DisplayName");
 
-        public override GlobalProjectile Clone(Projectile from, Projectile to)
-        {
-            var clone = (ElementalProjectile)base.Clone(from, to);
+        public static string ArcaneS_Plain = Language.GetTextValue("Mods.Redemption.Items.Arcane.PlainName");
+        public static string FireS_Plain = Language.GetTextValue("Mods.Redemption.Items.Fire.PlainName");
+        public static string WaterS_Plain = Language.GetTextValue("Mods.Redemption.Items.Water.PlainName");
+        public static string IceS_Plain = Language.GetTextValue("Mods.Redemption.Items.Ice.PlainName");
+        public static string EarthS_Plain = Language.GetTextValue("Mods.Redemption.Items.Earth.PlainName");
+        public static string WindS_Plain = Language.GetTextValue("Mods.Redemption.Items.Wind.PlainName");
+        public static string ThunderS_Plain = Language.GetTextValue("Mods.Redemption.Items.Thunder.PlainName");
+        public static string HolyS_Plain = Language.GetTextValue("Mods.Redemption.Items.Holy.PlainName");
+        public static string ShadowS_Plain = Language.GetTextValue("Mods.Redemption.Items.Shadow.PlainName");
+        public static string NatureS_Plain = Language.GetTextValue("Mods.Redemption.Items.Nature.PlainName");
+        public static string PoisonS_Plain = Language.GetTextValue("Mods.Redemption.Items.Poison.PlainName");
+        public static string BloodS_Plain = Language.GetTextValue("Mods.Redemption.Items.Blood.PlainName");
+        public static string PsychicS_Plain = Language.GetTextValue("Mods.Redemption.Items.Psychic.PlainName");
+        public static string CelestialS_Plain = Language.GetTextValue("Mods.Redemption.Items.Cosmic.PlainName");
+        public static string ExplosiveS_Plain = Language.GetTextValue("Mods.Redemption.Items.Explosive.PlainName");
 
-            clone.OverrideElement = new sbyte[OverrideElement.Length];
-            Array.Copy(OverrideElement, clone.OverrideElement, clone.OverrideElement.Length);
-
-            clone.InheritElement = new bool[InheritElement.Length];
-            Array.Copy(InheritElement, clone.InheritElement, clone.InheritElement.Length);
-
-            return clone;
-        }
-
-        public override void OnSpawn(Projectile projectile, IEntitySource source)
-        {
-            if (projectile.GetFirstElement() > 0)
-                return;
-            if (source is EntitySource_ItemUse_WithAmmo itemAmmo && ElementID.ProjectilesInheritElements[itemAmmo.Item.type])
-            {
-                for (int i = ElementID.Arcane; i <= ElementID.Explosive; i++)
-                {
-                    if (itemAmmo.Item.HasElement(i))
-                    {
-                        InheritElement[i] = true;
-                        OverrideElement[i] = ElementID.AddElement;
-                    }
-                }
-            }
-            else if (source is EntitySource_ItemUse item && ElementID.ProjectilesInheritElements[item.Item.type])
-            {
-                for (int i = ElementID.Arcane; i <= ElementID.Explosive; i++)
-                {
-                    if (item.Item.HasElement(i))
-                    {
-                        InheritElement[i] = true;
-                        OverrideElement[i] = ElementID.AddElement;
-                    }
-                }
-            }
-            if (source is EntitySource_Parent parent && parent.Entity is Projectile proj && ElementID.ProjectilesInheritElementsFromThis[proj.type])
-            {
-                for (int i = ElementID.Arcane; i <= ElementID.Explosive; i++)
-                {
-                    if (proj.HasElement(i))
-                    {
-                        InheritElement[i] = true;
-                        OverrideElement[i] = ElementID.AddElement;
-                    }
-                }
-            }
-        }
-
-        #region Element Syncing
-        public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter)
-        {
-            //Send all inherited elements
-            List<byte> elements = new();
-            for (sbyte i = 0; i <= ElementID.Explosive; i++)
-            {
-                if (InheritElement[i])
-                {
-                    elements.Add((byte)i);
-                }
-            }
-
-            int count = elements.Count;
-            bitWriter.WriteBit(count == 0);
-            if (count == 0)
-            {
-                return;
-            }
-
-            binaryWriter.Write7BitEncodedInt(count);
-            foreach (var e in elements)
-            {
-                //16 elements fit into 4 bits (2^4 = 16) from 0000 to 1111
-                BitsByte bits = e;
-                bitWriter.WriteBit(bits[0]);
-                bitWriter.WriteBit(bits[1]);
-                bitWriter.WriteBit(bits[2]);
-                bitWriter.WriteBit(bits[3]);
-            }
-        }
-
-        public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader)
-        {
-            bool empty = bitReader.ReadBit();
-            if (empty)
-                return;
-
-            int count = binaryReader.Read7BitEncodedInt();
-            for (int i = 0; i < count; i++)
-            {
-                BitsByte bits = 0;
-                bits[0] = bitReader.ReadBit();
-                bits[1] = bitReader.ReadBit();
-                bits[2] = bitReader.ReadBit();
-                bits[3] = bitReader.ReadBit();
-                OverrideElement[bits] = ElementID.AddElement;
-            }
-        }
-        #endregion
-
-        public override void ModifyHitNPC(Projectile projectile, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
-        {
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (projectile.HasElement(ElementID.Explosive))
-                    modifiers.ScalingArmorPenetration += .2f;
-            }
-        }
-        public override void OnHitNPC(Projectile projectile, Terraria.NPC target, Terraria.NPC.HitInfo hit, int damageDone)
-        {
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (Main.player[projectile.owner].RedemptionPlayerBuff().hydraCorrosion && projectile.HasElement(ElementID.Poison))
-                    target.AddBuff(BuffType<HydraAcidDebuff>(), 240);
-            }
-        }
-    }
-    public class ElementalItem : GlobalItem
-    {
-        public override bool InstancePerEntity => true;
-        [CloneByReference] public sbyte[] OverrideElement = new sbyte[16];
-        public int[] ItemShootExtra = new int[2];
-
-        public override void ModifyWeaponCrit(Item item, Terraria.Player player, ref float crit)
-        {
-            BuffPlayer modPlayer = player.RedemptionPlayerBuff();
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (modPlayer.powerCell)
-                {
-                    if (item.HasElementItem(ElementID.Fire))
-                        crit += 4;
-                    if (item.HasElementItem(ElementID.Holy))
-                        crit += 4;
-                }
-                if (modPlayer.gracesGuidance)
-                {
-                    if (item.HasElementItem(ElementID.Fire))
-                        crit += 6;
-                    if (item.HasElementItem(ElementID.Holy))
-                        crit += 6;
-                }
-                if (modPlayer.sacredCross && item.HasElementItem(ElementID.Holy))
-                    crit += 6;
-                if (modPlayer.forestCore && player.dryadWard && item.HasElementItem(ElementID.Nature))
-                    crit += 10;
-                if (modPlayer.thornCirclet && item.HasElementItem(ElementID.Nature))
-                    crit += 6;
-            }
-        }
-        public override void ModifyHitNPC(Item item, Terraria.Player player, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
-        {
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (item.HasElement(ElementID.Explosive))
-                    modifiers.ScalingArmorPenetration += .2f;
-            }
-        }
-        public override void OnHitNPC(Item item, Terraria.Player player, Terraria.NPC target, Terraria.NPC.HitInfo hit, int damageDone)
-        {
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (player.RedemptionPlayerBuff().hydraCorrosion && item.HasElementItem(ElementID.Poison))
-                    target.AddBuff(BuffType<HydraAcidDebuff>(), 240);
-            }
-        }
-    }
-    public class ElementalNPC : GlobalNPC
-    {
-        public override bool InstancePerEntity => true;
-        public sbyte[] OverrideElement = new sbyte[16];
-        public float[] OverrideMultiplier = new float[16] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-        public float[] elementDmg = new float[16] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-        public bool uncappedBossMultiplier;
-
-        public override void SetDefaults(Terraria.NPC npc)
-        {
-            SetElementalMultipliers(npc, ref npc.GetGlobalNPC<ElementalNPC>().elementDmg);
-        }
-        public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref Terraria.NPC.HitModifiers modifiers)
-        {
-            if (!RedeConfigClient.Instance.ElementDisable && !ItemLists.NoElement.Contains(item.type))
-            {
-                BuffPlayer modPlayer = player.RedemptionPlayerBuff();
-                for (int i = 1; i < 14; i++)
-                {
-                    if (item.HasElementItem(i))
-                        modifiers.FinalDamage *= 1 + modPlayer.ElementalDamage[i];
-                }
-
-                #region Elemental Attributes
-                float multiplier = 1;
-                ElementalEffects(npc, player, item, ref multiplier, ref modifiers);
-                for (int j = 0; j < npc.GetGlobalNPC<ElementalNPC>().elementDmg.Length; j++)
-                {
-                    if (npc.GetGlobalNPC<ElementalNPC>().elementDmg[j] is 1 || !item.HasElement(j))
-                        continue;
-                    multiplier *= npc.GetGlobalNPC<ElementalNPC>().elementDmg[j];
-                }
-                multiplier = (int)Math.Round(multiplier * 100);
-                multiplier /= 100;
-                if (npc.boss && !uncappedBossMultiplier)
-                    multiplier = MathHelper.Clamp(multiplier, .75f, 1.25f);
-
-                if (multiplier >= 1.1f)
-                    CombatText.NewText(npc.getRect(), Color.CornflowerBlue, multiplier + "x", true, true);
-                else if (multiplier <= 0.9f)
-                    CombatText.NewText(npc.getRect(), Color.IndianRed, multiplier + "x", true, true);
-
-                modifiers.FinalDamage *= multiplier;
-
-                SetElementalMultipliers(npc, ref npc.GetGlobalNPC<ElementalNPC>().elementDmg);
-                #endregion
-            }
-        }
-        public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)
-        {
-            if (!RedeConfigClient.Instance.ElementDisable && !ItemLists.NoElement.Contains(projectile.type))
-            {
-                BuffPlayer modPlayer = Main.player[projectile.owner].RedemptionPlayerBuff();
-                for (int i = 1; i < 14; i++)
-                {
-                    if (projectile.HasElement(i))
-                        modifiers.FinalDamage *= 1 + modPlayer.ElementalDamage[i];
-                }
-
-                #region Elemental Attributes
-                float multiplier = 1;
-                ElementalEffects(npc, projectile, ref multiplier, ref modifiers);
-                for (int j = 0; j < npc.GetGlobalNPC<ElementalNPC>().elementDmg.Length; j++)
-                {
-                    if (npc.GetGlobalNPC<ElementalNPC>().elementDmg[j] is 1 || !projectile.HasElement(j))
-                        continue;
-                    multiplier *= npc.GetGlobalNPC<ElementalNPC>().elementDmg[j];
-                }
-                multiplier = (int)Math.Round(multiplier * 100);
-                multiplier /= 100;
-                if (npc.boss && !uncappedBossMultiplier)
-                    multiplier = MathHelper.Clamp(multiplier, .75f, 1.25f);
-
-                if (multiplier >= 1.1f)
-                    CombatText.NewText(npc.getRect(), Color.CornflowerBlue, multiplier + "x", true, true);
-                else if (multiplier <= 0.9f)
-                    CombatText.NewText(npc.getRect(), Color.IndianRed, multiplier + "x", true, true);
-
-                modifiers.FinalDamage *= multiplier;
-
-                SetElementalMultipliers(npc, ref npc.GetGlobalNPC<ElementalNPC>().elementDmg);
-                #endregion
-            }
-        }
-        public override void ModifyHitNPC(Terraria.NPC npc, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
-        {
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                #region Elemental Attributes
-                float multiplier = 1;
-                ElementalEffects(target, npc, ref multiplier, ref modifiers);
-                for (int j = 0; j < target.GetGlobalNPC<ElementalNPC>().elementDmg.Length; j++)
-                {
-                    if (target.GetGlobalNPC<ElementalNPC>().elementDmg[j] is 1 || !npc.HasElement(j))
-                        continue;
-                    multiplier *= target.GetGlobalNPC<ElementalNPC>().elementDmg[j];
-                }
-                multiplier = (int)Math.Round(multiplier * 100);
-                multiplier /= 100;
-                if (target.boss && !uncappedBossMultiplier)
-                    multiplier = MathHelper.Clamp(multiplier, .75f, 1.25f);
-
-                if (multiplier >= 1.1f)
-                    CombatText.NewText(target.getRect(), Color.CornflowerBlue, multiplier + "x", true, true);
-                else if (multiplier <= 0.9f)
-                    CombatText.NewText(target.getRect(), Color.IndianRed, multiplier + "x", true, true);
-
-                modifiers.FinalDamage *= multiplier;
-
-                SetElementalMultipliers(target, ref target.GetGlobalNPC<ElementalNPC>().elementDmg);
-                #endregion
-            }
-        }
-        public static void SetElementalMultipliers(Terraria.NPC npc, ref float[] multiplier)
-        {
-            for (int j = 0; j < npc.GetGlobalNPC<ElementalNPC>().OverrideMultiplier.Length; j++)
-            {
-                if (npc.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[j] == 1)
-                    multiplier[j] = 1;
-                else
-                    multiplier[j] = npc.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[j];
-            }
-            if (NPCLists.Plantlike.Contains(npc.type))
-            {
-                multiplier[ElementID.Fire] *= 1.25f;
-                multiplier[ElementID.Wind] *= 1.25f;
-                multiplier[ElementID.Nature] *= 0.75f;
-                multiplier[ElementID.Poison] *= 0.5f;
-            }
-            if (NPCLists.Undead.Contains(npc.type) || NPCLists.Skeleton.Contains(npc.type))
-            {
-                multiplier[ElementID.Holy] *= 1.25f;
-                multiplier[ElementID.Shadow] *= 0.8f;
-            }
-            if (NPCLists.Demon.Contains(npc.type))
-            {
-                multiplier[ElementID.Holy] *= 1.3f;
-                multiplier[ElementID.Celestial] *= 1.2f;
-                multiplier[ElementID.Fire] *= 0.5f;
-                multiplier[ElementID.Water] *= 1.15f;
-                multiplier[ElementID.Ice] *= 1.15f;
-            }
-            if (NPCLists.Spirit.Contains(npc.type))
-            {
-                multiplier[ElementID.Holy] *= 1.15f;
-                multiplier[ElementID.Celestial] *= 1.15f;
-                multiplier[ElementID.Arcane] *= 1.25f;
-            }
-            if (NPCLists.IsSlime.Contains(npc.type))
-            {
-                multiplier[ElementID.Fire] *= 1.25f;
-                multiplier[ElementID.Ice] *= 0.75f;
-                multiplier[ElementID.Water] *= 0.5f;
-            }
-            if (NPCLists.Cold.Contains(npc.type))
-            {
-                multiplier[ElementID.Fire] *= 1.25f;
-                multiplier[ElementID.Ice] *= 0.75f;
-                multiplier[ElementID.Thunder] *= 1.1f;
-                multiplier[ElementID.Wind] *= 1.1f;
-                multiplier[ElementID.Poison] *= 0.9f;
-            }
-            if (NPCLists.Hot.Contains(npc.type))
-            {
-                multiplier[ElementID.Fire] *= 0.8f;
-                multiplier[ElementID.Ice] *= 1.25f;
-                multiplier[ElementID.Water] *= 1.1f;
-                multiplier[ElementID.Wind] *= 1.1f;
-                multiplier[ElementID.Poison] *= 1.1f;
-            }
-            if (NPCLists.Wet.Contains(npc.type))
-            {
-                multiplier[ElementID.Fire] *= 0.75f;
-                multiplier[ElementID.Ice] *= 1.25f;
-                multiplier[ElementID.Poison] *= 1.25f;
-                multiplier[ElementID.Water] *= 0.75f;
-            }
-            if (NPCLists.Infected.Contains(npc.type))
-            {
-                multiplier[ElementID.Fire] *= 1.15f;
-                multiplier[ElementID.Ice] *= 0.7f;
-                multiplier[ElementID.Blood] *= 1.25f;
-                multiplier[ElementID.Poison] *= 0.25f;
-            }
-            if (NPCLists.Robotic.Contains(npc.type))
-            {
-                multiplier[ElementID.Blood] *= 0.75f;
-                if (!npc.HasBuff<HydraAcidDebuff>())
-                    multiplier[ElementID.Poison] *= 0.75f;
-                multiplier[ElementID.Thunder] *= 1.1f;
-                multiplier[ElementID.Water] *= 1.35f;
-            }
-            if (!NPCLists.Inorganic.Contains(npc.type) && !NPCLists.Spirit.Contains(npc.type))
-            {
-                multiplier[ElementID.Blood] *= 1.1f;
-                multiplier[ElementID.Poison] *= 1.05f;
-            }
-            if (NPCLists.Hallowed.Contains(npc.type))
-            {
-                multiplier[ElementID.Celestial] *= 0.9f;
-                multiplier[ElementID.Holy] *= 0.5f;
-                multiplier[ElementID.Shadow] *= 1.25f;
-            }
-            if (NPCLists.Dark.Contains(npc.type))
-            {
-                multiplier[ElementID.Holy] *= 1.15f;
-                multiplier[ElementID.Nature] *= 1.25f;
-                multiplier[ElementID.Shadow] *= 0.75f;
-            }
-            if (NPCLists.Blood.Contains(npc.type))
-            {
-                multiplier[ElementID.Holy] *= 1.1f;
-                multiplier[ElementID.Ice] *= 1.1f;
-                multiplier[ElementID.Poison] *= 1.25f;
-                multiplier[ElementID.Shadow] *= 0.9f;
-                multiplier[ElementID.Blood] *= 0.75f;
-            }
-        }
-        public static void ElementalEffects(Terraria.NPC npc, Terraria.Player player, Item item, ref float multiplier, ref Terraria.NPC.HitModifiers knockback)
-        {
-            if (item.HasElement(ElementID.Shadow) && NPCLists.Dark.Contains(npc.type) && player.RedemptionPlayerBuff().eldritchRoot)
-                multiplier *= 1.33333f;
-
-            if (item.HasElement(ElementID.Thunder) && ((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet) || NPCLists.Wet.Contains(npc.type)))
-                multiplier *= 1.1f;
-            if (item.HasElement(ElementID.Earth) && !npc.noTileCollide && npc.collideY)
-                multiplier *= 1.1f;
-
-            if (item.HasElement(ElementID.Poison) && (npc.poisoned || npc.venom || npc.RedemptionNPCBuff().dirtyWound))
-                multiplier *= 1.1f;
-            if (item.HasElement(ElementID.Wind) && (npc.noGravity || !npc.collideY))
-            {
-                knockback.Knockback *= 1.25f;
-                if (npc.knockBackResist > 0)
-                    knockback.Knockback.Flat += 2;
-            }
-
-            multiplier = (int)Math.Round(multiplier * 100);
-            multiplier /= 100;
-        }
-        public static void ElementalEffects(Terraria.NPC npc, Projectile proj, ref float multiplier, ref Terraria.NPC.HitModifiers knockback)
-        {
-            if (proj.HasElement(ElementID.Shadow) && NPCLists.Dark.Contains(npc.type) && Main.player[proj.owner].RedemptionPlayerBuff().eldritchRoot)
-                multiplier *= 1.33333f;
-
-            if (proj.HasElement(ElementID.Thunder) && ((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet) || NPCLists.Wet.Contains(npc.type)))
-                multiplier *= 1.1f;
-            if (proj.HasElement(ElementID.Earth) && !npc.noTileCollide && npc.collideY)
-                multiplier *= 1.1f;
-
-            if (proj.HasElement(ElementID.Poison) && (npc.poisoned || npc.venom || npc.RedemptionNPCBuff().dirtyWound))
-                multiplier *= 1.1f;
-            if (proj.HasElement(ElementID.Wind) && (npc.noGravity || !npc.collideY))
-            {
-                knockback.Knockback *= 1.25f;
-                if (npc.knockBackResist > 0)
-                    knockback.Knockback.Flat += 2;
-            }
-
-            multiplier = (int)Math.Round(multiplier * 100);
-            multiplier /= 100;
-        }
-        public static void ElementalEffects(Terraria.NPC npc, Terraria.NPC attacker, ref float multiplier, ref Terraria.NPC.HitModifiers knockback)
-        {
-            if (attacker.HasElement(ElementID.Thunder) && ((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet) || NPCLists.Wet.Contains(npc.type)))
-                multiplier *= 1.1f;
-            if (attacker.HasElement(ElementID.Earth) && !npc.noTileCollide && npc.collideY)
-                multiplier *= 1.1f;
-
-            if (attacker.HasElement(ElementID.Poison) && (npc.poisoned || npc.venom || npc.RedemptionNPCBuff().dirtyWound))
-                multiplier *= 1.1f;
-            if (attacker.HasElement(ElementID.Wind) && (npc.noGravity || !npc.collideY))
-            {
-                knockback.Knockback *= 1.25f;
-                if (npc.knockBackResist > 0)
-                    knockback.Knockback.Flat += 2;
-            }
-
-            multiplier = (int)Math.Round(multiplier * 100);
-            multiplier /= 100;
-        }
+        public static string SlashS_Plain = Language.GetTextValue("Mods.Redemption.Items.Slash.PlainName");
+        public static string AxeS_Plain = Language.GetTextValue("Mods.Redemption.Items.Axe.PlainName");
+        public static string HammerS_Plain = Language.GetTextValue("Mods.Redemption.Items.Hammer.PlainName");
+        public static string SpearS_Plain = Language.GetTextValue("Mods.Redemption.Items.Spear.PlainName");
+        public static string ClashS_Plain = Language.GetTextValue("Mods.Redemption.Items.Clash.PlainName");
     }
 }

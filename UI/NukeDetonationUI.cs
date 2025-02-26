@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Redemption.Tiles.Furniture.Misc;
 using Terraria;
@@ -16,11 +15,11 @@ namespace Redemption.UI
 {
     public class NukeDetonationUI : UIState
     {
-        private readonly UIImage BgSprite = new(ModContent.Request<Texture2D>("Redemption/UI/NukeDetonationUI_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad));
-        private readonly UIImage ButtonSprite = new(ModContent.Request<Texture2D>("Redemption/UI/NukeDetonationUI_Button1", ReLogic.Content.AssetRequestMode.ImmediateLoad));
-        private readonly UIImageButton SwitchSprite1 = new(ModContent.Request<Texture2D>("Redemption/UI/NukeDetonationUI_SwitchDown", ReLogic.Content.AssetRequestMode.ImmediateLoad));
-        private readonly UIImageButton SwitchSprite2 = new(ModContent.Request<Texture2D>("Redemption/UI/NukeDetonationUI_SwitchDown", ReLogic.Content.AssetRequestMode.ImmediateLoad));
-        public readonly UIImageButton Button = new(ModContent.Request<Texture2D>(Redemption.EMPTY_TEXTURE));
+        private readonly UIImage BgSprite = new(Request<Texture2D>("Redemption/UI/NukeDetonationUI_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+        private readonly UIImage ButtonSprite = new(Request<Texture2D>("Redemption/UI/NukeDetonationUI_Button1", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+        private readonly UIImageButton SwitchSprite1 = new(Request<Texture2D>("Redemption/UI/NukeDetonationUI_SwitchDown", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+        private readonly UIImageButton SwitchSprite2 = new(Request<Texture2D>("Redemption/UI/NukeDetonationUI_SwitchDown", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+        public readonly UIImageButton Button = new(Request<Texture2D>(Redemption.EMPTY_TEXTURE));
 
         public Vector2 lastScreenSize;
 
@@ -65,7 +64,7 @@ namespace Redemption.UI
             BgSprite.Append(ButtonSprite);
             BgSprite.Append(Button);
 
-            UIImageButton closeButton = new(ModContent.Request<Texture2D>("Redemption/UI/ButtonClosePlaceholder", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+            UIImageButton closeButton = new(Request<Texture2D>("Redemption/UI/ButtonClosePlaceholder", ReLogic.Content.AssetRequestMode.ImmediateLoad));
 
             closeButton.Width.Set(22, 0f);
             closeButton.Height.Set(22, 0f);
@@ -80,14 +79,14 @@ namespace Redemption.UI
         private void Switch1Clicked(UIMouseEvent evt, UIElement listeningElement)
         {
             SoundEngine.PlaySound(SoundID.MenuTick);
-            SwitchSprite1.SetImage(ModContent.Request<Texture2D>("Redemption/UI/NukeDetonationUI_SwitchUp", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+            SwitchSprite1.SetImage(Request<Texture2D>("Redemption/UI/NukeDetonationUI_SwitchUp", ReLogic.Content.AssetRequestMode.ImmediateLoad));
             Switch1State = true;
             Main.isMouseLeftConsumedByUI = true;
         }
         private void Switch2Clicked(UIMouseEvent evt, UIElement listeningElement)
         {
             SoundEngine.PlaySound(SoundID.MenuTick);
-            SwitchSprite2.SetImage(ModContent.Request<Texture2D>("Redemption/UI/NukeDetonationUI_SwitchUp", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+            SwitchSprite2.SetImage(Request<Texture2D>("Redemption/UI/NukeDetonationUI_SwitchUp", ReLogic.Content.AssetRequestMode.ImmediateLoad));
             Switch2State = true;
             Main.isMouseLeftConsumedByUI = true;
         }
@@ -141,10 +140,8 @@ namespace Redemption.UI
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (ContainsPoint(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface)
-                Main.LocalPlayer.mouseInterface = true;
 
-            if (ButtonState != 2 && (!Main.LocalPlayer.releaseInventory || !Main.LocalPlayer.IsTileTypeInInteractionRange(ModContent.TileType<NuclearWarheadTile>(), TileReachCheckSettings.Simple)))
+            if (ButtonState != 2 && (!Main.LocalPlayer.releaseInventory || !Main.LocalPlayer.IsTileTypeInInteractionRange(TileType<NuclearWarheadTile>(), TileReachCheckSettings.Simple)))
                 Visible = false;
 
             if (!Visible)
@@ -153,13 +150,13 @@ namespace Redemption.UI
             switch (ButtonState)
             {
                 case 0:
-                    ButtonSprite.SetImage(ModContent.Request<Texture2D>("Redemption/UI/NukeDetonationUI_Button1", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+                    ButtonSprite.SetImage(Request<Texture2D>("Redemption/UI/NukeDetonationUI_Button1", ReLogic.Content.AssetRequestMode.ImmediateLoad));
                     break;
                 case 1:
-                    ButtonSprite.SetImage(ModContent.Request<Texture2D>("Redemption/UI/NukeDetonationUI_Button2", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+                    ButtonSprite.SetImage(Request<Texture2D>("Redemption/UI/NukeDetonationUI_Button2", ReLogic.Content.AssetRequestMode.ImmediateLoad));
                     break;
                 case 2:
-                    ButtonSprite.SetImage(ModContent.Request<Texture2D>("Redemption/UI/NukeDetonationUI_Button3", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+                    ButtonSprite.SetImage(Request<Texture2D>("Redemption/UI/NukeDetonationUI_Button3", ReLogic.Content.AssetRequestMode.ImmediateLoad));
                     break;
             }
 
@@ -191,6 +188,9 @@ namespace Redemption.UI
                 BgSprite.Top.Pixels = (Main.screenHeight / 2f) - (332f / 2f);
                 BgSprite.Recalculate();
             }
+
+            if (BgSprite.ContainsPoint(Main.MouseScreen))
+                Main.LocalPlayer.mouseInterface = true;
 
             base.Draw(spriteBatch);
         }

@@ -16,6 +16,7 @@ namespace Redemption.NPCs.Bosses.Neb
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjCelestial[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetDefaults()

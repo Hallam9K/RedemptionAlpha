@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 {
     public class DragonCleaver : ModItem
     {
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.FireS);
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.FireS, ElementID.WindS);
         public override void SetStaticDefaults()
         {
             /* Tooltip.SetDefault("Swings can block fire projectiles\n" +
@@ -50,7 +50,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<DragonCleaver_Proj>();
+            Item.shoot = ProjectileType<DragonCleaver_Proj>();
+
+            Item.Redemption().TechnicallySlash = true;
+            Item.Redemption().CanSwordClash = true;
         }
         public override bool MeleePrefix() => true;
         public override bool AltFunctionUse(Player player) => Count > 5;
@@ -73,7 +76,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<DragonLeadAlloy>(), 10)
+                .AddIngredient(ItemType<DragonLeadAlloy>(), 10)
                 .AddIngredient(ItemID.Bone, 3)
                 .AddTile(TileID.Anvils)
                 .Register();
@@ -97,8 +100,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 };
                 tooltips.Add(line);
             }
-            TooltipLine slashLine = new(Mod, "SharpBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
-            tooltips.Add(slashLine);
         }
     }
 }

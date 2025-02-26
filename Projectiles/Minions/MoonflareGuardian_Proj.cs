@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts;
 using Redemption.Effects;
@@ -20,6 +19,7 @@ namespace Redemption.Projectiles.Minions
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ElementID.ProjFire[Type] = true;
             ElementID.ProjNature[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetDefaults()
@@ -53,7 +53,7 @@ namespace Redemption.Projectiles.Minions
         private void FakeKill()
         {
             if (fakeTimer++ == 0)
-                DustHelper.DrawCircle(Projectile.Center, ModContent.DustType<MoonflareDust>(), 1, 2, 2, nogravity: true);
+                DustHelper.DrawCircle(Projectile.Center, DustType<MoonflareDust>(), 1, 2, 2, nogravity: true);
 
             Projectile.alpha = 255;
             Projectile.friendly = false;
@@ -68,7 +68,7 @@ namespace Redemption.Projectiles.Minions
         {
             if (fakeTimer > 0)
                 return;
-            DustHelper.DrawCircle(Projectile.Center, ModContent.DustType<MoonflareDust>(), 1, 2, 2, nogravity: true);
+            DustHelper.DrawCircle(Projectile.Center, DustType<MoonflareDust>(), 1, 2, 2, nogravity: true);
         }
         public override void AI()
         {
@@ -134,7 +134,7 @@ namespace Redemption.Projectiles.Minions
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 

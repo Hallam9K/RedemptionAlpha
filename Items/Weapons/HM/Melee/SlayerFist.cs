@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ExplosiveS);
         public override void SetStaticDefaults()
         {
-            Item.ResearchUnlockCount = 1;
+            ElementID.ItemExplosive[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -32,16 +32,15 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.rare = ItemRarityID.LightPurple;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<SlayerFist_Proj>();
-            Item.ExtraItemShoot(ModContent.ProjectileType<KS3_FistF>());
+            Item.shoot = ProjectileType<SlayerFist_Proj>();
             Item.shootSpeed = 5f;
         }
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<CyberPlating>(), 4)
-                .AddIngredient(ModContent.ItemType<Capacitor>(), 2)
-                .AddIngredient(ModContent.ItemType<AIChip>())
+                .AddIngredient(ItemType<CyberPlating>(), 4)
+                .AddIngredient(ItemType<Capacitor>(), 2)
+                .AddIngredient(ItemType<AIChip>())
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

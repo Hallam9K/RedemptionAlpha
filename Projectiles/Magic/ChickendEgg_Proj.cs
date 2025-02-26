@@ -1,5 +1,5 @@
-using Microsoft.Xna.Framework;
 using Redemption.Dusts;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -12,6 +12,7 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Chickend Egg");
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -30,12 +31,12 @@ namespace Redemption.Projectiles.Magic
             Projectile.velocity.Y += 0.3f;
             if (!Main.rand.NextBool(10))
                 return;
-            int dust2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<GlowDust>(), Scale: .4f);
+            int dust2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustType<GlowDust>(), Scale: .4f);
             Main.dust[dust2].velocity *= 0;
             Main.dust[dust2].noGravity = true;
             Color dustColor2 = new(217, 84, 155) { A = 0 };
             Main.dust[dust2].color = dustColor2;
-            int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<GlowDust>(), Scale: .6f);
+            int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustType<GlowDust>(), Scale: .6f);
             Main.dust[dust].velocity *= .1f;
             Main.dust[dust].noGravity = true;
             Color dustColor = new(251, 151, 146) { A = 0 };
@@ -50,12 +51,12 @@ namespace Redemption.Projectiles.Magic
                     Projectile.velocity.Y * 0.5f, Scale: 2);
             for (int i = 0; i < 6; i++)
             {
-                int dust2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<GlowDust>());
+                int dust2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustType<GlowDust>());
                 Main.dust[dust2].velocity *= 0;
                 Main.dust[dust2].noGravity = true;
                 Color dustColor2 = new(217, 84, 155) { A = 0 };
                 Main.dust[dust2].color = dustColor2;
-                int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<GlowDust>(), Scale: 1.2f);
+                int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustType<GlowDust>(), Scale: 1.2f);
                 Main.dust[dust].velocity *= .1f;
                 Main.dust[dust].noGravity = true;
                 Color dustColor = new(251, 151, 146) { A = 0 };
@@ -63,7 +64,7 @@ namespace Redemption.Projectiles.Magic
             }
 
             if (Main.myPlayer == Projectile.owner)
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Chick_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileType<Chick_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

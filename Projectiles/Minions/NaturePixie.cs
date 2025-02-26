@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Minions;
 using Redemption.Globals;
@@ -25,6 +24,7 @@ namespace Redemption.Projectiles.Minions
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
             Main.projPet[Projectile.type] = true;
             ElementID.ProjNature[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetDefaults()
@@ -48,7 +48,7 @@ namespace Redemption.Projectiles.Minions
         }
 
         public override bool? CanCutTiles() => false;
-        public override bool? CanHitNPC(NPC target) => !target.friendly && target.type != ModContent.NPCType<ForestNymph>() ? null : false;
+        public override bool? CanHitNPC(NPC target) => !target.friendly && target.type != NPCType<ForestNymph>() ? null : false;
         public override bool MinionContactDamage() => Projectile.velocity.Length() > 10;
         NPC target;
         public override void AI()
@@ -75,7 +75,7 @@ namespace Redemption.Projectiles.Minions
 
             if (Projectile.ai[1] == 2)
             {
-                int nymphID = NPC.FindFirstNPC(ModContent.NPCType<ForestNymph>());
+                int nymphID = NPC.FindFirstNPC(NPCType<ForestNymph>());
                 if (nymphID != -1)
                 {
                     NPC nymph = Main.npc[nymphID];
@@ -125,7 +125,7 @@ namespace Redemption.Projectiles.Minions
                 }
                 return;
             }
-            if (RedeHelper.ClosestNPC(ref target, 600, Projectile.Center, true, owner.MinionAttackTargetNPC) && target.type != ModContent.NPCType<ForestNymph>())
+            if (RedeHelper.ClosestNPC(ref target, 600, Projectile.Center, true, owner.MinionAttackTargetNPC) && target.type != NPCType<ForestNymph>())
             {
                 if (Projectile.ai[1] == 1)
                 {
@@ -157,7 +157,7 @@ namespace Redemption.Projectiles.Minions
                         }
                         if (Projectile.owner == Main.myPlayer)
                         {
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<NaturePixie_Yell>(), Projectile.damage * 2, 0, owner.whoAmI);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileType<NaturePixie_Yell>(), Projectile.damage * 2, 0, owner.whoAmI);
                         }
                     }
                     if (Projectile.localAI[0] >= 80)
@@ -195,7 +195,7 @@ namespace Redemption.Projectiles.Minions
                 Projectile.ai[1] = 0;
                 if (((RedeWorld.Alignment >= 1 && !RedeBossDowned.downedTreebark) || (RedeWorld.Alignment >= 3 && RedeBossDowned.downedTreebark)) && Projectile.localAI[1]++ % 60 == 0)
                 {
-                    int nymphID = NPC.FindFirstNPC(ModContent.NPCType<ForestNymph>());
+                    int nymphID = NPC.FindFirstNPC(NPCType<ForestNymph>());
                     if (nymphID != -1)
                     {
                         NPC nymph = Main.npc[nymphID];
@@ -236,7 +236,7 @@ namespace Redemption.Projectiles.Minions
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+            Texture2D glow = Request<Texture2D>(Texture + "_Glow").Value;
             int height = texture.Height / 6;
             int y = height * Projectile.frame;
             Rectangle rect = new(0, y, texture.Width, height);
@@ -259,7 +259,7 @@ namespace Redemption.Projectiles.Minions
         }
         private void CheckActive(Player player)
         {
-            if (!player.dead && player.HasBuff(ModContent.BuffType<NaturePixieBuff>()))
+            if (!player.dead && player.HasBuff(BuffType<NaturePixieBuff>()))
                 Projectile.timeLeft = 2;
         }
     }

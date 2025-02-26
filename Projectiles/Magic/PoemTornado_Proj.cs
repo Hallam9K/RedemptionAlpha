@@ -20,6 +20,7 @@ namespace Redemption.Projectiles.Magic
             // DisplayName.SetDefault("Tornado");
             ProjectileID.Sets.DontAttachHideToAlpha[Projectile.type] = true;
             ElementID.ProjWind[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -155,6 +156,7 @@ namespace Redemption.Projectiles.Magic
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjEarth[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -1,14 +1,16 @@
-using Terraria.ModLoader;
-using Terraria.ID;
-using Terraria;
-using Redemption.Items.Materials.PreHM;
-using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
+using Redemption.Globals;
+using Redemption.Items.Materials.PreHM;
+using Terraria;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
     public class NoblesHalberd : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.SpearS);
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Noble's Halberd");
@@ -43,9 +45,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 3.7f;
-            Item.shoot = ModContent.ProjectileType<NoblesHalberd_SlashProj>();
+            Item.shoot = ProjectileType<NoblesHalberd_SlashProj>();
             Item.Redemption().TechnicallyAxe = true;
         }
+        public override bool MeleePrefix() => true;
 
         public override bool AltFunctionUse(Player player) => true;
 
@@ -55,18 +58,18 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 damage = (int)(damage * 0.34f);
                 knockback -= 4;
-                type = ModContent.ProjectileType<NoblesHalberd_Proj>();
+                type = ProjectileType<NoblesHalberd_Proj>();
             }
             else
             {
-                type = ModContent.ProjectileType<NoblesHalberd_SlashProj>();
+                type = ProjectileType<NoblesHalberd_SlashProj>();
             }
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<GraveSteelAlloy>(), 18)
+                .AddIngredient(ItemType<GraveSteelAlloy>(), 18)
                 .AddRecipeGroup(RecipeGroupID.Wood, 7)
                 .AddTile(TileID.Anvils)
                 .Register();

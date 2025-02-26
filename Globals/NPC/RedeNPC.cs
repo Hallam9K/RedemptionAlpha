@@ -1,54 +1,50 @@
-using Microsoft.Xna.Framework;
+using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Biomes;
-using Redemption.Buffs.Debuffs;
-using Redemption.Buffs.NPCBuffs;
+using Redemption.Buffs.Cooldowns;
+using Redemption.Globals.World;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Armor.Vanity.Dev;
+using Redemption.Items.Critters;
+using Redemption.Items.Donator.BLT;
+using Redemption.Items.Donator.Lordfunnyman;
+using Redemption.Items.Donator.Megaswave;
+using Redemption.Items.Donator.Spoopy;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Tools.PreHM;
-using Redemption.Items.Usable;
+using Redemption.Items.Usable.Potions;
+using Redemption.Items.Weapons.HM.Magic;
+using Redemption.Items.Weapons.HM.Melee;
+using Redemption.Items.Weapons.HM.Summon;
+using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.Items.Weapons.PreHM.Ritualist;
+using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.Friendly;
+using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.NPCs.HM;
 using Redemption.NPCs.Lab;
 using Redemption.NPCs.Lab.Blisterface;
 using Redemption.NPCs.PreHM;
 using Redemption.NPCs.Wasteland;
 using Redemption.Tiles.Tiles;
+using Redemption.UI.Dialect;
+using Redemption.WorldGeneration.Misc;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Items.Weapons.PreHM.Magic;
-using Redemption.Items.Weapons.HM.Magic;
-using Redemption.Items.Donator.Megaswave;
-using Redemption.Items.Usable.Potions;
-using Redemption.Items.Weapons.HM.Melee;
-using Redemption.Items.Placeable.Furniture.Misc;
-using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.Buffs;
-using Redemption.Items.Armor.Vanity.Dev;
-using Redemption.Projectiles.Misc;
-using Redemption.Items.Weapons.PreHM.Summon;
-using System;
-using Redemption.Items.Weapons.HM.Summon;
-using Redemption.Items.Donator.Lordfunnyman;
-using Redemption.Globals.World;
-using Redemption.Buffs.Cooldowns;
-using Redemption.Items.Weapons.PreHM.Ranged;
-using Redemption.WorldGeneration.Misc;
-using SubworldLibrary;
-using Redemption.Items.Accessories.PreHM;
-using Redemption.Base;
-using Redemption.Items.Materials.PreHM;
-using Redemption.NPCs.Friendly.TownNPCs;
-using Redemption.Items.Donator.BLT;
-using Redemption.Items.Donator.Spoopy;
-using Redemption.Items.Accessories.PostML;
-using Redemption.Items.Critters;
-using Redemption.UI.Dialect;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.Globals.NPC
 {
@@ -66,36 +62,42 @@ namespace Redemption.Globals.NPC
 
         public override void ModifyShop(NPCShop shop)
         {
-            if (shop.NpcType == NPCID.Demolitionist)
-                shop.Add<EggBomb>(Condition.PlayerCarriesItem(ModContent.ItemType<GreneggLauncher>()));
-            if (shop.NpcType == NPCID.SkeletonMerchant)
-                shop.Add<CalciteWand>();
-            if (shop.NpcType == NPCID.Clothier)
+            switch (shop.NpcType)
             {
-                shop.Add<ThornPlush>(RedeConditions.DownedThorn);
-                shop.Add<EaglecrestGolemPlush>(RedeConditions.DownedEaglecrestGolem);
+                case NPCID.Demolitionist:
+                    shop.Add<EggBomb>(Condition.PlayerCarriesItem(ItemType<GreneggLauncher>()));
+                    break;
+                case NPCID.SkeletonMerchant:
+                    shop.Add<CalciteWand>();
+                    break;
+                case NPCID.Clothier:
+                    shop.Add<ThornPlush>(RedeConditions.DownedThorn);
+                    shop.Add<EaglecrestGolemPlush>(RedeConditions.DownedEaglecrestGolem);
+                    break;
+                case NPCID.Wizard:
+                    shop.Add<Taikasauva>();
+                    break;
+                case NPCID.Princess:
+                    shop.Add<HamPatPainting>();
+                    shop.Add<TiedBoiPainting>();
+                    shop.Add<HallamHoodie>(Condition.InExpertMode, RedeConditions.BroughtCat);
+                    shop.Add<HallamLeggings>(Condition.InExpertMode, RedeConditions.BroughtCat);
+                    break;
+                case NPCID.Mechanic:
+                    shop.Add<SpringtrapHead>();
+                    shop.Add<SpringtrapBody>();
+                    shop.Add<SpringtrapLegs>();
+                    break;
+                case NPCID.BestiaryGirl:
+                    shop.Add<HairyCloak>();
+                    break;
+                case NPCID.WitchDoctor:
+                    shop.Add<ErleasFlower>();
+                    break;
+                case NPCID.Merchant:
+                    shop.Add<DAVEPainting>(Condition.PlayerCarriesItem(ItemType<JohnSnailItem>()));
+                    break;
             }
-            if (shop.NpcType == NPCID.Wizard)
-                shop.Add<Taikasauva>();
-            if (shop.NpcType == NPCID.Princess)
-            {
-                shop.Add<HamPatPainting>();
-                shop.Add<TiedBoiPainting>();
-                shop.Add<HallamHoodie>(Condition.InExpertMode, RedeConditions.BroughtCat);
-                shop.Add<HallamLeggings>(Condition.InExpertMode, RedeConditions.BroughtCat);
-            }
-            if (shop.NpcType == NPCID.Mechanic)
-            {
-                shop.Add<SpringtrapHead>();
-                shop.Add<SpringtrapBody>();
-                shop.Add<SpringtrapLegs>();
-            }
-            if (shop.NpcType == NPCID.BestiaryGirl)
-                shop.Add<HairyCloak>();
-            if (shop.NpcType == NPCID.WitchDoctor)
-                shop.Add<ErleasFlower>();
-            if (shop.NpcType == NPCID.Merchant)
-                shop.Add<DAVEPainting>(Condition.PlayerCarriesItem(ModContent.ItemType<JohnSnailItem>()));
         }
         private static bool TalkedDryad;
         public override void GetChat(Terraria.NPC npc, ref string chat)
@@ -112,12 +114,10 @@ namespace Redemption.Globals.NPC
             RedeGlobalButton.talkActive = false;
             RedeGlobalButton.talkID = 0;
         }
-
         public override void ResetEffects(Terraria.NPC npc)
         {
             invisible = false;
         }
-
         public override void ModifyIncomingHit(Terraria.NPC npc, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (spiritSummon)
@@ -140,8 +140,8 @@ namespace Redemption.Globals.NPC
 
                     apply = false;
                 }
-                if (apply)
-                    Main.player[(int)npc.ai[3]].AddBuff(ModContent.BuffType<CruxCardCooldown>(), 3600);
+                if (apply && npc.ai[3] >= 0)
+                    Main.player[(int)npc.ai[3]].AddBuff(BuffType<CruxCardCooldown>(), 3600);
             }
             int FallenID = Terraria.NPC.FindFirstNPC(NPCType<Fallen>());
             if (npc.type is NPCID.EaterofWorldsHead or NPCID.BrainofCthulhu && !Terraria.NPC.downedBoss2)
@@ -194,13 +194,19 @@ namespace Redemption.Globals.NPC
                     decapitated = true;
                     modifiers.SetInstantKill();
                     modifiers.SetCrit();
+
+                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Slash, false);
+                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Axe);
                 }
-                else if (Main.rand.NextBool(80) && (item.axe > 0 || item.Redemption().TechnicallyAxe) && item.type != ModContent.ItemType<BeardedHatchet>())
+                else if (Main.rand.NextBool(80) && (item.axe > 0 || item.Redemption().TechnicallyAxe) && item.type != ItemType<BeardedHatchet>())
                 {
                     CombatText.NewText(npc.getRect(), Color.Orange, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Decapitated"));
                     decapitated = true;
                     modifiers.SetInstantKill();
                     modifiers.SetCrit();
+
+                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Slash, false);
+                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Axe);
                 }
             }
         }
@@ -215,142 +221,10 @@ namespace Redemption.Globals.NPC
         }
         public override void OnHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, Terraria.NPC.HitInfo hit, int damageDone)
         {
-            if (!RedeConfigClient.Instance.ElementDisable && !ItemLists.NoElement.Contains(item.type))
-            {
-                #region Elemental Attributes
-                if (NPCLists.Infected.Contains(npc.type))
-                {
-                    if (Main.rand.NextBool(4) && npc.life < npc.lifeMax && item.HasElement(ElementID.Ice))
-                        npc.AddBuff(ModContent.BuffType<PureChillDebuff>(), 600);
-                }
-                if (NPCLists.IsSlime.Contains(npc.type))
-                {
-                    if (Main.rand.NextBool(8) && npc.life < npc.lifeMax && npc.knockBackResist > 0 && !npc.RedemptionNPCBuff().iceFrozen && item.HasElement(ElementID.Ice))
-                    {
-                        SoundEngine.PlaySound(SoundID.Item30);
-                        npc.AddBuff(ModContent.BuffType<IceFrozen>(), 1800 - ((int)MathHelper.Clamp(npc.lifeMax, 60, 1780)));
-                    }
-                }
-                if (NPCLists.Plantlike.Contains(npc.type) || NPCLists.Cold.Contains(npc.type) || NPCLists.IsSlime.Contains(npc.type))
-                {
-                    if (Main.rand.NextBool(4) && item.HasElement(ElementID.Fire))
-                        npc.AddBuff(BuffID.OnFire, 180);
-                }
-                if ((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet))
-                {
-                    if (Main.rand.NextBool(2) && item.HasElement(ElementID.Thunder))
-                        npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
-                }
-                if (!npc.noTileCollide && npc.collideY && npc.knockBackResist > 0)
-                {
-                    if (Main.rand.NextBool(8) && item.HasElement(ElementID.Earth))
-                        npc.AddBuff(ModContent.BuffType<StunnedDebuff>(), 120);
-                }
-                if (NPCLists.Robotic.Contains(npc.type))
-                {
-                    if (Main.rand.NextBool(4) && item.HasElement(ElementID.Water))
-                        npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
-                }
-                if (item.HasElement(ElementID.Shadow))
-                {
-                    int c = player.HasBuff<EvilJellyBuff>() ? 3 : 6;
-                    if (Main.rand.NextBool(c) && npc.life <= 0 && npc.lifeMax > 5)
-                        Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
-                }
-                if (item.HasElement(ElementID.Nature) && npc.NPCHasAnyDebuff() && !RedeHelper.HasFireDebuff(npc))
-                {
-                    int c = 6;
-                    if (player.RedemptionPlayerBuff().shellNecklace)
-                        c = (int)(c * 0.75f);
-                    if (player.RedemptionPlayerBuff().forestCore)
-                        c = (int)(c * 0.75f);
-                    if (Main.rand.NextBool(c) && npc.CanBeChasedBy())
-                        Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<NaturePickup>(), noGrabDelay: true);
-                }
-                if (item.HasElement(ElementID.Celestial))
-                {
-                    int type = 0;
-                    if (player.setSolar)
-                        type = 1;
-                    int c = 6;
-                    if (player.GetModPlayer<WaterfowlEgg_Player>().equipped)
-                        c = 12;
-                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(c) && npc.CanBeChasedBy())
-                        Projectile.NewProjectile(npc.GetSource_OnHurt(player), npc.Center + RedeHelper.Spread(400), Vector2.Zero, ModContent.ProjectileType<CelestialStar>(), 0, 0, player.whoAmI, npc.whoAmI, type);
-                }
-                #endregion
-            }
-
             attacker = player;
         }
         public override void OnHitByProjectile(Terraria.NPC npc, Projectile projectile, Terraria.NPC.HitInfo hit, int damageDone)
         {
-            if (!RedeConfigClient.Instance.ElementDisable && !ProjectileLists.NoElement.Contains(projectile.type))
-            {
-                #region Elemental Attributes
-                if (NPCLists.Infected.Contains(npc.type))
-                {
-                    if (Main.rand.NextBool(4) && npc.life < npc.lifeMax && projectile.HasElement(ElementID.Ice))
-                        npc.AddBuff(ModContent.BuffType<PureChillDebuff>(), 600);
-                }
-                if (NPCLists.IsSlime.Contains(npc.type))
-                {
-                    if (Main.rand.NextBool(8) && npc.life < npc.lifeMax && npc.knockBackResist > 0 && !npc.RedemptionNPCBuff().iceFrozen && projectile.HasElement(ElementID.Ice))
-                    {
-                        SoundEngine.PlaySound(SoundID.Item30);
-                        npc.AddBuff(ModContent.BuffType<IceFrozen>(), 1800 - ((int)MathHelper.Clamp(npc.lifeMax, 60, 1780)));
-                    }
-                }
-                if (NPCLists.Plantlike.Contains(npc.type) || NPCLists.Cold.Contains(npc.type) || NPCLists.IsSlime.Contains(npc.type))
-                {
-                    if (Main.rand.NextBool(4) && projectile.HasElement(ElementID.Fire))
-                        npc.AddBuff(BuffID.OnFire, 180);
-                }
-                if ((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet))
-                {
-                    if (Main.rand.NextBool(2) && projectile.HasElement(ElementID.Thunder))
-                        npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
-                }
-                if (!npc.noTileCollide && npc.collideY && npc.knockBackResist > 0)
-                {
-                    if (Main.rand.NextBool(8) && projectile.HasElement(ElementID.Earth))
-                        npc.AddBuff(ModContent.BuffType<StunnedDebuff>(), 120);
-                }
-                if (NPCLists.Robotic.Contains(npc.type))
-                {
-                    if (Main.rand.NextBool(4) && projectile.HasElement(ElementID.Water))
-                        npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
-                }
-                if (projectile.HasElement(ElementID.Shadow))
-                {
-                    int c = Main.player[projectile.owner].HasBuff<EvilJellyBuff>() ? 3 : 6;
-                    if (Main.rand.NextBool(c) && npc.life <= 0 && npc.lifeMax > 5)
-                        Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
-                }
-                if (projectile.HasElement(ElementID.Nature) && npc.NPCHasAnyDebuff() && !RedeHelper.HasFireDebuff(npc))
-                {
-                    int c = 6;
-                    if (Main.player[projectile.owner].RedemptionPlayerBuff().shellNecklace)
-                        c = (int)(c * 0.75f);
-                    if (Main.player[projectile.owner].RedemptionPlayerBuff().forestCore)
-                        c = (int)(c * 0.75f);
-                    if (Main.rand.NextBool(c) && npc.CanBeChasedBy())
-                        Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<NaturePickup>(), noGrabDelay: true);
-                }
-                if (projectile.HasElement(ElementID.Celestial))
-                {
-                    int type = 0;
-                    if (Main.player[projectile.owner].setSolar)
-                        type = 1;
-                    int c = 6;
-                    if (Main.player[projectile.owner].GetModPlayer<WaterfowlEgg_Player>().equipped)
-                        c = 12;
-                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(c) && npc.CanBeChasedBy())
-                        Projectile.NewProjectile(npc.GetSource_OnHurt(Main.player[projectile.owner]), npc.Center + RedeHelper.Spread(400), Vector2.Zero, ModContent.ProjectileType<CelestialStar>(), 0, 0, projectile.owner, npc.whoAmI, type);
-                }
-                #endregion
-            }
-
             if (RedeProjectile.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IEntitySource source) value))
             {
                 bool g = false;
@@ -364,7 +238,7 @@ namespace Redemption.Globals.NPC
         public override void OnKill(Terraria.NPC npc)
         {
             if (NPCID.Sets.Skeletons[npc.type] && Main.rand.NextBool(3) && !npc.SpawnedFromStatue)
-                RedeHelper.SpawnNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
+                RedeHelper.SpawnNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
         }
         public override void ModifyNPCLoot(Terraria.NPC npc, NPCLoot npcLoot)
         {
@@ -375,13 +249,13 @@ namespace Redemption.Globals.NPC
                 int itemType = ItemID.None;
                 if (NPCLists.SkeletonHumanoid.Contains(npc.type))
                     itemType = ItemID.Skull;
-                if (npc.type == ModContent.NPCType<CorpseWalkerPriest>())
-                    itemType = ModContent.ItemType<CorpseWalkerSkullVanity>();
-                else if (npc.type == ModContent.NPCType<EpidotrianSkeleton>() || npc.type == ModContent.NPCType<SkeletonAssassin>() ||
-                    npc.type == ModContent.NPCType<SkeletonDuelist>() || npc.type == ModContent.NPCType<SkeletonFlagbearer>() ||
-                    npc.type == ModContent.NPCType<SkeletonNoble>() || npc.type == ModContent.NPCType<SkeletonWanderer>() ||
-                    npc.type == ModContent.NPCType<SkeletonWarden>() || npc.type == ModContent.NPCType<RaveyardSkeleton>() || npc.type == ModContent.NPCType<MoonflareSkeleton>())
-                    itemType = ModContent.ItemType<EpidotrianSkull>();
+                if (npc.type == NPCType<CorpseWalkerPriest>())
+                    itemType = ItemType<CorpseWalkerSkullVanity>();
+                else if (npc.type == NPCType<EpidotrianSkeleton>() || npc.type == NPCType<SkeletonAssassin>() ||
+                    npc.type == NPCType<SkeletonDuelist>() || npc.type == NPCType<SkeletonFlagbearer>() ||
+                    npc.type == NPCType<SkeletonNoble>() || npc.type == NPCType<SkeletonWanderer>() ||
+                    npc.type == NPCType<SkeletonWarden>() || npc.type == NPCType<RaveyardSkeleton>() || npc.type == NPCType<MoonflareSkeleton>())
+                    itemType = ItemType<EpidotrianSkull>();
                 else if (npc.type is NPCID.RockGolem)
                     itemType = ItemID.RockGolemHead;
                 else if (npc.type is NPCID.Medusa)
@@ -399,34 +273,36 @@ namespace Redemption.Globals.NPC
                 }
             }
             if (npc.type is NPCID.BoneSerpentHead)
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SmolderedScale>(), 20));
+                npcLoot.Add(ItemDropRule.Common(ItemType<SmolderedScale>(), 20));
             if (npc.type is NPCID.Ghost or NPCID.Wraith)
-                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Soulshake>(), 150));
-            //if (npc.type is NPCID.AngryBones or NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.CursedSkull or NPCID.DarkCaster)
-            //    npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Incisor>(), 100));
+                npcLoot.Add(ItemDropRule.Food(ItemType<Soulshake>(), 150));
+            if (npc.type is NPCID.AngryBones or NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.CursedSkull or NPCID.DarkCaster)
+                npcLoot.Add(ItemDropRule.Common(ItemType<Incisor>(), 100));
             if (npc.type is NPCID.Demon or NPCID.VoodooDemon or NPCID.FireImp or NPCID.RedDevil)
-                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForgottenSword>(), 100));
+                npcLoot.Add(ItemDropRule.Common(ItemType<ForgottenSword>(), 100));
             if (npc.type is NPCID.GraniteFlyer or NPCID.GraniteGolem)
             {
-                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<GaucheStaff>(), 30));
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LegoBrick>(), 200));
+                npcLoot.Add(ItemDropRule.Common(ItemType<GaucheStaff>(), 30));
+                npcLoot.Add(ItemDropRule.Common(ItemType<LegoBrick>(), 200));
             }
             if (npc.type is NPCID.Dandelion)
-                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<GiantDandelion>(), 5));
+                npcLoot.Add(ItemDropRule.Common(ItemType<GiantDandelion>(), 5));
             if (npc.type is NPCID.Golem)
-                npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<GolemStaff>(), 7));
+            {
+                npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemType<GolemStaff>(), 7));
+            }
             if (npc.type is NPCID.IceGolem or NPCID.RockGolem)
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LegoBrick>(), 50));
+                npcLoot.Add(ItemDropRule.Common(ItemType<LegoBrick>(), 50));
             if (npc.type is NPCID.Pumpking or NPCID.HoppinJack or NPCID.HeadlessHorseman)
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DuskyBall>(), 50));
+                npcLoot.Add(ItemDropRule.Common(ItemType<DuskyBall>(), 50));
             if (NPCLists.Dark.Contains(npc.type) && !npc.boss)
-                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<EldritchRoot>(), 400));
+                npcLoot.Add(ItemDropRule.Common(ItemType<EldritchRoot>(), 400));
             if (npc.type is NPCID.WallCreeper or NPCID.WallCreeperWall or NPCID.BlackRecluse or NPCID.BlackRecluseWall)
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SpiderSerum>(), 40));
+                npcLoot.Add(ItemDropRule.Common(ItemType<SpiderSerum>(), 40));
         }
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {
-            globalLoot.Add(ItemDropRule.ByCondition(new YoyosTidalWake(), ModContent.ItemType<TidalWake>(), 200));
+            globalLoot.Add(ItemDropRule.ByCondition(new YoyosTidalWake(), ItemType<TidalWake>(), 200));
         }
         public override void EditSpawnRate(Terraria.Player player, ref int spawnRate, ref int maxSpawns)
         {
@@ -486,20 +362,19 @@ namespace Redemption.Globals.NPC
             if (RedeWorld.blobbleSwarm)
             {
                 pool.Clear();
-                pool.Add(ModContent.NPCType<Blobble>(), 10);
+                pool.Add(NPCType<Blobble>(), 10);
                 return;
             }
-
             if (RedeWorld.SkeletonInvasion && spawnInfo.Player.ZoneOverworldHeight && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
             {
                 pool.Clear();
-                pool.Add(ModContent.NPCType<RaveyardSkeletonSpawner>(), 2);
-                pool.Add(ModContent.NPCType<EpidotrianSkeleton>(), 5);
-                pool.Add(ModContent.NPCType<CavernSkeletonSpawner>(), 5);
-                pool.Add(ModContent.NPCType<SurfaceSkeletonSpawner>(), 2);
-                pool.Add(ModContent.NPCType<CorpseWalkerPriest>(), 0.5f);
-                pool.Add(ModContent.NPCType<MoonflareSkeleton>(), 0.5f);
-                pool.Add(ModContent.NPCType<JollyMadman>(), 0.02f);
+                pool.Add(NPCType<RaveyardSkeletonSpawner>(), 2);
+                pool.Add(NPCType<EpidotrianSkeleton>(), 5);
+                pool.Add(NPCType<CavernSkeletonSpawner>(), 5);
+                pool.Add(NPCType<SurfaceSkeletonSpawner>(), 2);
+                pool.Add(NPCType<CorpseWalkerPriest>(), 0.5f);
+                pool.Add(NPCType<MoonflareSkeleton>(), 0.5f);
+                pool.Add(NPCType<JollyMadman>(), 0.025f);
             }
             if (FowlMorningWorld.FowlMorningActive && spawnInfo.Player.ZoneOverworldHeight && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
             {
@@ -536,45 +411,49 @@ namespace Redemption.Globals.NPC
             }
             if (spawnInfo.Player.InModBiome<WastelandPurityBiome>() && !spawnInfo.Player.ZoneDungeon && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
             {
-                int[] GrassTileArray = { ModContent.TileType<IrradiatedCorruptGrassTile>(), ModContent.TileType<IrradiatedCrimsonGrassTile>(), ModContent.TileType<IrradiatedGrassTile>() };
+                int[] GrassTileArray = { TileType<IrradiatedCorruptGrassTile>(), TileType<IrradiatedCrimsonGrassTile>(), TileType<IrradiatedGrassTile>() };
                 bool tileCheck = GrassTileArray.Contains(Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType);
 
                 pool.Clear();
                 pool.Add(NPCID.ToxicSludge, !Terraria.NPC.downedMechBossAny ? 0.8f : 0.3f);
                 pool.Add(NPCID.GreenJellyfish, spawnInfo.Water && !Terraria.NPC.downedMechBossAny ? 0.6f : 0);
-                pool.Add(ModContent.NPCType<BloatedGoldfish>(), spawnInfo.Water ? 2f : 0);
-                pool.Add(ModContent.NPCType<RadioactiveJelly>(), spawnInfo.Water && Terraria.NPC.downedMechBossAny ? 1f : 0);
-                pool.Add(ModContent.NPCType<HazmatZombie>(), 1f);
-                pool.Add(ModContent.NPCType<BobTheBlob>(), 0.05f);
-                pool.Add(ModContent.NPCType<RadioactiveSlime>(), 0.9f);
-                pool.Add(ModContent.NPCType<NuclearSlime>(), 0.07f);
-                pool.Add(ModContent.NPCType<HazmatBunny>(), Main.dayTime ? 0.1f : 0);
-                pool.Add(ModContent.NPCType<SickenedBunny>(), Main.dayTime ? 0.6f : 0);
-                pool.Add(ModContent.NPCType<SickenedDemonEye>(), !Main.dayTime ? 0.6f : 0);
-                pool.Add(ModContent.NPCType<NuclearShadow>(), 0.2f);
-                pool.Add(ModContent.NPCType<BloatedDiggerHead>(), 0.14f);
-                pool.Add(ModContent.NPCType<MutatedLivingBloom>(), tileCheck ? (Main.raining ? 0.4f : 0.2f) : 0f);
+                pool.Add(NPCType<BloatedGoldfish>(), spawnInfo.Water ? 2f : 0);
+                pool.Add(NPCType<RadioactiveJelly>(), spawnInfo.Water && Terraria.NPC.downedMechBossAny ? 1f : 0);
+                pool.Add(NPCType<HazmatZombie>(), 1f);
+                pool.Add(NPCType<BobTheBlob>(), 0.05f);
+                pool.Add(NPCType<RadioactiveSlime>(), 0.9f);
+                pool.Add(NPCType<NuclearSlime>(), 0.07f);
+                pool.Add(NPCType<HazmatBunny>(), Main.dayTime ? 0.1f : 0);
+                pool.Add(NPCType<SickenedBunny>(), Main.dayTime ? 0.6f : 0);
+                pool.Add(NPCType<SickenedDemonEye>(), !Main.dayTime ? 0.6f : 0);
+                pool.Add(NPCType<NuclearShadow>(), 0.2f);
+                if (!spawnInfo.PlayerSafe)
+                    pool.Add(NPCType<BloatedDiggerHead>(), 0.14f);
+
+                pool.Add(NPCType<MutatedLivingBloom>(), tileCheck ? (Main.raining ? 0.4f : 0.2f) : 0f);
                 if (spawnInfo.Player.InModBiome<WastelandSnowBiome>())
                 {
-                    pool.Add(ModContent.NPCType<SneezyFlinx>(), 0.8f);
-                    pool.Add(ModContent.NPCType<SicklyWolf>(), 0.7f);
-                    pool.Add(ModContent.NPCType<SicklyPenguin>(), 0.6f);
+                    pool.Add(NPCType<SneezyFlinx>(), 0.8f);
+                    pool.Add(NPCType<SicklyWolf>(), 0.7f);
+                    pool.Add(NPCType<SicklyPenguin>(), 0.6f);
                 }
                 if (spawnInfo.Player.InModBiome<WastelandDesertBiome>())
                 {
-                    pool.Add(ModContent.NPCType<BloatedGhoul>(), 1f);
-                    pool.Add(ModContent.NPCType<BloatedSwarmer>(), 0.3f);
+                    pool.Add(NPCType<BloatedGhoul>(), 1f);
+                    pool.Add(NPCType<BloatedSwarmer>(), 0.3f);
                 }
                 if (spawnInfo.Player.InModBiome<WastelandCorruptionBiome>())
-                    pool.Add(ModContent.NPCType<BloatedClinger>(), .4f);
+                    pool.Add(NPCType<BloatedClinger>(), .4f);
                 if (spawnInfo.Player.InModBiome<WastelandCrimsonBiome>())
-                    pool.Add(ModContent.NPCType<BloatedFaceMonster>(), 1f);
+                    pool.Add(NPCType<BloatedFaceMonster>(), 1f);
             }
             if (spawnInfo.Player.InModBiome<BlazingBastionBiome>())
             {
                 pool.Clear();
+                if (!spawnInfo.PlayerSafe)
+                    pool.Add(NPCID.FireImp, 0.3f);
+
                 pool.Add(NPCID.Demon, 1f);
-                pool.Add(NPCID.FireImp, 0.3f);
                 pool.Add(NPCID.VoodooDemon, 0.3f);
                 if (Terraria.NPC.downedMechBossAny)
                     pool.Add(NPCID.RedDevil, 0.2f);

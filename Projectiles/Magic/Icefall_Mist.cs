@@ -107,6 +107,7 @@ namespace Redemption.Projectiles.Magic
             // DisplayName.SetDefault("Icefall");
             Main.projFrames[Projectile.type] = 3;
             ElementID.ProjIce[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

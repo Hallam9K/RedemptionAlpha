@@ -1,7 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Redemption.BaseExtension;
+﻿using Redemption.BaseExtension;
 using Redemption.Globals;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -19,10 +19,10 @@ namespace Redemption.Items.Accessories.PostML
             Item.width = 20;
             Item.height = 26;
             Item.value = Item.sellPrice(0, 10);
+            Item.rare = ItemRarityID.Expert;
             Item.expert = true;
             Item.accessory = true;
         }
-        public int type;
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<WaterfowlEgg_Player>().equipped = true;
@@ -50,7 +50,7 @@ namespace Redemption.Items.Accessories.PostML
 
                 if (duration > 0)
                 {
-                    for (int i = 1; i < 14; i++)
+                    for (int i = 1; i <= 14; i++)
                         Player.RedemptionPlayerBuff().ElementalResistance[i] -= 0.15f;
                 }
 

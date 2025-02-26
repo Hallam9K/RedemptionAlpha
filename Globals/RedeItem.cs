@@ -1,5 +1,4 @@
 using Microsoft.CodeAnalysis;
-using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Buffs;
@@ -7,6 +6,7 @@ using Redemption.CrossMod;
 using Redemption.DamageClasses;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Armor.PostML.Xenium;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Donator.Emp;
 using Redemption.Items.Placeable.Furniture.Shade;
@@ -23,6 +23,7 @@ using Redemption.Tiles.Furniture.Misc;
 using Redemption.WorldGeneration.Misc;
 using Redemption.WorldGeneration.Soulless;
 using SubworldLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -45,17 +46,18 @@ namespace Redemption.Globals
         }
         public override void SetStaticDefaults()
         {
-            ItemID.Sets.ShimmerTransformToItem[ItemID.WizardHat] = ModContent.ItemType<DruidHat>();
-            ItemID.Sets.ShimmerTransformToItem[ItemID.StarHairpin] = ModContent.ItemType<CrimsonXrosLoader>();
+            ItemID.Sets.ShimmerTransformToItem[ItemID.WizardHat] = ItemType<DruidHat>();
+            ItemID.Sets.ShimmerTransformToItem[ItemID.StarHairpin] = ItemType<CrimsonXrosLoader>();
         }
         public bool TechnicallyHammer;
         public bool TechnicallyAxe;
+        public bool TechnicallySlash;
+        public bool CanSwordClash;
         public bool[] HideElementTooltip = new bool[16];
 
         // Crux Cards
         public float CruxHealthPrefix = 1f;
         public float CruxDefensePrefix = 1f;
-
         public override void ModifyShootStats(Item item, Terraria.Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             if (player.RedemptionPlayerBuff().bowString && item.useAmmo == AmmoID.Arrow)
@@ -64,7 +66,7 @@ namespace Redemption.Globals
         public override bool OnPickup(Item item, Terraria.Player player)
         {
             if ((item.type is ItemID.Heart or ItemID.CandyApple or ItemID.CandyCane) && player.RedemptionPlayerBuff().heartInsignia)
-                player.AddBuff(ModContent.BuffType<HeartInsigniaBuff>(), 180);
+                player.AddBuff(BuffType<HeartInsigniaBuff>(), 180);
 
             return true;
         }
@@ -76,7 +78,7 @@ namespace Redemption.Globals
         {
             if (item.type is ItemID.GolemBossBag)
             {
-                itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GolemStaff>(), 7));
+                itemLoot.Add(ItemDropRule.Common(ItemType<GolemStaff>(), 7));
             }
         }
 
@@ -255,7 +257,7 @@ namespace Redemption.Globals
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     Terraria.NPC chicken = Main.npc[i];
-                    if (!chicken.active || chicken.type != ModContent.NPCType<Chicken>())
+                    if (!chicken.active || chicken.type != NPCType<Chicken>())
                         continue;
 
                     if (chicken.frame.Y != 488 && chicken.frame.Y != 532)
@@ -271,7 +273,7 @@ namespace Redemption.Globals
                     chicken.active = false;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        Item.NewItem(item.GetSource_Loot(), item.getRect(), ModContent.ItemType<CrownOfTheKing>(), item.stack);
+                        Item.NewItem(item.GetSource_Loot(), item.getRect(), ItemType<CrownOfTheKing>(), item.stack);
                         item.active = false;
                         NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item.whoAmI);
                     }
@@ -312,6 +314,8 @@ namespace Redemption.Globals
                 return false;
             if (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ && (item.type is ItemID.RodofDiscord or ItemID.RodOfHarmony))
                 return false;
+            if (player.RedemptionScreen().cutscene && ItemID.Sets.SortingPriorityBossSpawns[item.type] != -1)
+                return false;
 
             // Disables Fargo's insta-items in any of this mod's subworlds
             if (SubworldSystem.AnyActive<Redemption>() && ModLoader.TryGetMod("Fargowiltas", out var fargo))
@@ -322,7 +326,7 @@ namespace Redemption.Globals
 
             #region C
             Point coop = player.Center.ToTileCoordinates();
-            if (item.type is ItemID.TeleportationPotion && player.RedemptionPlayerBuff().ChickenForm && Framing.GetTileSafely(coop.X, coop.Y).TileType == ModContent.TileType<ChickenCoopTile>())
+            if (item.type is ItemID.TeleportationPotion && player.RedemptionPlayerBuff().ChickenForm && Framing.GetTileSafely(coop.X, coop.Y).TileType == TileType<ChickenCoopTile>())
             {
                 if (!SubworldSystem.AnyActive<Redemption>())
                 {
@@ -338,21 +342,21 @@ namespace Redemption.Globals
         {
             if (ItemLists.AlignmentInterest.Contains(type))
             {
-                if (type == ModContent.ItemType<WeddingRing>() && (!RedeBossDowned.downedKeeper || RedeBossDowned.skullDiggerSaved))
+                if (type == ItemType<WeddingRing>() && (!RedeBossDowned.downedKeeper || RedeBossDowned.skullDiggerSaved))
                     return false;
-                if (type == ModContent.ItemType<SorrowfulEssence>() && RedeBossDowned.downedSkullDigger)
+                if (type == ItemType<SorrowfulEssence>() && RedeBossDowned.downedSkullDigger)
                     return false;
-                if (type == ModContent.ItemType<AbandonedTeddy>() && RedeBossDowned.keeperSaved)
+                if (type == ItemType<AbandonedTeddy>() && RedeBossDowned.keeperSaved)
                     return false;
-                if (type == ModContent.ItemType<CyberTech>() && RedeBossDowned.downedSlayer)
+                if (type == ItemType<CyberTech>() && RedeBossDowned.downedSlayer)
                     return false;
-                if (type == ModContent.ItemType<SlayerShipEngine>() && RedeQuest.slayerRep >= 4)
+                if (type == ItemType<SlayerShipEngine>() && RedeQuest.slayerRep >= 4)
                     return false;
-                if (type == ModContent.ItemType<AnglonicMysticBlossom>() && (RedeWorld.Alignment <= 0 || RedeQuest.forestNymphVar >= 2))
+                if (type == ItemType<AnglonicMysticBlossom>() && (RedeWorld.Alignment <= 0 || RedeQuest.forestNymphVar >= 2))
                     return false;
-                if (type == ModContent.ItemType<KingsOakStaff>() && (RedeWorld.Alignment <= 0 || RedeQuest.forestNymphVar > 0))
+                if (type == ItemType<KingsOakStaff>() && (RedeWorld.Alignment <= 0 || RedeQuest.forestNymphVar > 0))
                     return false;
-                if (type == ModContent.ItemType<NebSummon>() && RedeBossDowned.downedNebuleus && RedeBossDowned.nebDeath < 7)
+                if (type == ItemType<NebSummon>() && RedeBossDowned.downedNebuleus && RedeBossDowned.nebDeath < 7)
                     return false;
                 return true;
             }
@@ -363,6 +367,9 @@ namespace Redemption.Globals
             int tooltipVanity = tooltips.FindIndex(TooltipLine => TooltipLine.Name.Equals("Social"));
             if (tooltipVanity != -1)
                 return;
+            if (item.ModItem is HeldOnlyItem)
+                return;
+
             if (item.type is ItemID.RodOfHarmony)
             {
                 TooltipLine tooltip1Line = new(Mod, "Tooltip1", Language.GetTextValue("Mods.Redemption.GenericTooltips.RodOfHarmonyLine"));
@@ -375,106 +382,98 @@ namespace Redemption.Globals
                 TooltipLine chaliceLine = new(Mod, "ChaliceLine", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ChaliceLine")) { OverrideColor = new Color(203, 189, 99) };
                 tooltips.Add(chaliceLine);
             }
-            TooltipLine axeLine = new(Mod, "AxeBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.AxeBonus")) { OverrideColor = Colors.RarityOrange };
-            if ((item.CountsAsClass(DamageClass.Melee) && item.damage > 0 && item.useStyle == ItemUseStyleID.Swing && !item.noUseGraphic))
+
+            // Elements and Bonuses
+            TooltipLine elementsLine = new(Mod, "ElementBonus", "");
+            if (item.CountsAsClass(DamageClass.Melee) && item.damage > 0 && item.useStyle == ItemUseStyleID.Swing && !item.noUseGraphic)
             {
                 if (item.axe > 0)
-                    tooltips.Add(axeLine);
-
+                    elementsLine.Text += "[i:Redemption/Axe]";
                 else if (!ItemLists.BluntSwing.Contains(item.type) && item.hammer == 0 && item.pick == 0)
-                {
-                    TooltipLine slashLine = new(Mod, "SlashBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
-                    tooltips.Add(slashLine);
-                }
+                    elementsLine.Text += "[i:Redemption/Slash]";
             }
-            if (TechnicallyAxe)
-                tooltips.Add(axeLine);
+            else if (TechnicallyAxe)
+                elementsLine.Text += "[i:Redemption/Axe]";
+            else if (TechnicallySlash)
+                elementsLine.Text += "[i:Redemption/Slash]";
 
-            if (item.hammer > 0 || item.type == ItemID.PaladinsHammer || TechnicallyHammer)
-            {
-                TooltipLine hammerLine = new(Mod, "HammerBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.HammerBonus")) { OverrideColor = Colors.RarityOrange };
-                tooltips.Add(hammerLine);
-            }
-            if (!RedeConfigClient.Instance.ElementDisable && item.HasElementItem(ElementID.Explosive) && !HideElementTooltip[ElementID.Explosive])
-            {
-                TooltipLine explodeLine = new(Mod, "ExplodeBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ExplodeBonus")) { OverrideColor = Colors.RarityOrange };
-                tooltips.Add(explodeLine);
-            }
+            if (item.hammer > 0 || (item.type is ItemID.PaladinsHammer) || TechnicallyHammer)
+                elementsLine.Text += "[i:Redemption/Hammer]";
+            if (ItemID.Sets.Spears[item.type] || ProjectileLists.ProjSpear[item.shoot] || item.type is ItemID.PygmyStaff)
+                elementsLine.Text += "[i:Redemption/Spear]";
 
-            if (!RedeConfigClient.Instance.ElementDisable && !ItemLists.NoElement.Contains(item.type) && !ProjectileLists.NoElement.Contains(item.shoot))
+            if (!RedeConfigServer.Instance.ElementDisable && !ItemLists.NoElement.Contains(item.type) && !ProjectileLists.NoElement.Contains(item.shoot))
             {
-                if (item.HasElementItem(ElementID.Arcane) && !HideElementTooltip[ElementID.Arcane])
+                TooltipLine tt = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.Mod == "Terraria");
+                int elementDmg = 0;
+                string addedDamage = "";
+                for (int i = ElementID.Arcane; i <= ElementID.Explosive; i++)
                 {
-                    TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ArcaneBonus")) { OverrideColor = Color.LightBlue };
-                    tooltips.Add(line);
+                    if (item.HasElementItem(i))
+                    {
+                        if (tt != null && i < ElementID.Explosive)
+                        {
+                            string[] splitText = tt.Text.Split(' ');
+                            string damageValue = splitText.First();
+                            if (Int32.TryParse(damageValue, out int result))
+                            {
+                                switch (RedeConfigClient.Instance.ElementalDamageTooltipStyle)
+                                {
+                                    case ElementDamageTooltipEnum.ShowAdded:
+                                        elementDmg = (int)(result * (1 + Main.LocalPlayer.RedemptionPlayerBuff().ElementalDamage[i])) - result;
+                                        if (elementDmg != 0)
+                                        {
+                                            string elementColor = ElementID.ElementColorCodeFromID(i);
+
+                                            string symbol = elementDmg < 0 ? " - " : " + ";
+                                            elementDmg = Math.Abs(elementDmg);
+                                            addedDamage += elementColor + symbol + elementDmg + "]";
+                                        }
+                                        break;
+                                    case ElementDamageTooltipEnum.ShowTotalled:
+                                        elementDmg = (int)(result * (1 + Main.LocalPlayer.RedemptionPlayerBuff().ElementalDamage[i]));
+                                        if (elementDmg != result)
+                                        {
+                                            string elementColor = ElementID.ElementColorCodeFromID(i);
+                                            string elementIcon = ElementID.ElementIconFromID(i);
+                                            if (!string.IsNullOrEmpty(addedDamage))
+                                                addedDamage += ", ";
+                                            addedDamage += elementColor + elementDmg + "]" + elementIcon;
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+                        if (!HideElementTooltip[i])
+                        {
+                            string elementIcon = ElementID.ElementIconFromID(i);
+                            elementsLine.Text += elementIcon;
+                        }
+                    }
                 }
-                if (item.HasElementItem(ElementID.Blood) && !HideElementTooltip[ElementID.Blood])
+                if (!string.IsNullOrEmpty(addedDamage) && tt != null)
                 {
-                    TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.BloodBonus")) { OverrideColor = Color.IndianRed };
-                    tooltips.Add(line);
-                }
-                if (item.HasElementItem(ElementID.Celestial) && !HideElementTooltip[ElementID.Celestial])
-                {
-                    TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.CelestialBonus")) { OverrideColor = Color.Pink };
-                    tooltips.Add(line);
-                }
-                if (item.HasElementItem(ElementID.Earth) && !HideElementTooltip[ElementID.Earth])
-                {
-                    TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.EarthBonus")) { OverrideColor = Color.SandyBrown };
-                    tooltips.Add(line);
-                }
-                if (item.HasElementItem(ElementID.Fire) && !HideElementTooltip[ElementID.Fire])
-                {
-                    TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.FireBonus")) { OverrideColor = Color.Orange };
-                    tooltips.Add(line);
-                }
-                if (item.HasElementItem(ElementID.Holy) && !HideElementTooltip[ElementID.Holy])
-                {
-                    TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.HolyBonus")) { OverrideColor = Color.LightGoldenrodYellow };
-                    tooltips.Add(line);
-                }
-                if (item.HasElementItem(ElementID.Ice) && !HideElementTooltip[ElementID.Ice])
-                {
-                    TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.IceBonus")) { OverrideColor = Color.LightCyan };
-                    tooltips.Add(line);
-                }
-                if (item.HasElementItem(ElementID.Nature) && !HideElementTooltip[ElementID.Nature])
-                {
-                    TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.NatureBonus")) { OverrideColor = Color.LawnGreen };
-                    tooltips.Add(line);
-                }
-                if (item.HasElementItem(ElementID.Poison) && !HideElementTooltip[ElementID.Poison])
-                {
-                    TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.PoisonBonus")) { OverrideColor = Color.MediumPurple };
-                    tooltips.Add(line);
-                }
-                if (item.HasElementItem(ElementID.Psychic) && !HideElementTooltip[ElementID.Psychic])
-                {
-                    TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.PsychicBonus")) { OverrideColor = Color.LightPink };
-                    tooltips.Add(line);
-                }
-                if (item.HasElementItem(ElementID.Shadow) && !HideElementTooltip[ElementID.Shadow])
-                {
-                    TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ShadowBonus")) { OverrideColor = Color.MediumSlateBlue };
-                    tooltips.Add(line);
-                }
-                if (item.HasElementItem(ElementID.Thunder) && !HideElementTooltip[ElementID.Thunder])
-                {
-                    TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ThunderBonus")) { OverrideColor = Color.LightYellow };
-                    tooltips.Add(line);
-                }
-                if (item.HasElementItem(ElementID.Water) && !HideElementTooltip[ElementID.Water])
-                {
-                    TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.WaterBonus")) { OverrideColor = Color.SkyBlue };
-                    tooltips.Add(line);
-                }
-                if (item.HasElementItem(ElementID.Wind) && !HideElementTooltip[ElementID.Wind])
-                {
-                    TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.WindBonus")) { OverrideColor = Color.LightGray };
-                    tooltips.Add(line);
+                    switch (RedeConfigClient.Instance.ElementalDamageTooltipStyle)
+                    {
+                        case ElementDamageTooltipEnum.ShowAdded:
+                            string[] splitText = tt.Text.Split(' ');
+                            string damageValue = splitText.First();
+                            tt.Text = damageValue + addedDamage;
+                            for (int j = 1; j < splitText.Length; j++)
+                                tt.Text += " " + splitText[j];
+                            break;
+                        case ElementDamageTooltipEnum.ShowTotalled:
+                            tt.Text += " (" + addedDamage + ")";
+                            break;
+                    }
                 }
             }
-            if (item.rare == ModContent.RarityType<DonatorRarity>())
+            if (!string.IsNullOrEmpty(elementsLine.Text))
+                tooltips.Add(elementsLine);
+
+            //
+
+            if (item.rare == RarityType<DonatorRarity>())
             {
                 TooltipLine donatorLine = new(Mod, "DonatorLine", "-Donator Item-") { OverrideColor = Color.SpringGreen };
                 tooltips.Add(donatorLine);

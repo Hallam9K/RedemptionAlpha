@@ -19,6 +19,7 @@ namespace Redemption.Projectiles.Magic
         {
             // DisplayName.SetDefault("Heat Ray");
             ElementID.ProjFire[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetSafeDefaults()

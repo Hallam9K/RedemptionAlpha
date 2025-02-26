@@ -1,3 +1,4 @@
+using Redemption.BaseExtension;
 using Redemption.Buffs.Minions;
 using Redemption.Globals;
 using Redemption.Items.Weapons.PostML.Magic;
@@ -6,17 +7,22 @@ using Redemption.Rarities;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PostML.Summon
 {
     public class UkonRuno : ModItem
-	{
-		public override void SetStaticDefaults()
+    {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ThunderS);
+        public override void SetStaticDefaults()
 		{
             ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<PoemOfIlmatar>();
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
+
+            ElementID.ItemWater[Type] = true;
+            ElementID.ItemThunder[Type] = true;
         }
 
         public override void SetDefaults()
@@ -37,7 +43,8 @@ namespace Redemption.Items.Weapons.PostML.Summon
             Item.autoReuse = false;
             Item.buffType = BuffType<UkkonenBuff>();
             Item.shoot = ProjectileType<Ukkonen>();
-            Item.ExtraItemShoot(ProjectileID.RainFriendly);
+
+            Item.Redemption().HideElementTooltip[ElementID.Thunder] = true;
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {

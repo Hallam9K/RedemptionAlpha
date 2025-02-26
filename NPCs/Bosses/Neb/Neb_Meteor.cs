@@ -6,6 +6,7 @@ using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Particles;
 using ReLogic.Content;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -94,6 +95,8 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             ElementID.ProjFire[Type] = true;
             ElementID.ProjExplosive[Type] = true;
+            ElementID.ProjArcane[Type] = true;
+            ElementID.ProjCelestial[Type] = true;
         }
 
         public override void SetDefaults()

@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts;
 using Redemption.Effects;
@@ -15,6 +14,7 @@ namespace Redemption.Projectiles.Ranged
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Lunar Bolt");
+            ElementID.ProjArcane[Type] = true;
             ElementID.ProjFire[Type] = true;
             ElementID.ProjNature[Type] = true;
         }
@@ -36,24 +36,25 @@ namespace Redemption.Projectiles.Ranged
         private List<Vector2> cache2;
         private DanTrail trail;
         private DanTrail trail2;
-        private float thickness = 3f;
+        private readonly float thickness = 3f;
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             FakeKill();
             Player player = Main.player[Projectile.owner];
-            if (!Main.dayTime && Main.moonPhase != 4 && Main.myPlayer == player.whoAmI) {
-                if (Main.moonPhase == 0) 
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, RedeHelper.RandomRotation()), ModContent.ProjectileType<MoonflareBatIllusion>(), (int)(Projectile.damage * 0.85f), Projectile.knockBack, Main.myPlayer, target.whoAmI);
+            if (!Main.dayTime && Main.moonPhase != 4 && Main.myPlayer == player.whoAmI)
+            {
+                if (Main.moonPhase == 0)
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, RedeHelper.RandomRotation()), ProjectileType<MoonflareBatIllusion>(), (int)(Projectile.damage * 0.85f), Projectile.knockBack, Main.myPlayer, target.whoAmI);
 
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, RedeHelper.RandomRotation()), ModContent.ProjectileType<MoonflareBatIllusion>(), (int)(Projectile.damage * 0.85f), Projectile.knockBack, Main.myPlayer, target.whoAmI);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, RedeHelper.RandomRotation()), ProjectileType<MoonflareBatIllusion>(), (int)(Projectile.damage * 0.85f), Projectile.knockBack, Main.myPlayer, target.whoAmI);
             }
         }
         private int fakeTimer;
         private void FakeKill()
         {
             if (fakeTimer++ == 0)
-                DustHelper.DrawCircle(Projectile.Center, ModContent.DustType<MoonflareDust>(), 1, 2, 2, nogravity: true);
+                DustHelper.DrawCircle(Projectile.Center, DustType<MoonflareDust>(), 1, 2, 2, nogravity: true);
 
             Projectile.alpha = 255;
             Projectile.friendly = false;
@@ -68,7 +69,7 @@ namespace Redemption.Projectiles.Ranged
         {
             if (fakeTimer > 0)
                 return;
-            DustHelper.DrawCircle(Projectile.Center, ModContent.DustType<MoonflareDust>(), 1, 2, 2, nogravity: true);
+            DustHelper.DrawCircle(Projectile.Center, DustType<MoonflareDust>(), 1, 2, 2, nogravity: true);
         }
         public override void AI()
         {
@@ -106,7 +107,7 @@ namespace Redemption.Projectiles.Ranged
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 

@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Rarities;
 using System.Collections.Generic;
@@ -14,7 +14,9 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Salamanisku>();
+            // Tooltip.SetDefault("Right-click to change attack modes");
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<Salamanisku>();
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -22,7 +24,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             // Common Properties
             Item.width = 36;
             Item.height = 36;
-            Item.rare = ModContent.RarityType<TurquoiseRarity>();
+            Item.rare = RarityType<TurquoiseRarity>();
             Item.value = Item.sellPrice(0, 25);
 
             // Use Properties
@@ -42,7 +44,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<Ukonvasara_Sword_Proj>();
+            Item.shoot = ProjectileType<Ukonvasara_Sword_Proj>();
         }
 
         public int AttackMode;
@@ -90,10 +92,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
                         break;
                     case 1:
-                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Ukonvasara_Hammer>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
+                        Projectile.NewProjectile(source, position, velocity, ProjectileType<Ukonvasara_Hammer>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
                         break;
                     case 2:
-                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Ukonvasara_Axe>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
+                        Projectile.NewProjectile(source, position, velocity, ProjectileType<Ukonvasara_Axe>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
                         break;
 
                 }
@@ -139,16 +141,22 @@ namespace Redemption.Items.Weapons.PostML.Melee
             switch (AttackMode)
             {
                 default:
-                    TooltipLine swordLine = new(Mod, "SlashBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
-                    tooltips.Add(swordLine);
+                    Item.Redemption().CanSwordClash = true;
+                    Item.Redemption().TechnicallySlash = true;
+                    Item.Redemption().TechnicallyHammer = false;
+                    Item.Redemption().TechnicallyAxe = false;
                     break;
                 case 1:
-                    TooltipLine hammerLine = new(Mod, "HammerBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.HammerBonus")) { OverrideColor = Colors.RarityOrange };
-                    tooltips.Add(hammerLine);
+                    Item.Redemption().CanSwordClash = false;
+                    Item.Redemption().TechnicallySlash = false;
+                    Item.Redemption().TechnicallyHammer = true;
+                    Item.Redemption().TechnicallyAxe = false;
                     break;
                 case 2:
-                    TooltipLine axeLine = new(Mod, "AxeBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.AxeBonus")) { OverrideColor = Colors.RarityOrange };
-                    tooltips.Add(axeLine);
+                    Item.Redemption().CanSwordClash = false;
+                    Item.Redemption().TechnicallySlash = false;
+                    Item.Redemption().TechnicallyHammer = false;
+                    Item.Redemption().TechnicallyAxe = true;
                     break;
             }
         }

@@ -20,6 +20,7 @@ namespace Redemption.Projectiles.Magic
         {
             // DisplayName.SetDefault("Ember");
             ElementID.ProjFire[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetDefaults()

@@ -1,3 +1,4 @@
+using Redemption.BaseExtension;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using System.Collections.Generic;
@@ -17,8 +18,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 "Physical slashes deal double damage to undead and skeletons\n" +
                 "Hold left-click to charge a Blood Wave, taking away some of your life to fire life-stealing projectiles" +
                 "\n'The hand of my beloved, cold and dead...'"); */
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<FanOShivs>();
-
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<FanOShivs>();
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             Item.ResearchUnlockCount = 1;
         }
@@ -48,25 +48,24 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<KeepersClaw_Slash>();
+            Item.shoot = ProjectileType<KeepersClaw_Slash>();
+
+            Item.Redemption().TechnicallySlash = true;
+            Item.Redemption().CanSwordClash = true;
         }
+        public override bool MeleePrefix() => true;
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<GrimShard>())
+                .AddIngredient(ItemType<GrimShard>())
                 .AddIngredient(ItemID.DemoniteBar, 12)
                 .AddTile(TileID.Anvils)
                 .Register();
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<GrimShard>())
+                .AddIngredient(ItemType<GrimShard>())
                 .AddIngredient(ItemID.CrimtaneBar, 12)
                 .AddTile(TileID.Anvils)
                 .Register();
-        }
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
-        {
-            TooltipLine slashLine = new(Mod, "SharpBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
-            tooltips.Add(slashLine);
         }
     }
 }

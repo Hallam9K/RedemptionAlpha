@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using System.Collections.Generic;
 using Terraria;
@@ -13,11 +13,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ThunderS);
         public override void SetStaticDefaults()
         {
-            /* Tooltip.SetDefault("Hold left-click to charge the javelin, release to throw\n" +
-                "Strikes the ground and foe alike with lightning, dealing " + ElementID.ThunderS + " damage"); */
-
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            Item.ResearchUnlockCount = 1;
+
+            ElementID.ItemEarth[Type] = true;
+            ElementID.ItemThunder[Type] = true;
         }
 
         public override void SetDefaults()
@@ -46,8 +45,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 0f;
-            Item.shoot = ModContent.ProjectileType<EaglecrestJavelin_Proj>();
-            Item.ExtraItemShoot(ModContent.ProjectileType<EaglecrestJavelin_Thunder>());
+            Item.shoot = ProjectileType<EaglecrestJavelin_Proj>();
+
+            Item.Redemption().HideElementTooltip[ElementID.Thunder] = true;
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {

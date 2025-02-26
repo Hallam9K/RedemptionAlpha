@@ -1,6 +1,6 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
+using ParticleLibrary.Core;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Redemption.Effects;
@@ -9,6 +9,7 @@ using Redemption.Helpers;
 using Redemption.Items.Materials.PostML;
 using Redemption.Particles;
 using Redemption.Rarities;
+using Redemption.Textures;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -40,14 +41,15 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.height = 102;
             Item.damage = 350;
             Item.UseSound = CustomSounds.NebSound1 with { Volume = .7f };
-            Item.rare = ModContent.RarityType<CosmicRarity>();
+            Item.rare = RarityType<CosmicRarity>();
             Item.value = Item.buyPrice(1, 0, 0, 0);
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.autoReuse = true;
             Item.channel = true;
             Item.DamageType = DamageClass.Ranged;
-            Item.shoot = ModContent.ProjectileType<TwinklestarTinyStar>();
+            Item.useAmmo = AmmoID.Arrow;
+            Item.shoot = ProjectileType<TwinklestarTinyStar>();
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -58,15 +60,15 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                 Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(40));
                 Projectile.NewProjectile(source, position, perturbedSpeed, type, damage, knockback, player.whoAmI, 0, 0, i);
             }
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<TwinklestarHoldout>(), damage, knockback, player.whoAmI, 0, 0, player.itemAnimationMax);
+            Projectile.NewProjectile(source, position, velocity, ProjectileType<TwinklestarHoldout>(), damage, knockback, player.whoAmI, 0, 0, player.itemAnimationMax);
             return false;
         }
-        public override bool CanUseItem(Player player) => player.ownedProjectileCounts[ModContent.ProjectileType<TwinklestarHoldout>()] <= 0;
+        public override bool CanUseItem(Player player) => player.ownedProjectileCounts[ProjectileType<TwinklestarHoldout>()] <= 0;
         public override void AddRecipes()
         {
             CreateRecipe()
                 .AddIngredient(ItemID.Phantasm)
-                .AddIngredient(ModContent.ItemType<LifeFragment>(), 8)
+                .AddIngredient(ItemType<LifeFragment>(), 8)
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();
         }
@@ -113,13 +115,13 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                 {
                     charge += 2 * player.GetAttackSpeed(DamageClass.Ranged);
                     charge = MathHelper.Clamp(charge, 0, 50);
-                    if (player.ownedProjectileCounts[ModContent.ProjectileType<TwinklestarRadius>()] <= 0)
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<TwinklestarRadius>(), damage, knockback, Projectile.owner, Projectile.whoAmI, uuid);
+                    if (player.ownedProjectileCounts[ProjectileType<TwinklestarRadius>()] <= 0)
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileType<TwinklestarRadius>(), damage, knockback, Projectile.owner, Projectile.whoAmI, uuid);
                 }
                 else
                 {
                     if (Timer++ == 0 && charge >= 20)
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, 0.5f * beamVelocity, ModContent.ProjectileType<ShootingStar>(), damage * 3, knockback, Projectile.owner, charge, uuid);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, 0.5f * beamVelocity, ProjectileType<ShootingStar>(), damage * 3, knockback, Projectile.owner, charge, uuid);
 
                     if (Timer == 0 && charge < 5)
                         Projectile.Kill();
@@ -184,7 +186,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                 player.direction = 1;
             SpriteEffects effects = Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             Texture2D texture = TextureAssets.Projectile[Type].Value;
-            Vector2 position = Projectile.Center + Vector2.UnitY * Projectile.gfxOffY - Main.screenPosition;
+            Vector2 position = Projectile.Center - Main.screenPosition;
             Color drawColor = Color.White;
             Main.EntitySpriteDraw(texture, position, new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)), drawColor, Projectile.rotation, texture.Size() / 2, Projectile.scale, effects, 0);
             return false;
@@ -212,7 +214,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<TwinklestarHoldout>()] <= 0)
+            if (player.ownedProjectileCounts[ProjectileType<TwinklestarHoldout>()] <= 0)
                 Projectile.Kill();
 
             Projectile host = Main.projectile[(int)Projectile.ai[0]];
@@ -237,8 +239,8 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         }
         public void DrawTether(Vector2 End, Vector2 screenPos, Color color1, Color color2, float Size, float Strength)
         {
-            Texture2D TrailTex = ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_5", AssetRequestMode.ImmediateLoad).Value;
-            Effect effect = ModContent.Request<Effect>("Redemption/Effects/Beam", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D TrailTex = Request<Texture2D>("Redemption/Textures/Trails/Trail_5", AssetRequestMode.ImmediateLoad).Value;
+            Effect effect = Request<Effect>("Redemption/Effects/Beam", AssetRequestMode.ImmediateLoad).Value;
             effect.Parameters["uTexture"].SetValue(TrailTex);
             effect.Parameters["progress"].SetValue(Main.GlobalTimeWrappedHourly / 3);
             effect.Parameters["uColor"].SetValue(color1.ToVector4());
@@ -264,6 +266,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         public override void SetStaticDefaults()
         {
             ElementID.ProjCelestial[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -295,15 +298,15 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D tex = Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
             Projectile.Opacity = Projectile.timeLeft <= 20 ? 1f - 1f / 20f * (20 - Projectile.timeLeft) : 1f;
             float amount = MathHelper.Lerp(0f, 1f, Main.GlobalTimeWrappedHourly * 64f % 360 / 360);
             Color hsl = Main.hslToRgb(amount, 1f, 0.75f);
             Color color2 = Color.Multiply(new(hsl.R, hsl.G, hsl.B, 0), Projectile.Opacity);
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Particles/RainbowParticle2").Value, Projectile.Center - Main.screenPosition, null, color2, Projectile.ai[0].InRadians().AngleLerp((Projectile.ai[0] + 90f).InRadians(), (120f - Projectile.timeLeft) / 120f), new Vector2(71, 21), 0.75f * Projectile.scale, SpriteEffects.None, 0f);
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Particles/RainbowParticle2").Value, Projectile.Center - Main.screenPosition, null, color2, Projectile.ai[0].InRadians().AngleLerp((Projectile.ai[0] + 90f).InRadians(), (120f - Projectile.timeLeft) / 120f) + MathHelper.PiOver2, new Vector2(71, 21), 0.75f * Projectile.scale, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(CommonTextures.RainbowParticle2.Value, Projectile.Center - Main.screenPosition, null, color2, Projectile.ai[0].InRadians().AngleLerp((Projectile.ai[0] + 90f).InRadians(), (120f - Projectile.timeLeft) / 120f), new Vector2(71, 21), 0.75f * Projectile.scale, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(CommonTextures.RainbowParticle2.Value, Projectile.Center - Main.screenPosition, null, color2, Projectile.ai[0].InRadians().AngleLerp((Projectile.ai[0] + 90f).InRadians(), (120f - Projectile.timeLeft) / 120f) + MathHelper.PiOver2, new Vector2(71, 21), 0.75f * Projectile.scale, SpriteEffects.None, 0f);
             Main.spriteBatch.Draw(tex, Projectile.Center - Main.screenPosition, null, color2 * .5f, Projectile.ai[0].InRadians().AngleLerp((Projectile.ai[0] + 90f).InRadians(), (120f - Projectile.timeLeft) / 120f), new Vector2(114 / 2, 114 / 2), Projectile.scale + 1f, SpriteEffects.None, 0f);
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Particles/GlowParticle").Value, Projectile.Center - Main.screenPosition, null, color2, Projectile.rotation, new Vector2(64, 64), Projectile.scale * .3f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(CommonTextures.GlowParticle.Value, Projectile.Center - Main.screenPosition, null, color2, Projectile.rotation, new Vector2(64, 64), Projectile.scale * .3f, SpriteEffects.None, 0f);
             return false;
         }
     }
@@ -315,6 +318,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjCelestial[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -358,7 +362,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                 ParticleManager.NewParticle(Projectile.Center + Projectile.velocity, RedeHelper.Spread(1), new RainbowParticle(), Color.White, Main.rand.NextFloat(.4f, .6f) * Projectile.Opacity, 0, 0, 0, 0, Main.rand.Next(20, 40), Projectile.Opacity);
             for (int i = 0; i < 3; i++)
             {
-                Dust dust = Main.dust[Dust.NewDust(Projectile.Center, 2, 2, ModContent.DustType<GlowDust>(), Scale: 2 * Projectile.Opacity)];
+                Dust dust = Main.dust[Dust.NewDust(Projectile.Center, 2, 2, DustType<GlowDust>(), Scale: 2 * Projectile.Opacity)];
                 dust.noGravity = true;
                 dust.noLight = true;
                 Color dustColor = new(RedeColor.NebColour.R, RedeColor.NebColour.G, RedeColor.NebColour.B) { A = 0 };
@@ -394,7 +398,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (!proj.active || !(proj.type == ModContent.ProjectileType<TwinklestarTinyStar>()))
+                if (!proj.active || !(proj.type == ProjectileType<TwinklestarTinyStar>()))
                     continue;
 
                 if (proj.velocity.Length() > 10)
@@ -450,7 +454,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                     ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(94, 53, 104), 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
                 for (int i = 0; i < 20; i++)
                 {
-                    int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<VoidFlame>(), Scale: 2);
+                    int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustType<VoidFlame>(), Scale: 2);
                     Main.dust[dust].velocity *= 2;
                     Main.dust[dust].noGravity = true;
                 }
@@ -474,7 +478,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                 ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(94, 53, 104), 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
             for (int i = 0; i < 20; i++)
             {
-                int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<VoidFlame>(), Scale: 2);
+                int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustType<VoidFlame>(), Scale: 2);
                 Main.dust[dust].velocity *= 2;
                 Main.dust[dust].noGravity = true;
             }

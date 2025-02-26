@@ -18,6 +18,7 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             ElementID.ProjIce[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

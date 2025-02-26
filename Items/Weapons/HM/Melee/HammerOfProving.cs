@@ -1,15 +1,24 @@
-using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Projectiles.Melee;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
     public class HammerOfProving : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.HolyS, ElementID.ArcaneS);
+        public override void SetStaticDefaults()
+        {
+            ElementID.ItemHoly[Type] = true;
+            ElementID.ItemArcane[Type] = true;
+
+            Item.ResearchUnlockCount = 1;
+        }
+
         public override void SetDefaults()
         {
             // Common Properties
@@ -35,9 +44,10 @@ namespace Redemption.Items.Weapons.HM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<HammerOfProving_Proj>();
-            Item.ExtraItemShoot(ModContent.ProjectileType<HolyHammer>());
+            Item.shoot = ProjectileType<HammerOfProving_Proj>();
             Item.Redemption().TechnicallyHammer = true;
+            Item.Redemption().HideElementTooltip[ElementID.Holy] = true;
+            Item.Redemption().HideElementTooltip[ElementID.Arcane] = true;
         }
         public override bool MeleePrefix() => true;
         public override bool CanUseItem(Player player) => player.velocity.Y != 0;

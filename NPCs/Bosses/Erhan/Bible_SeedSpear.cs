@@ -15,6 +15,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             // DisplayName.SetDefault("Holy Spear");
             ElementID.ProjHoly[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetDefaults()

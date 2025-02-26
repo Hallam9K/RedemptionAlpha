@@ -1,8 +1,7 @@
-using Terraria.Audio;
-using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Redemption.Projectiles.Magic.Noita;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -17,6 +16,12 @@ namespace Redemption.Items.Weapons.HM.Magic
                 "'From Noita, with love'"); */
             Item.staff[Item.type] = true;
             ElementID.ItemWater[Type] = true;
+            ElementID.ItemArcane[Type] = true;
+            ElementID.ItemThunder[Type] = true;
+            ElementID.ItemExplosive[Type] = true;
+            ElementID.ItemCelestial[Type] = true;
+            ElementID.ItemShadow[Type] = true;
+
             Item.ResearchUnlockCount = 1;
         }
         private int spellType;
@@ -37,8 +42,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.rare = ItemRarityID.Orange;
             Item.UseSound = SoundID.Item20;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<EnergySphereSpell>();
-            Item.ExtraItemShoot(ModContent.ProjectileType<Pommisauva_Bomb>(), ModContent.ProjectileType<BlackHoleSpell>());
+            Item.shoot = ProjectileType<EnergySphereSpell>();
             Item.shootSpeed = 11f;
         }
         public override void ModifyManaCost(Player player, ref float reduce, ref float mult)
@@ -75,7 +79,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             switch (spellType)
             {
                 default:
-                    type = ModContent.ProjectileType<BubbleSparkSpell>();
+                    type = ProjectileType<BubbleSparkSpell>();
                     velocity = velocity.RotatedByRandom(MathHelper.ToRadians(15));
                     break;
                 case 1:
@@ -83,63 +87,63 @@ namespace Redemption.Items.Weapons.HM.Magic
                     velocity *= 0.2f;
                     break;
                 case 2:
-                    type = ModContent.ProjectileType<BouncingBurstSpell>();
+                    type = ProjectileType<BouncingBurstSpell>();
                     velocity = velocity.RotatedByRandom(MathHelper.ToRadians(5));
                     velocity *= 0.4f;
                     break;
                 case 3:
-                    type = ModContent.ProjectileType<ConcentratedLightSpell>();
+                    type = ProjectileType<ConcentratedLightSpell>();
                     damage = (int)(damage * 2.5f);
                     velocity *= 0.1f;
                     break;
                 case 4:
-                    type = ModContent.ProjectileType<MagicArrowSpell>();
+                    type = ProjectileType<MagicArrowSpell>();
                     velocity = velocity.RotatedByRandom(MathHelper.ToRadians(5));
                     velocity *= 0.4f;
                     break;
                 case 5:
-                    type = ModContent.ProjectileType<GlowingLanceSpell>();
+                    type = ProjectileType<GlowingLanceSpell>();
                     damage = (int)(damage * 1.25f);
                     velocity = velocity.RotatedByRandom(MathHelper.ToRadians(5));
                     velocity *= 0.4f;
                     break;
                 case 6:
-                    type = ModContent.ProjectileType<LuminousDrillSpell>();
+                    type = ProjectileType<LuminousDrillSpell>();
                     knockback *= .5f;
                     break;
                 case 7:
-                    type = ModContent.ProjectileType<BlackHoleSpell>();
+                    type = ProjectileType<BlackHoleSpell>();
                     damage = (int)(damage * 2.5f);
                     velocity *= .4f;
                     break;
                 case 8:
-                    type = ModContent.ProjectileType<DiscSpell>();
+                    type = ProjectileType<DiscSpell>();
                     velocity = velocity.RotatedByRandom(MathHelper.ToRadians(6));
                     velocity *= 1.4f;
                     break;
                 case 9:
-                    type = ModContent.ProjectileType<GigaDiscSpell>();
+                    type = ProjectileType<GigaDiscSpell>();
                     velocity = velocity.RotatedByRandom(MathHelper.ToRadians(6));
                     damage = (int)(damage * 1.5f);
                     velocity *= 1.4f;
                     break;
                 case 10:
-                    type = ModContent.ProjectileType<OmegaDiscSpell>();
+                    type = ProjectileType<OmegaDiscSpell>();
                     damage = (int)(damage * 2.5f);
                     velocity *= 1.4f;
                     break;
                 case 11:
-                    type = ModContent.ProjectileType<Pommisauva_Bomb>();
+                    type = ProjectileType<Pommisauva_Bomb>();
                     damage = (int)(damage * 3f);
                     knockback *= 3;
                     break;
                 case 12:
-                    type = ModContent.ProjectileType<TntSpell>();
+                    type = ProjectileType<TntSpell>();
                     damage = (int)(damage * 1.5f);
                     knockback *= 2;
                     break;
                 case 13:
-                    type = ModContent.ProjectileType<SpitterBoltSpell>();
+                    type = ProjectileType<SpitterBoltSpell>();
                     damage = (int)(damage * 1.25f);
                     velocity = velocity.RotatedByRandom(MathHelper.ToRadians(5));
                     velocity *= 1.1f;

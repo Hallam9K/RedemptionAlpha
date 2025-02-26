@@ -1,13 +1,13 @@
-using Terraria;
-using Terraria.ID;
-using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
+using Redemption.BaseExtension;
+using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Ranged;
-using Terraria.DataStructures;
+using Terraria;
 using Terraria.Audio;
-using Redemption.Globals;
+using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -16,9 +16,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ArcaneS);
         public override void SetStaticDefaults()
         {
-            /* Tooltip.SetDefault("Right-click to fire a lingering spirit at the aimed area, a spiritual rift will form between two spirits\n" +
-                "Arrows passing through the rift are transformed into Spirit Arrows that split into homing shards upon impact, dealing " + ElementID.ArcaneS + " damage"); */
-            Item.ResearchUnlockCount = 1;
+            ElementID.ItemArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -44,14 +42,15 @@ namespace Redemption.Items.Weapons.HM.Ranged
             // Projectile Properties
             Item.shootSpeed = 20f;
             Item.shoot = ProjectileID.WoodenArrowFriendly;
-            Item.ExtraItemShoot(ModContent.ProjectileType<SpiritArrow_Proj>());
             Item.useAmmo = AmmoID.Arrow;
+
+            Item.Redemption().HideElementTooltip[ElementID.Arcane] = true;
         }
         public override void AddRecipes()
         {
             CreateRecipe()
                 .AddIngredient(ItemID.Marrow)
-                .AddIngredient(ModContent.ItemType<LostSoul>(), 12)
+                .AddIngredient(ItemType<LostSoul>(), 12)
                 .AddIngredient(ItemID.Ectoplasm, 6)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
@@ -66,7 +65,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             if (player.altFunctionUse == 2)
             {
                 SoundEngine.PlaySound(SoundID.Zombie54, player.Center);
-                type = ModContent.ProjectileType<GhastlyRecurve_Proj>();
+                type = ProjectileType<GhastlyRecurve_Proj>();
             }
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

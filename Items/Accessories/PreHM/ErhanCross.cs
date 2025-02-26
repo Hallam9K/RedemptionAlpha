@@ -1,6 +1,6 @@
-﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Cooldowns;
 using Redemption.Globals;
 using Redemption.Globals.Player;
@@ -8,28 +8,16 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.BaseExtension;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.PreHM
 {
     public class ErhanCross : ModItem
     {
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.HolyS, ElementID.ShadowS);
-        public override void SetStaticDefaults()
-		{
-            // DisplayName.SetDefault("Erhan's Cross");
-            /* Tooltip.SetDefault("Summons a holy shield to orbit around the user, reflecting most projectiles" +
-                "\nThe shield breaks once enough damage has been dealt to it" +
-                "\n10% increased " + ElementID.HolyS + " elemental resistance" +
-                "\n10% decreased " + ElementID.ShadowS + " elemental resistance"); */
-
-            Item.ResearchUnlockCount = 1;
-        }
-
         public override void SetDefaults()
-		{
+        {
             Item.width = 28;
             Item.height = 34;
             Item.value = Item.sellPrice(0, 0, 75, 0);
@@ -44,11 +32,11 @@ namespace Redemption.Items.Accessories.PreHM
             modPlayer.ElementalResistance[ElementID.Shadow] -= 0.1f;
 
             modPlayer.erhanCross = true;
-            if (player.whoAmI == Main.myPlayer && player.active && !player.dead && player.ownedProjectileCounts[ModContent.ProjectileType<ErhanCross_Shield>()] < 1 &&
+            if (player.whoAmI == Main.myPlayer && player.active && !player.dead && player.ownedProjectileCounts[ProjectileType<ErhanCross_Shield>()] < 1 &&
                 !player.HasBuff<ErhanCrossCooldown>())
-                Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center, Vector2.Zero, ModContent.ProjectileType<ErhanCross_Shield>(), 0, 0, player.whoAmI);
+                Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center, Vector2.Zero, ProjectileType<ErhanCross_Shield>(), 0, 0, player.whoAmI);
         }
-	}
+    }
     public class ErhanCross_Shield : ModProjectile
     {
         public override string Texture => "Redemption/NPCs/Bosses/Erhan/Erhan_HolyShield";
@@ -73,11 +61,13 @@ namespace Redemption.Items.Accessories.PreHM
             if (!player.active || player.dead || player.HasBuff<ErhanCrossCooldown>() || !player.RedemptionPlayerBuff().erhanCross)
                 Projectile.Kill();
 
+            Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter, true);
+
             Projectile.timeLeft = 10;
-            Projectile.rotation = (player.Center - Projectile.Center).ToRotation();
+            Projectile.rotation = (playerCenter - Projectile.Center).ToRotation();
 
             Projectile.localAI[0] += 0.04f;
-            Projectile.Center = player.Center + Vector2.One.RotatedBy(Projectile.localAI[0]) * 80;
+            Projectile.Center = playerCenter + Vector2.One.RotatedBy(Projectile.localAI[0]) * 80;
 
             Projectile.alpha--;
             Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 80, 255);
@@ -85,9 +75,8 @@ namespace Redemption.Items.Accessories.PreHM
 
             if (Projectile.alpha < 100 && Projectile.ai[1] <= 0)
             {
-                for (int i = 0; i < Main.maxProjectiles; i++)
+                foreach (Projectile target in Main.ActiveProjectiles)
                 {
-                    Projectile target = Main.projectile[i];
                     if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
                         continue;
 
@@ -96,14 +85,14 @@ namespace Redemption.Items.Accessories.PreHM
 
                     Projectile.ai[1] = 10;
                     SoundEngine.PlaySound(SoundID.Item29, Projectile.position);
-                    DustHelper.DrawCircle(target.Center, DustID.GoldFlame, 1, 4, 4, nogravity: true);
+                    RedeDraw.SpawnExplosion(target.Center, new Color(246, 255, 148), shakeAmount: 0, scale: .5f, noDust: true, rot: RedeHelper.RandomRotation(), tex: "Redemption/Textures/SwordClash");
 
                     Projectile.localAI[1] += target.damage;
                     CombatText.NewText(Projectile.getRect(), Color.Orange, target.damage, true, true);
 
                     if (Projectile.localAI[1] >= 100)
                     {
-                        player.AddBuff(ModContent.BuffType<ErhanCrossCooldown>(), 1800);
+                        player.AddBuff(BuffType<ErhanCrossCooldown>(), 1800);
                         DustHelper.DrawCircle(target.Center, DustID.GoldFlame, 2, 4, 4, 1, 3, nogravity: true);
                         Projectile.Kill();
                     }
@@ -119,7 +108,7 @@ namespace Redemption.Items.Accessories.PreHM
                         target.hostile = false;
                     }
 
-                    target.Redemption().ReflectDamageIncrease = 4; 
+                    target.Redemption().ReflectDamageIncrease = 4;
                     target.velocity = -target.velocity;
                 }
             }
@@ -131,13 +120,13 @@ namespace Redemption.Items.Accessories.PreHM
             float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 0f, 0.15f, 0f);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White) * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale + scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }

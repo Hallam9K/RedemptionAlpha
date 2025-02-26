@@ -1,5 +1,6 @@
-using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Projectiles.Ranged;
 using Terraria;
@@ -15,7 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         public override void SetStaticDefaults()
         {
             // Tooltip.SetDefault("Replaces wooden arrows with seed-laden arrows that sprout small thorn traps, dealing Nature damage");
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<RootTendril>();
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<RootTendril>();
             Item.ResearchUnlockCount = 1;
             ElementID.ItemNature[Type] = true;
         }
@@ -38,6 +39,8 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.shoot = ProjectileID.PurificationPowder;
             Item.shootSpeed = 10f;
             Item.useAmmo = AmmoID.Arrow;
+
+            Item.Redemption().HideElementTooltip[ElementID.Nature] = true;
         }
         public override Vector2? HoldoutOffset()
         {
@@ -46,7 +49,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             if (type == ProjectileID.WoodenArrowFriendly)
-                type = ModContent.ProjectileType<ThornArrow>();
+                type = ProjectileType<ThornArrow>();
         }
     }
 }

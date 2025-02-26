@@ -1,18 +1,16 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameInput;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace Redemption.UI
 {
     public class AMemoryUIState : UIState
     {
-        public UIImage BgSprite = new(ModContent.Request<Texture2D>("Redemption/UI/AMemory", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+        public UIImage BgSprite = new(Request<Texture2D>("Redemption/UI/AMemory", ReLogic.Content.AssetRequestMode.ImmediateLoad));
 
         public static bool Visible = false;
         public Vector2 lastScreenSize;
@@ -26,7 +24,7 @@ namespace Redemption.UI
             BgSprite.Left.Set((Main.screenWidth / 2f) + 426f / 2f, 0f);
             BgSprite.Top.Set((Main.screenHeight / 2f) + 438f / 2f, 0f);
 
-            UIImageButton closeButton = new(ModContent.Request<Texture2D>("Redemption/UI/ButtonClosePlaceholder", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+            UIImageButton closeButton = new(Request<Texture2D>("Redemption/UI/ButtonClosePlaceholder", ReLogic.Content.AssetRequestMode.ImmediateLoad));
 
             closeButton.Width.Set(22, 0f);
             closeButton.Height.Set(22, 0f);
@@ -45,10 +43,7 @@ namespace Redemption.UI
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (ContainsPoint(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface)
-                Main.LocalPlayer.mouseInterface = true;
-
-            if (!Main.LocalPlayer.releaseInventory || !Main.LocalPlayer.IsTileTypeInInteractionRange(ModContent.TileType<LabPhotoTile>(), TileReachCheckSettings.Simple))
+            if (!Main.LocalPlayer.releaseInventory || !Main.LocalPlayer.IsTileTypeInInteractionRange(TileType<LabPhotoTile>(), TileReachCheckSettings.Simple))
                 Visible = false;
         }
         public override void Draw(SpriteBatch spriteBatch)
@@ -63,6 +58,9 @@ namespace Redemption.UI
                 BgSprite.Top.Pixels = (Main.screenHeight / 2f) - 438f / 2f;
                 BgSprite.Recalculate();
             }
+
+            if (BgSprite.ContainsPoint(Main.MouseScreen))
+                Main.LocalPlayer.mouseInterface = true;
 
             base.Draw(spriteBatch);
 

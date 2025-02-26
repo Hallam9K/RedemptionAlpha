@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
@@ -18,6 +17,7 @@ namespace Redemption.NPCs.Bosses.ADD
             // DisplayName.SetDefault("Static Dualcast");
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjThunder[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -127,7 +127,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Lightning2").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/Lightning2").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 
@@ -155,7 +155,7 @@ namespace Redemption.NPCs.Bosses.ADD
             {
                 target.AddBuff(BuffID.Electrified, target.HasBuff(BuffID.Wet) ? 320 : 160);
             }
-            target.AddBuff(ModContent.BuffType<StaticStunDebuff>(), 60);
+            target.AddBuff(BuffType<StaticStunDebuff>(), 60);
         }
     }
 }

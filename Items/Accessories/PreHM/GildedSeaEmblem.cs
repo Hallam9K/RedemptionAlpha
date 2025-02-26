@@ -11,18 +11,6 @@ namespace Redemption.Items.Accessories.PreHM
     public class GildedSeaEmblem : ModItem
     {
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.WaterS, ElementID.IceS, ElementID.FireS);
-        public override void SetStaticDefaults()
-        {
-            /*DisplayName.SetDefault("Gilded Sea Emblem");
-            Tooltip.SetDefault(ElementID.WaterS + " elemental weapons has a chance to soak enemies" +
-                "\nSoaked enemies are more sluggish and prone to " + ElementID.IceS + " damage" +
-                "\n15% increased " + ElementID.WaterS + " elemental damage and resistance" +
-                "\n10% decreased " + ElementID.FireS + " elemental damage and resistance");*/
-            ElementID.ItemWater[Type] = true;
-            ElementID.ItemFire[Type] = true;
-            Item.ResearchUnlockCount = 1;
-        }
-
         public override void SetDefaults()
         {
             Item.width = 42;

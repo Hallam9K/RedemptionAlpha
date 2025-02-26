@@ -25,6 +25,7 @@ namespace Redemption.NPCs.Bosses.Neb
             // DisplayName.SetDefault("Ray of Guidance");
             ElementID.ProjArcane[Type] = true;
             ElementID.ProjCelestial[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetSafeDefaults()

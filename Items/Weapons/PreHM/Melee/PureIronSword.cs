@@ -1,7 +1,9 @@
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -34,7 +36,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.useAnimation = 12;
             Item.useTime = 12;
             Item.UseSound = SoundID.Item1;
-            Item.autoReuse = false;
+            Item.autoReuse = true;
 
             // Weapon Properties
             Item.damage = 40;
@@ -46,20 +48,25 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<PureIronSword_Proj>();
+            Item.shoot = ProjectileType<PureIronSword_Proj>();
+
+            Item.Redemption().TechnicallySlash = true;
+            Item.Redemption().CanSwordClash = true;
+        }
+        public override bool MeleePrefix() => true;
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            float adjustedItemScale2 = player.GetAdjustedItemScale(Item);
+            Projectile.NewProjectile(source, position, velocity, ProjectileType<PureIronSword_Proj>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
+            return false;
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<PureIronAlloy>(), 10)
+                .AddIngredient(ItemType<PureIronAlloy>(), 10)
                 .AddTile(TileID.Anvils)
                 .Register();
-        }
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
-        {
-            TooltipLine slashLine = new(Mod, "SharpBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
-            tooltips.Add(slashLine);
         }
     }
 }

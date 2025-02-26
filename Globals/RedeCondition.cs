@@ -1,13 +1,18 @@
-using Redemption.NPCs.Minibosses.SkullDigger;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.NPCs.Minibosses.FowlEmperor;
-using Terraria;
 using Redemption.Base;
+using Redemption.BaseExtension;
+using Redemption.Biomes;
+using Redemption.Buffs;
 using Redemption.Items.Armor.Vanity.TBot;
+using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.NPCs.Lab;
+using Redemption.NPCs.Minibosses.FowlEmperor;
+using Redemption.NPCs.Minibosses.SkullDigger;
 using Redemption.WorldGeneration;
+using SubworldLibrary;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.Globals
 {
@@ -35,7 +40,7 @@ namespace Redemption.Globals
         public static Condition DownedSlayer = new("Mods.Redemption.Conditions.DownedSlayer", () => RedeBossDowned.downedSlayer);
         public static Condition BroughtCat = new("Mods.Redemption.Conditions.BroughtCat", () => Terraria.NPC.boughtCat);
         public static Condition IsTBotHead = new("Mods.Redemption.Conditions.IsTBotHead", () => Main.LocalPlayer.IsTBotHead());
-        public static Condition IsJanitor = new("Mods.Redemption.Conditions.IsJanitor", () => BasePlayer.HasChestplate(Main.LocalPlayer, ModContent.ItemType<JanitorOutfit>(), true) && BasePlayer.HasLeggings(Main.LocalPlayer, ModContent.ItemType<JanitorPants>(), true));
+        public static Condition IsJanitor = new("Mods.Redemption.Conditions.IsJanitor", () => BasePlayer.HasChestplate(Main.LocalPlayer, ItemType<JanitorOutfit>(), true) && BasePlayer.HasLeggings(Main.LocalPlayer, ItemType<JanitorPants>(), true));
         public static Condition KeycardGiven = new("Mods.Redemption.Conditions.KeycardGiven", () => RedeWorld.keycardGiven);
         public static Condition NukeDropped = new("Mods.Redemption.Conditions.NukeDropped", () => RedeBossDowned.nukeDropped);
         public static Condition NukeDroppedOrDownedMechBossAll = new("Mods.Redemption.Conditions.NukeDroppedOrDownedMechBossAll", () => RedeBossDowned.nukeDropped || Condition.DownedMechBossAny.IsMet());
@@ -50,43 +55,45 @@ namespace Redemption.Globals
         public static Condition DeadRingerGiven = new("Mods.Redemption.Conditions.DeadRingerGiven", () => RedeWorld.deadRingerGiven);
         public static Condition ForestNymphTrust = new("Mods.Redemption.Conditions.ForestNymphTrust", () => RedeQuest.forestNymphVar > 0);
         public static Condition OldTophat = new("Mods.Redemption.Conditions.OldTophat", () => Main.LocalPlayer.HasItemInAnyInventory(ItemType<CruxCardTied>()) || RedeGen.HangingTiedPoint.X == 0);
+        public static Condition ElementBookObtained = new("Mods.Redemption.Conditions.ElementBookObtained", () => RedeQuest.adviceSeen[(int)RedeQuest.Advice.Elements]);
+        public static Condition ElementBookQuest = new("Mods.Redemption.Conditions.ElementBookQuest", () => RedeQuest.bonusQuestComplete);
     }
     public class DecapitationCondition : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info)
-		{
-			if (!info.IsInSimulation && (NPCLists.SkeletonHumanoid.Contains(info.npc.type) || NPCLists.Humanoid.Contains(info.npc.type)))
-			{
-				return info.npc.Redemption().decapitated;
-			}
-			return false;
-		}
-		public bool CanShowItemDropInUI() => false;
-		public string GetConditionDescription() => "Drops when decapitated";
-	}
-	public class LostSoulCondition : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info) => false;
-		public bool CanShowItemDropInUI() => true;
-		public string GetConditionDescription() => "Appears as an NPC";
-	}
-	public class OnFireCondition : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info) => false;
-		public bool CanShowItemDropInUI() => true;
-		public string GetConditionDescription() => "Dropped while on fire";
-	}
-	public class TeddyCondition : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info)
-		{
-			if (!info.IsInSimulation && info.npc.type == ModContent.NPCType<SkullDigger>() && !(info.npc.ModNPC as SkullDigger).KeeperSpawn)
-				return true;
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            if (!info.IsInSimulation && (NPCLists.SkeletonHumanoid.Contains(info.npc.type) || NPCLists.Humanoid.Contains(info.npc.type)))
+            {
+                return info.npc.Redemption().decapitated;
+            }
+            return false;
+        }
+        public bool CanShowItemDropInUI() => false;
+        public string GetConditionDescription() => "Drops when decapitated";
+    }
+    public class LostSoulCondition : IItemDropRuleCondition
+    {
+        public bool CanDrop(DropAttemptInfo info) => false;
+        public bool CanShowItemDropInUI() => true;
+        public string GetConditionDescription() => "Appears as an NPC";
+    }
+    public class OnFireCondition : IItemDropRuleCondition
+    {
+        public bool CanDrop(DropAttemptInfo info) => false;
+        public bool CanShowItemDropInUI() => true;
+        public string GetConditionDescription() => "Dropped while on fire";
+    }
+    public class TeddyCondition : IItemDropRuleCondition
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            if (!info.IsInSimulation && info.npc.type == NPCType<SkullDigger>() && !(info.npc.ModNPC as SkullDigger).KeeperSpawn)
+                return true;
 
-			return false;
-		}
-		public bool CanShowItemDropInUI() => true;
-		public string GetConditionDescription() => "Dropped when spawned naturally in the caverns";
+            return false;
+        }
+        public bool CanShowItemDropInUI() => true;
+        public string GetConditionDescription() => "Dropped when spawned naturally in the caverns";
     }
     public class RoosterPaintingCondition : IItemDropRuleCondition
     {
@@ -101,27 +108,27 @@ namespace Redemption.Globals
         public string GetConditionDescription() => "Dropped while the boss is empowered";
     }
     public class YoyosTidalWake : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info)
-		{
-			if (!info.IsInSimulation && !info.npc.SpawnedFromStatue && info.player.ZoneBeach && Terraria.NPC.downedMechBossAny)
-				return true;
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            if (!info.IsInSimulation && !info.npc.SpawnedFromStatue && info.player.ZoneBeach && Terraria.NPC.downedMechBossAny && SubworldSystem.Current == null)
+                return true;
 
-			return false;
-		}
-		public bool CanShowItemDropInUI() => true;
-		public string GetConditionDescription() => "Dropped from enemies at the beach after any mech boss is defeated";
-	}
-	public class EggCrackerCondition : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info)
-		{
-			if (!info.IsInSimulation && Terraria.NPC.AnyNPCs(ModContent.NPCType<FowlEmperor>()))
-				return true;
+            return false;
+        }
+        public bool CanShowItemDropInUI() => true;
+        public string GetConditionDescription() => "Dropped from enemies at the beach after any mech boss is defeated";
+    }
+    public class EggCrackerCondition : IItemDropRuleCondition
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            if (!info.IsInSimulation && Terraria.NPC.AnyNPCs(NPCType<FowlEmperor>()))
+                return true;
 
-			return false;
-		}
-		public bool CanShowItemDropInUI() => true;
-		public string GetConditionDescription() => "Dropped while the Fowl Emperor is alive";
-	}
+            return false;
+        }
+        public bool CanShowItemDropInUI() => true;
+        public string GetConditionDescription() => "Dropped while the Fowl Emperor is alive";
+    }
 }

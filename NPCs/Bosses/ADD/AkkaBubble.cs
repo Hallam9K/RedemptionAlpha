@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,6 +19,7 @@ namespace Redemption.NPCs.Bosses.ADD
             // DisplayName.SetDefault("Bubble");
             ElementID.ProjWater[Type] = true;
             ElementID.ProjThunder[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

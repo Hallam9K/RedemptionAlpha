@@ -29,6 +29,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjCelestial[Type] = true;
+            ElementID.ProjArcane[Type] = true;
+            ProjectileLists.ProjSpear[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -17,6 +17,7 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             // DisplayName.SetDefault("Giant Star");
             ElementID.ProjCelestial[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

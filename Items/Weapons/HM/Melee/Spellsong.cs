@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
@@ -23,6 +22,7 @@ namespace Redemption.Items.Weapons.HM.Melee
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
         }
+
         public override void SetDefaults()
         {
             // Common Properties
@@ -48,15 +48,19 @@ namespace Redemption.Items.Weapons.HM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<Spellsong_Proj>();
+            Item.shoot = ProjectileType<Spellsong_Proj>();
+
+            Item.Redemption().TechnicallySlash = true;
+            Item.Redemption().CanSwordClash = true;
+            
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool MeleePrefix() => true;
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             float adjustedItemScale2 = player.GetAdjustedItemScale(Item);
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Spellsong_Proj>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
+            Projectile.NewProjectile(source, position, velocity, ProjectileType<Spellsong_Proj>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
             return false;
         }
 
@@ -88,9 +92,6 @@ namespace Redemption.Items.Weapons.HM.Melee
                 };
                 tooltips.Add(line);
             }
-
-            TooltipLine slashLine = new(Mod, "SharpBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
-            tooltips.Add(slashLine);
         }
     }
 }

@@ -1,6 +1,7 @@
-using Microsoft.Xna.Framework;
 using Redemption.Dusts;
+using Redemption.Items.Quest;
 using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.Textures.Elements;
 using Redemption.Tiles.Natural;
 using Redemption.WorldGeneration;
 using SubworldLibrary;
@@ -13,6 +14,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.UI;
 using static Redemption.Globals.RedeNet;
 
 namespace Redemption.Globals
@@ -34,6 +36,27 @@ namespace Redemption.Globals
         {
             UGPortal, ForestNymph, UkkoEye, EaglecrestGolem, Androids, StarSerpent, EymenNoza, FoolLeft, DemonFort,
             Elements, Insects, Invisibility, GuardPoints, DirtyWound, Fool, Chalice, Spirits, Undead, Slimes, Erhan
+        }
+
+        public static bool[] bonusDiscovered = new bool[20];
+        public static bool bonusQuestComplete;
+        public enum Bonuses : byte
+        {
+            Slash, Axe, Spear, Hammer, Clash, Explosive, Arcane, Fire, Water, Ice, Earth, Wind, Thunder, Holy, Shadow, Nature, Poison, Blood, Psychic, Celestial, Count
+        }
+        public static void SetBonusDiscovered(Bonuses bonus, bool sync = true)
+        {
+            if (bonusDiscovered[(int)bonus])
+                return;
+
+            if (adviceSeen[(int)Advice.Elements])
+            {
+                SoundEngine.PlaySound(SoundID.Item4 with { Pitch = .5f });
+                InGameNotificationsTracker.AddNotification(new BookOfBonusesInGameNotification(ElementID.BonusPlainNameFromID((int)bonus), ElementID.BonusItemFromID((int)bonus)));
+            }
+            bonusDiscovered[(int)bonus] = true;
+            if (sync)
+                SyncData();
         }
 
         public override void PostUpdateWorld()
@@ -94,11 +117,11 @@ namespace Redemption.Globals
                         Main.NewText(Language.GetTextValue(status), new Color(50, 125, 255));
 
                     Vector2 anglonPortalPos = new(((RedeGen.newbCaveVector.X + 35) * 16) - 8, ((RedeGen.newbCaveVector.Y + 6) * 16) - 4);
-                    int wayfarer = WorldGen.crimson ? ModContent.NPCType<Daerel>() : ModContent.NPCType<Zephos>();
+                    int wayfarer = WorldGen.crimson ? NPCType<Daerel>() : NPCType<Zephos>();
                     SoundEngine.PlaySound(SoundID.DD2_EtherianPortalSpawnEnemy, anglonPortalPos);
                     for (int i = 0; i < 30; i++)
                     {
-                        int dust = Dust.NewDust(anglonPortalPos - new Vector2(12, 24), 24, 48, ModContent.DustType<GlowDust>(), 1, 0, 0, default, 0.5f);
+                        int dust = Dust.NewDust(anglonPortalPos - new Vector2(12, 24), 24, 48, DustType<GlowDust>(), 1, 0, 0, default, 0.5f);
                         Main.dust[dust].noGravity = true;
                         Color dustColor = new(Color.DarkOliveGreen.R, Color.DarkOliveGreen.G, Color.DarkOliveGreen.B) { A = 0 };
                         Main.dust[dust].color = dustColor;
@@ -123,6 +146,8 @@ namespace Redemption.Globals
                 adviceUnlocked[k] = false;
             for (int k = 0; k < adviceSeen.Length; k++)
                 adviceSeen[k] = false;
+            for (int k = 0; k < bonusDiscovered.Length; k++)
+                bonusDiscovered[k] = false;
         }
         public override void SaveWorldData(TagCompound tag)
         {
@@ -143,12 +168,20 @@ namespace Redemption.Globals
                 if (adviceSeen[k])
                     lists.Add("AdviceS" + k);
             }
+            for (int k = 0; k < bonusDiscovered.Length; k++)
+            {
+                if (bonusDiscovered[k])
+                    lists.Add("bonusD" + k);
+            }
+
+            if (bonusQuestComplete)
+                lists.Add("bonusQuestComplete");
             tag["lists"] = lists;
 
             for (int k = 0; k < wayfarerVars.Length; k++)
                 tag["WV" + k] = wayfarerVars[k];
             tag["FNV"] = forestNymphVar;
-            tag["CV"] = calaviaVar; 
+            tag["CV"] = calaviaVar;
             tag["slayerRep"] = slayerRep;
         }
 
@@ -157,11 +190,15 @@ namespace Redemption.Globals
             var lists = tag.GetList<string>("lists");
             for (int k = 0; k < voltVars.Length; k++)
                 voltVars[k] = lists.Contains("VV" + k);
+            bonusQuestComplete = lists.Contains("bonusQuestComplete");
 
             for (int k = 0; k < adviceUnlocked.Length; k++)
                 adviceUnlocked[k] = lists.Contains("AdviceU" + k);
             for (int k = 0; k < adviceSeen.Length; k++)
                 adviceSeen[k] = lists.Contains("AdviceS" + k);
+            for (int k = 0; k < bonusDiscovered.Length; k++)
+                bonusDiscovered[k] = lists.Contains("bonusD" + k);
+
 
             for (int k = 0; k < wayfarerVars.Length; k++)
                 wayfarerVars[k] = tag.GetInt("WV" + k);
@@ -180,7 +217,7 @@ namespace Redemption.Globals
             {
                 ModPacket packet = Redemption.Instance.GetPacket();
                 packet.Write((byte)ModMessageType.SyncRedeQuestFromClient);
-                ModContent.GetInstance<RedeQuest>().NetSend(packet);
+                GetInstance<RedeQuest>().NetSend(packet);
                 packet.Send();
             }
             else if (Main.netMode == NetmodeID.Server)
@@ -194,7 +231,7 @@ namespace Redemption.Globals
             if (Main.netMode != NetmodeID.Server)
                 return;
 
-            ModContent.GetInstance<RedeQuest>().NetReceive(reader);
+            GetInstance<RedeQuest>().NetReceive(reader);
             NetMessage.SendData(MessageID.WorldData, ignoreClient: sender);
         }
 
@@ -204,6 +241,13 @@ namespace Redemption.Globals
             for (int k = 0; k < voltVars.Length; k++)
                 flags[k] = voltVars[k];
             writer.Write(flags);
+
+            var flags2 = new BitsByte();
+            flags2[5] = bonusQuestComplete;
+            writer.Write(flags2);
+
+            //Utils.SendBitArray(new BitArray(adviceUnlocked), writer);
+            //Utils.SendBitArray(new BitArray(adviceSeen), writer);
 
             #region Advice stuff (Evil Temporary Solution)
             var adviceUnlockedflags1 = new BitsByte();
@@ -245,6 +289,33 @@ namespace Redemption.Globals
             adviceSeenflags3[2] = adviceSeen[18];
             adviceSeenflags3[3] = adviceSeen[19];
             writer.Write(adviceSeenflags3);
+
+            var bonusDiscoveredflags1 = new BitsByte();
+            bonusDiscoveredflags1[0] = bonusDiscovered[0];
+            bonusDiscoveredflags1[1] = bonusDiscovered[1];
+            bonusDiscoveredflags1[2] = bonusDiscovered[2];
+            bonusDiscoveredflags1[3] = bonusDiscovered[3];
+            bonusDiscoveredflags1[4] = bonusDiscovered[4];
+            bonusDiscoveredflags1[5] = bonusDiscovered[5];
+            bonusDiscoveredflags1[6] = bonusDiscovered[6];
+            bonusDiscoveredflags1[7] = bonusDiscovered[7];
+            writer.Write(bonusDiscoveredflags1);
+            var bonusDiscoveredflags2 = new BitsByte();
+            bonusDiscoveredflags2[0] = bonusDiscovered[8];
+            bonusDiscoveredflags2[1] = bonusDiscovered[9];
+            bonusDiscoveredflags2[2] = bonusDiscovered[10];
+            bonusDiscoveredflags2[3] = bonusDiscovered[11];
+            bonusDiscoveredflags2[4] = bonusDiscovered[12];
+            bonusDiscoveredflags2[5] = bonusDiscovered[13];
+            bonusDiscoveredflags2[6] = bonusDiscovered[14];
+            bonusDiscoveredflags2[7] = bonusDiscovered[15];
+            writer.Write(bonusDiscoveredflags2);
+            var bonusDiscoveredflags3 = new BitsByte();
+            bonusDiscoveredflags2[0] = bonusDiscovered[16];
+            bonusDiscoveredflags2[1] = bonusDiscovered[17];
+            bonusDiscoveredflags2[2] = bonusDiscovered[18];
+            bonusDiscoveredflags2[3] = bonusDiscovered[19];
+            writer.Write(bonusDiscoveredflags3);
             #endregion
 
             for (int k = 0; k < wayfarerVars.Length; k++)
@@ -259,6 +330,14 @@ namespace Redemption.Globals
             BitsByte flags = reader.ReadByte();
             for (int k = 0; k < voltVars.Length; k++)
                 voltVars[k] = flags[k];
+
+            BitsByte flags2 = reader.ReadByte();
+            bonusQuestComplete = flags2[5];
+
+            //var adviceUnlockedData = Utils.ReceiveBitArray(adviceUnlocked.Length, reader);
+            //adviceUnlockedData.CopyTo(adviceUnlocked, 0);
+            //var adviceSeenData = Utils.ReceiveBitArray(adviceSeen.Length, reader);
+            //adviceSeenData.CopyTo(adviceSeen, 0);
 
             #region Advice stuff (Evil Temporary Solution)
             BitsByte adviceUnlockedflags1 = reader.ReadByte();
@@ -296,6 +375,30 @@ namespace Redemption.Globals
             adviceSeen[17] = adviceSeenflags3[1];
             adviceSeen[18] = adviceSeenflags3[2];
             adviceSeen[19] = adviceSeenflags3[3];
+
+            BitsByte bonusDiscoveredflags1 = reader.ReadByte();
+            bonusDiscovered[0] = bonusDiscoveredflags1[0];
+            bonusDiscovered[1] = bonusDiscoveredflags1[1];
+            bonusDiscovered[2] = bonusDiscoveredflags1[2];
+            bonusDiscovered[3] = bonusDiscoveredflags1[3];
+            bonusDiscovered[4] = bonusDiscoveredflags1[4];
+            bonusDiscovered[5] = bonusDiscoveredflags1[5];
+            bonusDiscovered[6] = bonusDiscoveredflags1[6];
+            bonusDiscovered[7] = bonusDiscoveredflags1[7];
+            BitsByte bonusDiscoveredflags2 = reader.ReadByte();
+            bonusDiscovered[8] = bonusDiscoveredflags2[0];
+            bonusDiscovered[9] = bonusDiscoveredflags2[1];
+            bonusDiscovered[10] = bonusDiscoveredflags2[2];
+            bonusDiscovered[11] = bonusDiscoveredflags2[3];
+            bonusDiscovered[12] = bonusDiscoveredflags2[4];
+            bonusDiscovered[13] = bonusDiscoveredflags2[5];
+            bonusDiscovered[14] = bonusDiscoveredflags2[6];
+            bonusDiscovered[15] = bonusDiscoveredflags2[7];
+            BitsByte bonusDiscoveredflags3 = reader.ReadByte();
+            bonusDiscovered[16] = bonusDiscoveredflags3[0];
+            bonusDiscovered[17] = bonusDiscoveredflags3[1];
+            bonusDiscovered[18] = bonusDiscoveredflags3[2];
+            bonusDiscovered[19] = bonusDiscoveredflags3[3];
             #endregion
 
             for (int k = 0; k < wayfarerVars.Length; k++)

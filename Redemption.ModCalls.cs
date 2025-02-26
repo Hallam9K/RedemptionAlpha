@@ -1,6 +1,7 @@
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Globals.World;
+using Redemption.Textures.Elements;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -222,7 +223,21 @@ namespace Redemption
                             throw new Exception($"Expected an argument of type float when setting multiplier value, but got type {args[3].GetType().Name} instead.");
 
                         if (npc2.TryGetGlobalNPC<ElementalNPC>(out ElementalNPC elementNPC))
+                        {
                             elementNPC.OverrideMultiplier[elementID7] *= multiplier;
+                            if (args.Length > 4)
+                            {
+                                if (args[4] is bool noSetMultipliers)
+                                {
+                                    if (!noSetMultipliers)
+                                        ElementalNPC.SetElementalMultipliers(npc2, ref npc2.GetGlobalNPC<ElementalNPC>().elementDmg);
+                                }
+                                else
+                                    throw new Exception($"Expected an argument of type bool when disabling setting multipliers, but got type {args[4].GetType().Name} instead.");
+                            }
+                            else
+                                ElementalNPC.SetElementalMultipliers(npc2, ref npc2.GetGlobalNPC<ElementalNPC>().elementDmg);
+                        }
                         break;
                     case "uncapBossElementMultiplier":
                         if (args[1] is not NPC npc4)
@@ -311,6 +326,98 @@ namespace Redemption
                                 break;
                         }
                         break;
+                    case "decapitation":
+                        if (args[1] is not NPC target)
+                            throw new Exception($"Expected an argument of type NPC when setting target, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not int damageDone)
+                            throw new Exception($"Expected an argument of type int when setting damageDone ref, but got type {args[2].GetType().Name} instead.");
+                        if (args[3] is not bool crit)
+                            throw new Exception($"Expected an argument of type bool when setting crit ref, but got type {args[3].GetType().Name} instead.");
+
+                        int c = 200;
+                        if (args.Length > 4)
+                        {
+                            if (args[4] is int chance)
+                            {
+                                c = chance;
+                            }
+                            else
+                                throw new Exception($"Expected an argument of type int when setting chance, but got type {args[4].GetType().Name} instead.");
+                        }
+
+                        return RedeProjectile.Decapitation(target, ref damageDone, ref crit, c);
+                    case "setSlashBonus":
+                        if (args[1] is not Item slashItem)
+                            throw new Exception($"Expected an argument of type Item when setting item to get the bonus, but got type {args[1].GetType().Name} instead.");
+                        if (args.Length > 2)
+                        {
+                            if (args[2] is bool isSlash)
+                                return slashItem.Redemption().TechnicallySlash = isSlash;
+                            else
+                                throw new Exception($"Expected an argument of type bool when setting slash bonus, but got type {args[2].GetType().Name} instead.");
+                        }
+
+                        return slashItem.Redemption().TechnicallySlash = true;
+                    case "setAxeBonus":
+                        if (args[1] is not Item axeItem)
+                            throw new Exception($"Expected an argument of type Item when setting item to get the bonus, but got type {args[1].GetType().Name} instead.");
+                        if (args.Length > 2)
+                        {
+                            if (args[2] is bool isAxe)
+                                return axeItem.Redemption().TechnicallyAxe = isAxe;
+                            else
+                                throw new Exception($"Expected an argument of type bool when setting axe bonus, but got type {args[2].GetType().Name} instead.");
+                        }
+
+                        return axeItem.Redemption().TechnicallyAxe = true;
+                    case "setHammerBonus":
+                        if (args[1] is not Item hammerItem)
+                            throw new Exception($"Expected an argument of type Item when setting item to get the bonus, but got type {args[1].GetType().Name} instead.");
+                        if (args.Length > 2)
+                        {
+                            if (args[2] is bool isHammer)
+                                return hammerItem.Redemption().TechnicallyHammer = isHammer;
+                            else
+                                throw new Exception($"Expected an argument of type bool when setting hammer bonus, but got type {args[2].GetType().Name} instead.");
+                        }
+
+                        return hammerItem.Redemption().TechnicallyHammer = true;
+                    case "setHammerProj":
+                        if (args[1] is not Projectile hammerProj)
+                            throw new Exception($"Expected an argument of type Projectile when setting projectile to be hammer, but got type {args[1].GetType().Name} instead.");
+                        if (args.Length > 2)
+                        {
+                            if (args[2] is bool isHammer)
+                                return hammerProj.Redemption().IsHammer = isHammer;
+                            else
+                                throw new Exception($"Expected an argument of type bool when setting if projectile is hammer, but got type {args[2].GetType().Name} instead.");
+                        }
+
+                        return hammerProj.Redemption().IsHammer = true;
+                    case "setAxeProj":
+                        if (args[1] is not Projectile axeProj)
+                            throw new Exception($"Expected an argument of type Projectile when setting projectile to be axe, but got type {args[1].GetType().Name} instead.");
+                        if (args.Length > 2)
+                        {
+                            if (args[2] is bool isAxe)
+                                return axeProj.Redemption().IsAxe = isAxe;
+                            else
+                                throw new Exception($"Expected an argument of type bool when setting if projectile is axe, but got type {args[2].GetType().Name} instead.");
+                        }
+
+                        return axeProj.Redemption().IsAxe = true;
+                    case "setSpearProj":
+                        if (args[1] is not Projectile spearProj)
+                            throw new Exception($"Expected an argument of type Projectile when setting projectile to be spear, but got type {args[1].GetType().Name} instead.");
+                        if (args.Length > 2)
+                        {
+                            if (args[2] is bool isSpear)
+                                return spearProj.Redemption().IsSpear = isSpear;
+                            else
+                                throw new Exception($"Expected an argument of type bool when setting if projectile is spear, but got type {args[2].GetType().Name} instead.");
+                        }
+
+                        return spearProj.Redemption().IsSpear = true;
                     case "RaveyardActive":
                         return RedeWorld.SkeletonInvasion;
                 }

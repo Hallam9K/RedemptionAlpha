@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
@@ -7,6 +6,7 @@ using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -21,6 +21,7 @@ namespace Redemption.Projectiles.Magic
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjHoly[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -59,7 +60,8 @@ namespace Redemption.Projectiles.Magic
                     SoundEngine.PlaySound(SoundID.Item115 with { Volume = .5f }, Projectile.position);
                     for (int i = 0; i < Main.rand.Next(2, 4); i++)
                     {
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<LightOrbRay_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, target.whoAmI, Projectile.whoAmI);
+                        MakeParticle();
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileType<LightOrbRay_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, target.whoAmI, Projectile.whoAmI);
                     }
                     Projectile.localAI[0] = 0;
                     BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, Projectile, crit: RedeHelper.HeldItemCrit(Projectile));
@@ -67,11 +69,19 @@ namespace Redemption.Projectiles.Magic
             }
             squish += Projectile.ai[0];
         }
+        public void MakeParticle()
+        {
+            Vector2 positionInWorld = Main.rand.NextVector2FromRectangle(Projectile.Hitbox);
+            ParticleOrchestraSettings particleOrchestraSettings = default;
+            particleOrchestraSettings.PositionInWorld = positionInWorld;
+            ParticleOrchestraSettings settings = particleOrchestraSettings;
+            ParticleOrchestrator.RequestParticleSpawn(false, ParticleOrchestraType.PaladinsHammer, settings, Projectile.owner);
+        }
         public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 8; i++)
             {
-                int dust = Dust.NewDust(Projectile.Center + Projectile.velocity - Vector2.One, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 1.3f);
+                int dust = Dust.NewDust(Projectile.Center + Projectile.velocity - Vector2.One, 1, 1, DustType<GlowDust>(), 0, 0, 0, default, 1.3f);
                 Main.dust[dust].noGravity = true;
                 Main.dust[dust].velocity *= 0;
                 Color dustColor = new(255, 255, 255) { A = 0 };
@@ -81,18 +91,18 @@ namespace Redemption.Projectiles.Magic
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(3))
-                target.AddBuff(ModContent.BuffType<HolyFireDebuff>(), 60);
+                target.AddBuff(BuffType<HolyFireDebuff>(), 60);
         }
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D glow = ModContent.Request<Texture2D>("Terraria/Images/Projectile_927").Value;
+            Texture2D glow = Request<Texture2D>("Terraria/Images/Projectile_927").Value;
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             Vector2 origin2 = new(glow.Width / 2, glow.Height / 2);
             Vector2 scale = new(Projectile.scale + squish, Projectile.scale - squish);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i++)
             {
@@ -104,7 +114,7 @@ namespace Redemption.Projectiles.Magic
             Main.EntitySpriteDraw(glow, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.LightYellow), Projectile.rotation + MathHelper.PiOver2, origin2, scale, 0, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }
@@ -145,7 +155,7 @@ namespace Redemption.Projectiles.Magic
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(3))
-                target.AddBuff(ModContent.BuffType<HolyFireDebuff>(), 180);
+                target.AddBuff(BuffType<HolyFireDebuff>(), 180);
         }
         public override bool PreDraw(ref Color lightColor)
         {
@@ -154,12 +164,12 @@ namespace Redemption.Projectiles.Magic
             if (pos != default)
             {
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.BeginAdditive();
 
                 Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.White * Projectile.Opacity, (pos - Projectile.Center).ToRotation() + MathHelper.PiOver2 + randRot, new Vector2(10, 100), new Vector2(Projectile.width / 20f, Projectile.Distance(pos) / Projectile.localAI[0]), SpriteEffects.None, 0f);
 
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.BeginDefault();
             }
             return false;
         }

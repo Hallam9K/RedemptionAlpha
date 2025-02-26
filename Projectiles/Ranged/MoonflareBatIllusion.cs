@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts;
 using Redemption.Globals;
@@ -22,6 +21,7 @@ namespace Redemption.Projectiles.Ranged
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjFire[Type] = true;
             ElementID.ProjNature[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -68,7 +68,7 @@ namespace Redemption.Projectiles.Ranged
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
@@ -78,7 +78,7 @@ namespace Redemption.Projectiles.Ranged
             }
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.White, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
@@ -88,7 +88,7 @@ namespace Redemption.Projectiles.Ranged
         {
             SoundEngine.PlaySound(SoundID.NPCDeath4, Projectile.position);
             for (int i = 0; i < 8; i++)
-                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<MoonflareDust>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 2);
+                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustType<MoonflareDust>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 2);
         }
     }
 }

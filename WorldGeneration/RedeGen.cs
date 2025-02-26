@@ -151,7 +151,7 @@ namespace Redemption.WorldGeneration
                 }
             }
             #region The Funnies
-            if (RedeConfigClient.Instance.FunniSpiders)
+            if (RedeConfigServer.Instance.FunniSpiders)
             {
                 for (int i = 0; i < Main.maxTilesX; i++)
                 {
@@ -163,7 +163,7 @@ namespace Redemption.WorldGeneration
                     }
                 }
             }
-            if (RedeConfigClient.Instance.FunniWasteland)
+            if (RedeConfigServer.Instance.FunniWasteland)
             {
                 bool placed = false;
                 int attempts = 0;
@@ -222,7 +222,7 @@ namespace Redemption.WorldGeneration
                         NetMessage.SendData(MessageID.WorldData);
                 }
             }
-            if (RedeConfigClient.Instance.FunniAllWasteland)
+            if (RedeConfigServer.Instance.FunniAllWasteland)
             {
                 for (int i = 0; i < Main.maxTilesX; i++)
                 {
@@ -277,7 +277,7 @@ namespace Redemption.WorldGeneration
                         NetMessage.SendData(MessageID.WorldData);
                 }
             }
-            else if (RedeConfigClient.Instance.FunniAncient)
+            else if (RedeConfigServer.Instance.FunniAncient)
             {
                 for (int i = 0; i < Main.maxTilesX; i++)
                 {
@@ -360,7 +360,7 @@ namespace Redemption.WorldGeneration
                 Main.npc[num].direction = 1;
                 Main.npc[num].homeless = true;
             }
-            if (RedeConfigClient.Instance.FunniJanitor)
+            if (RedeConfigServer.Instance.FunniJanitor)
             {
                 for (int i = 0; i < Main.maxTilesX; i++)
                 {
@@ -685,14 +685,14 @@ namespace Redemption.WorldGeneration
                 {
                     #region Ancient Decal
                     progress.Message = "Carving gathic caverns";
-                    int multi = RedeConfigClient.Instance.FunniAncient ? 4 : 1;
+                    int multi = RedeConfigServer.Instance.FunniAncient ? 4 : 1;
                     for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * (4E-06 * multi)); k++)
                     {
                         bool placed = false;
                         int attempts = 0;
                         while (!placed && attempts++ < 10000)
                         {
-                            bool funni = RedeConfigClient.Instance.FunniAncient;
+                            bool funni = RedeConfigServer.Instance.FunniAncient;
                             int tilesX = WorldGen.genRand.Next(50, Main.maxTilesX - 250);
                             int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * (funni ? .1f : .4f)), (int)(Main.maxTilesY * .8f));
                             if (!WorldGen.InWorld(tilesX, tilesY))
@@ -785,14 +785,14 @@ namespace Redemption.WorldGeneration
                 {
                     #region Frozen Ancient Decal
                     progress.Message = "Carving gathic caverns 2: Frozen Edition";
-                    int multi = RedeConfigClient.Instance.FunniAncient ? 2 : 1;
+                    int multi = RedeConfigServer.Instance.FunniAncient ? 2 : 1;
                     for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * (16E-07 * multi)); k++)
                     {
                         bool placed = false;
                         int attempts = 0;
                         while (!placed && attempts++ < 10000)
                         {
-                            bool funni = RedeConfigClient.Instance.FunniAncient;
+                            bool funni = RedeConfigServer.Instance.FunniAncient;
                             int tilesX = WorldGen.genRand.Next(60, Main.maxTilesX - 250);
                             int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * (funni ? .1f : .3f)), (int)(Main.maxTilesY * .8f));
                             if (!WorldGen.InWorld(tilesX, tilesY))
@@ -1712,7 +1712,7 @@ namespace Redemption.WorldGeneration
                     GenVars.structures.AddProtectedStructure(new Rectangle(originPoint.X, originPoint.Y, dims.X, dims.Y));
                     #endregion
                 }));
-                if (!ModLoader.TryGetMod("InfernumMode", out Mod infernum))
+                if (!ModLoader.TryGetMod("InfernumMode", out Mod infernum) && !ModLoader.TryGetMod("Spooky", out Mod spooky))
                 {
                     tasks.Add(new PassLegacy("Blazing Bastion", delegate (GenerationProgress progress, GameConfiguration configuration)
                     {

@@ -1,8 +1,9 @@
-using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Projectiles.Melee;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -17,7 +18,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             /* Tooltip.SetDefault("Hitting armed enemies with the blade inflicts Disarmed and Broken Armor\n" +
                 "Disarmed heavily decreases contact damage and their weapon damage\n" +
                 "Blocks weak physical projectiles"); */
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<DarkSteelBow>();
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<DarkSteelBow>();
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             Item.ResearchUnlockCount = 1;
         }
@@ -47,11 +48,17 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<MythrilsBaneSlash_Proj>();
+            Item.shoot = ProjectileType<MythrilsBaneSlash_Proj>();
+
+            Item.Redemption().TechnicallySlash = true;
+            Item.Redemption().CanSwordClash = true;
         }
-        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        public override bool MeleePrefix() => true;
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            type = ModContent.ProjectileType<MythrilsBane_Proj>();
+            float adjustedItemScale2 = player.GetAdjustedItemScale(Item);
+            Projectile.NewProjectile(source, position, velocity, ProjectileType<MythrilsBane_Proj>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
+            return false;
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
@@ -71,9 +78,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 };
                 tooltips.Add(line);
             }
-
-            TooltipLine slashLine = new(Mod, "SharpBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
-            tooltips.Add(slashLine);
         }
     }
 }

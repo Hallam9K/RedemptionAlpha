@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
@@ -18,17 +17,14 @@ namespace Redemption.NPCs.Bosses.ADD
         {
             if (Main.dedServ)
                 return;
-            warning = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/LightningWarning");
-        }
-        public override void Unload()
-        {
-            warning = null;
+            warning = Request<Texture2D>("Redemption/NPCs/Bosses/ADD/LightningWarning");
         }
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Ukko's Lightning");
             Main.projFrames[Projectile.type] = 24;
             ElementID.ProjThunder[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -80,7 +76,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 player.GetModPlayer<ScreenPlayer>().Rumble(10, 10);
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(CustomSounds.Thunderstrike, Projectile.position);
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X, Projectile.Bottom.Y), Projectile.velocity, ModContent.ProjectileType<UkkoStrikeZap>(), (int)(Projectile.damage * 1.2f), Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X, Projectile.Bottom.Y), Projectile.velocity, ProjectileType<UkkoStrikeZap>(), (int)(Projectile.damage * 1.2f), Projectile.knockBack, Projectile.owner);
             }
         }
         private float drawTimer;

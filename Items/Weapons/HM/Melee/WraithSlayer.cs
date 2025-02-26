@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Terraria;
@@ -45,22 +45,25 @@ namespace Redemption.Items.Weapons.HM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<WraithSlayer_Proj>();
+            Item.shoot = ProjectileType<WraithSlayer_Proj>();
+
+            Item.Redemption().TechnicallySlash = true;
+            Item.Redemption().CanSwordClash = true;
         }
         public override bool MeleePrefix() => true;
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             float adjustedItemScale2 = player.GetAdjustedItemScale(Item);
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<WraithSlayer_Proj>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
+            Projectile.NewProjectile(source, position, velocity, ProjectileType<WraithSlayer_Proj>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
             return false;
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<GraveSteelAlloy>(), 12)
-                .AddIngredient(ModContent.ItemType<GrimShard>(), 8)
-                .AddIngredient(ModContent.ItemType<LostSoul>(), 8)
+                .AddIngredient(ItemType<GraveSteelAlloy>(), 12)
+                .AddIngredient(ItemType<GrimShard>(), 8)
+                .AddIngredient(ItemType<LostSoul>(), 8)
                 .AddIngredient(ItemID.SoulofFright, 5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
@@ -84,9 +87,6 @@ namespace Redemption.Items.Weapons.HM.Melee
                 };
                 tooltips.Add(line);
             }
-
-            TooltipLine slashLine = new(Mod, "SharpBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
-            tooltips.Add(slashLine);
         }
     }
 }

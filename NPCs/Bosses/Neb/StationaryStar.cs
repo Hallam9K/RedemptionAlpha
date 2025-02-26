@@ -18,6 +18,7 @@ namespace Redemption.NPCs.Bosses.Neb
             // DisplayName.SetDefault("Starplane");
             Main.projFrames[Projectile.type] = 6;
             ElementID.ProjCelestial[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetDefaults()

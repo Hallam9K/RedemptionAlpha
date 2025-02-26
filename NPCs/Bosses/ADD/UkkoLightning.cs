@@ -1,13 +1,12 @@
-﻿using System;
-using Terraria.Audio;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
+using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using Terraria.GameContent;
-using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -20,6 +19,7 @@ namespace Redemption.NPCs.Bosses.ADD
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
             ElementID.ProjThunder[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         float colorlerp;

@@ -1,6 +1,6 @@
-using Microsoft.Xna.Framework;
 using Redemption.Buffs.Minions;
 using Redemption.Globals;
+using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.DataStructures;
@@ -10,21 +10,21 @@ using Terraria.ModLoader;
 namespace Redemption.Items.Weapons.HM.Summon
 {
     public class AndroidHologram : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             // Tooltip.SetDefault("Summons a little Android to fight for you");
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<WireTaser>();
-
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 20));
-            Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<WireTaser>();
+
+            ElementID.ItemExplosive[Type] = true;
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
         }
 
         public override void SetDefaults()
-		{
+        {
             Item.damage = 75;
             Item.DamageType = DamageClass.Summon;
             Item.mana = 15;
@@ -39,10 +39,9 @@ namespace Redemption.Items.Weapons.HM.Summon
             Item.knockBack = 2;
             Item.value = Item.sellPrice(0, 10, 0, 0);
             Item.UseSound = SoundID.Item44;
-            Item.shoot = ModContent.ProjectileType<AndroidMinion_Proj>();
-            Item.ExtraItemShoot(ModContent.ProjectileType<AndroidMinion_Fist>());
-            Item.buffType = ModContent.BuffType<AndroidMinionBuff>();
-		}
+            Item.shoot = ProjectileType<AndroidMinion_Proj>();
+            Item.buffType = BuffType<AndroidMinionBuff>();
+        }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             position = Main.MouseWorld;

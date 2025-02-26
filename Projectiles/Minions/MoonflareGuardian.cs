@@ -24,6 +24,7 @@ namespace Redemption.Projectiles.Minions
             Main.projPet[Projectile.type] = true;
             ElementID.ProjFire[Type] = true;
             ElementID.ProjNature[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetDefaults()

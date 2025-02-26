@@ -17,6 +17,7 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             // DisplayName.SetDefault("Cosmic Ray");
             ElementID.ProjCelestial[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetSafeDefaults()
         {

@@ -1,15 +1,15 @@
-using Terraria.ID;
-using Terraria;
-using Microsoft.Xna.Framework;
-using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Redemption.Globals;
-using Redemption.BaseExtension;
-using Terraria.ModLoader;
-using Redemption.Projectiles.Melee;
 using ParticleLibrary;
+using ParticleLibrary.Core;
+using Redemption.BaseExtension;
+using Redemption.Dusts;
+using Redemption.Globals;
 using Redemption.Particles;
+using Redemption.Projectiles.Melee;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -21,6 +21,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Main.projFrames[Projectile.type] = 9;
             ElementID.ProjShadow[Type] = true;
             ElementID.ProjCelestial[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()
@@ -38,6 +39,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public float SwingSpeed;
         int directionLock = 0;
         private float glow;
+        public int pauseTimer;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -84,12 +86,13 @@ namespace Redemption.Items.Weapons.HM.Melee
                 if (Projectile.ai[0] >= 1)
                 {
                     player.direction = directionLock;
-                    Projectile.ai[0]++;
+                    if (--pauseTimer <= 0)
+                        Projectile.ai[0]++;
                     if (Projectile.frame > 3)
                         player.itemRotation -= MathHelper.ToRadians(-9f * player.direction);
                     else
                         player.bodyFrame.Y = 5 * player.bodyFrame.Height;
-                    if (++Projectile.frameCounter >= SwingSpeed / 9)
+                    if (pauseTimer <= 0 && ++Projectile.frameCounter >= SwingSpeed / 9)
                     {
                         Projectile.frameCounter = 0;
                         Projectile.frame++;
@@ -121,7 +124,7 @@ namespace Redemption.Items.Weapons.HM.Melee
 
             Projectile.spriteDirection = player.direction;
 
-            Projectile.Center = player.Center;
+            Projectile.Center = player.RotatedRelativePoint(player.MountedCenter, true);
             player.itemTime = 2;
             player.itemAnimation = 2;
         }
@@ -137,7 +140,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         private void SpawnNebulaSparks()
         {
             Player player = Main.player[Projectile.owner];
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<NebulaStar>()] < 4)
+            if (player.ownedProjectileCounts[ProjectileType<NebulaStar>()] < 4)
             {
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(CustomSounds.Teleport1, Projectile.position);
@@ -149,16 +152,24 @@ namespace Redemption.Items.Weapons.HM.Melee
                 for (int i = 0; i < num; i++)
                 {
                     if (Projectile.owner == Main.myPlayer)
-                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), RedeHelper.RandomPointInArea(Projectile.Redemption().swordHitbox), RedeHelper.SpreadUp(10), ModContent.ProjectileType<NebulaStar>(), (int)(Projectile.damage * 0.75f), 2, player.whoAmI);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), RedeHelper.RandomPointInArea(Projectile.Redemption().swordHitbox), RedeHelper.SpreadUp(10), ProjectileType<NebulaStar>(), (int)(Projectile.damage * 0.75f), 2, player.whoAmI);
                 }
             }
         }
         private bool hitOnce;
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            Player player = Main.player[Projectile.owner];
+            SoundEngine.PlaySound(CustomSounds.Slice4 with { Pitch = -.2f }, Projectile.position);
+            Vector2 directionTo = target.DirectionTo(player.Center);
+            for (int i = 0; i < 5; i++)
+                Dust.NewDustPerfect(target.Center + directionTo + new Vector2(0, 35) + player.velocity, DustType<DustSpark>(), directionTo.RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f) - MathHelper.PiOver2 + (Projectile.spriteDirection == 1 ? MathHelper.Pi : 0)) * -Main.rand.NextFloat(4f, 5f) + (player.velocity / 2), 0, RedeColor.NebColour * 0.8f, 3f);
+
             RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit, 80);
             if (!hitOnce)
             {
+                pauseTimer = 2;
+
                 Point tileBelow = new Vector2(Projectile.Redemption().swordHitbox.Center.X, Projectile.Redemption().swordHitbox.Bottom).ToTileCoordinates();
                 Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
                 if (tile is not { HasUnactuatedTile: true } || !Main.tileSolid[tile.TileType])
@@ -182,28 +193,28 @@ namespace Redemption.Items.Weapons.HM.Melee
             Player player = Main.player[Projectile.owner];
 
             Texture2D axe = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D mask = ModContent.Request<Texture2D>("Redemption/Items/Weapons/HM/Melee/Midnight_SlashProjMask").Value;
+            Texture2D mask = Request<Texture2D>("Redemption/Items/Weapons/HM/Melee/Midnight_SlashProjMask").Value;
             int height = axe.Height / 9;
             int y = height * Projectile.frame;
             Rectangle rect = new(0, y, axe.Width, height);
             Vector2 drawOrigin = new(axe.Width / 2, Projectile.height / 2);
-            Vector2 pos = Projectile.Center - Main.screenPosition - new Vector2(-62 * Projectile.spriteDirection, 80) + Vector2.UnitY * Projectile.gfxOffY;
+            Vector2 pos = Projectile.Center - Main.screenPosition - new Vector2(-62 * Projectile.spriteDirection, 80);
             var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, axe, ref drawTimer, pos, new Rectangle?(rect), RedeColor.NebColour * Projectile.Opacity * glow, Projectile.rotation, drawOrigin, Projectile.scale, effects);
 
-            Texture2D space = ModContent.Request<Texture2D>("Redemption/Textures/SpacePlaceholder").Value;
-            Effect midnight = ModContent.Request<Effect>("Redemption/Effects/Midnight").Value;
+            Texture2D space = Request<Texture2D>("Redemption/Textures/SpacePlaceholder").Value;
+            Effect midnight = Request<Effect>("Redemption/Effects/Midnight").Value;
             midnight.Parameters["sampleTexture"].SetValue(space);
             midnight.Parameters["border"].SetValue(new Color(1f, 0.41960788f, 0.5921569f, 1f).ToVector4());
             midnight.Parameters["mask"].SetValue(new Vector4(0f, 1f, 0f, 1f));
-            midnight.Parameters["offset"].SetValue(Main.player[Main.myPlayer].position * 0.21f / new Vector2(space.Width, space.Height));
+            midnight.Parameters["offset"].SetValue(Main.LocalPlayer.position * 0.21f / new Vector2(space.Width, space.Height));
             // The division stuff here will need changing once the actual space texture is made.
             midnight.Parameters["spriteRatio"].SetValue(new Vector2(Main.screenWidth / 8f / mask.Width, Main.screenHeight / 2f / mask.Height * 25f));
             midnight.Parameters["conversion"].SetValue(new Vector2(1f / (Main.screenWidth / 2f), 1f / (Main.screenHeight / 2f)));
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
             Main.spriteBatch.Draw(axe, pos, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             if (!player.channel || Projectile.ai[0] >= 1)
             {
@@ -211,7 +222,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 Main.spriteBatch.Draw(mask, pos, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             }
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }

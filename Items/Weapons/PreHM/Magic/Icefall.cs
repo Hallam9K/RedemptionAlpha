@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Projectiles.Magic;
 using Terraria;
@@ -11,10 +11,8 @@ namespace Redemption.Items.Weapons.PreHM.Magic
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Icefall");
-            // Tooltip.SetDefault("Lowers the air temperature at cursor point, forming damaging ice crystals that eventually fall to gravity");
-
-            Item.ResearchUnlockCount = 1;
+            ElementID.ItemIce[Type] = true;
+            ElementID.ItemArcane[Type] = true;
         }
 
         public override void SetDefaults()
@@ -33,8 +31,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.value = Item.sellPrice(0, 3, 50, 0);
             Item.rare = ItemRarityID.Orange;
             Item.shootSpeed = 0;
-            Item.shoot = ModContent.ProjectileType<Icefall_Mist>();
-            Item.ExtraItemShoot(ModContent.ProjectileType<Icefall_Proj>());
+            Item.shoot = ProjectileType<Icefall_Mist>();
             if (Main.netMode != NetmodeID.Server)
                 Item.UseSound = CustomSounds.IceMist;
         }

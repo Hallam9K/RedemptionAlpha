@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs.Minions;
 using Redemption.Globals;
@@ -15,12 +14,11 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Log Staff");
-            // Tooltip.SetDefault("Summons a small log that fires acorns in an arc");
-            Item.ResearchUnlockCount = 1;
-
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
+
+            ElementID.ItemNature[Type] = true;
+            ElementID.ItemExplosive[Type] = true;
         }
 
         public override void SetDefaults()
@@ -39,15 +37,14 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.DD2_DefenseTowerSpawn;
             Item.autoReuse = false;
-            Item.buffType = ModContent.BuffType<LogStaffBuff>();
-            Item.shoot = ModContent.ProjectileType<LogStaff_Proj>();
-            Item.ExtraItemShoot(ModContent.ProjectileType<AcornBomb_Proj>());
+            Item.buffType = BuffType<LogStaffBuff>();
+            Item.shoot = ProjectileType<LogStaff_Proj>();
             Item.mana = 4;
         }
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<LivingTwig>(), 18)
+                .AddIngredient(ItemType<LivingTwig>(), 18)
                 .AddIngredient(ItemID.Acorn, 4)
                 .AddTile(TileID.WorkBenches)
                 .Register();

@@ -26,6 +26,7 @@ namespace Redemption.Globals
         public bool TechnicallyMelee;
         public bool IsHammer;
         public bool IsAxe;
+        public bool IsSpear;
         public bool RitDagger;
         public bool EnergyBased;
         public bool ParryBlacklist;
@@ -75,7 +76,7 @@ namespace Redemption.Globals
             if (ArenaWorld.arenaActive && projectile.aiStyle == 7 && !projectile.Hitbox.Intersects(new Rectangle((int)ArenaWorld.arenaTopLeft.X, (int)ArenaWorld.arenaTopLeft.Y, (int)ArenaWorld.arenaSize.X, (int)ArenaWorld.arenaSize.Y)))
                 projectile.Kill();
         }
-        public static void Decapitation(Terraria.NPC target, ref int damage, ref bool crit, int chance = 200)
+        public static bool Decapitation(Terraria.NPC target, ref int damage, ref bool crit, int chance = 200)
         {
             bool humanoid = NPCLists.SkeletonHumanoid.Contains(target.type) || NPCLists.Humanoid.Contains(target.type);
             if (target.life < target.lifeMax && target.life < damage * 100 && humanoid)
@@ -86,8 +87,13 @@ namespace Redemption.Globals
                     target.Redemption().decapitated = true;
                     crit = true;
                     target.StrikeInstantKill();
+
+                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Slash, false);
+                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Axe);
+                    return true;
                 }
             }
+            return false;
         }
         public static bool SwordClashFriendly(Projectile projectile, Projectile target, Entity player, ref bool parried, int frame = 5)
         {
@@ -108,6 +114,8 @@ namespace Redemption.Globals
                 SoundEngine.PlaySound(CustomSounds.SwordClash, projectile.position);
                 DustHelper.DrawCircle(RedeHelper.CenterPoint(projectile.Center, target.Center), DustID.SilverCoin, 1, 4, 4, nogravity: true);
                 parried = true;
+
+                RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Clash);
                 return true;
             }
             return false;

@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria;
@@ -15,6 +14,7 @@ namespace Redemption.NPCs.Bosses.ADD
             // DisplayName.SetDefault("Poison Bubble");
             ElementID.ProjWater[Type] = true;
             ElementID.ProjPoison[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -50,7 +50,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) => target.AddBuff(BuffID.Venom, 120);
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D telegraph = ModContent.Request<Texture2D>("Redemption/Textures/RadialTelegraph3").Value;
+            Texture2D telegraph = Request<Texture2D>("Redemption/Textures/RadialTelegraph3").Value;
             Vector2 position = Projectile.Center - Main.screenPosition;
             Vector2 origin = new(telegraph.Width / 2f, telegraph.Height / 2f);
             Main.spriteBatch.End();

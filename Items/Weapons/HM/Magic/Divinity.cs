@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals.Player;
@@ -31,7 +30,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.value = Item.sellPrice(0, 15, 50, 0);
             Item.UseSound = SoundID.Item123;
             Item.shootSpeed = 2f;
-            Item.shoot = ModContent.ProjectileType<Divinity_Sun>();
+            Item.shoot = ProjectileType<Divinity_Sun>();
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
@@ -42,7 +41,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<HolyBible>())
+                .AddIngredient(ItemType<HolyBible>())
                 .AddIngredient(ItemID.BeetleHusk, 2)
                 .AddIngredient(ItemID.LunarTabletFragment, 5)
                 .AddIngredient(ItemID.SoulofLight, 5)
@@ -62,7 +61,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            type = ModContent.ProjectileType<Divinity_Proj>();
+            type = ProjectileType<Divinity_Proj>();
         }
     }
 }

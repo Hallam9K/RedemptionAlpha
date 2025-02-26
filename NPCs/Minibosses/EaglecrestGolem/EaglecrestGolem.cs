@@ -1,7 +1,7 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
+using Redemption.Dusts.Tiles;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Accessories.PreHM;
@@ -9,12 +9,15 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.Items.Weapons.PreHM.Summon;
-using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.NPCs.Bosses.ADD;
 using Redemption.Particles;
+using Redemption.Projectiles;
 using Redemption.Projectiles.Magic;
 using Redemption.UI;
 using System;
@@ -74,7 +77,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Electrified] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1,
                 Position = new Vector2(0, 30),
@@ -84,12 +87,13 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             ElementID.NPCEarth[Type] = true;
         }
 
+        public int GuardPointMax;
         public override void SetDefaults()
         {
             NPC.lifeMax = 3200;
             NPC.damage = 40;
             NPC.defense = 18;
-            NPC.knockBackResist = 0f;
+            NPC.knockBackResist = 0.01f;
             NPC.value = Item.buyPrice(0, 2, 0, 0);
             NPC.aiStyle = -1;
             NPC.width = 80;
@@ -101,12 +105,26 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             NPC.lavaImmune = true;
             NPC.boss = true;
             NPC.netAlways = true;
-            NPC.BossBar = ModContent.GetInstance<NoHeadHealthBar>();
+            GuardPointMax = NPC.lifeMax / 10;
+            NPC.RedemptionGuard().GuardPoints = GuardPointMax;
+            NPC.BossBar = GetInstance<EaglecrestGolemHealthBar>();
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
 
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Earth] *= .75f;
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Thunder] *= .9f;
+        }
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+            if (NPC.frame.Y == 12 * 84 && AIState is not ActionState.Slash && NPC.RedemptionGuard().GuardPoints >= 0)
+            {
+                modifiers.DisableCrit();
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.DD2_WitherBeastCrystalImpact, 0.25f, true, DustType<SlateRubbleDust>(), CustomSounds.EarthBoom, 60, 2, 500);
+            }
+            if (NPC.RedemptionGuard().GuardBroken)
+            {
+                modifiers.Defense *= .5f;
+            }
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => (AIState is ActionState.Roll or ActionState.Boulders) || (AIState is ActionState.Stomp && TimerRand > 0);
@@ -154,6 +172,12 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LightningStone>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GathicStone>(), 1, 14, 34));
         }
+
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance);
+            NPC.damage = (int)(NPC.damage * 0.75f);
+        }
         public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (item.pick > 0)
@@ -161,13 +185,8 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(CustomSounds.StoneHit, NPC.position);
                 modifiers.FlatBonusDamage += item.pick / 2;
+                modifiers.Knockback += 20;
             }
-        }
-
-        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
-        {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance);
-            NPC.damage = (int)(NPC.damage * 0.75f);
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
@@ -179,6 +198,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             AniFrameY = reader.ReadInt32();
             summonTimer = reader.ReadInt32();
         }
+
         private int AniFrameY;
         private int summonTimer;
         private float FlareTimer;
@@ -218,8 +238,10 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     if (++AITimer >= TimerRand)
                     {
                         AITimer = 0;
+
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                             TimerRand = Main.rand.Next(500, 700);
+
                         AIState = ActionState.Roll;
                         NPC.netUpdate = true;
                     }
@@ -240,6 +262,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                         AIState = ActionState.Laser;
                         NPC.netUpdate = true;
                     }
+
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         bool chance = Main.rand.NextBool(2);
@@ -256,7 +279,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     }
 
                     summonTimer--;
-                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(100) && summonTimer <= 0 && NPC.CountNPCS(ModContent.NPCType<EaglecrestRockPile>()) < 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(100) && summonTimer <= 0 && NPC.CountNPCS(NPCType<EaglecrestRockPile>()) < 1)
                     {
                         int amt = 2;
                         if (NPC.life <= (int)(NPC.lifeMax * .65f))
@@ -265,7 +288,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                             amt = 4;
                         for (int i = 0; i < amt; i++)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<RockPileSummon>(), 0, RedeHelper.SpreadUp(16), NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ProjectileType<RockPileSummon>(), 0, RedeHelper.SpreadUp(16), NPC.whoAmI);
                         }
                         summonTimer = 600;
                         NPC.netUpdate = true;
@@ -339,7 +362,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     }
                     if (TimerRand2 == 60)
                     {
-                        NPC.Shoot(origin, ModContent.ProjectileType<GolemEyeRay>(), NPC.damage, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + MathHelper.ToRadians(20 * NPC.spriteDirection)), SoundID.Item109, NPC.whoAmI);
+                        NPC.Shoot(origin, ProjectileType<GolemEyeRay>(), NPC.damage, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + MathHelper.ToRadians(20 * NPC.spriteDirection)), SoundID.Item109, NPC.whoAmI);
                     }
                     if (TimerRand2 >= 60)
                     {
@@ -415,7 +438,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                                         if (i != 0)
                                         {
                                             SoundEngine.PlaySound(SoundID.Item88, NPC.Center);
-                                            int proj = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(i, NPC.velocity.Y), ModContent.ProjectileType<EaglecrestBoulder_Proj>(), NPCHelper.HostileProjDamage(NPC.damage), 3, Main.myPlayer, 0, 1);
+                                            int proj = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(i, NPC.velocity.Y), ProjectileType<EaglecrestBoulder_Proj>(), NPCHelper.HostileProjDamage(NPC.damage), 3, Main.myPlayer, 0, 1);
                                             Main.projectile[proj].hostile = true;
                                             Main.projectile[proj].friendly = false;
                                             Main.projectile[proj].DamageType = DamageClass.Default;
@@ -584,8 +607,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                         AniFrameY--;
                     if (AniFrameY is 6)
                     {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<RockSlash_Proj>(), NPC.damage, RedeHelper.PolarVector(16,
-                            (player.Center - NPC.Center).ToRotation()), SoundID.Item71, NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ProjectileType<RockSlash_Proj>(), NPC.damage, RedeHelper.PolarVector(16, (player.Center - NPC.Center).ToRotation()), SoundID.Item71, NPC.whoAmI);
                     }
                     if (AniFrameY <= 0)
                     {
@@ -674,7 +696,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D SlashAni = ModContent.Request<Texture2D>(Texture + "_Slash").Value;
+            Texture2D SlashAni = Request<Texture2D>(Texture + "_Slash").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Vector2 scale = new(NPC.scale + customScale.X, NPC.scale + customScale.Y);
             if (!NPC.IsABestiaryIconDummy && ((AIState is ActionState.Roll or ActionState.Boulders) || (AIState is ActionState.Stomp && TimerRand > 0)))
@@ -692,11 +714,11 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                 int y = Height * AniFrameY;
                 Rectangle rect = new(0, y, SlashAni.Width, Height);
                 Vector2 origin = new(SlashAni.Width / 2f, Height / 2f);
-                spriteBatch.Draw(SlashAni, NPC.Center - screenPos - new Vector2(0, 13), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+                spriteBatch.Draw(SlashAni, NPC.Center - screenPos - new Vector2(0, 13), new Rectangle?(rect), NPC.ColorTintedAndOpacity(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
             }
             else
             {
-                spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, scale, effects, 0f);
+                spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(drawColor), NPC.rotation, NPC.frame.Size() / 2, scale, effects, 0f);
                 if (glowOpacity > 0)
                 {
                     int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
@@ -710,7 +732,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                         Color color = NPC.GetAlpha(new Color(255, 255, 174)) * ((NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
                         spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, color * .5f * glowOpacity, oldrot[k], NPC.frame.Size() / 2, scale, effects, 0);
                     }
-                    spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(new Color(255, 255, 174)) * glowOpacity, NPC.rotation, NPC.frame.Size() / 2, scale, effects, 0f);
+                    spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(new Color(255, 255, 174)) * glowOpacity, NPC.rotation, NPC.frame.Size() / 2, scale, effects, 0f);
 
                     Main.spriteBatch.End();
                     Main.spriteBatch.BeginDefault();
@@ -739,13 +761,13 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     Main.dust[dustIndex2].velocity *= 5f;
                 }
                 for (int i = 0; i < 2; i++)
-                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestGolemGore2").Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, Find<ModGore>("Redemption/EaglecrestGolemGore2").Type, 1);
                 for (int i = 0; i < 6; i++)
-                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestGolemGore4").Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, Find<ModGore>("Redemption/EaglecrestGolemGore4").Type, 1);
                 for (int i = 0; i < 12; i++)
-                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestGolemGore5").Type, 1);
-                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestGolemGore1").Type, 1);
-                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestGolemGore3").Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, Find<ModGore>("Redemption/EaglecrestGolemGore5").Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, Find<ModGore>("Redemption/EaglecrestGolemGore1").Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, Find<ModGore>("Redemption/EaglecrestGolemGore3").Type, 1);
             }
             int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone);
             Main.dust[dustIndex].velocity *= 2f;
@@ -787,7 +809,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        int proj = Projectile.NewProjectile(Terraria.Entity.InheritSource(Main.npc[(int)Projectile.ai[2]]), origin + new Vector2(0, 2), Vector2.Zero, ModContent.ProjectileType<Golem_GroundShock>(), Projectile.damage, 3, Main.myPlayer, Projectile.ai[1]);
+                        int proj = Projectile.NewProjectile(Terraria.Entity.InheritSource(Main.npc[(int)Projectile.ai[2]]), origin + new Vector2(0, 2), Vector2.Zero, ProjectileType<Golem_GroundShock>(), Projectile.damage, 3, Main.myPlayer, Projectile.ai[1]);
                         SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact with { Volume = 0.2f }, Main.projectile[proj].Center);
                     }
                 }

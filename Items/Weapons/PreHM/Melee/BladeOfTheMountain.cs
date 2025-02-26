@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using System;
 using System.Collections.Generic;
@@ -50,7 +50,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<BladeOfTheMountain_Slash>();
+            Item.shoot = ProjectileType<BladeOfTheMountain_Slash>();
+
+            Item.Redemption().TechnicallySlash = true;
+            Item.Redemption().CanSwordClash = true;
         }
 
         public override void PostUpdate()
@@ -89,9 +92,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 };
                 tooltips.Add(line);
             }
-
-            TooltipLine slashLine = new(Mod, "SharpBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
-            tooltips.Add(slashLine);
         }
     }
 }

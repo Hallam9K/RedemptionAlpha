@@ -13,15 +13,6 @@ namespace Redemption.Items.Accessories.PreHM
     public class ShellNecklace : ModItem
     {
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.NatureS);
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Shell Necklace");
-            /* Tooltip.SetDefault("10% increased " + ElementID.NatureS + " elemental damage and resistance\n" +
-                "Increased chance of Nature Boons to drop from the " + ElementID.NatureS + " elemental bonus\n" +
-                "'Makes you feel one with nature'"); */
-            ElementID.ItemNature[Type] = true;
-            Item.ResearchUnlockCount = 1;
-        }
 
         public override void SetDefaults()
         {
@@ -43,8 +34,8 @@ namespace Redemption.Items.Accessories.PreHM
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<TreeBugShell>(), 2)
-                .AddIngredient(ModContent.ItemType<CoastScarabShell>(), 2)
+                .AddIngredient(ItemType<TreeBugShell>(), 2)
+                .AddIngredient(ItemType<CoastScarabShell>(), 2)
                 .AddIngredient(ItemID.Chain, 4)
                 .AddRecipeGroup(RedeRecipe.SilverRecipeGroup)
                 .AddTile(TileID.WorkBenches)

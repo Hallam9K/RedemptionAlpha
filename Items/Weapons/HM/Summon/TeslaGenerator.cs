@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs.Minions;
 using Redemption.Globals;
@@ -15,7 +14,9 @@ namespace Redemption.Items.Weapons.HM.Summon
     {
         public override void SetStaticDefaults()
         {
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<LightningRod>();
+            ElementID.ItemThunder[Type] = true;
+
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<LightningRod>();
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
@@ -37,9 +38,8 @@ namespace Redemption.Items.Weapons.HM.Summon
             Item.rare = ItemRarityID.Pink;
             Item.UseSound = SoundID.DD2_DefenseTowerSpawn;
             Item.autoReuse = false;
-            Item.buffType = ModContent.BuffType<TeslaGeneratorBuff>();
-            Item.shoot = ModContent.ProjectileType<TeslaGenerator_Proj>();
-            Item.ExtraItemShoot(ModContent.ProjectileType<TeslaGenerator_Lightning>());
+            Item.buffType = BuffType<TeslaGeneratorBuff>();
+            Item.shoot = ProjectileType<TeslaGenerator_Proj>();
             Item.mana = 10;
         }
         public override bool CanUseItem(Player player)

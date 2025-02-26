@@ -43,6 +43,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             // DisplayName.SetDefault("Eye Ray");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
             ElementID.ProjFire[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetDefaults()

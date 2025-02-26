@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using System.Collections.Generic;
 using Terraria;
@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             /* Tooltip.SetDefault("Hitting armed enemies inflicts Disarmed\n" +
                 "Disarmed heavily decreases contact damage and their weapon damage\n" +
                 "Blocks weak physical projectiles"); */
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<SilverwoodBow>();
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<SilverwoodBow>();
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             Item.ResearchUnlockCount = 1;
         }
@@ -45,7 +45,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<SwordSlicer_Slash>();
+            Item.shoot = ProjectileType<SwordSlicer_Slash>();
+
+            Item.Redemption().TechnicallySlash = true;
+            Item.Redemption().CanSwordClash = true;
         }
         public override bool MeleePrefix() => true;
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -66,8 +69,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 };
                 tooltips.Add(line);
             }
-            TooltipLine slashLine = new(Mod, "SharpBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
-            tooltips.Add(slashLine);
         }
     }
 }

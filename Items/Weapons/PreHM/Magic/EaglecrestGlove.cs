@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Projectiles.Magic;
@@ -14,11 +14,9 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ThunderS);
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Eaglecrest Glove");
-            /* Tooltip.SetDefault("Throws a boulder which inherits your forward momentum\n" +
-                "If thrown fast enough, lightning strikes the ground when it bounces, dealing " + ElementID.ThunderS + " damage\n" +
-                "'Don't like a guy? Throw a boulder at him!'"); */
-            Item.ResearchUnlockCount = 1;
+            ElementID.ItemEarth[Type] = true;
+            ElementID.ItemThunder[Type] = true;
+            ElementID.ItemArcane[Type] = true;
         }
 
         public override void SetDefaults()
@@ -37,10 +35,11 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.UseSound = SoundID.Item88;
             Item.autoReuse = true;
             Item.noUseGraphic = true;
-            Item.shoot = ModContent.ProjectileType<EaglecrestBoulder_Proj>();
-            Item.ExtraItemShoot(ModContent.ProjectileType<EaglecrestJavelin_Thunder>());
+            Item.shoot = ProjectileType<EaglecrestBoulder_Proj>();
             Item.shootSpeed = 5f;
             Item.rare = ItemRarityID.Orange;
+
+            Item.Redemption().HideElementTooltip[ElementID.Thunder] = true;
         }
         public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
         {

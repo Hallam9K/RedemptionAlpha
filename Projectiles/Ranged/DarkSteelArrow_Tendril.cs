@@ -12,6 +12,7 @@ namespace Redemption.Projectiles.Ranged
         {
             // DisplayName.SetDefault("Dark Tendril");
             ElementID.ProjShadow[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -40,7 +41,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.localAI[0]);
             for (int i = 0; i < 1; i++)
             {
-                int dust = Dust.NewDust(Projectile.position, (int)Projectile.localAI[1], (int)Projectile.localAI[1], ModContent.DustType<VoidFlame>(), Scale: Projectile.localAI[1] / 6);
+                int dust = Dust.NewDust(Projectile.position, (int)Projectile.localAI[1], (int)Projectile.localAI[1], DustType<VoidFlame>(), Scale: Projectile.localAI[1] / 6);
                 Main.dust[dust].velocity *= 0;
                 Main.dust[dust].noGravity = true;
             }

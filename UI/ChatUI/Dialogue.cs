@@ -49,8 +49,8 @@ namespace Redemption.UI.ChatUI
 
             this.textColor = textColor ?? Color.White;
             this.shadowColor = shadowColor ?? Color.Black;
-            this.charTime = charTime - RedeConfigClient.Instance.DialogueSpeed;
-            this.preFadeTime = preFadeTime + RedeConfigClient.Instance.DialogueWaitTime;
+            this.charTime = charTime - RedeConfigServer.Instance.DialogueSpeed;
+            this.preFadeTime = preFadeTime + RedeConfigServer.Instance.DialogueWaitTime;
             this.fadeTime = fadeTime;
             fadeTimeMax = fadeTime;
             this.boxFade = boxFade;

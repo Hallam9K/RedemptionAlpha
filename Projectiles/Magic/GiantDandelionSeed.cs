@@ -1,9 +1,8 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Redemption.Base;
 using Redemption.Globals;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -14,6 +13,7 @@ namespace Redemption.Projectiles.Magic
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjWind[Type] = true;
             ElementID.ProjNature[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

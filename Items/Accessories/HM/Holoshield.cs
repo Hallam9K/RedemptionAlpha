@@ -1,7 +1,7 @@
-using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Redemption.Items.Accessories.PostML;
 using Terraria;
 using Terraria.Audio;
@@ -73,6 +73,17 @@ namespace Redemption.Items.Accessories.HM
                 DashDir = -1;
         }
 
+        public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
+        {
+            if (DashAccessoryEquipped && npc.GetFirstElement(true) == 0)
+                modifiers.FinalDamage *= .9f;
+        }
+        public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
+        {
+            if (DashAccessoryEquipped && proj.GetFirstElement(true) == 0)
+                modifiers.FinalDamage *= .9f;
+        }
+
         public override void PreUpdateMovement()
         {
             if (CanUseDash() && DashDir != -1 && DashDelay == 0)
@@ -113,7 +124,7 @@ namespace Redemption.Items.Accessories.HM
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC npc = Main.npc[i];
-                        if (!npc.active || npc.dontTakeDamage || npc.friendly || NPCLoader.CanBeHitByItem(npc, Player, new Item(ModContent.ItemType<Holoshield>())) == false)
+                        if (!npc.active || npc.dontTakeDamage || npc.friendly || NPCLoader.CanBeHitByItem(npc, Player, new Item(ItemType<Holoshield>())) == false)
                             continue;
 
                         if (!hitbox.Intersects(npc.Hitbox) || !npc.noTileCollide && !Collision.CanHit(Player.position, Player.width, Player.height, npc.position, npc.width, npc.height))
@@ -153,9 +164,8 @@ namespace Redemption.Items.Accessories.HM
                         DashTimer = 0;
                         Player.eocDash = DashTimer - 1;
                     }
-                    for (int i = 0; i < Main.maxProjectiles; i++)
+                    foreach (Projectile proj in Main.ActiveProjectiles)
                     {
-                        Projectile proj = Main.projectile[i];
                         if (!proj.active || !proj.hostile || proj.friendly || proj.damage >= 100 || proj.velocity.Length() <= 0)
                             continue;
 
@@ -164,10 +174,12 @@ namespace Redemption.Items.Accessories.HM
 
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.Reflect);
+
                         proj.damage *= 8;
                         proj.velocity = -proj.velocity;
                         proj.friendly = true;
                         proj.hostile = false;
+                        RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(Player.Center, proj.Center), new Color(128, 242, 208), shakeAmount: 0, scale: .5f, noDust: true, rot: MathHelper.PiOver2, tex: "Redemption/Textures/SwordClash");
 
                         Player.immune = true;
                         Player.immuneTime = 20;
@@ -184,7 +196,7 @@ namespace Redemption.Items.Accessories.HM
         }
         public override bool ImmuneTo(PlayerDeathReason damageSource, int cooldownCounter, bool dodgeable)
         {
-            if ((damageSource.SourceNPCIndex >= 0 || (damageSource.SourceProjectileLocalIndex >= 0 && Main.projectile[damageSource.SourceProjectileLocalIndex].damage < 200)) && ShieldHit < 0 && DashTimer > 15)
+            if ((damageSource.SourceNPCIndex >= 0 || (damageSource.SourceProjectileLocalIndex >= 0 && Main.projectile[damageSource.SourceProjectileLocalIndex].damage < NPCHelper.HostileProjDamage(500))) && ShieldHit < 0 && DashTimer > 15)
                 return true;
             return false;
         }
@@ -197,7 +209,8 @@ namespace Redemption.Items.Accessories.HM
                 return false;
             return DashAccessoryEquipped
                 && !Player.mount.Active
-                && !Player.HasBuff(ModContent.BuffType<StunnedDebuff>())
+                && !Player.CCed
+                && !Player.HasBuff(BuffType<StunnedDebuff>())
                 && !Player.GetModPlayer<ThornshieldDashPlayer>().DashAccessoryEquipped;
         }
     }

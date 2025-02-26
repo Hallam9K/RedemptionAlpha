@@ -11,15 +11,14 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            /* Tooltip.SetDefault("Tosses the book, stopping at cursor point\n" +
-                "Shoots 4 short-ranged rays of light\n" +
-                "'You dare question the words of the mighty Jimmy!?'"); */
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<ErhanMagnifyingGlass>();
-            Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<ErhanMagnifyingGlass>();
+
+            ElementID.ItemHoly[Type] = true;
+            ElementID.ItemArcane[Type] = true;
         }
 
         public override void SetDefaults()
-		{
+        {
             Item.damage = 10;
             Item.DamageType = DamageClass.Summon;
             Item.width = 30;
@@ -36,9 +35,8 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Item.noUseGraphic = true;
             Item.noMelee = true;
             Item.rare = ItemRarityID.Blue;
-            Item.shoot = ModContent.ProjectileType<HolyBible_Proj>();
+            Item.shoot = ProjectileType<HolyBible_Proj>();
             Item.shootSpeed = 10;
-            Item.ExtraItemShoot(ModContent.ProjectileType<HolyBible_Ray>());
         }
         public override bool CanUseItem(Player player)
         {
