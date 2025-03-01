@@ -86,7 +86,10 @@ namespace Redemption.NPCs.FowlMorning
         private Vector2 flarePos;
         public override void AI()
         {
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+                NPC.TargetClosest();
             Player player = Main.player[NPC.target];
+            
             NPC.LookByVelocity();
             if (NPC.DespawnHandler(3))
                 return;

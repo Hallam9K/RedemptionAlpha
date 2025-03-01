@@ -12,12 +12,13 @@ namespace Redemption.Items.Placeable.MusicBoxes
             ItemID.Sets.CanGetPrefixes[Type] = false;
             ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox;
 
-            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SpiritRealm"), ModContent.ItemType<SpiritRealmBox>(), ModContent.TileType<SpiritRealmBoxTile>());
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SpiritRealm"), ItemType<SpiritRealmBox>(), TileType<SpiritRealmBoxTile>());
+            MusicID.Sets.SkipsVolumeRemap[MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SpiritRealm")] = false;
         }
 
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<SpiritRealmBoxTile>(), 0);
+            Item.DefaultToPlaceableTile(TileType<SpiritRealmBoxTile>(), 0);
             Item.width = 26;
             Item.height = 30;
             Item.rare = ItemRarityID.LightRed;

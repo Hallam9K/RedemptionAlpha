@@ -15,13 +15,14 @@ namespace Redemption.Items.Placeable.MusicBoxes
             ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox;
             Item.ResearchUnlockCount = 1;
 
-            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SlayerShipMusic"), ModContent.ItemType<SlayerShipBox>(), ModContent.TileType<SlayerShipBoxTile>());
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SlayerShipMusic"), ItemType<SlayerShipBox>(), TileType<SlayerShipBoxTile>());
+            MusicID.Sets.SkipsVolumeRemap[MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SlayerShipMusic")] = false;
         }
 
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<SlayerShipBoxTile>(), 0);
-            Item.createTile = ModContent.TileType<SlayerShipBoxTile>();
+            Item.DefaultToPlaceableTile(TileType<SlayerShipBoxTile>(), 0);
+            Item.createTile = TileType<SlayerShipBoxTile>();
             Item.width = 32;
             Item.height = 18;
             Item.rare = ItemRarityID.LightRed;
@@ -32,7 +33,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
         {
             CreateRecipe()
                 .AddIngredient(ItemID.MusicBox)
-                .AddIngredient(ModContent.ItemType<SlayerShipPanel2>(), 40)
+                .AddIngredient(ItemType<SlayerShipPanel2>(), 40)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

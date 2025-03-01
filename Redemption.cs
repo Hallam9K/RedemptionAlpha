@@ -94,6 +94,7 @@ namespace Redemption
         public Redemption()
         {
             Instance = this;
+            MusicSkipsVolumeRemap = true;
         }
 
         public override void Load()

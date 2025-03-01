@@ -14,13 +14,14 @@ namespace Redemption.Items.Placeable.MusicBoxes
             ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox;
             Item.ResearchUnlockCount = 1;
 
-            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/HallofHeroes"), ModContent.ItemType<HallOfHeroesBox>(), ModContent.TileType<HallOfHeroesBoxTile>());
+            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/HallofHeroes"), ItemType<HallOfHeroesBox>(), TileType<HallOfHeroesBoxTile>());
+            MusicID.Sets.SkipsVolumeRemap[MusicLoader.GetMusicSlot(Mod, "Sounds/Music/HallofHeroes")] = false;
         }
 
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<HallOfHeroesBoxTile>(), 0);
-            Item.createTile = ModContent.TileType<HallOfHeroesBoxTile>();
+            Item.DefaultToPlaceableTile(TileType<HallOfHeroesBoxTile>(), 0);
+            Item.createTile = TileType<HallOfHeroesBoxTile>();
             Item.width = 32;
             Item.height = 24;
             Item.rare = ItemRarityID.LightRed;
@@ -30,7 +31,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
         {
             CreateRecipe()
                 .AddIngredient(ItemID.MusicBox)
-                .AddIngredient(ModContent.ItemType<ChaliceFragments>())
+                .AddIngredient(ItemType<ChaliceFragments>())
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
