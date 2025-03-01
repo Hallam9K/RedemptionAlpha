@@ -1,30 +1,6 @@
-=== 0.8 Beta .407 === (Elemental Patch)
-- Slightly increase spawn chance of Jolly Madman in a Raveyard
-- Can no longer use boss summon items during cutscenes
-- Buffed Hyper-Tech Blaster damage from 78 -> 120, increased bullet amount of Spread Shot from 3 -> 5, increased piercing of Rebound Shot from 3 -> 10
-- Improved visuals of Iron Realm Sword
-- 'elementalMultiplier' Mod Call now sets the multipliers
-- Projectiles with inherited elements will give those elements to other projectiles spawned by them, including ones inherited from items
-- Blazing Bastion won't generate if Spooky Mod is enabled to stop it generating over the nose dungeon
-1682. Forest Nymph's Sickle can now have the common prefixes, and buffed damage of magic's ability from 30% -> 15% less base damage
-1862. Added Spear Bonus that pierces through Guard Points
-2082. Changed Xeno Xyston spin sprite to look less sussy and changed knockback formula
-2089. Cleaned elements in tooltips, now a row of the icons
-2090. Added Arcane element to more of the mod's projectiles, only Arcane element can hit spirit realm enemies now (Holy, Celestial, and Psychic also used to) Arcane acts more like a bonus now for anything magical (not limited to magic class)
-2091. Added Elemental Stats UI to view all your elemental resistance and damage percentages
-2092. Some Elemental damage effects affect players now too (Taking extra Thunder damage when wet, extra Earth damage while grounded, more knockback while airborne from Wind damage etc.)
-2093. Elemental damage increases/decreases are shown in a weapon's damage tooltip, can choose from 2 styles or disable it in config
-2094. Split config options into "Personal Config" and "Global Config" for clientside and serverside changes
-2095. Evil Jelly also grants 8% increased Shadow elemental damage
-2096. Holoshield grants 10% extra damage reduction against non-elemental damage
-2097. Living Wood set bonus also grants 15% increased Nature elemental damage and resistance
-2099. Changed text colours of elements
-2100. Added Book of Bonuses, given by Wayfarer when looking at the advice on Elemental Basics, has a list of all 19* elemental and bonus effects, triggering a bonus' effect will reveal it in the book. This will be how to learn what bonuses do now (*Clash Bonus isn't included yet)
-2101. Moved Crystallized Knowledge to pre-hm, rewarded by the Wayfarer after filling out the Book of Bonuses. Increased its cost from 3 gold to sell -> 6 gold to buy
-2102. Added a new effect for Blood Bonus: Blood Loss accumulates on continuous hits, causing a burst of percentage damage (100 flat + 15% max health on normal enemies, 100 flat + 5% on bosses), Blood Loss is harder to cause the more times its applied to a single enemy, crits double the amount of build-up, build-up is based on damage and max fill is based on the enemy's max health, Elemental Resistance or Weakness to Blood will affect the build-up and total flat damage
-2103. Added Mod Calls for calling Decapitation and setting Slash, Axe, Hammer and Spear bonus to items and projectiles (none for Spear on items since there's already the vanilla ID.Sets for spears)
-2106. Decreased chance of Keeper naturally spawning from 1/3 -> 1/4
-2107. Eaglecrest Golem can take knockback, but has Guard Points while rolled into boulder, breaking the guard points halves his defense for the rest of the fight and deals 500 damage
-2108. Eaglecrest Rockpiles take more knockback and pickaxes deal extra damage
-2111. Most of the mod's music volume is louder, as it was in 1.3
+=== 0.8 Beta .4071 === (Tiny Patch)
+- Fixed Elemental Damage not affecting Celestial element
+- Fixed Twinklestar shooting arrows instead of the tiny stars
+- Crystallized Knowledge's Crystals uses Local NPC Immunity
+1715. Phantasm Arrows from Phantasm are no longer affected by Ghastly Recurve's spirit rift, the shards of Spirit Arrows no longer count as arrows, and there can't be more than 24 Spirit Arrow shards active at a time
 ===============
