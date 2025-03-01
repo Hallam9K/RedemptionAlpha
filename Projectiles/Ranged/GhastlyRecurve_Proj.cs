@@ -1,10 +1,9 @@
-using Terraria.Audio;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Effects;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Ranged
 {
@@ -18,14 +17,13 @@ namespace Redemption.Projectiles.Ranged
         }
         public override void SetDefaults()
         {
-            Projectile.width = 40;
-            Projectile.height = 40;
+            Projectile.width = 30;
+            Projectile.height = 30;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 3600;
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Ranged;
         }
-
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -53,7 +51,7 @@ namespace Redemption.Projectiles.Ranged
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (!proj.active || !proj.arrow || !proj.friendly || proj.type == ModContent.ProjectileType<SpiritArrow_Proj>() || proj.type == ModContent.ProjectileType<SpiritArrow_Shard>() || proj.type == Type)
+                if (!proj.active || !proj.arrow || !proj.friendly || proj.type == ProjectileType<SpiritArrow_Proj>() || proj.type == ProjectileType<SpiritArrow_Shard>() || proj.type == Type || proj.type == ProjectileID.PhantasmArrow)
                     continue;
 
                 float point = 0;
@@ -67,7 +65,7 @@ namespace Redemption.Projectiles.Ranged
                     Main.dust[d].velocity *= 3f;
                 }
                 proj.active = false;
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), proj.position, proj.velocity, ModContent.ProjectileType<SpiritArrow_Proj>(), proj.damage, proj.knockBack, player.whoAmI);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), proj.Center, proj.velocity, ProjectileType<SpiritArrow_Proj>(), proj.damage, proj.knockBack, player.whoAmI);
             }
         }
         public Projectile other;
@@ -78,8 +76,8 @@ namespace Redemption.Projectiles.Ranged
         }
         public void DrawTether(Projectile Target, Vector2 screenPos, Color color1, Color color2, float Size, float Strength)
         {
-            Effect effect = ModContent.Request<Effect>("Redemption/Effects/Beam", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            effect.Parameters["uTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
+            Effect effect = Request<Effect>("Redemption/Effects/Beam", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            effect.Parameters["uTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/Trail_1", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
             effect.Parameters["progress"].SetValue(Main.GlobalTimeWrappedHourly / 3);
             effect.Parameters["uColor"].SetValue(color1.ToVector4());
             effect.Parameters["uSecondaryColor"].SetValue(color2.ToVector4());

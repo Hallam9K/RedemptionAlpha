@@ -385,7 +385,7 @@ namespace Redemption.Globals
             if (!RedeConfigServer.Instance.ElementDisable && !ItemLists.NoElement.Contains(item.type))
             {
                 BuffPlayer modPlayer = player.RedemptionPlayerBuff();
-                for (int i = 1; i < 14; i++)
+                for (int i = 1; i <= 14; i++)
                 {
                     if (item.HasElementItem(i))
                         modifiers.FinalDamage *= 1 + modPlayer.ElementalDamage[i];
@@ -421,7 +421,7 @@ namespace Redemption.Globals
             if (!RedeConfigServer.Instance.ElementDisable && !ItemLists.NoElement.Contains(projectile.type))
             {
                 BuffPlayer modPlayer = Main.player[projectile.owner].RedemptionPlayerBuff();
-                for (int i = 1; i < 14; i++)
+                for (int i = 1; i <= 14; i++)
                 {
                     if (projectile.HasElement(i))
                         modifiers.FinalDamage *= 1 + modPlayer.ElementalDamage[i];

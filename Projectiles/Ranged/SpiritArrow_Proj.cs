@@ -1,10 +1,10 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Ranged
 {
@@ -29,14 +29,19 @@ namespace Redemption.Projectiles.Ranged
             Projectile.alpha = 255;
             Projectile.arrow = true;
         }
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.velocity = 30f * Projectile.velocity.SafeNormalize(default);
+        }
+
         public override void OnKill(int timeLeft)
         {
             Player player = Main.player[Projectile.owner];
-            if (Main.myPlayer == player.whoAmI)
+            if (Main.myPlayer == player.whoAmI && player.ownedProjectileCounts[ProjectileType<SpiritArrow_Shard>()] <= 24)
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, RedeHelper.RandomRotation()), ModContent.ProjectileType<SpiritArrow_Shard>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, RedeHelper.RandomRotation()), ProjectileType<SpiritArrow_Shard>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Main.myPlayer);
                 }
             }
         }

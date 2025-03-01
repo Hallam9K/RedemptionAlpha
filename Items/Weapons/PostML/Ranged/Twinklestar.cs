@@ -58,7 +58,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             {
                 velocity *= Main.rand.NextFloat(0.8f, 1f);
                 Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(40));
-                Projectile.NewProjectile(source, position, perturbedSpeed, type, damage, knockback, player.whoAmI, 0, 0, i);
+                Projectile.NewProjectile(source, position, perturbedSpeed, ProjectileType<TwinklestarTinyStar>(), damage, knockback, player.whoAmI, 0, 0, i);
             }
             Projectile.NewProjectile(source, position, velocity, ProjectileType<TwinklestarHoldout>(), damage, knockback, player.whoAmI, 0, 0, player.itemAnimationMax);
             return false;

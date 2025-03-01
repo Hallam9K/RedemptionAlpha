@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria;
@@ -28,7 +27,6 @@ namespace Redemption.Projectiles.Ranged
             Projectile.penetrate = 1;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.timeLeft = 180;
-            Projectile.arrow = true;
         }
         NPC target;
         public override void AI()

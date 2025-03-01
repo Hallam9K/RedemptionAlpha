@@ -35,6 +35,12 @@ namespace Redemption.Projectiles.Misc
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 1200;
             Projectile.alpha = 255;
+            Projectile.usesLocalNPCImmunity = true;
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            Projectile.localNPCImmunity[target.whoAmI] = 15;
+            target.immune[Projectile.owner] = 0;
         }
         public override bool? CanCutTiles() => false;
         public ref float Element => ref Projectile.ai[1];
