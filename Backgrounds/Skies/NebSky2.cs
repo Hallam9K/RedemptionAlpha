@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Redemption.NPCs.Bosses.Neb;
+using System;
 using Terraria;
 using Terraria.Graphics.Effects;
-using Terraria.ModLoader;
 
 namespace Redemption.Backgrounds.Skies
 {
@@ -9,6 +10,7 @@ namespace Redemption.Backgrounds.Skies
     {
         public bool Active;
         public float Intensity;
+        public float MoonbeamIntensity;
         public override void Update(GameTime gameTime)
         {
             if (Active)
@@ -26,10 +28,25 @@ namespace Redemption.Backgrounds.Skies
             Vector4 value = inColor.ToVector4();
             return new Color(Vector4.Lerp(value, Vector4.One, Intensity * 0.5f));
         }
+        private Color skyColor;
         public float Rotation = 0;
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {
-            Texture2D SkyTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/NebSky2").Value;
+            Texture2D SkyTex = Request<Texture2D>("Redemption/Backgrounds/Skies/NebSky2").Value;
+            Texture2D SkyTex3 = Request<Texture2D>("Redemption/Backgrounds/Skies/SkyTex3").Value;
+
+            bool beamActive = false;
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                if (!proj.active)
+                    continue;
+
+                if (proj.type == ProjectileType<Neb_Moonbeam>() && proj.localAI[0] >= 20)
+                {
+                    beamActive = true;
+                    MoonbeamIntensity = proj.Opacity;
+                    skyColor = Color.Cyan;
                     break;
                 }
                 else if (proj.type == ProjectileType<Neb_Meteor_Tele>())
