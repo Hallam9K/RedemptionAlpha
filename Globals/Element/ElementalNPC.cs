@@ -189,7 +189,10 @@ namespace Redemption.Globals
                 if (NPCLists.Infected.Contains(npc.type))
                 {
                     if (Main.rand.NextBool(4) && npc.life < npc.lifeMax && item.HasElement(ElementID.Ice))
+                    {
                         npc.AddBuff(BuffType<PureChillDebuff>(), 600);
+                        RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Ice);
+                    }
                 }
                 if (NPCLists.IsSlime.Contains(npc.type))
                 {
@@ -292,7 +295,10 @@ namespace Redemption.Globals
                 if (NPCLists.Infected.Contains(npc.type))
                 {
                     if (Main.rand.NextBool(4) && npc.life < npc.lifeMax && projectile.HasElement(ElementID.Ice))
+                    {
                         npc.AddBuff(BuffType<PureChillDebuff>(), 600);
+                        RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Ice);
+                    }
                 }
                 if (NPCLists.IsSlime.Contains(npc.type))
                 {

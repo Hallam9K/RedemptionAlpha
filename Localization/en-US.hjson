@@ -10752,6 +10752,11 @@ Mods: {
 				DisplayName: Book of Bonuses
 				Tooltip: Discover what bonuses do by triggering their effects
 			}
+
+			CalaviaRelic: {
+				DisplayName: Calavia Relic
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -12271,6 +12276,11 @@ Mods: {
 				ElementalDamageTooltipStyle: {
 					Label: Elemental Damage Tooltip Style
 					Tooltip: Change how the appearance of elemental damage increases appear in weapon tooltips, or disable it
+				}
+
+				NoFlyBuzz: {
+					Label: Disable Fly Buzzing
+					Tooltip: Flies become silent
 				}
 			}
 

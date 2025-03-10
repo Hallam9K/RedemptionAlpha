@@ -1,0 +1,8 @@
+=== 0.8 Beta .4072 === (Tiny Patch 2)
+- Nebuleus' Meteor Armada, Kuunvalo, and Cosmic Fulgura attacks affect the sky background now
+- Reduced Raveyard track's volume back to its previous state
+- Inflicting an Infected enemy with Pure Chill using an Ice weapon discovers Ice effect in Book of Bonuses
+- Slightly improved Calavia's map head icon
+2117. Added Calavia Relic (Can still be obtained if spared)
+2118. Added Config option to turn off Fly buzzing sound, and made it quieter
+===============

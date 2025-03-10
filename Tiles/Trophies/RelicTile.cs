@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Placeable.Trophies;
 using ReLogic.Content;
@@ -19,7 +18,7 @@ namespace Redemption.Tiles.Trophies
         public const int FrameWidth = 18 * 3;
         public const int FrameHeight = 18 * 4;
         public const int HorizontalFrames = 1;
-        public const int VerticalFrames = 21;
+        public const int VerticalFrames = 23;
 
         public Asset<Texture2D> RelicTexture;
 
@@ -29,12 +28,7 @@ namespace Redemption.Tiles.Trophies
         public override void Load()
         {
             if (!Main.dedServ)
-                RelicTexture = ModContent.Request<Texture2D>(RelicTextureName);
-        }
-
-        public override void Unload()
-        {
-            RelicTexture = null;
+                RelicTexture = Request<Texture2D>(RelicTextureName);
         }
 
         public override void SetStaticDefaults()
@@ -71,55 +65,58 @@ namespace Redemption.Tiles.Trophies
             switch (placeStyle)
             {
                 case 0:
-                    itemType = ModContent.ItemType<ErhanRelic>();
+                    itemType = ItemType<ErhanRelic>();
                     break;
                 case 1:
-                    itemType = ModContent.ItemType<KS3Relic>();
+                    itemType = ItemType<KS3Relic>();
                     break;
                 case 2:
-                    itemType = ModContent.ItemType<SoIRelic>();
+                    itemType = ItemType<SoIRelic>();
                     break;
                 case 3:
-                    itemType = ModContent.ItemType<ThornRelic>();
+                    itemType = ItemType<ThornRelic>();
                     break;
                 case 4:
-                    itemType = ModContent.ItemType<KeeperRelic>();
+                    itemType = ItemType<KeeperRelic>();
                     break;
                 case 5:
-                    itemType = ModContent.ItemType<CleaverRelic>();
+                    itemType = ItemType<CleaverRelic>();
                     break;
                 case 6:
-                    itemType = ModContent.ItemType<GigaporaRelic>();
+                    itemType = ItemType<GigaporaRelic>();
                     break;
                 case 7:
-                    itemType = ModContent.ItemType<OORelic>();
+                    itemType = ItemType<OORelic>();
                     break;
                 case 8:
-                    itemType = ModContent.ItemType<PZRelic>();
+                    itemType = ItemType<PZRelic>();
                     break;
                 case 9:
-                    itemType = ModContent.ItemType<AkkaRelic>();
+                    itemType = ItemType<AkkaRelic>();
                     break;
                 case 10:
-                    itemType = ModContent.ItemType<UkkoRelic>();
+                    itemType = ItemType<UkkoRelic>();
                     break;
                 case 11:
-                    itemType = ModContent.ItemType<NebRelic>();
+                    itemType = ItemType<NebRelic>();
                     break;
                 case 12:
-                    itemType = ModContent.ItemType<FowlEmperorRelic>();
+                    itemType = ItemType<FowlEmperorRelic>();
                     break;
                 case 13:
-                    itemType = ModContent.ItemType<CockatriceRelic>();
+                    itemType = ItemType<CockatriceRelic>();
                     break;
                 case 14:
-                    itemType = ModContent.ItemType<BasanRelic>();
+                    itemType = ItemType<BasanRelic>();
                     break;
                 case 18:
-                    itemType = ModContent.ItemType<SkullDiggerRelic>();
+                    itemType = ItemType<SkullDiggerRelic>();
                     break;
                 case 19:
-                    itemType = ModContent.ItemType<EaglecrestGolemRelic>();
+                    itemType = ItemType<EaglecrestGolemRelic>();
+                    break;
+                case 22:
+                    itemType = ItemType<CalaviaRelic>();
                     break;
             }
 

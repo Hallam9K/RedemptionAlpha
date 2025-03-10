@@ -105,7 +105,8 @@ namespace Redemption.NPCs.Critters
                     NPC.noGravity = true;
                     NPC.rotation = NPC.velocity.ToRotation() + MathHelper.Pi;
 
-                    loopVolume = 1 * NPC.scale;
+                    if (!RedeConfigClient.Instance.NoFlyBuzz)
+                        loopVolume = .6f * NPC.scale;
 
                     if (NPC.velocity.Length() < 4)
                         NPC.velocity = RedeHelper.PolarVector(10, RedeHelper.RandomRotation());

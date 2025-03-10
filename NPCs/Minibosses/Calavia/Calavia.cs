@@ -23,6 +23,7 @@ using Redemption.Globals.NPC;
 using Redemption.Textures;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.UI;
+using Redemption.Items.Placeable.Trophies;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -166,6 +167,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<CalaviaRelic>()));
+
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BladeOfTheMountain>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PureIronCrossbow>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Icefall>()));
@@ -679,6 +682,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                     NetMessage.SendData(MessageID.WorldData);
                             }
                             Main.BestiaryTracker.Kills.RegisterKill(NPC);
+                            if (Main.masterMode)
+                                Item.NewItem(NPC.GetSource_Loot(), NPC.Hitbox, ItemType<CalaviaRelic>());
                             NPC.SetDefaults(ModContent.NPCType<Calavia_NPC>());
                         }
                         else
@@ -873,6 +878,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 NPC.Center = gathicPortalPos;
                                 NPC.velocity *= 0;
                                 Main.BestiaryTracker.Kills.RegisterKill(NPC);
+                                if (Main.masterMode)
+                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Hitbox, ItemType<CalaviaRelic>());
                                 NPC.SetDefaults(ModContent.NPCType<Calavia_NPC>());
                                 NPC.netUpdate = true;
                             }

@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
@@ -32,6 +30,26 @@ namespace Redemption.Backgrounds.Skies
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {
             Texture2D SkyTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/NebSky2").Value;
+                    break;
+                }
+                else if (proj.type == ProjectileType<Neb_Meteor_Tele>())
+                {
+                    skyColor = Color.Orange;
+                    beamActive = true;
+                    MoonbeamIntensity += 0.05f;
+                    break;
+                }
+                else if (proj.type == ProjectileType<Neb_Lightning_Tele>())
+                {
+                    skyColor = new(0, 242, 170);
+                    beamActive = true;
+                    MoonbeamIntensity += 0.01f;
+                    break;
+                }
+            }
+            if (!beamActive)
+                MoonbeamIntensity -= 0.01f;
+            MoonbeamIntensity = MathHelper.Clamp(MoonbeamIntensity, 0, 1);
 
             if (maxDepth >= 3.40282347E+38f && minDepth < 3.40282347E+38f)
             {
@@ -39,7 +57,16 @@ namespace Redemption.Backgrounds.Skies
                 if (!Main.dayTime)
                 {
                     Vector2 SkyPos = new(Main.screenWidth / 2, Main.screenHeight / 2);
-                    spriteBatch.Draw(SkyTex, SkyPos, null, Color.White, Rotation, new Vector2(SkyTex.Width >> 1, SkyTex.Height >> 1), 2f, SpriteEffects.None, 1f);
+                    spriteBatch.Draw(SkyTex, SkyPos, null, Color.White * .9f, Rotation, new Vector2(SkyTex.Width >> 1, SkyTex.Height >> 1), 2f, SpriteEffects.None, 1f);
+                    if (MoonbeamIntensity > 0f)
+                    {
+                        float flicker = 1;
+                        if (skyColor == Color.Cyan)
+                            flicker = Main.rand.NextFloat(.9f, 1.1f);
+                        spriteBatch.Draw(SkyTex3, SkyPos, new Rectangle(0, 0, Main.screenWidth, SkyTex3.Height), skyColor with { A = 0 } * MoonbeamIntensity * flicker, 0f, new Vector2(1920 >> 1, 1200 >> 1), 1f, SpriteEffects.None, 1f);
+                        if (skyColor == Color.Cyan)
+                            spriteBatch.Draw(SkyTex3, SkyPos, new Rectangle(0, 0, Main.screenWidth, SkyTex3.Height), Color.White with { A = 0 } * MoonbeamIntensity * flicker, 0f, new Vector2(1920 >> 1, 1200 >> 1), 1f, SpriteEffects.None, 1f);
+                    }
                 }
             }
         }

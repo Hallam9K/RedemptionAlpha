@@ -34,6 +34,8 @@ namespace Redemption
         //[Label("Screen Shake Intensity")]
         //[Tooltip("Reduce to decrease the intensity of screen shaking effects, 0 will disable it entirely")]
         public float ShakeIntensity;
+
+        public bool NoFlyBuzz;
     }
     public class RedeConfigServer : ModConfig
     {

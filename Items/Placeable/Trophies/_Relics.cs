@@ -116,4 +116,9 @@ namespace Redemption.Items.Placeable.Trophies
         protected override int Style => 10;
         protected override Point Size => new(30, 48);
     }
+    public class CalaviaRelic : BaseRelicItem
+    {
+        protected override int Style => 22;
+        protected override Point Size => new(30, 40);
+    }
 }

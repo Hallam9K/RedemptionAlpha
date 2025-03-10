@@ -13,6 +13,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
             ItemID.Sets.CanGetPrefixes[Type] = false;
             ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox;
             MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Spooky"), ModContent.ItemType<RaveyardBox>(), ModContent.TileType<RaveyardBoxTile>());
+            MusicID.Sets.SkipsVolumeRemap[MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Spooky")] = false;
         }
 
         public override void SetDefaults()
