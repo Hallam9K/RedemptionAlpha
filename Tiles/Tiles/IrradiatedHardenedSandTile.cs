@@ -1,9 +1,5 @@
-using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
-using Redemption.Globals.Player;
-using Redemption.Items.Accessories.HM;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,13 +10,10 @@ namespace Redemption.Tiles.Tiles
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
-            Main.tileMergeDirt[Type] = true;
-            Main.tileBlendAll[Type] = true;
-            Main.tileBrick[Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
-            Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedSandstoneTile>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedSandTile>()] = true;
+            Main.tileMerge[Type][TileType<IrradiatedDirtTile>()] = true;
+            Main.tileMerge[TileType<IrradiatedDirtTile>()][Type] = true;
+            Main.tileMerge[Type][TileType<IrradiatedSandstoneTile>()] = true;
+            Main.tileMerge[TileType<IrradiatedSandTile>()][Type] = true;
             Main.tileMerge[Type][TileID.HardenedSand] = true;
             Main.tileMerge[TileID.HardenedSand][Type] = true;
             Main.tileMerge[Type][TileID.CorruptHardenedSand] = true;
@@ -39,6 +32,10 @@ namespace Redemption.Tiles.Tiles
             AddMapEntry(new Color(149, 133, 121));
             MineResist = 1.5f;
             DustType = DustID.Ash;
+        }
+        public override void ModifyFrameMerge(int i, int j, ref int up, ref int down, ref int left, ref int right, ref int upLeft, ref int upRight, ref int downLeft, ref int downRight)
+        {
+            WorldGen.TileMergeAttempt(-2, TileType<IrradiatedSandTile>(), ref up, ref down, ref left, ref right, ref upLeft, ref upRight, ref downLeft, ref downRight);
         }
         public override void FloorVisuals(Player player)
         {

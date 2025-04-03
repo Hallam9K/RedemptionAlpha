@@ -1,38 +1,39 @@
 using Redemption.BaseExtension;
+using Redemption.Projectiles.Misc;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Tiles
 {
-    public class IrradiatedDirtTile : ModTile
+    public class IrradiatedMudTile : ModTile
     {
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
             Main.tileBrick[Type] = true;
-            Main.tileMerge[Type][TileType<IrradiatedGrassTile>()] = true;
-            Main.tileMerge[TileType<IrradiatedGrassTile>()][Type] = true;
-            Main.tileMerge[Type][TileType<IrradiatedCorruptGrassTile>()] = true;
-            Main.tileMerge[TileType<IrradiatedCorruptGrassTile>()][Type] = true;
-            Main.tileMerge[Type][TileType<IrradiatedCrimsonGrassTile>()] = true;
-            Main.tileMerge[TileType<IrradiatedCrimsonGrassTile>()][Type] = true;
+            Main.tileMerge[Type][TileType<IrradiatedJungleGrassTile>()] = true;
+            Main.tileMerge[TileType<IrradiatedJungleGrassTile>()][Type] = true;
+            Main.tileMerge[Type][TileType<IrradiatedDirtTile>()] = true;
+            Main.tileMerge[TileType<IrradiatedDirtTile>()][Type] = true;
             Main.tileMerge[Type][TileID.Dirt] = true;
             Main.tileMerge[TileID.Dirt][Type] = true;
-            Main.tileMerge[Type][TileID.Grass] = true;
-            Main.tileMerge[TileID.Grass][Type] = true;
-            Main.tileMerge[Type][TileID.CorruptGrass] = true;
-            Main.tileMerge[TileID.CorruptGrass][Type] = true;
-            Main.tileMerge[Type][TileID.CrimsonGrass] = true;
-            Main.tileMerge[TileID.CrimsonGrass][Type] = true;
-            Main.tileMerge[Type][TileID.HallowedGrass] = true;
-            Main.tileMerge[TileID.HallowedGrass][Type] = true;
-            TileID.Sets.Conversion.Dirt[Type] = true;
+            Main.tileMerge[Type][TileID.Mud] = true;
+            Main.tileMerge[TileID.Mud][Type] = true;
+            Main.tileMerge[Type][TileID.JungleGrass] = true;
+            Main.tileMerge[TileID.JungleGrass][Type] = true;
+            Main.tileMerge[Type][TileID.MushroomGrass] = true;
+            Main.tileMerge[TileID.MushroomGrass][Type] = true;
+            Main.tileMerge[Type][TileID.CorruptJungleGrass] = true;
+            Main.tileMerge[TileID.CorruptJungleGrass][Type] = true;
+            Main.tileMerge[Type][TileID.CrimsonJungleGrass] = true;
+            Main.tileMerge[TileID.CrimsonJungleGrass][Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
             TileID.Sets.CanBeDugByShovel[Type] = true;
+            TileID.Sets.Mud[Type] = true;
             Main.tileBlockLight[Type] = true;
-            AddMapEntry(new Color(117, 99, 86));
+            AddMapEntry(new Color(77, 67, 69));
             MinPick = 10;
             MineResist = 1f;
             DustType = DustID.Ash;
@@ -45,6 +46,12 @@ namespace Redemption.Tiles.Tiles
                 dust.noGravity = true;
                 dust.fadeIn = 1f;
             }
+        }
+        public override void Convert(int i, int j, int conversionType)
+        {
+            if (conversionType == GetInstance<WastelandSolutionConversion>().Type)
+                return;
+            WorldGen.ConvertTile(i, j, TileID.Mud);
         }
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {

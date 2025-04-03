@@ -60,8 +60,8 @@ namespace Redemption.WorldGeneration.Misc
 
             Mod mod = Redemption.Instance;
             Point16 dims = Point16.Zero;
-            StructureHelper.Generator.GetDimensions("WorldGeneration/Misc/C", mod, ref dims);
-            StructureHelper.Generator.GenerateStructure("WorldGeneration/Misc/C", new Point16(100 - (dims.X / 2), 100 - (dims.Y / 2)), mod);
+            StructureHelper.API.Legacy.LegacyGenerator.GetDimensions("WorldGeneration/Misc/C", mod, ref dims);
+            StructureHelper.API.Legacy.LegacyGenerator.GenerateStructure("WorldGeneration/Misc/C", new Point16(100 - (dims.X / 2), 100 - (dims.Y / 2)), mod);
         }
         public CPass(string name, float loadWeight) : base(name, loadWeight)
         {

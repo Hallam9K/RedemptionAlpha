@@ -1,10 +1,6 @@
-using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
-using Redemption.Globals.Player;
-using Redemption.Items.Accessories.HM;
 using Redemption.Tiles.Natural;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -28,10 +24,10 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[TileID.Ebonstone][Type] = true;
             Main.tileMerge[Type][TileID.Pearlstone] = true;
             Main.tileMerge[TileID.Pearlstone][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
-            Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedStoneTile>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedEbonstoneTile>()] = true;
+            Main.tileMerge[Type][TileType<IrradiatedDirtTile>()] = true;
+            Main.tileMerge[TileType<IrradiatedDirtTile>()][Type] = true;
+            Main.tileMerge[Type][TileType<IrradiatedStoneTile>()] = true;
+            Main.tileMerge[Type][TileType<IrradiatedEbonstoneTile>()] = true;
             TileID.Sets.Conversion.Stone[Type] = true;
             TileID.Sets.Stone[Type] = true;
             TileID.Sets.GeneralPlacementTiles[Type] = true;
@@ -68,28 +64,28 @@ namespace Redemption.Tiles.Tiles
 
             if (!tileAbove.HasTile && !tileAbove2.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(400))
             {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<DeadRockStalagmitesTile>(), true);
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<DeadRockStalagmitesTile>(), 0, 0, -1, -1);
+                WorldGen.PlaceObject(i, j - 1, TileType<DeadRockStalagmitesTile>(), true);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, TileType<DeadRockStalagmitesTile>(), 0, 0, -1, -1);
             }
             if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(400))
             {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<DeadRockStalagmites2Tile>(), true);
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<DeadRockStalagmites2Tile>(), 0, 0, -1, -1);
+                WorldGen.PlaceObject(i, j - 1, TileType<DeadRockStalagmites2Tile>(), true);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, TileType<DeadRockStalagmites2Tile>(), 0, 0, -1, -1);
             }
             if (!tileBelow.HasTile && !tileBelow2.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(400))
             {
-                WorldGen.PlaceObject(i, j + 1, ModContent.TileType<DeadRockStalacmitesTile>(), true);
-                NetMessage.SendObjectPlacement(-1, i, j + 1, ModContent.TileType<DeadRockStalacmitesTile>(), 0, 0, -1, -1);
+                WorldGen.PlaceObject(i, j + 1, TileType<DeadRockStalacmitesTile>(), true);
+                NetMessage.SendObjectPlacement(-1, i, j + 1, TileType<DeadRockStalacmitesTile>(), 0, 0, -1, -1);
             }
             if (!tileBelow.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(400))
             {
-                WorldGen.PlaceObject(i, j + 1, ModContent.TileType<DeadRockStalacmites2Tile>(), true);
-                NetMessage.SendObjectPlacement(-1, i, j + 1, ModContent.TileType<DeadRockStalacmites2Tile>(), 0, 0, -1, -1);
+                WorldGen.PlaceObject(i, j + 1, TileType<DeadRockStalacmites2Tile>(), true);
+                NetMessage.SendObjectPlacement(-1, i, j + 1, TileType<DeadRockStalacmites2Tile>(), 0, 0, -1, -1);
             }
             if (NPC.downedMechBossAny && !tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(600))
             {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>());
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>(), 0, 0, -1, -1);
+                WorldGen.PlaceObject(i, j - 1, TileType<XenomiteCrystalBigTile>());
+                NetMessage.SendObjectPlacement(-1, i, j - 1, TileType<XenomiteCrystalBigTile>(), 0, 0, -1, -1);
             }
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

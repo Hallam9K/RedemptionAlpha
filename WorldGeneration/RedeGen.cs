@@ -250,9 +250,9 @@ namespace Redemption.WorldGeneration
                     }
                 }
                 Point16 dims = Point16.Zero;
-                StructureHelper.Generator.GetDimensions("WorldGeneration/AllWastelandHouse", Mod, ref dims);
+                StructureHelper.API.Legacy.LegacyGenerator.GetDimensions("WorldGeneration/AllWastelandHouse", Mod, ref dims);
                 Point16 house = new(Main.spawnTileX - (dims.X / 2), Main.spawnTileY - 15);
-                StructureHelper.Generator.GenerateStructure("WorldGeneration/AllWastelandHouse", house, Mod);
+                StructureHelper.API.Legacy.LegacyGenerator.GenerateStructure("WorldGeneration/AllWastelandHouse", house, Mod);
                 for (int i = house.X - 1; i < house.X + dims.X + 1; i++)
                 {
                     for (int j = house.Y - 1; j < house.Y + dims.Y; j++)
@@ -639,7 +639,7 @@ namespace Redemption.WorldGeneration
 
                             int index = WorldGen.genRand.Next(11);
                             Point16 dims = new();
-                            StructureHelper.Generator.GetMultistructureDimensions("WorldGeneration/DragonLeadM", Mod, index, ref dims);
+                            StructureHelper.API.Legacy.LegacyGenerator.GetMultistructureDimensions("WorldGeneration/DragonLeadM", Mod, index, ref dims);
 
                             bool whitelist = false;
                             int stoneScore = 0;
@@ -666,7 +666,7 @@ namespace Redemption.WorldGeneration
                                 continue;
 
                             Point16 origin = new(tilesX, tilesY);
-                            StructureHelper.Generator.GenerateMultistructureSpecific("WorldGeneration/DragonLeadM", origin, Mod, index);
+                            StructureHelper.API.Legacy.LegacyGenerator.GenerateMultistructureSpecific("WorldGeneration/DragonLeadM", origin, Mod, index);
 
                             for (int x = 0; x < dims.X; x++)
                             {
@@ -724,14 +724,14 @@ namespace Redemption.WorldGeneration
                                 continue;
 
                             Vector2 origin = new(tilesX, tilesY);
-                            StructureHelper.Generator.GenerateMultistructureRandom("WorldGeneration/AncientDecalR", origin.ToPoint16(), Mod);
+                            StructureHelper.API.Legacy.LegacyGenerator.GenerateMultistructureRandom("WorldGeneration/AncientDecalR", origin.ToPoint16(), Mod);
                             for (int i = 0; i < roomNum - 2; i++)
                             {
                                 origin.X += 25;
-                                StructureHelper.Generator.GenerateMultistructureRandom("WorldGeneration/AncientDecalM", origin.ToPoint16(), Mod);
+                                StructureHelper.API.Legacy.LegacyGenerator.GenerateMultistructureRandom("WorldGeneration/AncientDecalM", origin.ToPoint16(), Mod);
                             }
                             origin.X += 25;
-                            StructureHelper.Generator.GenerateMultistructureRandom("WorldGeneration/AncientDecalL", origin.ToPoint16(), Mod);
+                            StructureHelper.API.Legacy.LegacyGenerator.GenerateMultistructureRandom("WorldGeneration/AncientDecalL", origin.ToPoint16(), Mod);
 
                             for (int x = 0; x < 25 * roomNum; x++)
                             {
@@ -824,14 +824,14 @@ namespace Redemption.WorldGeneration
                                 continue;
 
                             Vector2 origin = new(tilesX, tilesY);
-                            StructureHelper.Generator.GenerateStructure("WorldGeneration/IceDecalR", origin.ToPoint16(), Mod);
+                            StructureHelper.API.Legacy.LegacyGenerator.GenerateStructure("WorldGeneration/IceDecalR", origin.ToPoint16(), Mod);
                             for (int i = 0; i < roomNum; i++)
                             {
                                 origin.X += 30;
-                                StructureHelper.Generator.GenerateMultistructureRandom("WorldGeneration/IceDecalM", origin.ToPoint16(), Mod);
+                                StructureHelper.API.Legacy.LegacyGenerator.GenerateMultistructureRandom("WorldGeneration/IceDecalM", origin.ToPoint16(), Mod);
                             }
                             origin.X += 30;
-                            StructureHelper.Generator.GenerateStructure("WorldGeneration/IceDecalL", origin.ToPoint16(), Mod);
+                            StructureHelper.API.Legacy.LegacyGenerator.GenerateStructure("WorldGeneration/IceDecalL", origin.ToPoint16(), Mod);
 
                             for (int x = 0; x < 30 * (roomNum + 2); x++)
                             {
@@ -983,16 +983,16 @@ namespace Redemption.WorldGeneration
                             continue;
 
                         Vector2 origin = new(tilesX, tilesY);
-                        Generator.GenerateStructure("WorldGeneration/AncientDecalRSpirit1", origin.ToPoint16(), Mod);
+                        StructureHelper.API.Legacy.LegacyGenerator.GenerateStructure("WorldGeneration/AncientDecalRSpirit1", origin.ToPoint16(), Mod);
                         origin.X += 25;
                         origin.Y += 14;
                         for (int i = 0; i < roomNum - 2; i++)
                         {
                             origin.X += 25;
-                            Generator.GenerateMultistructureRandom("WorldGeneration/AncientDecalM", origin.ToPoint16(), Mod);
+                            StructureHelper.API.Legacy.LegacyGenerator.GenerateMultistructureRandom("WorldGeneration/AncientDecalM", origin.ToPoint16(), Mod);
                         }
                         origin.X += 25;
-                        Generator.GenerateMultistructureRandom("WorldGeneration/AncientDecalL", origin.ToPoint16(), Mod);
+                        StructureHelper.API.Legacy.LegacyGenerator.GenerateMultistructureRandom("WorldGeneration/AncientDecalL", origin.ToPoint16(), Mod);
 
                         for (int x = 0; x < 25 + (25 * roomNum); x++)
                         {
@@ -1064,15 +1064,15 @@ namespace Redemption.WorldGeneration
                             continue;
 
                         Vector2 origin = new(tilesX, tilesY);
-                        Generator.GenerateMultistructureRandom("WorldGeneration/AncientDecalR", origin.ToPoint16(), Mod);
+                        StructureHelper.API.Legacy.LegacyGenerator.GenerateMultistructureRandom("WorldGeneration/AncientDecalR", origin.ToPoint16(), Mod);
                         for (int i = 0; i < roomNum - 2; i++)
                         {
                             origin.X += 25;
-                            Generator.GenerateMultistructureRandom("WorldGeneration/AncientDecalM", origin.ToPoint16(), Mod);
+                            StructureHelper.API.Legacy.LegacyGenerator.GenerateMultistructureRandom("WorldGeneration/AncientDecalM", origin.ToPoint16(), Mod);
                         }
                         origin.X += 25;
                         origin.Y -= 19;
-                        Generator.GenerateStructure("WorldGeneration/AncientDecalLSpirit1", origin.ToPoint16(), Mod);
+                        StructureHelper.API.Legacy.LegacyGenerator.GenerateStructure("WorldGeneration/AncientDecalLSpirit1", origin.ToPoint16(), Mod);
 
                         for (int x = 0; x < 25 + (25 * roomNum); x++)
                         {
@@ -1142,22 +1142,22 @@ namespace Redemption.WorldGeneration
                             continue;
 
                         Vector2 origin = new(tilesX, tilesY);
-                        Generator.GenerateStructure("WorldGeneration/IceDecalR", origin.ToPoint16(), Mod);
+                        StructureHelper.API.Legacy.LegacyGenerator.GenerateStructure("WorldGeneration/IceDecalR", origin.ToPoint16(), Mod);
                         for (int i = 0; i < roomNum; i++)
                         {
                             origin.X += 30;
                             if (i == bigRoom)
                             {
                                 origin.Y -= 6;
-                                Generator.GenerateStructure("WorldGeneration/IceDecalMSpecial1", origin.ToPoint16(), Mod);
+                                StructureHelper.API.Legacy.LegacyGenerator.GenerateStructure("WorldGeneration/IceDecalMSpecial1", origin.ToPoint16(), Mod);
                                 origin.X += 30;
                                 origin.Y += 6;
                             }
                             else
-                                Generator.GenerateMultistructureRandom("WorldGeneration/IceDecalM", origin.ToPoint16(), Mod);
+                                StructureHelper.API.Legacy.LegacyGenerator.GenerateMultistructureRandom("WorldGeneration/IceDecalM", origin.ToPoint16(), Mod);
                         }
                         origin.X += 30;
-                        Generator.GenerateStructure("WorldGeneration/IceDecalL", origin.ToPoint16(), Mod);
+                        StructureHelper.API.Legacy.LegacyGenerator.GenerateStructure("WorldGeneration/IceDecalL", origin.ToPoint16(), Mod);
 
                         for (int x = 0; x < 30 + (30 * roomNum); x++)
                         {
@@ -1260,7 +1260,7 @@ namespace Redemption.WorldGeneration
                             continue;
 
                         Vector2 origin = new(tilesX, tilesY);
-                        Generator.GenerateStructure("WorldGeneration/CommonGuardTomb", origin.ToPoint16(), Mod);
+                        StructureHelper.API.Legacy.LegacyGenerator.GenerateStructure("WorldGeneration/CommonGuardTomb", origin.ToPoint16(), Mod);
                         for (int x = 0; x < 53; x++)
                         {
                             for (int y = 0; y < 33; y++)
@@ -1299,7 +1299,7 @@ namespace Redemption.WorldGeneration
                             continue;
 
                         Point16 dims = Point16.Zero;
-                        Generator.GetDimensions("WorldGeneration/JungleDecalSpecial1", Mod, ref dims);
+                        StructureHelper.API.Legacy.LegacyGenerator.GetDimensions("WorldGeneration/JungleDecalSpecial1", Mod, ref dims);
 
                         bool blacklist = false;
                         int stoneScore = 0;
@@ -1326,7 +1326,7 @@ namespace Redemption.WorldGeneration
                             continue;
 
                         Vector2 origin = new(tilesX, tilesY);
-                        Generator.GenerateStructure("WorldGeneration/JungleDecalSpecial1", origin.ToPoint16(), Mod);
+                        StructureHelper.API.Legacy.LegacyGenerator.GenerateStructure("WorldGeneration/JungleDecalSpecial1", origin.ToPoint16(), Mod);
                         for (int x = 0; x < dims.X; x++)
                         {
                             for (int y = 0; y < dims.Y; y++)
@@ -1559,7 +1559,7 @@ namespace Redemption.WorldGeneration
                     #region Jo Shrine
                     progress.Message = "Thinking with portals...Golden Gateway";
                     Point16 dims = new();
-                    Generator.GetDimensions("WorldGeneration/JShrine", Mod, ref dims);
+                    StructureHelper.API.Legacy.LegacyGenerator.GetDimensions("WorldGeneration/JShrine", Mod, ref dims);
                     int totalAttempts = 0;
                     bool placed = false;
                     while (!placed)
@@ -2755,7 +2755,7 @@ namespace Redemption.WorldGeneration
             fargo.Call("AddIndestructibleRectangle", new Rectangle((int)LabVector.X * 16, (int)LabVector.Y * 16, 289 * 16, 217 * 16));
             fargo.Call("AddIndestructibleRectangle", new Rectangle((int)newbCaveVector.X * 16, (int)newbCaveVector.Y * 16, 60 * 16, 82 * 16));
             fargo.Call("AddIndestructibleRectangle", new Rectangle((int)slayerShipVector.X * 16, (int)slayerShipVector.Y * 16, 133 * 16, 58 * 16));
-            Generator.GetDimensions("WorldGeneration/JShrine", Mod, ref dims);
+            StructureHelper.API.Legacy.LegacyGenerator.GetDimensions("WorldGeneration/JShrine", Mod, ref dims);
             fargo.Call("AddIndestructibleRectangle", new Rectangle(JoShrinePoint.X * 16, JoShrinePoint.Y * 16, dims.X * 16, dims.Y * 16));
             fargo.Call("AddIndestructibleTileType", ModContent.TileType<AncientHallBrickTile>());
             fargo.Call("AddIndestructibleTileType", ModContent.TileType<NiricAutomatonRemainsTile>());
@@ -2901,11 +2901,11 @@ namespace Redemption.WorldGeneration
         {
             Mod mod = Redemption.Instance;
             Point16 point = Point16.Zero;
-            Generator.GetDimensions(path, mod, ref point);
+            StructureHelper.API.Legacy.LegacyGenerator.GetDimensions(path, mod, ref point);
 
             ClearTrees(point, origin);
 
-            Generator.GenerateStructure(path, origin, mod);
+            StructureHelper.API.Legacy.LegacyGenerator.GenerateStructure(path, origin, mod);
 
             if (!resetTileVisual)
                 return;

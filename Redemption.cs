@@ -144,14 +144,14 @@ namespace Redemption
                 dragonLeadCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back", EquipType.Back, GetInstance<DragonLeadRibplate>());
                 shinkiteCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PostML/Shinkite/ShinkiteChestplate_Back", EquipType.Back, GetInstance<ShinkiteChestplate>());
                 mercenaryCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/BLT/MercenarysChestplate_Back", EquipType.Back, GetInstance<MercenarysChestplate>());
-                archeMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs", EquipType.Legs, GetModItem(ItemType<ArchePatreonVanityLegs>()));
-                archeFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs", EquipType.Legs, GetModItem(ItemType<ArchePatreonVanityLegs>()));
-                unconMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_Legs", EquipType.Legs, GetModItem(ItemType<UnconLegs>()));
-                unconFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_FemaleLegs", EquipType.Legs, GetModItem(ItemType<UnconLegs>()));
-                unconMaleLeg2ID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs2_Legs", EquipType.Legs, GetModItem(ItemType<UnconLegs2>()));
-                unconFemLeg2ID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs2_FemaleLegs", EquipType.Legs, GetModItem(ItemType<UnconLegs2>()));
-                halmMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_Legs", EquipType.Legs, GetModItem(ItemType<HallamLeggings>()));
-                halmFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_FemaleLegs", EquipType.Legs, GetModItem(ItemType<HallamLeggings>()));
+                archeMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs", EquipType.Legs, GetInstance<ArchePatreonVanityLegs>());
+                archeFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs", EquipType.Legs, GetInstance<ArchePatreonVanityLegs>(), "ArchePatreonVanityLegs_Female");
+                unconMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_Legs", EquipType.Legs, GetInstance<UnconLegs>());
+                unconFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_FemaleLegs", EquipType.Legs, GetInstance<UnconLegs>(), "UnconLegs_Female");
+                unconMaleLeg2ID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs2_Legs", EquipType.Legs, GetInstance<UnconLegs2>());
+                unconFemLeg2ID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs2_FemaleLegs", EquipType.Legs, GetInstance<UnconLegs2>(), "UnconLegs2_Female");
+                halmMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_Legs", EquipType.Legs, GetInstance<HallamLeggings>());
+                halmFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_FemaleLegs", EquipType.Legs, GetInstance<HallamLeggings>(), "HallamLeggings_Female");
                 #endregion
 
                 int width = Main.graphics.GraphicsDevice.Viewport.Width;

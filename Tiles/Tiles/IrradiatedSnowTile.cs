@@ -1,10 +1,6 @@
-using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
-using Redemption.Globals.Player;
-using Redemption.Items.Accessories.HM;
 using Redemption.Tiles.Natural;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,7 +12,6 @@ namespace Redemption.Tiles.Tiles
         {
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
-            Main.tileBlendAll[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
             TileID.Sets.Conversion.Snow[Type] = true;
@@ -52,23 +47,23 @@ namespace Redemption.Tiles.Tiles
             if (NPC.downedMechBossAny && !tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(100))
             {
                 int rand = Main.rand.Next(4);
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), true, rand);
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), rand, 0, -1, -1);
+                WorldGen.PlaceObject(i, j - 1, TileType<XenomiteCrystalTile>(), true, rand);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, TileType<XenomiteCrystalTile>(), rand, 0, -1, -1);
             }
             if (!tileBelow.HasTile && !tileBelow2.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(300))
             {
-                WorldGen.PlaceObject(i, j + 1, ModContent.TileType<RadioactiveIciclesTile>(), true);
-                NetMessage.SendObjectPlacement(-1, i, j + 1, ModContent.TileType<RadioactiveIciclesTile>(), 0, 0, -1, -1);
+                WorldGen.PlaceObject(i, j + 1, TileType<RadioactiveIciclesTile>(), true);
+                NetMessage.SendObjectPlacement(-1, i, j + 1, TileType<RadioactiveIciclesTile>(), 0, 0, -1, -1);
             }
             if (!tileBelow.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(300))
             {
-                WorldGen.PlaceObject(i, j + 1, ModContent.TileType<RadioactiveIciclesTile>(), true);
-                NetMessage.SendObjectPlacement(-1, i, j + 1, ModContent.TileType<RadioactiveIciclesTile>(), 0, 0, -1, -1);
+                WorldGen.PlaceObject(i, j + 1, TileType<RadioactiveIciclesTile>(), true);
+                NetMessage.SendObjectPlacement(-1, i, j + 1, TileType<RadioactiveIciclesTile>(), 0, 0, -1, -1);
             }
             if (NPC.downedMechBossAny && !tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(600))
             {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>());
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>(), 0, 0, -1, -1);
+                WorldGen.PlaceObject(i, j - 1, TileType<XenomiteCrystalBigTile>());
+                NetMessage.SendObjectPlacement(-1, i, j - 1, TileType<XenomiteCrystalBigTile>(), 0, 0, -1, -1);
             }
         }
     }

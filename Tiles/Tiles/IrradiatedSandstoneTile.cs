@@ -1,10 +1,6 @@
-using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
-using Redemption.Globals.Player;
-using Redemption.Items.Accessories.HM;
 using Redemption.Tiles.Natural;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,12 +12,12 @@ namespace Redemption.Tiles.Tiles
         {
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
-            Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedSandTile>()] = true;
-            Main.tileMerge[ModContent.TileType<IrradiatedSandTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedHardenedSandTile>()] = true;
-            Main.tileMerge[ModContent.TileType<IrradiatedHardenedSandTile>()][Type] = true;
+            Main.tileMerge[Type][TileType<IrradiatedDirtTile>()] = true;
+            Main.tileMerge[TileType<IrradiatedDirtTile>()][Type] = true;
+            Main.tileMerge[Type][TileType<IrradiatedSandTile>()] = true;
+            Main.tileMerge[TileType<IrradiatedSandTile>()][Type] = true;
+            Main.tileMerge[Type][TileType<IrradiatedHardenedSandTile>()] = true;
+            Main.tileMerge[TileType<IrradiatedHardenedSandTile>()][Type] = true;
             Main.tileMerge[Type][TileID.Sandstone] = true;
             Main.tileMerge[TileID.Sandstone][Type] = true;
             Main.tileMerge[Type][TileID.CorruptSandstone] = true;
@@ -67,28 +63,28 @@ namespace Redemption.Tiles.Tiles
 
             if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(300))
             {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<GrubNestTile>());
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<GrubNestTile>(), 0, 0, -1, -1);
+                WorldGen.PlaceObject(i, j - 1, TileType<GrubNestTile>());
+                NetMessage.SendObjectPlacement(-1, i, j - 1, TileType<GrubNestTile>(), 0, 0, -1, -1);
             }
             if (!tileAbove.HasTile && !tileAbove2.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(300))
             {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<RadioactiveSandstoneStalagmitesTile>(), true);
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<RadioactiveSandstoneStalagmitesTile>(), 0, 0, -1, -1);
+                WorldGen.PlaceObject(i, j - 1, TileType<RadioactiveSandstoneStalagmitesTile>(), true);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, TileType<RadioactiveSandstoneStalagmitesTile>(), 0, 0, -1, -1);
             }
             if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(300))
             {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<RadioactiveSandstoneStalagmites2Tile>(), true);
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<RadioactiveSandstoneStalagmites2Tile>(), 0, 0, -1, -1);
+                WorldGen.PlaceObject(i, j - 1, TileType<RadioactiveSandstoneStalagmites2Tile>(), true);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, TileType<RadioactiveSandstoneStalagmites2Tile>(), 0, 0, -1, -1);
             }
             if (!tileBelow.HasTile && !tileBelow2.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(300))
             {
-                WorldGen.PlaceObject(i, j + 1, ModContent.TileType<RadioactiveSandstoneStalacmitesTile>(), true);
-                NetMessage.SendObjectPlacement(-1, i, j + 1, ModContent.TileType<RadioactiveSandstoneStalacmitesTile>(), 0, 0, -1, -1);
+                WorldGen.PlaceObject(i, j + 1, TileType<RadioactiveSandstoneStalacmitesTile>(), true);
+                NetMessage.SendObjectPlacement(-1, i, j + 1, TileType<RadioactiveSandstoneStalacmitesTile>(), 0, 0, -1, -1);
             }
             if (!tileBelow.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(300))
             {
-                WorldGen.PlaceObject(i, j + 1, ModContent.TileType<RadioactiveSandstoneStalacmites2Tile>(), true);
-                NetMessage.SendObjectPlacement(-1, i, j + 1, ModContent.TileType<RadioactiveSandstoneStalacmites2Tile>(), 0, 0, -1, -1);
+                WorldGen.PlaceObject(i, j + 1, TileType<RadioactiveSandstoneStalacmites2Tile>(), true);
+                NetMessage.SendObjectPlacement(-1, i, j + 1, TileType<RadioactiveSandstoneStalacmites2Tile>(), 0, 0, -1, -1);
             }
         }
     }

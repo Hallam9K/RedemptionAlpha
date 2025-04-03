@@ -1,11 +1,7 @@
-using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
-using Redemption.Globals.Player;
-using Redemption.Items.Accessories.HM;
 using Redemption.Items.Placeable.Tiles;
 using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,13 +15,12 @@ namespace Redemption.Tiles.Tiles
             Main.tileSolid[Type] = true;
             Main.tileBrick[Type] = true;
             Main.tileMergeDirt[Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
-            Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedSandstoneTile>()] = true;
-            Main.tileMerge[ModContent.TileType<IrradiatedSandstoneTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedHardenedSandTile>()] = true;
-            Main.tileMerge[ModContent.TileType<IrradiatedHardenedSandTile>()][Type] = true;
-            Main.tileBlendAll[Type] = true;
+            Main.tileMerge[Type][TileType<IrradiatedDirtTile>()] = true;
+            Main.tileMerge[TileType<IrradiatedDirtTile>()][Type] = true;
+            Main.tileMerge[Type][TileType<IrradiatedSandstoneTile>()] = true;
+            Main.tileMerge[TileType<IrradiatedSandstoneTile>()][Type] = true;
+            Main.tileMerge[Type][TileType<IrradiatedHardenedSandTile>()] = true;
+            Main.tileMerge[TileType<IrradiatedHardenedSandTile>()][Type] = true;
             Main.tileSand[Type] = true;
             TileID.Sets.CanBeDugByShovel[Type] = true;
             TileID.Sets.Suffocate[Type] = true;
@@ -75,7 +70,7 @@ namespace Redemption.Tiles.Tiles
 
             if (canFall)
             {
-                int projectileType = ModContent.ProjectileType<IrradiatedSandBall>();
+                int projectileType = ProjectileType<IrradiatedSandBall>();
                 float positionX = i * 16 + 8;
                 float positionY = j * 16 + 8;
 
@@ -139,7 +134,7 @@ namespace Redemption.Tiles.Tiles
             Projectile.friendly = false;
             Projectile.hostile = false;
             Projectile.penetrate = -1;
-            tileType = ModContent.TileType<IrradiatedSandTile>();
+            tileType = TileType<IrradiatedSandTile>();
             dustType = DustID.Ash;
         }
 
@@ -220,7 +215,7 @@ namespace Redemption.Tiles.Tiles
                     }
                     else
                     {
-                        Item.NewItem(Projectile.GetSource_DropAsItem(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<IrradiatedSand>());
+                        Item.NewItem(Projectile.GetSource_DropAsItem(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ItemType<IrradiatedSand>());
                     }
 
                     if (!onMinecartTrack && tile.HasTile && tile.TileType == tileType)
@@ -239,7 +234,7 @@ namespace Redemption.Tiles.Tiles
                 }
                 else
                 {
-                    Item.NewItem(Projectile.GetSource_DropAsItem(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<IrradiatedSand>());
+                    Item.NewItem(Projectile.GetSource_DropAsItem(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ItemType<IrradiatedSand>());
                 }
             }
         }

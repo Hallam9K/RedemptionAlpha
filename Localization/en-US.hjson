@@ -9830,6 +9830,11 @@ Mods: {
 				Tooltip: ""
 			}
 
+			IrradiatedMud: {
+				DisplayName: Irradiated Mud
+				Tooltip: ""
+			}
+
 			IrradiatedSandstoneWall: {
 				DisplayName: Irradiated Sandstone Wall
 				Tooltip: ""

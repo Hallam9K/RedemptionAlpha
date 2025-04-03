@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Tiles
 {
-    public class IrradiatedGrassTile : ModTile
+    public class IrradiatedJungleGrassTile : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -17,19 +17,18 @@ namespace Redemption.Tiles.Tiles
             Main.tileSolid[Type] = true;
 
             TileID.Sets.CanBeDugByShovel[Type] = true;
-            TileID.Sets.Grass[Type] = true;
+            TileID.Sets.GrassSpecial[Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.NeedsGrassFraming[Type] = true;
-            TileID.Sets.ForcedDirtMerging[Type] = true;
-            TileID.Sets.Conversion.Grass[Type] = true;
-            TileID.Sets.Conversion.MergesWithDirtInASpecialWay[Type] = true;
+            TileID.Sets.NeedsGrassFramingDirt[Type] = TileID.Mud;
+            TileID.Sets.Conversion.JungleGrass[Type] = true;
             TileID.Sets.ResetsHalfBrickPlacementAttempt[Type] = false;
             TileID.Sets.DoesntPlaceWithTileReplacement[Type] = true;
             AddMapEntry(new Color(125, 115, 97));
             MinPick = 10;
             MineResist = 0.1f;
             DustType = DustID.Ash;
-            RegisterItemDrop(ItemType<IrradiatedDirt>(), 0);
+            RegisterItemDrop(ItemType<IrradiatedMud>(), 0);
         }
         public override bool CanExplode(int i, int j)
         {
@@ -50,7 +49,7 @@ namespace Redemption.Tiles.Tiles
             if (!fail)
             {
                 fail = true;
-                Framing.GetTileSafely(i, j).TileType = (ushort)TileType<IrradiatedDirtTile>();
+                Framing.GetTileSafely(i, j).TileType = (ushort)TileType<IrradiatedMudTile>();
             }
         }
         public override void RandomUpdate(int i, int j)
@@ -77,7 +76,7 @@ namespace Redemption.Tiles.Tiles
                 NetMessage.SendObjectPlacement(-1, i, j - 1, TileType<PurityWastelandFoliage>(), rand, 0, -1, -1);
             }
             if (Main.rand.NextBool(4))
-                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), TileType<IrradiatedDirtTile>(), Type, false, tile.BlockColorAndCoating());
+                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), TileType<IrradiatedMudTile>(), Type, false, tile.BlockColorAndCoating());
 
             if (NPC.downedMechBossAny && !tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(100))
             {

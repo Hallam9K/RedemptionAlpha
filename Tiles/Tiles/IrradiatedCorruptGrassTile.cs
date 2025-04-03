@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Natural;
 using Redemption.Tiles.Plants;
@@ -20,7 +19,7 @@ namespace Redemption.Tiles.Tiles
             TileID.Sets.Grass[Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.NeedsGrassFraming[Type] = true;
-            TileID.Sets.NeedsGrassFramingDirt[Type] = ModContent.TileType<AncientDirtTile>();
+            TileID.Sets.NeedsGrassFramingDirt[Type] = TileType<AncientDirtTile>();
             TileID.Sets.ForcedDirtMerging[Type] = true;
             TileID.Sets.Conversion.Grass[Type] = true;
             TileID.Sets.Conversion.MergesWithDirtInASpecialWay[Type] = true;
@@ -30,7 +29,7 @@ namespace Redemption.Tiles.Tiles
             MinPick = 10;
             MineResist = 0.1f;
             DustType = DustID.Ash;
-            RegisterItemDrop(ModContent.ItemType<IrradiatedDirt>(), 0);
+            RegisterItemDrop(ItemType<IrradiatedDirt>(), 0);
         }
         public override bool CanExplode(int i, int j)
         {
@@ -51,7 +50,7 @@ namespace Redemption.Tiles.Tiles
             if (!fail)
             {
                 fail = true;
-                Framing.GetTileSafely(i, j).TileType = (ushort)ModContent.TileType<IrradiatedDirtTile>();
+                Framing.GetTileSafely(i, j).TileType = (ushort)TileType<IrradiatedDirtTile>();
             }
         }
 
@@ -64,7 +63,7 @@ namespace Redemption.Tiles.Tiles
             {
                 if (tile.Slope != SlopeType.SlopeUpLeft && tile.Slope != SlopeType.SlopeUpRight)
                 {
-                    tileBelow.TileType = (ushort)ModContent.TileType<CorruptWastelandVine>();
+                    tileBelow.TileType = (ushort)TileType<CorruptWastelandVine>();
                     tileBelow.HasTile = true;
                     WorldGen.SquareTileFrame(i, j + 1, true);
                     if (Main.netMode == NetmodeID.Server)
@@ -75,22 +74,22 @@ namespace Redemption.Tiles.Tiles
             if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(15) && Main.tile[i, j - 1].LiquidAmount == 0)
             {
                 int rand = Main.rand.Next(22);
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<CorruptionWastelandFoliage>(), true, rand);
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<CorruptionWastelandFoliage>(), rand, 0, -1, -1);
+                WorldGen.PlaceObject(i, j - 1, TileType<CorruptionWastelandFoliage>(), true, rand);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, TileType<CorruptionWastelandFoliage>(), rand, 0, -1, -1);
             }
             if (Main.rand.NextBool(4))
-                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<IrradiatedDirtTile>(), Type, false, tile.BlockColorAndCoating());
+                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), TileType<IrradiatedDirtTile>(), Type, false, tile.BlockColorAndCoating());
 
             if (NPC.downedMechBossAny && !tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(100))
             {
                 int rand = Main.rand.Next(4);
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), true, rand);
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), rand, 0, -1, -1);
+                WorldGen.PlaceObject(i, j - 1, TileType<XenomiteCrystalTile>(), true, rand);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, TileType<XenomiteCrystalTile>(), rand, 0, -1, -1);
             }
             if (NPC.downedMechBossAny && !tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(600))
             {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>());
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>(), 0, 0, -1, -1);
+                WorldGen.PlaceObject(i, j - 1, TileType<XenomiteCrystalBigTile>());
+                NetMessage.SendObjectPlacement(-1, i, j - 1, TileType<XenomiteCrystalBigTile>(), 0, 0, -1, -1);
             }
         }
 
@@ -102,4 +101,3 @@ namespace Redemption.Tiles.Tiles
         }
     }
 }
-

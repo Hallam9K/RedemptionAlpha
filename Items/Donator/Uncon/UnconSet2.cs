@@ -53,7 +53,6 @@ namespace Redemption.Items.Donator.Uncon
                 .Register();
         }
     }
-    [AutoloadEquip(EquipType.Legs)]
     public class UnconLegs2 : ModItem
     {
         public override void SetStaticDefaults()
