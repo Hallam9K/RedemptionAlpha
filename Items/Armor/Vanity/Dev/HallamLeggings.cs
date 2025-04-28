@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Armor.Vanity.Dev
 {
-    [AutoloadEquip(EquipType.Legs)]
     public class HallamLeggings : ModItem
     {
         public override void SetStaticDefaults()

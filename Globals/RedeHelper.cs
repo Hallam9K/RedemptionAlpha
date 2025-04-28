@@ -1757,6 +1757,10 @@ namespace Redemption.Globals
                     if (target.type == npc.type)
                         return true;
                     break;
+                case 5:
+                    if (target.type == NPCType<KeeperSpirit>() || target.type == NPCType<Keeper>())
+                        return true;
+                    break;
             }
             return false;
         }

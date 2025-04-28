@@ -103,6 +103,16 @@ namespace Redemption.UI.ChatUI
 
             if ((textFinished && ((preFadeTime <= 0 && fadeTime <= 0) || Redemption.RedeSkipDialogue.Current)) || !entity.active)
             {
+                if (RedeConfigClient.Instance.DialogueInChat)
+                {
+                    if (entity is NPC npc)
+                        Main.NewText("<" + npc.GivenOrTypeName + "> " + displayingText, textColor);
+                    else if (entity is Projectile proj)
+                        Main.NewText("<" + proj.Name + "> " + displayingText, textColor);
+                    else
+                        Main.NewText(text, textColor);
+                }
+
                 if (endID > 0)
                 {
                     TriggerEnd(endID);

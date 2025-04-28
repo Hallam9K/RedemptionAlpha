@@ -1,25 +1,18 @@
-using Terraria;
-using Terraria.ID;
-using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
-using Redemption.Globals;
-using Terraria.Audio;
-using Redemption.BaseExtension;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Redemption.Items.Weapons.PreHM.Magic;
-using Redemption.Buffs.NPCBuffs;
-using Terraria.DataStructures;
 using Redemption.Base;
-using Terraria.Utilities;
-using Redemption.Buffs.Debuffs;
-using Redemption.NPCs.Minibosses.Calavia;
+using Redemption.BaseExtension;
+using Redemption.Globals;
 using Redemption.Globals.NPC;
-using ParticleLibrary;
-using Redemption.Dusts;
-using Redemption.Particles;
+using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.NPCs.Minibosses.Calavia;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
-using System.IO;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace Redemption.NPCs.Friendly.SpiritSummons
 {
@@ -61,7 +54,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             NPC.width = 26;
             NPC.height = 48;
-            NPC.damage = 60;
+            NPC.damage = 78;
             NPC.defense = 17;
             NPC.lifeMax = 3000;
             NPC.knockBackResist = 0.2f;
@@ -95,25 +88,12 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
         public override void OnKill()
         {
-            RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(2.6f, 3.4f));
+            RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<LostSoulNPC>(), Main.rand.NextFloat(2.6f, 3.4f));
         }
         public override void OnSpawn(IEntitySource source)
         {
             NPC.localAI[0] = Main.rand.Next(80, 120);
             NPC.netUpdate = true;
-        }
-        public Vector2 moveTo;
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.WriteVector2(moveTo);
-        }
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                moveTo = reader.ReadVector2();
         }
         private int runCooldown;
         private int dodgeCooldown;
@@ -126,11 +106,13 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
 
             Player player = Main.player[(int)NPC.ai[3]];
             RedeNPC globalNPC = NPC.Redemption();
+            var attacker = globalNPC.attacker;
+            NPC.TargetClosest();
 
             dodgeCooldown--;
             dodgeCooldown = (int)MathHelper.Max(0, dodgeCooldown);
 
-            if (AIState < ActionState.Slash && globalNPC.attacker != null)
+            if (AIState < ActionState.Slash)
                 NPC.LookByVelocity();
 
             switch (AIState)
@@ -177,20 +159,19 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         break;
                     }
 
-                    if (!NPC.Sight(globalNPC.attacker, 1400, false, true))
+                    if (!NPC.Sight(attacker, 1400, false, true))
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 12, globalNPC.attacker.Center.Y);
-                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.3f, 4, 18, 18, NPC.Center.Y > globalNPC.attacker.Center.Y, globalNPC.attacker);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 12, attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, attacker.Center, 0.3f, 4, 18, 18, NPC.Center.Y > attacker.Center.Y, attacker);
 
                     if (NPC.life < NPC.lifeMax / 10 && dodgeCooldown <= 0 && BaseAI.HitTileOnSide(NPC, 3))
                     {
-                        for (int i = 0; i < Main.maxProjectiles; i++)
+                        foreach (Projectile proj in Main.ActiveProjectiles)
                         {
-                            Projectile proj = Main.projectile[i];
-                            if (!proj.active || !proj.hostile || proj.damage <= 0 || proj.velocity.Length() == 0)
+                            if (!proj.hostile || proj.damage <= 0 || proj.velocity.Length() == 0)
                                 continue;
 
                             if (!NPC.Sight(proj, 100 + (proj.velocity.Length() * 5), true, true))
@@ -207,19 +188,20 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                             NPC.velocity.X *= 2f;
                             NPC.velocity.Y -= Main.rand.NextFloat(1, 3);
                             dodgeCooldown = 30;
+                            break;
                         }
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 1, 10, interactDoorStyle: 2);
                     Rectangle tooHighCheck = new((int)NPC.Center.X - 60, (int)NPC.Center.Y - 240, 120, 240);
-                    if (NPC.DistanceSQ(globalNPC.attacker.Center) < 180 * 180 || globalNPC.attacker.Hitbox.Intersects(tooHighCheck) || (AITimer++ >= 60 && !NPC.Sight(globalNPC.attacker, -1, false, true)))
+                    if (NPC.DistanceSQ(attacker.Center) < 180 * 180 || attacker.Hitbox.Intersects(tooHighCheck) || (AITimer++ >= 60 && !NPC.Sight(attacker, -1, false, true)))
                     {
                         WeightedRandom<ActionState> attacks = new(Main.rand);
                         attacks.Add(ActionState.Slash);
-                        attacks.Add(ActionState.Stab, NPC.DistanceSQ(globalNPC.attacker.Center) < 80 * 80 ? 0 : 0.5);
+                        attacks.Add(ActionState.Stab, NPC.DistanceSQ(attacker.Center) < 80 * 80 ? 0 : 0.5);
                         attacks.Add(ActionState.SpinSlash, 0.2);
                         attacks.Add(ActionState.Icefall, 0.3);
                         ActionState choice = attacks;
-                        if (!NPC.Sight(globalNPC.attacker, -1, false, true, true))
+                        if (!NPC.Sight(attacker, -1, false, true, true))
                             choice = ActionState.Stab;
                         if (BaseAI.HitTileOnSide(NPC, 3))
                         {
@@ -227,7 +209,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                             AITimer = 0;
                             TimerRand = 0;
                             TimerRand2 = 0;
-                            if (choice == ActionState.Slash && globalNPC.attacker.Center.Y + 60 < NPC.Center.Y)
+                            if (choice == ActionState.Slash && attacker.Center.Y + 60 < NPC.Center.Y)
                             {
                                 AITimer = -60;
                                 TimerRand = 1;
@@ -247,11 +229,11 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 CustomBodyAni = 2;
                                 TimerRand2 = Main.rand.Next(10, 21);
                                 int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_SS_BladeOfTheMountain>(), damage, Vector2.Zero, NPC.whoAmI, TimerRand2, knockback: 7);
+                                NPC.Shoot(NPC.Center, ProjectileType<Calavia_SS_BladeOfTheMountain>(), damage * NPCHelper.HostileProjDamageMultiplier(), Vector2.Zero, NPC.whoAmI, TimerRand2, knockback: 7);
                             }
                             if (AITimer < TimerRand2 + 10)
                             {
-                                NPC.LookAtEntity(globalNPC.attacker);
+                                NPC.LookAtEntity(attacker);
                                 NPC.velocity.X *= 0.5f;
                             }
                             else
@@ -259,7 +241,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                             if (AITimer == TimerRand2 + 10)
                             {
                                 NPC.LookByVelocity();
-                                if (NPC.DistanceSQ(globalNPC.attacker.Center) > 70 * 70)
+                                if (NPC.DistanceSQ(attacker.Center) > 70 * 70)
                                     NPC.velocity.X += 12 * NPC.spriteDirection;
                             }
                             if (AITimer >= TimerRand2 + 40)
@@ -275,7 +257,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         case 1:
                             if (AITimer < -20 && BaseAI.HitTileOnSide(NPC, 3))
                             {
-                                NPC.velocity.Y -= MathHelper.Distance(NPC.Center.Y, globalNPC.attacker.Center.Y) / 8;
+                                NPC.velocity.Y -= MathHelper.Distance(NPC.Center.Y, attacker.Center.Y) / 8;
                                 AITimer = -20;
                             }
 
@@ -284,11 +266,11 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 CustomBodyAni = 2;
                                 TimerRand2 = Main.rand.Next(0, 11);
                                 int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_SS_BladeOfTheMountain>(), damage, Vector2.Zero, NPC.whoAmI, TimerRand2, knockback: 7);
+                                NPC.Shoot(NPC.Center, ProjectileType<Calavia_SS_BladeOfTheMountain>(), damage * NPCHelper.HostileProjDamageMultiplier(), Vector2.Zero, NPC.whoAmI, TimerRand2, knockback: 7);
                             }
                             if (AITimer >= 0 && AITimer < TimerRand2 + 10)
                             {
-                                NPC.LookAtEntity(globalNPC.attacker);
+                                NPC.LookAtEntity(attacker);
                                 NPC.velocity.Y = -.51f;
                                 NPC.velocity *= 0.6f;
                             }
@@ -297,7 +279,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                             if (AITimer == TimerRand2 + 10)
                             {
                                 NPC.LookByVelocity();
-                                if (NPC.DistanceSQ(globalNPC.attacker.Center) > 70 * 70)
+                                if (NPC.DistanceSQ(attacker.Center) > 70 * 70)
                                     NPC.velocity.X += 18 * NPC.spriteDirection;
                             }
                             if (AITimer >= TimerRand2 + 40)
@@ -318,13 +300,13 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     switch (TimerRand)
                     {
                         default:
-                            NPC.LookAtEntity(globalNPC.attacker);
+                            NPC.LookAtEntity(attacker);
                             if (AITimer++ == 0)
                             {
                                 NPC.velocity *= 0;
                                 customArm = true;
                                 int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_SS_BladeOfTheMountain2>(), damage, Vector2.Zero, NPC.whoAmI, TimerRand2, knockback: 7);
+                                NPC.Shoot(NPC.Center, ProjectileType<Calavia_SS_BladeOfTheMountain2>(), damage * NPCHelper.HostileProjDamageMultiplier(), Vector2.Zero, NPC.whoAmI, TimerRand2, knockback: 7);
                             }
                             break;
                         case 1:
@@ -332,7 +314,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                             NPC.rotation = NPC.velocity.X * 0.07f;
                             dodgeCooldown = 20;
                             NPC.noGravity = true;
-                            if (AITimer++ == 0)
+                            if (AITimer++ == 0 && !Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.Swoosh1, NPC.position);
                             if (AITimer >= 20)
                                 TimerRand = 2;
@@ -357,7 +339,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         NPC.velocity *= 0;
                         customArm = true;
                         int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_SS_BladeOfTheMountain2>(), damage, Vector2.Zero, NPC.whoAmI, 3, knockback: 7);
+                        NPC.Shoot(NPC.Center, ProjectileType<Calavia_SS_BladeOfTheMountain2>(), damage * NPCHelper.HostileProjDamageMultiplier(), Vector2.Zero, NPC.whoAmI, 3, knockback: 7);
                     }
                     if (AITimer == 60)
                         NPC.velocity.Y = -12;
@@ -370,7 +352,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     }
                     else
                     {
-                        NPC.LookAtEntity(globalNPC.attacker);
+                        NPC.LookAtEntity(attacker);
                         NPC.velocity *= 0.94f;
                     }
                     if (AITimer >= 200)
@@ -391,14 +373,15 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     {
                         NPC.velocity *= 0;
                         HoldIcefall = true;
-                        SoundEngine.PlaySound(CustomSounds.IceMist, NPC.position);
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.IceMist, NPC.position);
                     }
                     if (AITimer == 30)
                     {
                         for (int i = 0; i < 3; i++)
                         {
-                            NPC.Shoot(NPC.Center + new Vector2(100, -10), ModContent.ProjectileType<Calavia_IcefallMist>(), NPC.damage, new Vector2(Main.rand.NextFloat(-1, 1), 0), 1, knockback: 2);
-                            NPC.Shoot(NPC.Center + new Vector2(-100, -10), ModContent.ProjectileType<Calavia_IcefallMist>(), NPC.damage, new Vector2(Main.rand.NextFloat(-1, 1), 0), 1, knockback: 2);
+                            NPC.Shoot(NPC.Center + new Vector2(100, -10), ProjectileType<Calavia_IcefallMist>(), NPC.damage * NPCHelper.HostileProjDamageMultiplier(), new Vector2(Main.rand.NextFloat(-1, 1), 0), 1, knockback: 2, ai2: NPC.whoAmI);
+                            NPC.Shoot(NPC.Center + new Vector2(-100, -10), ProjectileType<Calavia_IcefallMist>(), NPC.damage * NPCHelper.HostileProjDamageMultiplier(), new Vector2(Main.rand.NextFloat(-1, 1), 0), 1, knockback: 2, ai2: NPC.whoAmI);
                         }
                     }
                     if (AITimer >= 80)
@@ -411,51 +394,19 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     }
                     break;
                 case ActionState.SoulMove:
-                    NPC.alpha = 255;
-                    NPC.noGravity = true;
-                    NPC.noTileCollide = true;
-                    AITimer = 0;
-
-                    ParticleManager.NewParticle(NPC.Center + RedeHelper.Spread(10) + NPC.velocity, Vector2.Zero, new SpiritParticle(), Color.White, 0.6f * 1, 0, 1);
-                    for (int i = 0; i < 2; i++)
-                    {
-                        int dust = Dust.NewDust(NPC.Center + NPC.velocity - Vector2.One, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 1f);
-                        Main.dust[dust].noGravity = true;
-                        Main.dust[dust].velocity *= .1f;
-                        Color dustColor = new(188, 244, 227) { A = 0 };
-                        Main.dust[dust].color = dustColor;
-                    }
-
-                    if (NPC.Hitbox.Intersects(player.Hitbox) && Collision.CanHit(NPC.Center, 0, 0, player.Center, 0, 0) && !Collision.SolidCollision(NPC.position, NPC.width, NPC.height))
-                    {
-                        for (int i = 0; i < 10; i++)
-                        {
-                            int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.DungeonSpirit, 0, 0, Scale: 2);
-                            Main.dust[dust].velocity *= 2f;
-                            Main.dust[dust].noGravity = true;
-                        }
-
-                        NPC.alpha = 0;
-                        NPC.noGravity = false;
-                        NPC.noTileCollide = false;
-                        NPC.velocity *= 0f;
-
-                        moveTo = NPC.FindGround(20);
-                        runCooldown = 0;
-                        TimerRand = Main.rand.Next(120, 260);
-                        AIState = ActionState.Idle;
-                        NPC.netUpdate = true;
-                    }
-                    else
-                        NPC.Move(player.Center - new Vector2(0, 8), 20, 20);
-
+                    SoulMoveState(NPC, ref AITimer, player, ref TimerRand, ref runCooldown, ref moveTo);
                     break;
 
             }
             if (AIState is not ActionState.SoulMove)
             {
-                NPC.alpha += Main.rand.Next(-10, 11);
-                NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 0, 30);
+                if (NoSpiritEffect(NPC))
+                    NPC.alpha = 0;
+                else
+                {
+                    NPC.alpha += Main.rand.Next(-10, 11);
+                    NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 0, 30);
+                }
             }
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
@@ -514,34 +465,13 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             if (HoldIcefall)
                 BodyFrame = 2 * frameHeight;
         }
-        public int GetNearestNPC()
-        {
-            float nearestNPCDist = -1;
-            int nearestNPC = -1;
-
-            for (int i = 0; i < Main.maxNPCs; i++)
-            {
-                NPC target = Main.npc[i];
-                if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan || target.type == NPCID.TargetDummy)
-                    continue;
-
-                if (target.friendly || target.lifeMax <= 5 || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type])
-                    continue;
-
-                if (nearestNPCDist != -1 && !(target.Distance(NPC.Center) < nearestNPCDist))
-                    continue;
-
-                nearestNPCDist = target.Distance(NPC.Center);
-                nearestNPC = target.whoAmI;
-            }
-
-            return nearestNPC;
-        }
         public void SightCheck()
         {
             Player player = Main.player[(int)NPC.ai[3]];
             RedeNPC globalNPC = NPC.Redemption();
-            int gotNPC = GetNearestNPC();
+            var attacker = globalNPC.attacker;
+
+            int gotNPC = GetNearestNPC(NPC);
             if (player.MinionAttackTargetNPC != -1)
                 gotNPC = player.MinionAttackTargetNPC;
             if (gotNPC != -1 && (NPC.Sight(Main.npc[gotNPC], 1400, false, true) || gotNPC == player.MinionAttackTargetNPC))
@@ -562,40 +492,48 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         private bool HoldIcefall;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            bool noSpiritEffect = NoSpiritEffect(NPC);
+            Color color = noSpiritEffect ? drawColor : Color.White;
+            if (!noSpiritEffect)
+            {
+                int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
+                spriteBatch.End();
+                spriteBatch.BeginAdditive(true);
+                GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
+            }
 
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Rectangle rect = new(0, BodyFrame, NPC.frame.Width, NPC.frame.Height);
 
-            spriteBatch.Draw(Calavia.CloakTex.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White) * .5f, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            spriteBatch.Draw(Calavia.LegsTex.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, new Rectangle?(rect), NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(Calavia.CloakTex.Value, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(color) * (noSpiritEffect ? 1f : .5f), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(Calavia.LegsTex.Value, NPC.Center + new Vector2(2 * NPC.spriteDirection, 0) - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, new Rectangle?(rect), NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             if (HoldIcefall)
-                spriteBatch.Draw(TextureAssets.Item[ModContent.ItemType<Icefall>()].Value, NPC.Center + new Vector2(14 * NPC.spriteDirection, 0) - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(TextureAssets.Item[ItemType<Icefall>()].Value, NPC.Center + new Vector2(14 * NPC.spriteDirection, 0) - screenPos, null, NPC.GetAlpha(color), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             if (customArm)
-                spriteBatch.Draw(Calavia.ArmTex2.Value, NPC.Center + new Vector2(-8 * NPC.spriteDirection, 0) - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation + customArmRot, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(Calavia.ArmTex2.Value, NPC.Center + new Vector2(-8 * NPC.spriteDirection, 0) - screenPos, null, NPC.ColorTintedAndOpacity(color), NPC.rotation + customArmRot, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             else
-                spriteBatch.Draw(Calavia.ArmTex.Value, NPC.Center - screenPos, new Rectangle?(rect), NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            spriteBatch.Draw(Calavia.ShoulderTex.Value, NPC.Center - screenPos, new Rectangle?(rect), NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(Calavia.ArmTex.Value, NPC.Center - screenPos, new Rectangle?(rect), NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(Calavia.ShoulderTex.Value, NPC.Center - screenPos, new Rectangle?(rect), NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             float fade = dodgeCooldown / 40f;
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
             {
                 Vector2 oldPos = NPC.oldPos[i];
-                Main.spriteBatch.Draw(Calavia.CloakTex.Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.White) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
-                Main.spriteBatch.Draw(Calavia.LegsTex.Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.White) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
-                Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(rect), NPC.GetAlpha(Color.White) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                Main.spriteBatch.Draw(Calavia.CloakTex.Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(color) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                Main.spriteBatch.Draw(Calavia.LegsTex.Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(2 * NPC.spriteDirection, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(color) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(rect), NPC.GetAlpha(color) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
                 if (customArm)
-                    spriteBatch.Draw(Calavia.ArmTex2.Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY) + new Vector2(-8 * NPC.spriteDirection, 0), null, NPC.GetAlpha(Color.White) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), oldrot[i] + customArmRot, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                    spriteBatch.Draw(Calavia.ArmTex2.Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY) + new Vector2(-8 * NPC.spriteDirection, 0), null, NPC.GetAlpha(color) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), oldrot[i] + customArmRot, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                 else
-                    spriteBatch.Draw(Calavia.ArmTex.Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(rect), NPC.GetAlpha(Color.White) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
-                spriteBatch.Draw(Calavia.ShoulderTex.Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(rect), NPC.GetAlpha(Color.White) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                    spriteBatch.Draw(Calavia.ArmTex.Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(rect), NPC.GetAlpha(color) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(Calavia.ShoulderTex.Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(rect), NPC.GetAlpha(color) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
             }
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            if (!noSpiritEffect)
+            {
+                spriteBatch.End();
+                spriteBatch.BeginDefault();
+            }
             return false;
         }
     }

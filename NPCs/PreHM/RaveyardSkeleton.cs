@@ -116,7 +116,7 @@ namespace Redemption.NPCs.PreHM
             NPC.TargetClosest();
 
             if (Main.rand.NextBool(800) && !Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/SkeletonAmbient"), NPC.position);
+                SoundEngine.PlaySound(AmbientSound, NPC.position);
 
             switch (AIState)
             {

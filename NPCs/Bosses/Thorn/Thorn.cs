@@ -185,6 +185,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         {
             writer.Write(ID);
             writer.Write(PhaseTwo);
+            writer.Write(finalSubphaseSlam);
 
             writer.Write(NPC.dontTakeDamage);
         }
@@ -193,11 +194,12 @@ namespace Redemption.NPCs.Bosses.Thorn
         {
             ID = reader.ReadInt32();
             PhaseTwo = reader.ReadBoolean();
+            finalSubphaseSlam = reader.ReadBoolean();
 
             NPC.dontTakeDamage = reader.ReadBoolean();
         }
 
-        public List<int> AttackList = new() { 0, 2, 3, 4, 5, 6, 7 };
+        public List<int> AttackList = new() { 0, 2, 3, 4, 6, 7 };
         public List<int> CopyList = null;
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
         void AttackChoice()
@@ -217,8 +219,6 @@ namespace Redemption.NPCs.Bosses.Thorn
                 if (ID is 0 && NPC.CountNPCS(ModContent.NPCType<BrambleTrap>()) > 20)
                     continue;
                 if (ID is 3 && NPC.life >= (int)(NPC.lifeMax * 0.9f))
-                    continue;
-                if (ID is 5 && (!PhaseTwo || !Main.expertMode))
                     continue;
 
                 attempts++;
@@ -315,6 +315,9 @@ namespace Redemption.NPCs.Bosses.Thorn
                         {
                             SwapAnimation(BOTH_SLAM);
                             finalSubphaseSlam = true;
+
+                            ID = 5;
+                            NPC.netUpdate = true;
                         }
 
                         redEyeOpacity -= .01f;
@@ -330,7 +333,8 @@ namespace Redemption.NPCs.Bosses.Thorn
                             NPC.netUpdate = true;
                             break;
                         }
-                        AttackChoice();
+                        if (ID != 5)
+                            AttackChoice();
                         AIState = ActionState.Attacks;
                     }
                     break;
@@ -356,6 +360,9 @@ namespace Redemption.NPCs.Bosses.Thorn
                                 delay -= 2;
                                 amount += 2;
                             }
+                            if (AITimer == 30 && !Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.Thorn1.WithPitchOffset(-0.8f).WithVolumeScale(0.6f), NPC.position);
+
                             if (AITimer >= 30 && AITimer % delay == 0 && TimerRand < amount)
                             {
                                 for (int i = -1; i <= 1; i += 2)
@@ -564,6 +571,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
                         #region Claw Dance
                         case 5:
+                            bool crazyMode = NPC.life < NPC.lifeMax / 4 && Main.expertMode;
                             switch (TimerRand)
                             {
                                 default:
@@ -603,7 +611,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                     }
                                     break;
                                 case 1:
-                                    int endTime = NPC.life < NPC.lifeMax / 4 ? 280 : 220;
+                                    int endTime = crazyMode ? 280 : 220;
                                     if (AITimer++ >= 60 && AITimer % 50 == 0)
                                     {
                                         for (int k = 0; k < 16; k++)
@@ -620,7 +628,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                             SoundEngine.PlaySound(CustomSounds.Saint3 with { Volume = .6f }, player.position);
                                         float randRot = RedeHelper.RandomRotation();
                                         amount = 6;
-                                        if (NPC.life < NPC.lifeMax / 4)
+                                        if (crazyMode)
                                             amount = 7;
                                         if (Main.getGoodWorld)
                                             amount += 1;
@@ -640,7 +648,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                     }
                                     break;
                                 case 2:
-                                    delay = NPC.life < NPC.lifeMax / 4 ? 8 : 10;
+                                    delay = crazyMode ? 8 : 10;
                                     if (AITimer++ > 90 && AITimer % delay == 0 && AITimer < 180)
                                     {
                                         for (int k = 0; k < 16; k++)
@@ -655,7 +663,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                         }
                                         if (!Main.dedServ)
                                             SoundEngine.PlaySound(CustomSounds.Saint3 with { Volume = .6f }, player.position);
-                                        if (NPC.life < NPC.lifeMax / 4)
+                                        if (crazyMode)
                                         {
                                             NPC.Shoot(player.Center, ModContent.ProjectileType<Thorn_SlashFlash>(), NPC.damage, new Vector2(Main.rand.NextFloat(-12, 13), Main.rand.NextFloat(22, 32) * (AITimer % 20 == 0 ? 1 : -1)), 0, Main.rand.NextBool() ? 1 : -1, ai2: NPC.whoAmI);
                                         }
@@ -663,6 +671,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                     }
                                     if (AITimer >= 240)
                                     {
+                                        ID = 0;
                                         NPC.dontTakeDamage = false;
                                         TimerRand = 0;
                                         AITimer = 0;
@@ -837,7 +846,6 @@ namespace Redemption.NPCs.Bosses.Thorn
                         AITimer = 0;
                         TimerRand = 0;
                         ID = 5;
-                        CopyList?.Remove(ID);
 
                         AIState = ActionState.Attacks;
                         NPC.netUpdate = true;
@@ -941,6 +949,10 @@ namespace Redemption.NPCs.Bosses.Thorn
                         NPC.frameCounter = 0;
                     if (AITimer < 70 + 35 + 120 && NPC.frame.Y is 10)
                         NPC.frameCounter = 0;
+
+                    if (AITimer == 215 && !Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.Thorn1.WithVolumeScale(0.6f), NPC.position);
+
                     if (AITimer >= 300)
                         magicOpacity += .006f;
                     if (magicOpacity >= 1)

@@ -152,10 +152,16 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.MissileExplosion, seg.position);
+                    if (AIState is ActionState.Death && AITimer >= 180 && TimerRand == 1 && !Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.HeavyExplosion1, seg.position);
+
                     RedeDraw.SpawnExplosion(seg.Center, Color.OrangeRed);
                 }
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(CustomSounds.MissileExplosion, NPC.position);
+                if (AIState is ActionState.Death && AITimer >= 180 && TimerRand == 1 && !Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.HeavyExplosion1, NPC.position);
+
                 RedeDraw.SpawnExplosion(NPC.Center, Color.OrangeRed);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);

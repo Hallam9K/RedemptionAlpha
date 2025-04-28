@@ -108,7 +108,11 @@ namespace Redemption.NPCs.Bosses.Cleaver
             if (NPC.life <= 0)
             {
                 if (!Main.dedServ)
+                {
                     SoundEngine.PlaySound(CustomSounds.MissileExplosion, NPC.position);
+                    SoundEngine.PlaySound(CustomSounds.HeavyExplosion1, NPC.position);
+                }
+
                 RedeDraw.SpawnExplosion(NPC.Center, Color.OrangeRed);
 
                 for (int i = 0; i < 80; i++)

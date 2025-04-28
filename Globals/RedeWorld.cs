@@ -350,15 +350,15 @@ namespace Redemption.Globals
 
                 if (player.Distance(nukeGroundZero) < nukeFireballRadius * 16)
                 {
-                    string nukeDeathReason;
+                    NetworkText nukeDeathReason;
 
-                    WeightedRandom<string> nukeDeaths = new(Main.rand);
-                    nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear1"), 5);
-                    nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear2") + Main.worldName, 5);
-                    nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear3"), 5);
-                    nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear4"), 5);
-                    nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear5"), 5);
-                    nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear6"), 1);
+                    WeightedRandom<NetworkText> nukeDeaths = new(Main.rand);
+                    nukeDeaths.Add(NetworkText.FromKey("Mods.Redemption.StatusMessage.Death.Nuclear1", player.name), 5);
+                    nukeDeaths.Add(NetworkText.FromKey("Mods.Redemption.StatusMessage.Death.Nuclear2", player.name, Main.worldName), 5);
+                    nukeDeaths.Add(NetworkText.FromKey("Mods.Redemption.StatusMessage.Death.Nuclear3", player.name), 5);
+                    nukeDeaths.Add(NetworkText.FromKey("Mods.Redemption.StatusMessage.Death.Nuclear4", player.name), 5);
+                    nukeDeaths.Add(NetworkText.FromKey("Mods.Redemption.StatusMessage.Death.Nuclear5", player.name), 5);
+                    nukeDeaths.Add(NetworkText.FromKey("Mods.Redemption.StatusMessage.Death.Nuclear6", player.name), 1);
 
                     nukeDeathReason = nukeDeaths;
 

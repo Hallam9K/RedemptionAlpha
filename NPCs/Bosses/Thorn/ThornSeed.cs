@@ -1,8 +1,6 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.Projectiles;
 using Redemption.Textures;
 using Terraria;
 using Terraria.Audio;
@@ -76,10 +74,12 @@ namespace Redemption.NPCs.Bosses.Thorn
         {
             SoundEngine.PlaySound(SoundID.Grass, Projectile.position);
             SoundEngine.PlaySound(SoundID.Item17, Projectile.position);
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+
+            NPC host = Main.npc[(int)Projectile.ai[2]];
+            if (Main.netMode != NetmodeID.MultiplayerClient && host.active && host.ai[0] != 6)
             {
                 for (int i = 0; i < 4; i++)
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center + new Vector2(0, 8), new Vector2(Main.rand.Next(-4, 5), -Main.rand.Next(2, 9)), ModContent.ProjectileType<CursedThornVile>(), Projectile.damage, 3, Projectile.owner, ai2: Projectile.ai[2]);
+                    Projectile.NewProjectile(Projectile.InheritSource(host), Projectile.Center + new Vector2(0, 8), new Vector2(Main.rand.Next(-4, 5), -Main.rand.Next(2, 9)), ProjectileType<CursedThornVile>(), Projectile.damage, 3, Projectile.owner, ai2: Projectile.ai[2]);
             }
             return true;
         }

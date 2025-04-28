@@ -1,25 +1,23 @@
-using Terraria.ModLoader;
-using Terraria.ID;
-using Terraria;
-using Microsoft.Xna.Framework;
-using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Redemption.Globals;
-using System;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.Projectiles.Magic;
+using Redemption.Globals;
 using Redemption.NPCs.Minibosses.Calavia;
+using Redemption.Projectiles.Magic;
+using System;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Friendly.SpiritSummons
 {
     public class Calavia_SS_BladeOfTheMountain : Calavia_BladeOfTheMountain
     {
         public override string Texture => "Redemption/Items/Weapons/PreHM/Melee/BladeOfTheMountain_Slash";
-        public override void SetStaticDefaults() => base.SetSafeDefaults();
         public override bool ShouldUpdatePosition() => false;
         public override void SetDefaults()
         {
@@ -27,13 +25,17 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.DamageType = DamageClass.Summon;
+            Projectile.Redemption().friendlyHostile = false;
         }
         public override bool? CanHitNPC(NPC target) => Projectile.frame is 5 ? null : false;
         public override bool PreAI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || npc.ai[0] is 4 or 9 or 10 || npc.type != ModContent.NPCType<Calavia_SS>())
+            if (npc == null || !npc.active || npc.ai[0] is 4 or 9 or 10 || npc.type != NPCType<Calavia_SS>())
+            {
                 Projectile.Kill();
+                return false;
+            }
 
             Projectile.Redemption().swordHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
 
@@ -70,13 +72,9 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         }
                         if (Projectile.frame >= 5 && Projectile.frame <= 6)
                         {
-                            for (int i = 0; i < Main.maxProjectiles; i++)
+                            foreach (Projectile target in Main.ActiveProjectiles)
                             {
-                                Projectile target = Main.projectile[i];
-                                if (!target.active)
-                                    continue;
-
-                                if (target.ai[0] is 0 && (target.type == ModContent.ProjectileType<Icefall_Proj>() || target.type == ModContent.ProjectileType<Calavia_Icefall>()) && Projectile.Redemption().swordHitbox.Intersects(target.Hitbox))
+                                if (target.ai[0] is 0 && (target.type == ProjectileType<Icefall_Proj>() || target.type == ProjectileType<Calavia_Icefall>()) && Projectile.Redemption().swordHitbox.Intersects(target.Hitbox))
                                 {
                                     DustHelper.DrawCircle(target.Center, DustID.IceTorch, 1, 2, 2, dustSize: 2, nogravity: true);
                                     if (!Main.dedServ)
@@ -116,8 +114,9 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.FinalDamage *= NPCHelper.HostileProjDamageMultiplier();
             NPC npc = Main.npc[(int)Projectile.ai[0]];
+            if (npc == null || !npc.active)
+                return;
             float tipBonus;
             tipBonus = npc.Distance(target.Center) / 3;
             tipBonus = MathHelper.Clamp(tipBonus, 0, 20);
@@ -133,17 +132,21 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             {
                 SoundEngine.PlaySound(SoundID.Item30, target.position);
                 DustHelper.DrawDustImage(target.Center, DustID.Frost, 0.5f, "Redemption/Effects/DustImages/Flake", 2, true, RedeHelper.RandomRotation());
-                target.AddBuff(ModContent.BuffType<IceFrozen>(), 1800 - ((int)MathHelper.Clamp(target.lifeMax, 60, 1780)));
+                target.AddBuff(BuffType<IceFrozen>(), 1800 - ((int)MathHelper.Clamp(target.lifeMax, 60, 1780)));
             }
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
-            Main.spriteBatch.End();
-            Main.spriteBatch.BeginAdditive(true);
-            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
-
             NPC npc = Main.npc[(int)Projectile.ai[0]];
+            bool noSpiritEffect = SSBase.NoSpiritEffect(npc);
+            Color color = noSpiritEffect ? lightColor : Color.White;
+            if (!noSpiritEffect)
+            {
+                int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
+                Main.spriteBatch.End();
+                Main.spriteBatch.BeginAdditive(true);
+                GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
+            }
 
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             int height = texture.Height / 10;
@@ -153,9 +156,9 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int offset = Projectile.frame > 4 ? 16 : 0;
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(40 * npc.spriteDirection, 50 - offset) + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(40 * npc.spriteDirection, 50 - offset) + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(color), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
-            Texture2D slash = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PreHM/Melee/BladeOfTheMountain_SlashProj").Value;
+            Texture2D slash = Request<Texture2D>("Redemption/Items/Weapons/PreHM/Melee/BladeOfTheMountain_SlashProj").Value;
             int height2 = slash.Height / 6;
             int y2 = height2 * (Projectile.frame - 5);
             Rectangle rect2 = new(0, y2, slash.Width, height2);
@@ -163,8 +166,12 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
 
             if (Projectile.frame >= 5 && Projectile.frame <= 9)
                 Main.EntitySpriteDraw(slash, Projectile.Center - Main.screenPosition - new Vector2(0 * npc.spriteDirection, -331 - offset) + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect2), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin2, Projectile.scale, effects, 0);
-            Main.spriteBatch.End();
-            Main.spriteBatch.BeginDefault();
+
+            if (!noSpiritEffect)
+            {
+                Main.spriteBatch.End();
+                Main.spriteBatch.BeginDefault();
+            }
             return false;
         }
     }
@@ -184,9 +191,9 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.DamageType = DamageClass.Summon;
+            Projectile.Redemption().friendlyHostile = false;
         }
         public override bool? CanHitNPC(NPC target) => Projectile.ai[1] > 1 && Projectile.ai[1] != 3 && Projectile.ai[1] != 4 ? null : false;
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= NPCHelper.HostileProjDamageMultiplier();
         private Vector2 startVector;
         private Vector2 vector;
         private float speed;
@@ -197,8 +204,11 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             if (npc.Redemption().attacker != null)
                 npcTarget = npc.Redemption().attacker;
-            if (!npc.active || npc.type != ModContent.NPCType<Calavia_SS>())
+            if (!npc.active || npc.type != NPCType<Calavia_SS>())
+            {
                 Projectile.Kill();
+                return false;
+            }
 
             if (npc.ModNPC is Calavia_SS calavia && npcTarget != null)
             {
@@ -252,7 +262,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.EarthBoom with { Pitch = .1f, Volume = .5f }, Projectile.position);
                                 Collision.HitTiles(Projectile.Center - new Vector2(6, 6), vector / 3, 12, 12);
-                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, vector / 2, ModContent.ProjectileType<Calavia_SS_BladeStab>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, vector / 2, ProjectileType<Calavia_SS_BladeStab>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
                             }
                             npc.ai[2] = 2;
                             Projectile.Kill();
@@ -289,7 +299,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                             speed = MathHelper.ToRadians(6);
                             SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, Projectile.position);
                             if (Projectile.owner == Main.myPlayer)
-                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), npc.Center, Vector2.Zero, ModContent.ProjectileType<Calavia_ArcticWind>(), 0, 0, Main.myPlayer, npc.whoAmI);
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), npc.Center, Vector2.Zero, ProjectileType<Calavia_ArcticWind>(), 0, 0, Main.myPlayer, npc.whoAmI);
                             Projectile.scale = 1;
                             Timer = 0;
                             Projectile.ai[1] = 5;
@@ -312,10 +322,9 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                             speed *= 0.9f;
                         else
                         {
-                            for (int i = 0; i < Main.maxProjectiles; i++)
+                            foreach (Projectile target in Main.ActiveProjectiles)
                             {
-                                Projectile target = Main.projectile[i];
-                                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
+                                if (target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
                                     continue;
 
                                 if (Projectile.DistanceSQ(target.Center) > 140 * 140)
@@ -357,12 +366,17 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
-            Main.spriteBatch.End();
-            Main.spriteBatch.BeginAdditive(true);
-            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
-
             NPC npc = Main.npc[(int)Projectile.ai[0]];
+            bool noSpiritEffect = SSBase.NoSpiritEffect(npc);
+            Color color = noSpiritEffect ? lightColor : Color.White;
+            if (!noSpiritEffect)
+            {
+                int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
+                Main.spriteBatch.End();
+                Main.spriteBatch.BeginAdditive(true);
+                GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
+            }
+
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
@@ -374,8 +388,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 for (int k = 0; k < Projectile.oldPos.Length; k++)
                 {
                     Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
-                    Color color = Color.LightBlue * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                    Main.EntitySpriteDraw(texture, drawPos - v, null, color * glow, oldrot[k], origin, Projectile.scale * scale, spriteEffects, 0);
+                    Color color2 = Color.LightBlue * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                    Main.EntitySpriteDraw(texture, drawPos - v, null, color2 * glow, oldrot[k], origin, Projectile.scale * scale, spriteEffects, 0);
                 }
             }
             else
@@ -383,13 +397,17 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 for (int k = 0; k < Projectile.oldPos.Length; k++)
                 {
                     Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
-                    Color color = Color.LightBlue * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                    Main.EntitySpriteDraw(texture, drawPos - v, null, color * .5f, oldrot[k], origin, Projectile.scale, spriteEffects, 0);
+                    Color color2 = Color.LightBlue * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                    Main.EntitySpriteDraw(texture, drawPos - v, null, color2 * .5f, oldrot[k], origin, Projectile.scale, spriteEffects, 0);
                 }
             }
-            Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(Color.White), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
-            Main.spriteBatch.End();
-            Main.spriteBatch.BeginDefault();
+            Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(color), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+
+            if (!noSpiritEffect)
+            {
+                Main.spriteBatch.End();
+                Main.spriteBatch.BeginDefault();
+            }
             return false;
         }
     }
@@ -401,8 +419,9 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             base.SetDefaults();
             Projectile.friendly = true;
             Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Summon;
+            Projectile.Redemption().friendlyHostile = false;
         }
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= NPCHelper.HostileProjDamageMultiplier();
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.frame < 2;
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(BuffID.Frostburn, 120);
     }

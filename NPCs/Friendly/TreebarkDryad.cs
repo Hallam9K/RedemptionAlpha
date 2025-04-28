@@ -5,6 +5,7 @@ using Redemption.Globals;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Textures;
 using Redemption.UI;
 using Redemption.UI.ChatUI;
 using ReLogic.Content;
@@ -83,7 +84,7 @@ namespace Redemption.NPCs.Friendly
         }
         public override void SetDefaults()
         {
-            NPC.width = 88;
+            NPC.width = 38;
             NPC.height = 92;
             NPC.lifeMax = Main.hardMode ? 2000 : 500;
             NPC.defense = 6;
@@ -129,22 +130,28 @@ namespace Redemption.NPCs.Friendly
         public string setName;
         public override void ModifyTypeName(ref string typeName)
         {
+            if (AITimer == 1)
+            {
+                setName = Language.GetTextValue("Mods.Redemption.NPCs.TreebarkDryad.Name2Sakura");
+                typeName = setName + Language.GetTextValue("Mods.Redemption.NPCs.TreebarkDryad.Title");
+                return;
+            }
             if (setName == null)
             {
                 WeightedRandom<string> name = new(Main.rand);
-                name.Add("Gentlewood");
-                name.Add("Blandwood");
-                name.Add("Elmshade");
-                name.Add("Vinewood");
-                name.Add("Bitterthorn");
-                name.Add("Irontwig");
-                name.Add("Tapio");
+                name.Add(Language.GetTextValue("Mods.Redemption.NPCs.TreebarkDryad.Name1"));
+                name.Add(Language.GetTextValue("Mods.Redemption.NPCs.TreebarkDryad.Name2"));
+                name.Add(Language.GetTextValue("Mods.Redemption.NPCs.TreebarkDryad.Name3"));
+                name.Add(Language.GetTextValue("Mods.Redemption.NPCs.TreebarkDryad.Name4"));
+                name.Add(Language.GetTextValue("Mods.Redemption.NPCs.TreebarkDryad.Name5"));
+                name.Add(Language.GetTextValue("Mods.Redemption.NPCs.TreebarkDryad.Name6"));
+                name.Add(Language.GetTextValue("Mods.Redemption.NPCs.TreebarkDryad.Name7"));
                 if (WoodType == 1)
-                    name.Add("Willowbark", 3);
+                    name.Add(Language.GetTextValue("Mods.Redemption.NPCs.TreebarkDryad.Name1Willow"), 3);
                 if (WoodType == 2)
                 {
-                    name.Add("Cherrysplinter", 3);
-                    name.Add("Blossomwood", 3);
+                    name.Add(Language.GetTextValue("Mods.Redemption.NPCs.TreebarkDryad.Name1Sakura"), 3);
+                    name.Add(Language.GetTextValue("Mods.Redemption.NPCs.TreebarkDryad.Name2Sakura"), 3);
                 }
                 setName = name;
             }
@@ -192,7 +199,7 @@ namespace Redemption.NPCs.Friendly
                 {
                     if (NPC.life < NPC.lifeMax - 10 && !Main.dedServ)
                     {
-                        Texture2D bubble = !Main.dedServ ? Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value : null;
+                        Texture2D bubble = !Main.dedServ ? CommonTextures.TextBubble_Epidotra.Value : null;
                         SoundStyle voice = CustomSounds.Voice2 with { Pitch = -1f };
 
                         DialogueChain chain = new();
@@ -207,7 +214,7 @@ namespace Redemption.NPCs.Friendly
                 {
                     if (NPC.life < NPC.lifeMax / 2 && !Main.dedServ)
                     {
-                        Texture2D bubble = !Main.dedServ ? Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value : null;
+                        Texture2D bubble = !Main.dedServ ? CommonTextures.TextBubble_Epidotra.Value : null;
                         SoundStyle voice = CustomSounds.Voice2 with { Pitch = -1f };
 
                         string gender = player.Male ? Language.GetTextValue("Mods.Redemption.Cutscene.TreebarkDryad.3") : Language.GetTextValue("Mods.Redemption.Cutscene.TreebarkDryad.4");
@@ -407,7 +414,7 @@ namespace Redemption.NPCs.Friendly
             Texture2D EyesTex = Request<Texture2D>("Redemption/NPCs/Friendly/TreebarkDryad_Eyes").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             int Height = EyesTex.Height / 2;
             int Width = EyesTex.Width / 3;
@@ -418,7 +425,7 @@ namespace Redemption.NPCs.Friendly
 
             if (NPC.frame.Y < 400)
             {
-                spriteBatch.Draw(EyesTex, NPC.Center - screenPos - new Vector2(6 * -NPC.spriteDirection, NPC.frame.Y >= 100 && NPC.frame.Y < 300 ? 12 : 14), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+                spriteBatch.Draw(EyesTex, NPC.Center - screenPos - new Vector2(6 * -NPC.spriteDirection, NPC.frame.Y >= 100 && NPC.frame.Y < 300 ? 12 : 14), new Rectangle?(rect), NPC.ColorTintedAndOpacity(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
             }
             return false;
         }

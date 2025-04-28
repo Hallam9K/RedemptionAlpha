@@ -174,62 +174,62 @@ namespace Redemption.Globals
         {
             if (set == copperSet || set == tinSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.ThunderS);
+                player.setBonus += "\n" + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.ThunderS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Thunder] += 0.2f;
             }
             if (set == silverSet || set == tungstenSet || set == titaniumSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Damage", 20, ElementID.ThunderS);
+                player.setBonus += "\n" + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Damage", 20, ElementID.ThunderS);
                 player.RedemptionPlayerBuff().ElementalDamage[ElementID.Thunder] += 0.2f;
             }
             if (set == cactusSet || set == jungleSet || set == orichalcumSet || set == beetleSet || set == turtleSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.NatureS);
+                player.setBonus += "\n" + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.NatureS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Nature] += 0.2f;
             }
             if (set == goldSet || set == mythrilSet || set == spectreSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.ArcaneS);
+                player.setBonus += "\n" + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.ArcaneS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Arcane] += 0.2f;
             }
             if (set == platinumSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Damage", 20, ElementID.ArcaneS);
+                player.setBonus += "\n" + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Damage", 20, ElementID.ArcaneS);
                 player.RedemptionPlayerBuff().ElementalDamage[ElementID.Arcane] += 0.2f;
             }
             if (set == fossilSet || set == adamantiteSet || set == forbiddenSet || set == turtleSet || set == beetleSet || set == ironSet || set == leadSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.EarthS);
+                player.setBonus += "\n" + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.EarthS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Earth] += 0.2f;
             }
             if (set == shadowSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.ShadowS);
+                player.setBonus += "\n" + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.ShadowS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Shadow] += 0.2f;
             }
             if (set == crimsonSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.BloodS);
+                player.setBonus += "\n" + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.BloodS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Blood] += 0.2f;
             }
             if (set == moltenSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.FireS);
+                player.setBonus += "\n" + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.FireS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Fire] += 0.2f;
             }
             if (set == cobaltSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.WaterS);
+                player.setBonus += "\n" + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.WaterS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Water] += 0.2f;
             }
             if (set == palladiumSet || set == hallowedSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.HolyS);
+                player.setBonus += "\n" + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.HolyS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Holy] += 0.2f;
             }
             if (set == frostSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.IceS);
+                player.setBonus += "\n" + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.IceS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Ice] += 0.2f;
             }
             if (set == solarSet)
@@ -302,7 +302,7 @@ namespace Redemption.Globals
                 {
                     player.statLife -= player.statLifeMax2 / 6;
                     if (player.statLife <= 0)
-                        player.KillMe(PlayerDeathReason.ByCustomReason(Language.GetTextValue("DeathText.Teleport_1", player.name)), 1, 1);
+                        player.KillMe(PlayerDeathReason.ByCustomReason(NetworkText.FromKey("DeathText.Teleport_1", player.name)), 1, 1);
                 }
                 player.AddBuff(BuffID.ChaosState, 360);
             }

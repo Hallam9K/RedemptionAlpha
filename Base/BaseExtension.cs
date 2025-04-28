@@ -26,6 +26,8 @@ namespace Redemption.BaseExtension
         public static BuffNPC RedemptionNPCBuff(this NPC npc) => npc.GetGlobalNPC<BuffNPC>();
         /// <summary>References the GuardNPC instance.</summary>
         public static GuardNPC RedemptionGuard(this NPC npc) => npc.GetGlobalNPC<GuardNPC>();
+        /// <summary>References the HitboxNPC instance.</summary>
+        public static HitboxNPC RedemptionHitbox(this NPC npc) => npc.GetGlobalNPC<HitboxNPC>();
         /// <summary>References the RedeItem instance.</summary>
         public static RedeItem Redemption(this Item item) => item.GetGlobalItem<RedeItem>();
         /// <summary>References the </summary>

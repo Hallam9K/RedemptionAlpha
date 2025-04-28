@@ -351,6 +351,34 @@ namespace Redemption.WorldGeneration
                             tile.WallType = (ushort)ModContent.WallType<GathicStoneBrickWallTile>();
                     }
                 }
+                for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 4E-05); k++)
+                {
+                    int xAxis = WorldGen.genRand.Next(15, Main.maxTilesX - 15);
+                    int yAxis = WorldGen.genRand.Next(15, (int)(Main.maxTilesY * .9f));
+                    for (int DecoX = xAxis; DecoX < xAxis + 30; DecoX++)
+                    {
+                        for (int DecoY = yAxis; DecoY < yAxis + 30; DecoY++)
+                        {
+                            ushort type = Framing.GetTileSafely(DecoX, DecoY).TileType;
+                            if ((type == TileType<GathicStoneTile>() || type == TileType<GathicGladestoneTile>() || type == TileType<GathicGladestoneBrickTile>() || type == TileType<GathicStoneBrickTile>()) && !Framing.GetTileSafely(DecoX, DecoY - 1).HasTile)
+                            {
+                                if (!WorldGen.genRand.NextBool(3))
+                                {
+                                    switch (WorldGen.genRand.Next(3))
+                                    {
+                                        default:
+                                            WorldGen.PlaceObject(DecoX, DecoY - 1, TileType<GloomShroomFoliage>(), true, WorldGen.genRand.Next(5));
+                                            break;
+                                        case 1:
+                                            WorldGen.PlaceObject(DecoX, DecoY - 1, TileType<GloomShroomFoliage2>(), true, WorldGen.genRand.Next(3));
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
                 int guide = NPC.FindFirstNPC(NPCID.Guide);
                 if (guide != -1)
                     Main.npc[guide].active = false;
@@ -1349,7 +1377,7 @@ namespace Redemption.WorldGeneration
                     }
                     #endregion
                 }));
-                tasks.Add(new PassLegacy("Ancient Decal Chests", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Add(new PassLegacy("Ancient Decal Chests and Shrooms", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     for (int i = 15; i < Main.maxTilesX - 15; i++)
                     {
@@ -1368,6 +1396,33 @@ namespace Redemption.WorldGeneration
                                 {
                                     Framing.GetTileSafely(i, j).ClearTile();
                                     ElderWoodChest(i, j, frozen ? 3 : 0);
+                                }
+                            }
+                        }
+                    }
+                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 4E-05); k++)
+                    {
+                        int xAxis = WorldGen.genRand.Next(15, Main.maxTilesX - 15);
+                        int yAxis = WorldGen.genRand.Next((int)(Main.maxTilesY * .3f), (int)(Main.maxTilesY * .9f));
+                        for (int DecoX = xAxis; DecoX < xAxis + 30; DecoX++)
+                        {
+                            for (int DecoY = yAxis; DecoY < yAxis + 30; DecoY++)
+                            {
+                                ushort type = Framing.GetTileSafely(DecoX, DecoY).TileType;
+                                if ((type == TileType<GathicStoneTile>() || type == TileType<GathicGladestoneTile>() || type == TileType<GathicGladestoneBrickTile>() || type == TileType<GathicStoneBrickTile>()) && !Framing.GetTileSafely(DecoX, DecoY - 1).HasTile)
+                                {
+                                    if (!WorldGen.genRand.NextBool(3))
+                                    {
+                                        switch (WorldGen.genRand.Next(3))
+                                        {
+                                            default:
+                                                WorldGen.PlaceObject(DecoX, DecoY - 1, TileType<GloomShroomFoliage>(), true, WorldGen.genRand.Next(5));
+                                                break;
+                                            case 1:
+                                                WorldGen.PlaceObject(DecoX, DecoY - 1, TileType<GloomShroomFoliage2>(), true, WorldGen.genRand.Next(3));
+                                                break;
+                                        }
+                                    }
                                 }
                             }
                         }

@@ -1,24 +1,26 @@
-using Microsoft.Xna.Framework;
+using ParticleLibrary;
+using ParticleLibrary.Core;
+using Redemption.BaseExtension;
+using Redemption.Buffs;
+using Redemption.Dusts;
 using Redemption.Globals;
+using Redemption.NPCs.Bosses.Keeper;
+using Redemption.Particles;
 using Terraria;
+using Terraria.Graphics.Renderers;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using ParticleLibrary;
-using Redemption.Particles;
-using Redemption.Buffs;
-using Redemption.NPCs.Bosses.Keeper;
 
 namespace Redemption.NPCs.Friendly.SpiritSummons
 {
-    public abstract class SSBase : ModNPC
+    public abstract class SSBase : ModRedeNPC
     {
         public virtual void SetSafeStaticDefaults() { }
         public override void SetStaticDefaults()
         {
             SetSafeStaticDefaults();
             NPCID.Sets.MPAllowedEnemies[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public virtual void SetSafeDefaults() { }
@@ -26,34 +28,107 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             NPC.friendly = true;
             NPC.aiStyle = -1;
+            NPC.lavaImmune = true;
             NPC.Redemption().spiritSummon = true;
             SetSafeDefaults();
         }
+        public bool CannotBeSoulTugged;
+
+        public static bool NoSpiritEffect(NPC npc)
+        {
+            if (npc.ai[3] < 0)
+                return false;
+            return Main.player[(int)npc.ai[3]].RedemptionPlayerBuff().cruxSpiritExtractor;
+        }
+
         public override bool CheckActive() => false;
         public override bool PreAI()
         {
             Player player = Main.player[(int)NPC.ai[3]];
-            if (!player.active || player.dead || !CheckActive(player))
-                NPC.SimpleStrikeNPC(999, 1);
-
-            if (Main.myPlayer == player.whoAmI && NPC.DistanceSQ(player.Center) > 2000 * 2000)
-            {
-                NPC.Center = player.Center;
-                NPC.velocity *= 0.1f;
-                NPC.netUpdate = true;
-            }
-            if (!Main.rand.NextBool(40))
-                return true;
-            ParticleManager.NewParticle(NPC.RandAreaInEntity(), RedeHelper.Spread(2), new SpiritParticle(), Color.White, 1);
+            SpiritBasicAI(NPC, player);
             return true;
+        }
+        public static void SpiritBasicAI(NPC npc, Player player)
+        {
+            if (!player.active || player.dead || !CheckActive(player))
+                npc.SimpleStrikeNPC(9999, 1);
+
+            if (npc.lavaWet)
+            {
+                npc.ai[0] = 10;
+                npc.netUpdate = true;
+            }
+
+            if (Main.myPlayer == player.whoAmI && npc.DistanceSQ(player.Center) > 2000 * 2000)
+            {
+                npc.Center = player.Center;
+                npc.velocity *= 0.1f;
+                npc.netUpdate = true;
+            }
+            if (!Main.rand.NextBool(40) || NoSpiritEffect(npc))
+                return;
+            ParticleManager.NewParticle(npc.RandAreaInEntity(), RedeHelper.Spread(2), new SpiritParticle(), Color.White, 1);
         }
         public static bool CheckActive(Player owner)
         {
-            if (!owner.HasBuff(ModContent.BuffType<CruxCardBuff>()))
+            if (!owner.HasBuff(BuffType<CruxCardBuff>()))
                 return false;
             return true;
         }
-        public static int GetNearestNPC(NPC npc, int ID = 0)
+        public static void SoulMoveState(NPC npc, ref float aiTimer, Player player, ref float timerRand, ref int runCooldown, float particleScale = .6f, float glowScale = 1f, int yOffset = 8, bool infernal = false, bool noTileCollide = false, bool flying = false)
+        {
+            Vector2 v = Vector2.Zero;
+            SoulMoveState(npc, ref aiTimer, player, ref timerRand, ref runCooldown, ref v, particleScale, glowScale, yOffset, infernal, noTileCollide, flying);
+        }
+        public static void SoulMoveState(NPC npc, ref float aiTimer, Player player, ref float timerRand, ref int runCooldown, ref Vector2 moveTo, float particleScale = .6f, float glowScale = 1f, int yOffset = 8, bool infernal = false, bool noTileCollide = false, bool flying = false)
+        {
+            npc.alpha = 255;
+            npc.noGravity = true;
+            npc.noTileCollide = true;
+            aiTimer = 0;
+
+            ParticleManager.NewParticle(npc.Center + RedeHelper.Spread(10) + npc.velocity, Vector2.Zero, new SpiritParticle(), Color.White, particleScale, 0, 1);
+
+            for (int i = 0; i < 2; i++)
+            {
+                int dust = Dust.NewDust(npc.Center + npc.velocity - Vector2.One, 1, 1, DustType<GlowDust>(), 0, 0, 0, default, glowScale);
+                Main.dust[dust].noGravity = true;
+                Main.dust[dust].velocity *= .1f;
+                Color dustColor = new(188, 244, 227) { A = 0 };
+                if (infernal)
+                    dustColor = new(255, 162, 17) { A = 0 };
+                Main.dust[dust].color = dustColor;
+            }
+
+            bool check = npc.Hitbox.Intersects(player.Hitbox);
+            if (!noTileCollide)
+                check &= Collision.CanHit(npc.Center, 0, 0, player.Center, 0, 0) && !Collision.SolidCollision(npc.position, npc.width, npc.height);
+
+            if (check)
+            {
+                int dustType = infernal ? DustID.InfernoFork : DustID.DungeonSpirit;
+                for (int i = 0; i < 10; i++)
+                {
+                    int dust = Dust.NewDust(npc.position + npc.velocity, npc.width, npc.height, dustType, 0, 0, Scale: 2);
+                    Main.dust[dust].velocity *= 2f;
+                    Main.dust[dust].noGravity = true;
+                }
+
+                npc.alpha = 0;
+                npc.noGravity = flying;
+                npc.noTileCollide = noTileCollide;
+                npc.velocity *= 0f;
+
+                moveTo = npc.FindGround(20);
+                runCooldown = 0;
+                timerRand = Main.rand.Next(120, 260);
+                npc.ai[0] = 0;
+                npc.netUpdate = true;
+            }
+            else
+                npc.Move(player.Center - new Vector2(0, yOffset), 20, 20);
+        }
+        public static int GetNearestNPC(NPC npc, int ID = 0, bool targetFriendly = false)
         {
             float nearestNPCDist = -1;
             int nearestNPC = -1;
@@ -71,11 +146,22 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         friendlyCheck |= NPCLists.Plantlike.Contains(target.type);
                         break;
                     case 2:
-                        friendlyCheck |= target.type == ModContent.NPCType<KeeperSpirit>() || target.type == ModContent.NPCType<Keeper>();
+                        friendlyCheck |= target.type == NPCType<KeeperSpirit>() || target.type == NPCType<Keeper>();
+                        break;
+                    case 3:
+                        friendlyCheck = target.friendly && target.life < target.lifeMax;
                         break;
                 }
-                if (friendlyCheck)
-                    continue;
+                if (targetFriendly)
+                {
+                    if (!friendlyCheck)
+                        continue;
+                }
+                else
+                {
+                    if (friendlyCheck)
+                        continue;
+                }
 
                 if (nearestNPCDist != -1 && !(target.Distance(npc.Center) < nearestNPCDist))
                     continue;

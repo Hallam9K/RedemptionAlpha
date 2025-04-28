@@ -618,6 +618,8 @@ namespace Redemption.NPCs.Bosses.Keeper
                                     dust.velocity = dust.position.DirectionTo(NPC.Center + new Vector2(0, 50)) * 3f;
                                     origin = player.Center;
                                 }
+                                if (AITimer == (Unveiled ? 260 : 280) && !Main.dedServ)
+                                    SoundEngine.PlaySound(CustomSounds.Ghost2, NPC.position);
                                 if (AITimer >= (Unveiled ? 260 : 280) && AITimer < 320)
                                 {
                                     SoulCharging = true;

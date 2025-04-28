@@ -1,3 +1,4 @@
+using System.IO;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -66,6 +67,14 @@ namespace Redemption.NPCs
                 NPC.rotation = NPC.velocity.X * 0.05f;
                 NPC.frame.Y = jumpFrame * frameHeight;
             }
+        }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.WriteVector2(moveTo);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            moveTo = reader.ReadVector2();
         }
     }
 }

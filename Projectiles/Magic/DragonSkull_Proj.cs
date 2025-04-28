@@ -80,7 +80,10 @@ namespace Redemption.Projectiles.Magic
                     jawRot += 0.03f;
                 }
                 if (Projectile.ai[0] == 40)
+                {
+                    SoundEngine.PlaySound(CustomSounds.FlameRise2, Projectile.position);
                     SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, Projectile.position);
+                }
                 if (Projectile.ai[0] >= 40 && Projectile.ai[0] % 3 == 0 && Projectile.ai[0] <= 180)
                 {
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + RedeHelper.PolarVector(6, Projectile.rotation + MathHelper.PiOver2), RedeHelper.PolarVector(5, Projectile.rotation + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0)), ProjectileType<DragonSkullFlames_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);

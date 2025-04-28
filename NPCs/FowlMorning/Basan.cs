@@ -347,6 +347,7 @@ namespace Redemption.NPCs.FowlMorning
                             if (AITimer == 35)
                             {
                                 SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, NPC.position);
+                                SoundEngine.PlaySound(CustomSounds.FlameRise2, NPC.position);
                                 playerOld = player.Center;
                             }
                             if (AITimer++ >= 35 && AITimer % 2 == 0)

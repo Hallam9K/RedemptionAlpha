@@ -1417,6 +1417,9 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     }
                     break;
                 case ActionState.Death:
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.HeavyExplosion1, NPC.position);
+
                     NPC.dontTakeDamage = false;
                     NPC.netUpdate = true;
                     if (Main.netMode != NetmodeID.MultiplayerClient)

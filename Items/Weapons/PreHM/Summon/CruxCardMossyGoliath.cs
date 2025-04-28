@@ -1,3 +1,4 @@
+using Redemption.Globals;
 using Redemption.NPCs.Friendly.SpiritSummons;
 using Terraria;
 using Terraria.ID;
@@ -6,6 +7,12 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 {
     public class CruxCardMossyGoliath : BaseCruxCard
     {
+        public override void SetStaticDefaults()
+        {
+            ElementID.ItemEarth[Type] = true;
+            ElementID.ItemPoison[Type] = true;
+            ElementID.ItemWind[Type] = true;
+        }
         public override void SafeSetDefaults()
         {
             BossCard = true;

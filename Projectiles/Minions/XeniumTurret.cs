@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Minions;
 using Redemption.Globals;
 using System;
@@ -83,7 +84,9 @@ namespace Redemption.Projectiles.Minions
                 {
                     if (Projectile.UseAmmo(AmmoID.Bullet, ref bulletID, ref shootSpeed, ref shootDamage, ref shootKnockback, !Main.rand.NextBool(5)))
                     {
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(shootSpeed, (target.Center - Projectile.Center).ToRotation()), bulletID, shootDamage, Projectile.knockBack, Main.myPlayer);
+                        int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(shootSpeed, (target.Center - Projectile.Center).ToRotation()), bulletID, shootDamage, Projectile.knockBack, owner.whoAmI);
+                        Main.projectile[p].DamageType = DamageClass.Summon;
+                        Main.projectile[p].netUpdate = true;
                     }
                 }
                 MoveVector2 = Vector2.Zero;

@@ -50,7 +50,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             Lighting.AddLight(Projectile.Center, Projectile.Opacity, Projectile.Opacity, Projectile.Opacity);
 
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
-            float velChange = .1f;
+            float velChange = .08f;
             if (Projectile.ai[0] == 2)
                 velChange = .05f;
             Projectile.velocity = Projectile.velocity.RotatedBy(Main.rand.NextFloat(-velChange, velChange));

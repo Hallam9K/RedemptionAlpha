@@ -7,6 +7,10 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 {
     public class CruxCardGathicSkeletons : BaseCruxCard
     {
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.Spears[Type] = true;
+        }
         public override void SafeSetDefaults()
         {
             SpiritTypes = new int[2] { NPCType<SkeletonWanderer_SS>(), NPCType<SkeletonDuelist_SS>() };
@@ -20,6 +24,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(0, 1, 33, 0);
             Item.Redemption().CanSwordClash = true;
+            Item.Redemption().TechnicallySlash = true;
         }
         public override void SpawnSpirits(Player player)
         {

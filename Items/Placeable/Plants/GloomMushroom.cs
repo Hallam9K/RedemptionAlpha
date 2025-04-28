@@ -1,10 +1,10 @@
 using Redemption.Items.Materials.PreHM;
-using Redemption.Tiles.Tiles;
+using Redemption.Tiles.Plants;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Placeable.Tiles
+namespace Redemption.Items.Placeable.Plants
 {
     public class GloomMushroom : ModItem
     {
@@ -14,7 +14,7 @@ namespace Redemption.Items.Placeable.Tiles
         }
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<GloomMushroomTile>(), 0);
+            Item.DefaultToPlaceableTile(TileType<GloomShroomFoliage>());
             Item.width = 18;
             Item.height = 18;
             Item.maxStack = Item.CommonMaxStack;
@@ -25,6 +25,10 @@ namespace Redemption.Items.Placeable.Tiles
                 .AddIngredient(ItemID.GlowingMushroom, 10)
                 .AddIngredient<LostSoul>()
                 .AddCondition(Condition.InGraveyard)
+                .Register();
+            CreateRecipe(3)
+                .AddIngredient<GloomMushroomBig>()
+                .AddTile(TileID.WorkBenches)
                 .Register();
         }
     }

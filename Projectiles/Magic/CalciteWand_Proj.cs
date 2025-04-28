@@ -30,6 +30,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.tileCollide = true;
             Projectile.timeLeft = 300;
             Projectile.scale = 0.1f;
+            Projectile.extraUpdates = 1;
             Projectile.frame = Main.rand.Next(3);
         }
         public override void AI()
@@ -56,11 +57,11 @@ namespace Redemption.Projectiles.Magic
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.FlatBonusDamage += (int)Projectile.velocity.Y * 3;
+            modifiers.FlatBonusDamage += (int)Projectile.velocity.Y * 2;
         }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
-            modifiers.SourceDamage.Flat += (int)Projectile.velocity.Y * 3;
+            modifiers.SourceDamage.Flat += (int)Projectile.velocity.Y * 2;
         }
         public override bool PreDraw(ref Color lightColor)
         {

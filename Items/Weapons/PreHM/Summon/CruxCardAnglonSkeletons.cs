@@ -1,3 +1,4 @@
+using Redemption.BaseExtension;
 using Redemption.NPCs.Friendly.SpiritSummons;
 using Terraria;
 using Terraria.ID;
@@ -6,6 +7,10 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 {
     public class CruxCardAnglonSkeletons : BaseCruxCard
     {
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.Spears[Type] = true;
+        }
         public override void SafeSetDefaults()
         {
             SpiritTypes = new int[3] { NPCType<SkeletonWarden_SS>(), NPCType<SkeletonFlagbearer_SS>(), NPCType<SkeletonNoble_SS>() };
@@ -17,6 +22,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Item.knockBack = 9;
             Item.rare = ItemRarityID.Green;
             Item.value = Item.sellPrice(0, 2, 66, 0);
+            Item.Redemption().TechnicallyAxe = true;
         }
         public override void SpawnSpirits(Player player)
         {

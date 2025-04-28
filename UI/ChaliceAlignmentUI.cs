@@ -39,7 +39,7 @@ namespace Redemption.UI
         /// </summary>
         public static void DisplayDialogue(string text, int displayTime = 30, int fadeTime = 12, float shakeStrength = 0, Color? textColor = null, Color? shadowColor = null, Vector2? textPosition = null)
         {
-            if(!RedeWorld.alignmentGiven)
+            if (!RedeWorld.alignmentGiven)
                 return;
 
             if (!Main.dedServ)
@@ -55,7 +55,10 @@ namespace Redemption.UI
                 Instance.ShadowColor = shadowColor;
                 Instance.Shake = shakeStrength;
                 Instance.TextPos = textPosition;
-                Visible = true;   
+                Visible = true;
+
+                if (RedeConfigClient.Instance.DialogueInChat)
+                    Main.NewText("<" + Language.GetTextValue("Mods.Redemption.UI.Chalice.Name") + "> " + text, Instance.TextColor);
             }
         }
 

@@ -135,7 +135,7 @@ namespace Redemption.NPCs.PreHM
             NPC.LookByVelocity();
 
             if (Main.rand.NextBool(1500) && !Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + SoundString + "Ambient"), NPC.position);
+                SoundEngine.PlaySound(AmbientSound, NPC.position);
 
             switch (AIState)
             {
@@ -381,7 +381,7 @@ namespace Redemption.NPCs.PreHM
             if (AIState != ActionState.Retreat && !player.RedemptionPlayerBuff().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes, false))
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + SoundString + "Notice"), NPC.position);
+                    SoundEngine.PlaySound(NoticeSound, NPC.position);
                 globalNPC.attacker = player;
                 moveTo = NPC.FindGround(20);
                 AITimer = 0;

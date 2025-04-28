@@ -10,6 +10,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using Terraria.Audio;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -51,7 +52,8 @@ namespace Redemption.NPCs.PreHM
         public int HeadX;
         public int HeadOffset;
         public int CoinsDropped;
-        public string SoundString = "Skeleton";
+        public SoundStyle AmbientSound = CustomSounds.SkeletonAmbient;
+        public SoundStyle NoticeSound = CustomSounds.SkeletonNotice;
         public Vector2 moveTo;
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -250,9 +252,15 @@ namespace Redemption.NPCs.PreHM
                 VisionRange = 200 + VisionIncrease + (NPC.type == ModContent.NPCType<SkeletonNoble>() ? 50 : 0);
 
             if (Personality is PersonalityState.Greedy)
-                SoundString = "GreedySkeleton";
+            {
+                AmbientSound = CustomSounds.GreedySkeletonAmbient;
+                NoticeSound = CustomSounds.GreedySkeletonNotice;
+            }
             else if (Personality is PersonalityState.Soulful)
-                SoundString = "SoulfulSkeleton";
+            {
+                AmbientSound = CustomSounds.SoulfulSkeletonAmbient;
+                NoticeSound = CustomSounds.SoulfulSkeletonNotice;
+            }
             NPC.netUpdate = true;
         }
     }

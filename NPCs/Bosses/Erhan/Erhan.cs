@@ -1199,6 +1199,18 @@ namespace Redemption.NPCs.Bosses.Erhan
                 return false;
             return base.CanBeHitByProjectile(projectile);
         }
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+            if (AIState is ActionState.Death && AITimer < 1200)
+            {
+                modifiers.SetMaxDamage(1);
+                if (AITimer > 600)
+                {
+                    AITimer = 600;
+                    NPC.netUpdate = true;
+                }
+            }
+        }
 
         private bool egged;
         private bool grenaded;

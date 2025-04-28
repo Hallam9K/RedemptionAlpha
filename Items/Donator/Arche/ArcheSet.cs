@@ -59,7 +59,6 @@ namespace Redemption.Items.Donator.Arche
                 .Register();
         }
     }
-    [AutoloadEquip(EquipType.Legs)]
     public class ArchePatreonVanityLegs : ModItem
     {
         public override void SetStaticDefaults()

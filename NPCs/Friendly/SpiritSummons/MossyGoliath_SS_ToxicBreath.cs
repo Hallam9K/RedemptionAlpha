@@ -1,6 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -32,6 +33,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Projectile.timeLeft = 140;
             Projectile.scale = Main.rand.NextFloat(0.2f, 0.4f);
             Projectile.rotation = RedeHelper.RandomRotation();
+            Projectile.Redemption().ParryBlacklist = true;
         }
 
         public override void AI()

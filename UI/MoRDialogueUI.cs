@@ -72,6 +72,19 @@ namespace Redemption.UI
                 TextPos = textPosition;
                 ID = id;
                 Visible = true;
+
+                if (RedeConfigClient.Instance.DialogueInChat)
+                {
+                    if (string.IsNullOrEmpty(whosespeaking))
+                    {
+                        Main.NewText(text, textColor);
+                    }
+                    else
+                    {
+                        whosespeaking = whosespeaking.Remove(whosespeaking.Length - 1);
+                        Main.NewText("<" + whosespeaking + "> " + text, textColor);
+                    }
+                }
             }
         }
         public Vector2 lastScreenSize;

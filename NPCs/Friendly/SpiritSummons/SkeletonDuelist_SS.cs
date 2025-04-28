@@ -1,22 +1,18 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
+using Redemption.NPCs.PreHM;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using Redemption.BaseExtension;
-using Terraria.DataStructures;
-using ParticleLibrary;
-using Redemption.Dusts;
-using Redemption.Particles;
-using Terraria.Graphics.Shaders;
-using Redemption.NPCs.PreHM;
 
 namespace Redemption.NPCs.Friendly.SpiritSummons
 {
@@ -44,7 +40,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.TrailCacheLength[NPC.type] = 4;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -59,6 +55,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC.DeathSound = SoundID.DD2_SkeletonDeath;
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
+            NPC.lavaImmune = true;
             NPC.Redemption().spiritSummon = true;
         }
         public override void HitEffect(NPC.HitInfo hit)
@@ -78,7 +75,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             if (AIState is ActionState.Idle or ActionState.Wander or ActionState.IdleAlert)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + SoundString + "Notice"), NPC.position);
+                    SoundEngine.PlaySound(NoticeSound, NPC.position);
                 AITimer = 0;
                 AIState = ActionState.Alert;
             }
@@ -104,12 +101,11 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
         public override void AI()
         {
-            CustomFrames(58);
-
             Player player = Main.player[(int)NPC.ai[3]];
+            SSBase.SpiritBasicAI(NPC, player);
+
             RedeNPC globalNPC = NPC.Redemption();
-            if (!player.active || player.dead || !SSBase.CheckActive(player))
-                NPC.SimpleStrikeNPC(999, 1);
+            var attacker = globalNPC.attacker;
             NPC.TargetClosest();
             NPC.LookByVelocity();
             Rectangle SlashHitbox1 = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 66 : NPC.Center.X + 4), (int)(NPC.Center.Y - 60), 62, 86);
@@ -118,7 +114,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             dodgeCooldown = (int)MathHelper.Max(0, dodgeCooldown);
 
             if (Main.rand.NextBool(4500) && !Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + SoundString + "Ambient"), NPC.position);
+                SoundEngine.PlaySound(AmbientSound, NPC.position);
 
             switch (AIState)
             {
@@ -179,19 +175,19 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         TimerRand = Main.rand.Next(120, 240);
                         AIState = ActionState.IdleAlert;
                         NPC.netUpdate = true;
+                        break;
                     }
 
-                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
+                    if (!NPC.Sight(attacker, VisionRange, HasEyes, HasEyes, false))
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
 
                     if (dodgeCooldown <= 0 && NPC.velocity.Y == 0)
                     {
-                        for (int i = 0; i < Main.maxProjectiles; i++)
+                        foreach (Projectile proj in Main.ActiveProjectiles)
                         {
-                            Projectile proj = Main.projectile[i];
-                            if (!proj.active || !proj.hostile || proj.damage <= 0 || proj.velocity.Length() == 0)
+                            if (!proj.hostile || proj.damage <= 0 || proj.velocity.Length() == 0)
                                 continue;
 
                             if (!NPC.Sight(proj, 80 + (proj.velocity.Length() * 4), true, true))
@@ -209,18 +205,18 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, interactDoorStyle: HasEyes ? 2 : 0);
 
-                    if (NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) < 80 * 80)
+                    if (NPC.velocity.Y == 0 && NPC.DistanceSQ(attacker.Center) < 80 * 80)
                     {
-                        NPC.LookAtEntity(globalNPC.attacker);
+                        NPC.LookAtEntity(attacker);
                         AITimer = 0;
                         NPC.frameCounter = 0;
                         NPC.velocity *= 0;
                         AIState = ActionState.Attack;
                     }
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, globalNPC.attacker.Center.Y);
-                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 2.2f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1),
-                        12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y, globalNPC.attacker);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, attacker.Center, 0.2f, 2.2f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1),
+                        12, 8, NPC.Center.Y > attacker.Center.Y, attacker);
 
                     break;
 
@@ -229,82 +225,42 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
+                        break;
                     }
 
-                    NPC.LookAtEntity(globalNPC.attacker);
+                    NPC.LookAtEntity(attacker);
 
                     if (NPC.velocity.Y < 0)
                         NPC.velocity.Y = 0;
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X *= 0.9f;
 
-                    if ((AniFrameY == 3 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox1)) || (AniFrameY == 6 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox2)))
-                    {
-                        if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
-                        {
-                            attackerNPC.immune[NPC.whoAmI] = 10;
-                            int hitDirection = attackerNPC.RightOfDir(NPC);
-                            BaseAI.DamageNPC(attackerNPC, NPC.damage, 6, hitDirection, NPC);
-                            if (Main.rand.NextBool(3))
-                                attackerNPC.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
-                        }
-                    }
+                    if (AniFrameY is 3 or 6)
+                        NPC.RedemptionHitbox().DamageInHitbox(NPC, 2, AniFrameY == 3 ? SlashHitbox1 : SlashHitbox2, NPC.damage, 6f, false, 10);
                     break;
                 case ActionState.SoulMove:
-                    NPC.alpha = 255;
-                    NPC.noGravity = true;
-                    NPC.noTileCollide = true;
-                    AITimer = 0;
-
-                    ParticleManager.NewParticle(NPC.Center + RedeHelper.Spread(10) + NPC.velocity, Vector2.Zero, new SpiritParticle(), Color.White, 0.6f * 1, 0, 1);
-                    for (int i = 0; i < 2; i++)
-                    {
-                        int dust = Dust.NewDust(NPC.Center + NPC.velocity - Vector2.One, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 1f);
-                        Main.dust[dust].noGravity = true;
-                        Main.dust[dust].velocity *= .1f;
-                        Color dustColor = new(188, 244, 227) { A = 0 };
-                        Main.dust[dust].color = dustColor;
-                    }
-
-                    if (NPC.Hitbox.Intersects(player.Hitbox) && Collision.CanHit(NPC.Center, 0, 0, player.Center, 0, 0) && !Collision.SolidCollision(NPC.position, NPC.width, NPC.height))
-                    {
-                        for (int i = 0; i < 10; i++)
-                        {
-                            int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.DungeonSpirit, 0, 0, Scale: 2);
-                            Main.dust[dust].velocity *= 2f;
-                            Main.dust[dust].noGravity = true;
-                        }
-
-                        NPC.alpha = 0;
-                        NPC.noGravity = false;
-                        NPC.noTileCollide = false;
-                        NPC.velocity *= 0f;
-
-                        moveTo = NPC.FindGround(20);
-                        runCooldown = 0;
-                        TimerRand = Main.rand.Next(120, 260);
-                        AIState = ActionState.Idle;
-                        NPC.netUpdate = true;
-                    }
-                    else
-                        NPC.Move(player.Center - new Vector2(0, 8), 20, 20);
+                    SSBase.SoulMoveState(NPC, ref AITimer, player, ref TimerRand, ref runCooldown, ref moveTo);
                     break;
-            }
-            if (Main.myPlayer == player.whoAmI && NPC.DistanceSQ(player.Center) > 2000 * 2000)
-            {
-                NPC.Center = player.Center;
-                NPC.velocity *= 0.1f;
-                NPC.netUpdate = true;
             }
             if (AIState is not ActionState.SoulMove)
             {
-                NPC.alpha += Main.rand.Next(-10, 11);
-                NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 0, 30);
+                if (SSBase.NoSpiritEffect(NPC))
+                    NPC.alpha = 0;
+                else
+                {
+                    NPC.alpha += Main.rand.Next(-10, 11);
+                    NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 0, 30);
+                }
             }
+            CustomFrames(58);
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit)
+        {
+            int damageDone = hit.Damage;
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
 
-            if (!Main.rand.NextBool(40))
-                return;
-            ParticleManager.NewParticle(NPC.RandAreaInEntity(), RedeHelper.Spread(2), new SpiritParticle(), Color.White, 1);
+            if (Main.rand.NextBool(3))
+                target.AddBuff(BuffType<DirtyWoundDebuff>(), Main.rand.Next(800, 2400));
         }
         private void CustomFrames(int frameHeight)
         {
@@ -326,8 +282,9 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         HeadOffset = 0;
 
                         RedeNPC globalNPC = NPC.Redemption();
-                        if (NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100)
-                            NPC.LookAtEntity(globalNPC.attacker);
+                        var attacker = globalNPC.attacker;
+                        if (NPC.velocity.Y == 0 && NPC.DistanceSQ(attacker.Center) < 100 * 100)
+                            NPC.LookAtEntity(attacker);
                         else
                             AIState = ActionState.Alert;
                     }
@@ -413,40 +370,18 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 _ => 0,
             };
         }
-        public int GetNearestNPC()
-        {
-            float nearestNPCDist = -1;
-            int nearestNPC = -1;
-
-            for (int i = 0; i < Main.maxNPCs; i++)
-            {
-                NPC target = Main.npc[i];
-                if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan || target.type == NPCID.TargetDummy)
-                    continue;
-
-                if (target.friendly || target.lifeMax <= 5 || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type])
-                    continue;
-
-                if (nearestNPCDist != -1 && !(target.Distance(NPC.Center) < nearestNPCDist))
-                    continue;
-
-                nearestNPCDist = target.Distance(NPC.Center);
-                nearestNPC = target.whoAmI;
-            }
-
-            return nearestNPC;
-        }
         public void SightCheck()
         {
             Player player = Main.player[(int)NPC.ai[3]];
             RedeNPC globalNPC = NPC.Redemption();
-            int gotNPC = GetNearestNPC();
+
+            int gotNPC = SSBase.GetNearestNPC(NPC);
             if (player.MinionAttackTargetNPC != -1)
                 gotNPC = player.MinionAttackTargetNPC;
             if (gotNPC != -1 && (NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes, false) || gotNPC == player.MinionAttackTargetNPC))
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + SoundString + "Notice"), NPC.position);
+                    SoundEngine.PlaySound(NoticeSound, NPC.position);
                 globalNPC.attacker = Main.npc[gotNPC];
                 moveTo = NPC.FindGround(20);
                 AITimer = 0;
@@ -476,13 +411,18 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D Glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+            Texture2D Glow = Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
-            spriteBatch.End();
-            spriteBatch.BeginAdditive(true);
-            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
+            bool noSpiritEffect = SSBase.NoSpiritEffect(NPC);
+            Color color = noSpiritEffect ? drawColor : Color.White;
+            if (!noSpiritEffect)
+            {
+                int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
+                spriteBatch.End();
+                spriteBatch.BeginAdditive(true);
+                GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
+            }
 
             int HeightH = head2.Value.Height / 12;
             int WidthH = head2.Value.Width / 2;
@@ -497,12 +437,12 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 int y = Height * AniFrameY;
                 Rectangle rect = new(0, y, Width, Height);
                 Vector2 origin = new(Width / 2f, Height / 2f);
-                spriteBatch.Draw(SlashAni.Value, NPC.Center - screenPos - new Vector2(0, 11), new Rectangle?(rect), NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale, effects, 0);
+                spriteBatch.Draw(SlashAni.Value, NPC.Center - screenPos - new Vector2(0, 11), new Rectangle?(rect), NPC.ColorTintedAndOpacity(color), NPC.rotation, origin, NPC.scale, effects, 0);
 
-                spriteBatch.Draw(head2.Value, NPC.Center - screenPos, new Rectangle?(rectH), NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -1 + HeadOffset), NPC.scale, effects, 0);
+                spriteBatch.Draw(head2.Value, NPC.Center - screenPos, new Rectangle?(rectH), NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -1 + HeadOffset), NPC.scale, effects, 0);
 
                 if (HasEyes)
-                    spriteBatch.Draw(SlashGlow.Value, NPC.Center - screenPos - new Vector2(0, 11), new Rectangle?(rect), NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale, effects, 0);
+                    spriteBatch.Draw(SlashGlow.Value, NPC.Center - screenPos - new Vector2(0, 11), new Rectangle?(rect), NPC.ColorTintedAndOpacity(Color.White), NPC.rotation, origin, NPC.scale, effects, 0);
             }
             else
             {
@@ -512,24 +452,28 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
-                        Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.White) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                        spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(color) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                     }
                 }
-                spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-                spriteBatch.Draw(head2.Value, NPC.Center - screenPos, new Rectangle?(rectH), NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -2 + HeadOffset), NPC.scale, effects, 0);
+                spriteBatch.Draw(head2.Value, NPC.Center - screenPos, new Rectangle?(rectH), NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -2 + HeadOffset), NPC.scale, effects, 0);
 
                 if (HasEyes)
-                    spriteBatch.Draw(Glow, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                    spriteBatch.Draw(Glow, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             }
-            spriteBatch.End();
-            spriteBatch.BeginDefault();
+
+            if (!noSpiritEffect)
+            {
+                spriteBatch.End();
+                spriteBatch.BeginDefault();
+            }
             return false;
         }
         public override bool CanHitNPC(NPC target) => false;
         public override void OnKill()
         {
-            RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.2f, 0.6f));
+            RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.2f, 0.6f));
         }
     }
 }

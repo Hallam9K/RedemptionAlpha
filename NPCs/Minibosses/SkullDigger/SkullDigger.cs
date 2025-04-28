@@ -225,6 +225,9 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
             NPC.netOffset *= 0f;
 
+            if (Main.rand.NextBool(1500) && !Main.dedServ)
+                SoundEngine.PlaySound(CustomSounds.Ghost3.WithPitchOffset(-0.5f), NPC.position);
+
             switch (AIState)
             {
                 case ActionState.Begin:
@@ -391,6 +394,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                 dust.velocity = dust.position.DirectionTo(NPC.Center + new Vector2(0, 50)) * 3f;
                                 origin = player.Center;
                             }
+                            if (AITimer == 100 && !Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.Ghost2.WithPitchOffset(.2f), NPC.position);
                             if (AITimer >= 100 && AITimer < 120)
                             {
                                 NPC.velocity.Y = 0;

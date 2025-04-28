@@ -96,6 +96,7 @@ namespace Redemption.Globals.Player
         public bool wardbreaker;
         public bool erleasFlower;
         public bool spiderFriendly;
+        public bool cruxSpiritExtractor;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -178,6 +179,7 @@ namespace Redemption.Globals.Player
             wardbreaker = false;
             erleasFlower = false;
             spiderFriendly = false;
+            cruxSpiritExtractor = false;
 
             Player.RedemptionRad().protectionLevel = 0;
 
@@ -811,7 +813,7 @@ namespace Redemption.Globals.Player
             if (infested && infestedTime >= 60)
             {
                 if (damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                    damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Infested"));
+                    damageSource = PlayerDeathReason.ByCustomReason(NetworkText.FromKey("Mods.Redemption.StatusMessage.Death.Infested", Player.name));
 
                 SoundEngine.PlaySound(SoundID.NPCDeath19, Player.position);
                 for (int i = 0; i < 20; i++)
@@ -827,22 +829,22 @@ namespace Redemption.Globals.Player
                 }
             }
             if (dirtyWound && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.DirtyWound"));
+                damageSource = PlayerDeathReason.ByCustomReason(NetworkText.FromKey("Mods.Redemption.StatusMessage.Death.DirtyWound", Player.name));
 
             if (spiderSwarmed && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Swarmed"));
+                damageSource = PlayerDeathReason.ByCustomReason(NetworkText.FromKey("Mods.Redemption.StatusMessage.Death.Swarmed", Player.name));
 
             if ((fleshCrystals || shockDebuff) && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Xenomite"));
+                damageSource = PlayerDeathReason.ByCustomReason(NetworkText.FromKey("Mods.Redemption.StatusMessage.Death.Xenomite", Player.name));
 
             if (Player.FindBuffIndex(BuffType<RadiationDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Radiation"));
+                damageSource = PlayerDeathReason.ByCustomReason(NetworkText.FromKey("Mods.Redemption.StatusMessage.Death.Radiation", Player.name));
 
             if (Player.FindBuffIndex(BuffType<HolyFireDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Incandesence"));
+                damageSource = PlayerDeathReason.ByCustomReason(NetworkText.FromKey("Mods.Redemption.StatusMessage.Death.Incandesence", Player.name));
 
             if (Player.FindBuffIndex(BuffType<EnsnaredDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Ensnared"));
+                damageSource = PlayerDeathReason.ByCustomReason(NetworkText.FromKey("Mods.Redemption.StatusMessage.Death.Ensnared", Player.name));
 
             return true;
         }

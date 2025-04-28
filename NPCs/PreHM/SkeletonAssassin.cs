@@ -119,7 +119,7 @@ namespace Redemption.NPCs.PreHM
             if (AIState is ActionState.Idle or ActionState.Wander or ActionState.Hiding or ActionState.Stalk)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + SoundString + "Notice"), NPC.position);
+                    SoundEngine.PlaySound(NoticeSound, NPC.position);
                 AITimer = 0;
                 AIState = ActionState.Alert;
             }
@@ -150,7 +150,7 @@ namespace Redemption.NPCs.PreHM
             Rectangle KnifeHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 46 : NPC.Center.X + 10), (int)(NPC.Center.Y - 12), 36, 18);
 
             if (Main.rand.NextBool(3500) && !Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + SoundString + "Ambient"), NPC.position);
+                SoundEngine.PlaySound(AmbientSound, NPC.position);
 
             if (AIState is ActionState.Hiding or ActionState.Stalk)
             {
@@ -243,7 +243,7 @@ namespace Redemption.NPCs.PreHM
                     if (HasEyes && globalNPC.attacker.direction == NPC.direction * -1 && NPC.Sight(globalNPC.attacker, 200, true, true))
                     {
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + SoundString + "Notice"), NPC.position);
+                            SoundEngine.PlaySound(NoticeSound, NPC.position);
                         runCooldown = 0;
                         AITimer = 0;
                         AIState = ActionState.Alert;

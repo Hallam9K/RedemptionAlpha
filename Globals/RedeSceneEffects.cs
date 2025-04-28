@@ -27,7 +27,7 @@ namespace Redemption.Globals
     }
     public class SkeletonInvasionMusic : ModSceneEffect
     {
-        public override int Music => MusicLoader.GetMusicSlot("Redemption/Sounds/Music/Spooky");
+        public override int Music => MusicLoader.GetMusicSlot("Redemption/Sounds/Music/Raveyard");
         public override SceneEffectPriority Priority => SceneEffectPriority.Event;
         public override bool IsSceneEffectActive(Terraria.Player player)
         {

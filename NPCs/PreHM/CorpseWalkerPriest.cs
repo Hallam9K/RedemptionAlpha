@@ -89,7 +89,7 @@ namespace Redemption.NPCs.PreHM
             if (AIState is ActionState.Idle or ActionState.Wander)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/SkeletonNotice"), NPC.position);
+                    SoundEngine.PlaySound(CustomSounds.SkeletonNotice, NPC.position);
                 AITimer = 0;
                 AIState = ActionState.Alert;
             }
@@ -111,7 +111,7 @@ namespace Redemption.NPCs.PreHM
             NPC.TargetClosest();
 
             if (Main.rand.NextBool(1500) && !Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + SoundString + "Ambient"), NPC.position);
+                SoundEngine.PlaySound(AmbientSound, NPC.position);
 
 
             switch (AIState)
@@ -347,7 +347,7 @@ namespace Redemption.NPCs.PreHM
                 if (!player.RedemptionPlayerBuff().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes))
                 {
                     if (!Main.dedServ)
-                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/SkeletonNotice"), NPC.position);
+                        SoundEngine.PlaySound(CustomSounds.SkeletonNotice, NPC.position);
                     globalNPC.attacker = player;
                     moveTo = NPC.FindGround(20);
                     AITimer = 0;
@@ -356,7 +356,7 @@ namespace Redemption.NPCs.PreHM
                 if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes, false))
                 {
                     if (!Main.dedServ)
-                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/SkeletonNotice"), NPC.position);
+                        SoundEngine.PlaySound(CustomSounds.SkeletonNotice, NPC.position);
                     globalNPC.attacker = Main.npc[gotNPC];
                     moveTo = NPC.FindGround(20);
                     AITimer = 0;

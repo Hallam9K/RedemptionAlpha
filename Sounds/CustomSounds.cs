@@ -1,6 +1,6 @@
-using Terraria.Audio;
-using Microsoft.Xna.Framework;
 using ReLogic.Utilities;
+using Terraria;
+using Terraria.Audio;
 
 namespace Redemption
 {
@@ -28,10 +28,7 @@ namespace Redemption
                 slot = SlotId.Invalid;
             }
         }
-        public static readonly SoundStyle MaskBreak = new("Redemption/Sounds/Custom/MaskBreak")
-        {
-            PitchVariance = 0.2f
-        };
+        public static readonly SoundStyle MaskBreak = new("Redemption/Sounds/Custom/MaskBreak") { PitchVariance = 0.3f };
         public static readonly SoundStyle AlarmItem = new("Redemption/Sounds/Custom/AlarmItem") { Volume = .5f, PitchVariance = .1f };
         public static readonly SoundStyle Alarm2 = new("Redemption/Sounds/Custom/Alarm2");
         public static readonly SoundStyle BallCreate = new("Redemption/Sounds/Custom/BallCreate") { PitchVariance = .1f };
@@ -78,7 +75,7 @@ namespace Redemption
         public static readonly SoundStyle NebSound1 = new("Redemption/Sounds/Custom/NebSound1") { PitchVariance = .1f };
         public static readonly SoundStyle NebSound2 = new("Redemption/Sounds/Custom/NebSound2") { PitchVariance = .1f };
         public static readonly SoundStyle NebSound3 = new("Redemption/Sounds/Custom/NebSound3") { PitchVariance = .1f };
-        public static readonly SoundStyle NukeExplosion = new("Redemption/Sounds/Custom/NukeExplosion");
+        public static readonly SoundStyle NukeExplosion = new("Redemption/Sounds/Custom/NukeExplosion") { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
         public static readonly SoundStyle PatientZeroLaser = new("Redemption/Sounds/Custom/PatientZeroLaser");
         public static readonly SoundStyle PatientZeroLaserL = new("Redemption/Sounds/Custom/PatientZeroLaserL");
         public static readonly SoundStyle PlasmaBlast = new("Redemption/Sounds/Custom/PlasmaBlast");
@@ -144,18 +141,39 @@ namespace Redemption
         public static readonly SoundStyle NoitaDeath = new("Redemption/Sounds/Custom/NoitaDeath");
         public static readonly SoundStyle SwordClash = new("Redemption/Sounds/Custom/SwordClash") { PitchVariance = .1f };
         public static readonly SoundStyle AftonScream = new("Redemption/Sounds/Custom/AftonScream") { PitchVariance = .1f };
+        public static readonly SoundStyle SoulfulSkeletonNotice = new("Redemption/Sounds/Custom/SoulfulSkeletonNotice") { PitchVariance = .3f, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
+        public static readonly SoundStyle SoulfulSkeletonAmbient = new("Redemption/Sounds/Custom/SoulfulSkeletonAmbient") { PitchVariance = .3f };
+        public static readonly SoundStyle GreedySkeletonNotice = new("Redemption/Sounds/Custom/GreedySkeletonNotice") { PitchVariance = .3f, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
+        public static readonly SoundStyle GreedySkeletonAmbient = new("Redemption/Sounds/Custom/GreedySkeletonAmbient") { PitchVariance = .3f };
+        public static readonly SoundStyle SkeletonNotice = new("Redemption/Sounds/Custom/SkeletonNotice", 3) { PitchVariance = .3f, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
+        public static readonly SoundStyle SkeletonAmbient = new("Redemption/Sounds/Custom/SkeletonAmbient", 2) { PitchVariance = .3f };
+        public static readonly SoundStyle NebBeam = new("Redemption/Sounds/Custom/NebBeam");
+        public static readonly SoundStyle NebMeteor = new("Redemption/Sounds/Custom/NebMeteor");
+        public static readonly SoundStyle MetalExplosion = new("Redemption/Sounds/Custom/MetalExplosion");
+        public static readonly SoundStyle FireExplosion = new("Redemption/Sounds/Custom/FireExplosion");
+        public static readonly SoundStyle ThunderExplosion = new("Redemption/Sounds/Custom/ThunderExplosion");
         public static readonly SoundStyle Shatter = new("Redemption/Sounds/Custom/Shatter");
         public static readonly SoundStyle HLShotgun1 = new("Redemption/Sounds/Custom/HLShotgun1") { PitchVariance = .1f };
         public static readonly SoundStyle Bell = new("Redemption/Sounds/Custom/Bell") { PitchVariance = .1f, Pitch = -.5f, Volume = .5f };
         public static readonly SoundStyle Kantele1 = new("Redemption/Sounds/Custom/Kantele1");
         public static readonly SoundStyle Kantele2 = new("Redemption/Sounds/Custom/Kantele2");
-        public static readonly SoundStyle NebBeam = new("Redemption/Sounds/Custom/NebBeam");
-        public static readonly SoundStyle NebMeteor = new("Redemption/Sounds/Custom/NebMeteor");
 
         public static readonly SoundStyle Magic1 = new("Redemption/Sounds/Custom/Magic1") { PitchVariance = .1f };
+        public static readonly SoundStyle Magic2 = new("Redemption/Sounds/Custom/Magic2") { PitchVariance = .1f };
         public static readonly SoundStyle Magic5 = new("Redemption/Sounds/Custom/Magic5") { PitchVariance = .1f };
+        public static readonly SoundStyle Saint1 = new("Redemption/Sounds/Custom/Saint1") { PitchVariance = .2f };
+        public static readonly SoundStyle Saint2 = new("Redemption/Sounds/Custom/Saint2");
         public static readonly SoundStyle Saint3 = new("Redemption/Sounds/Custom/Saint3") { PitchVariance = .1f };
+        public static readonly SoundStyle Saint4 = new("Redemption/Sounds/Custom/Saint4");
         public static readonly SoundStyle Saint9 = new("Redemption/Sounds/Custom/Saint9") { PitchVariance = .1f };
+        public static readonly SoundStyle Thorn1 = new("Redemption/Sounds/Custom/ThornSound1") { PitchVariance = .2f, Volume = .8f };
+        public static readonly SoundStyle WailingSoul = new("Redemption/Sounds/Custom/WailingSoul", 2) { PitchVariance = .1f };
+        public static readonly SoundStyle HeavyMagic1 = new("Redemption/Sounds/Custom/HeavyMagic1") { PitchVariance = .1f };
+        public static readonly SoundStyle HeavyExplosion1 = new("Redemption/Sounds/Custom/Explosion1") { PitchVariance = .1f };
+        public static readonly SoundStyle Ghost1 = new("Redemption/Sounds/Custom/WailingSoul3") { PitchVariance = .1f };
+        public static readonly SoundStyle Ghost2 = new("Redemption/Sounds/Custom/WailingSoul4") { PitchVariance = .1f };
+        public static readonly SoundStyle Ghost3 = new("Redemption/Sounds/Custom/Ghost", 2) { PitchVariance = .4f, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
+        public static readonly SoundStyle FlameRise2 = new("Redemption/Sounds/Custom/FlameRise2") { PitchVariance = .1f };
 
         public static readonly SoundStyle BoneHit = new("Redemption/Sounds/Tiles/BoneHit", 3);
         public static readonly SoundStyle BrickHit = new("Redemption/Sounds/Tiles/BrickHit", 3);

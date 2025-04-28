@@ -1,0 +1,28 @@
+=== 0.8 Beta .4073 === (Spirits and Sounds Patch)
+- Added localisation for Treebark Dryad names
+- Reduced Keeper's Soul Charge velocity rotation from .1 -> .08
+- Fixed Kyretha's damage from 60 -> 78
+- Skeleton Noble Crux's slam will have axe bonus' extra crit damage, and thrust with the spear bonus
+- Skeleton Wanderer has spear bonus
+- Fixed Skull Digger Crux's damage from 28 -> 30
+- Skull Digger's Crux moves to the side of the target like normal Skull Digger
+- Reduced Treebark Dryad's hitbox width
+- The Sakura Treebark Dryad at the shrine will always be called Blossomwood
+- Xenium Turret's bullets deal Summon damage now
+- Added Earth element to Gladestone Golem and Mossy Goliath Cruxes, and Nature to Forest Nymph
+- Forest Nymph Crux has more Nature resistance
+1428. Skull Digger's crux summon will not target the Keeper or the Keeper's Spirit
+1976. All Crux Card spirits are immune to lava and upon touching lava will be tugged back to player position automatically
+2124. The Guiding Stranger can occasionally appear by just having an Empty Crux Card in your inventory now (still appears when held in hand too)
+2130. Added Gloom Mushroom foliage that can rarely generate in Gathic Tombs
+2131. Erhan needs 10 hits to kill during sparing phase, hitting him resets the time until being spared
+2136. Thorn's Claw Dance is no longer part of the attack pool and instead happens after phase 2 and final subphase transitions only (So twice per fight)
+2137. Thorn's vilethorn-like Seeds don't sprout during his Death animation
+2138. Added new sound effects for Omega Prototype's defeat explosion, Keeper's Soul Charge attack, Thorn's bramble attack, Basan and Dragon Slayer's Staff flamethrower, Skeleton ambience and alerted, and Vagrant Spirit ambience
+2140. Added Spirit Extractor, vanity accessory that removes the spiritual appearance from crux card spirits
+2142. Doubled Calcite Wand projectile's speed, nerfed damage increase from Y Velocity * 3 -> Y Velocity * 2
+2144. Added config option to log cutscene dialogue in chat (Dialogue from cutscenes, Chalice of Alignment, and bosses will be sent in the text chat)
+2155. Added new track for Raveyard
+2161. Removed Holy element from the various Star Cloak stars, they're now just Celestial
+2162. Added elemental damage and resistance increases to some vanilla accessories, namely Anklet of the Wind, Celestial Stone, Celestial Shell, Arcane Flower, Mana Cloak, Bezoar, Countercurse Mantra, Cross Necklace, Fire Gauntlet, Flesh Knuckles, Frozen Turtle Shell, Frozen Shield, Hero Shield, Paladin's Shield, Medicated Bandage, Star Veil, Spore Sac, and Obsidian Skull
+===============

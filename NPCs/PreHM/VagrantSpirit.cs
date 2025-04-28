@@ -11,6 +11,7 @@ using Redemption.NPCs.Friendly;
 using ReLogic.Content;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -139,6 +140,9 @@ namespace Redemption.NPCs.PreHM
             NPC.LookByVelocity();
 
             NPC.position.Y += (float)Math.Sin(NPC.localAI[0]++ / 40);
+
+            if (Main.rand.NextBool(1500) && !Main.dedServ)
+                SoundEngine.PlaySound(CustomSounds.Ghost3, NPC.position);
 
             switch (AIState)
             {

@@ -376,20 +376,20 @@ Mods: {
 			}
 
 			Death: {
-				Infested: " burst into larva!"
-				DirtyWound: " had an infection"
-				Swarmed: " got nibbled to death"
-				Xenomite: " was turned into a crystal"
-				Radiation: " was irradiated"
-				Incandesence: " was too glorious"
-				Ensnared: " got consumed by the thorns"
-				Nuclear1: " saw a second sunrise"
-				Nuclear2: " was wiped off the face of "
-				Nuclear3: " experienced doomsday"
-				Nuclear4: " became a shadow on the ground"
-				Nuclear5: " went out with a bang"
-				Nuclear6: " couldn't find the fridge in time"
-				DoorStuck: " experienced DOOR STUCK."
+				Infested: "{0} burst into larva!"
+				DirtyWound: "{0} had an infection"
+				Swarmed: "{0} got nibbled to death"
+				Xenomite: "{0} was turned into a crystal"
+				Radiation: "{0} was irradiated"
+				Incandesence: "{0} was too glorious"
+				Ensnared: "{0} got consumed by the thorns"
+				Nuclear1: "{0} saw a second sunrise"
+				Nuclear2: "{0} was wiped off the face of {1}"
+				Nuclear3: "{0} experienced doomsday"
+				Nuclear4: "{0} became a shadow on the ground"
+				Nuclear5: "{0} went out with a bang"
+				Nuclear6: "{0} couldn't find the fridge in time"
+				DoorStuck: "{0} experienced DOOR STUCK."
 			}
 
 			Event: {
@@ -452,16 +452,8 @@ Mods: {
 
 			ArmorSetBonus: {
 				VanillaArmor: {
-					Resistance:
-						'''
-
-						{0}% increased {1} elemental resistance
-						'''
-					Damage:
-						'''
-
-						{0}% increased {1} elemental damage
-						'''
+					Resistance: "{0}% increased {1} elemental resistance"
+					Damage: "{0}% increased {1} elemental damage"
 					SolarCelestial:
 						'''
 
@@ -10328,7 +10320,7 @@ Mods: {
 
 			RaveyardBox: {
 				DisplayName: Music Box (Raveyard)
-				Tooltip: PeriTune - Spook3
+				Tooltip: Zeus073 - Rattle Thy Bones
 			}
 
 			AetherianGreathelm: {
@@ -10755,6 +10747,21 @@ Mods: {
 
 			CalaviaRelic: {
 				DisplayName: Calavia Relic
+				Tooltip: ""
+			}
+
+			SpiritExtractor: {
+				DisplayName: Spirit Extractor
+				Tooltip: Removes the spiritual appearance of your Crux Card spirits
+			}
+
+			GloomMushroomBig: {
+				DisplayName: Large Gloom Mushroom
+				Tooltip: ""
+			}
+
+			GloomMushroomBlock: {
+				DisplayName: Gloom Mushroom Block
 				Tooltip: ""
 			}
 		}
@@ -11806,6 +11813,16 @@ Mods: {
 			TreebarkDryad: {
 				DisplayName: Treebark Dryad
 				Title: " the Treebark Dryad"
+				Name1: Gentlewood
+				Name2: Blandwood
+				Name3: Elmshade
+				Name4: Vinewood
+				Name5: Bitterthorn
+				Name6: Irontwig
+				Name7: Tapio
+				Name1Willow: Willowbark
+				Name1Sakura: Cherrysplinter
+				Name2Sakura: Blossomwood
 			}
 
 			WraithSlayer_Samurai.DisplayName: Cursed Samurai
@@ -12199,6 +12216,8 @@ Mods: {
 			SandskinSpiderCageTile.MapEntry: Sandskin Spider Cage Tile
 			SpiderSwarmerCageTile.MapEntry: Spider Swarmer Cage Tile
 			TreeBugCageTile.MapEntry: Tree Bug Cage Tile
+			GloomShroomFoliage.MapEntry: Gloom Mushroom
+			GloomShroomFoliage2.MapEntry: Gloom Mushroom
 		}
 
 		Keybinds: {
@@ -12281,6 +12300,11 @@ Mods: {
 				NoFlyBuzz: {
 					Label: Disable Fly Buzzing
 					Tooltip: Flies become silent
+				}
+
+				DialogueInChat: {
+					Label: Log Cutscene Dialogue in Chat
+					Tooltip: Dialogue from cutscenes, Chalice of Alignment, and bosses will be also sent in the text chat
 				}
 			}
 

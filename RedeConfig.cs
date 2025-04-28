@@ -36,6 +36,8 @@ namespace Redemption
         public float ShakeIntensity;
 
         public bool NoFlyBuzz;
+
+        public bool DialogueInChat;
     }
     public class RedeConfigServer : ModConfig
     {

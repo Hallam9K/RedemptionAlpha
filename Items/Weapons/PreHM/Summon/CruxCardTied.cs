@@ -18,6 +18,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Item.rare = ItemRarityID.Green;
             Item.value = Item.sellPrice(0, 2, 66, 0);
             Item.Redemption().CanSwordClash = true;
+            Item.Redemption().TechnicallySlash = true;
         }
         public override void SpawnSpirits(Player player)
         {

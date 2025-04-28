@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
@@ -13,14 +12,6 @@ namespace Redemption.Items.Materials.PreHM
 {
     public class EmptyCruxCard : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            /* Tooltip.SetDefault("A container for friendly spirits to aid you\n" +
-                "Find willing spirits and request their crux to imbue into the card" +
-                "\n'Those who peek into the realm of fulfilment are bound to find friends'"); */
-            Item.ResearchUnlockCount = 1;
-        }
-
         public override void SetDefaults()
         {
             Item.width = 40;
@@ -29,10 +20,15 @@ namespace Redemption.Items.Materials.PreHM
             Item.value = Item.sellPrice(0, 0, 50, 0);
             Item.rare = ItemRarityID.Blue;
         }
+        public override void UpdateInventory(Player player)
+        {
+            if (player.whoAmI == Main.myPlayer && !player.RedemptionAbility().Spiritwalker && Main.rand.NextBool(5000) && player.ZoneRockLayerHeight && player.ownedProjectileCounts[ProjectileType<GuidingStranger_Proj>()] < 1)
+                Projectile.NewProjectile(player.GetSource_ItemUse(Item), player.Center, Vector2.Zero, ProjectileType<GuidingStranger_Proj>(), 0, 0, player.whoAmI);
+        }
         public override void HoldItem(Player player)
         {
-            if (player.whoAmI == Main.myPlayer && !player.RedemptionAbility().Spiritwalker && Main.rand.NextBool(100) && player.ZoneRockLayerHeight && player.ownedProjectileCounts[ModContent.ProjectileType<GuidingStranger_Proj>()] < 1)
-                Projectile.NewProjectile(player.GetSource_ItemUse(Item), player.Center, Vector2.Zero, ModContent.ProjectileType<GuidingStranger_Proj>(), 0, 0, player.whoAmI);
+            if (player.whoAmI == Main.myPlayer && !player.RedemptionAbility().Spiritwalker && Main.rand.NextBool(100) && player.ZoneRockLayerHeight && player.ownedProjectileCounts[ProjectileType<GuidingStranger_Proj>()] < 1)
+                Projectile.NewProjectile(player.GetSource_ItemUse(Item), player.Center, Vector2.Zero, ProjectileType<GuidingStranger_Proj>(), 0, 0, player.whoAmI);
         }
     }
     public class GuidingStranger_Proj : ModProjectile
