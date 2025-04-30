@@ -34,7 +34,7 @@ namespace Redemption.Buffs
         // MeleeEffects and EmitEnchantmentVisualsAt apply the visual effects of the weapon imbue to items and projectiles respectively.
         public override void MeleeEffects(Item item, Rectangle hitbox)
         {
-            if (explosiveWeaponImbue && item.DamageType.CountsAsClass<MeleeDamageClass>() && !item.noMelee && !item.noUseGraphic)
+            if (explosiveWeaponImbue && item.DamageType.CountsAsClass(DamageClass.Melee) && !item.noMelee && !item.noUseGraphic)
             {
                 if (Main.rand.NextBool(3))
                 {
@@ -51,7 +51,7 @@ namespace Redemption.Buffs
 
         public override void EmitEnchantmentVisualsAt(Projectile projectile, Vector2 boxPosition, int boxWidth, int boxHeight)
         {
-            if (explosiveWeaponImbue && (projectile.DamageType.CountsAsClass<MeleeDamageClass>() || ProjectileID.Sets.IsAWhip[projectile.type]) && !projectile.noEnchantments)
+            if (explosiveWeaponImbue && (projectile.DamageType.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[projectile.type]) && !projectile.noEnchantments)
             {
                 if (Main.rand.NextBool(3))
                 {

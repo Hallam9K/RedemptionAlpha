@@ -1,4 +1,6 @@
-﻿using Redemption.Items.Placeable.Plants;
+﻿using Redemption.Globals;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Placeable.Plants;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.ID;
@@ -26,6 +28,12 @@ namespace Redemption.Items.Placeable.Tiles
 
         public override void ExtractinatorUse(int extractinatorBlockType, ref int resultType, ref int resultStack)
         {
+            if (RedeHelper.Chance(.03f))
+            {
+                resultType = ItemType<WeirdBloom>();
+                resultStack = 1;
+                return;
+            }
             switch (Main.rand.Next(14))
             {
                 case 0:

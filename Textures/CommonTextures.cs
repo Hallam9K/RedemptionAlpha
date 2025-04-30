@@ -17,6 +17,7 @@ namespace Redemption.Textures
 
         public static Asset<Texture2D> BigFlare;
         public static Asset<Texture2D> WhiteFlare;
+        public static Asset<Texture2D> WhiteEyeFlare;
         public static Asset<Texture2D> WhiteGlow;
         public static Asset<Texture2D> WhiteOrb;
         public static Asset<Texture2D> GunFlash;
@@ -40,6 +41,7 @@ namespace Redemption.Textures
 
             BigFlare = ModContent.Request<Texture2D>("Redemption/Textures/BigFlare");
             WhiteFlare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare");
+            WhiteEyeFlare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteEyeFlare");
             WhiteGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow");
             WhiteOrb = ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb");
             GunFlash = ModContent.Request<Texture2D>("Redemption/Textures/GunFlash");

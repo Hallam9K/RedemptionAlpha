@@ -1,7 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using ParticleLibrary.Utilities;
 using Redemption.Base;
-using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Quest.KingSlayer;
@@ -9,9 +8,13 @@ using Redemption.Items.Usable;
 using Redemption.Items.Usable.Summons;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.Friendly;
+using Redemption.Textures;
 using ReLogic.Content;
+using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
@@ -22,8 +25,8 @@ namespace Redemption.UI
 {
     public class AlignmentButton : UIState
     {
-        private readonly UIImage AlignmentButtonTexture = new(ModContent.Request<Texture2D>("Redemption/UI/AlignmentButton", AssetRequestMode.ImmediateLoad));
-        private readonly Asset<Texture2D> AlignmentButton_MouseOverTexture = ModContent.Request<Texture2D>("Redemption/UI/AlignmentButton_MouseOver", AssetRequestMode.ImmediateLoad);
+        private readonly UIImage AlignmentButtonTexture = new(Request<Texture2D>("Redemption/UI/AlignmentButton", AssetRequestMode.ImmediateLoad));
+        private readonly Asset<Texture2D> AlignmentButton_MouseOverTexture = Request<Texture2D>("Redemption/UI/AlignmentButton_MouseOver", AssetRequestMode.ImmediateLoad);
 
         public UIImage Icon;
         public UIHoverTextImageButton IconHighlight;
@@ -33,7 +36,7 @@ namespace Redemption.UI
         {
             Icon = AlignmentButtonTexture;
             Icon.Left.Set(570, 0f);
-            Icon.Top.Set(20, 0f);
+            Icon.Top.Set(10, 0f);
             Append(Icon);
 
             IconHighlight = new UIHoverTextImageButton(AlignmentButton_MouseOverTexture, "Alignment");
@@ -53,6 +56,17 @@ namespace Redemption.UI
         }
         public override void Update(GameTime gameTime)
         {
+            float passedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (Main.FrameSkipMode == FrameSkipMode.Subtle)
+                passedTime = 1f / 60f;
+
+            frameCounter += (int)(passedTime * 60);
+            if (frameCounter >= 12)
+            {
+                frameCounter = 0;
+                if (++eyeFrame > 5)
+                    eyeFrame = 0;
+            }
             int type = Main.LocalPlayer.HeldItem.type;
             Glowing = false;
             if (RedeItem.ChaliceInterest(type))
@@ -170,6 +184,11 @@ namespace Redemption.UI
             }
         }
         private float fade;
+        private int frameCounter;
+        private int eyeFrame;
+        Asset<Texture2D> eyeTex;
+        Asset<Texture2D> eyeFlameTex;
+        Asset<Texture2D> flameTex;
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (!RedeWorld.alignmentGiven || !Main.playerInventory)
@@ -182,17 +201,43 @@ namespace Redemption.UI
 
             if (fade > 0)
             {
-                Texture2D glowTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
-                Vector2 drawOrigin = new(glowTex.Width / 2, glowTex.Height / 2);
+                Asset<Texture2D> glowTex = CommonTextures.WhiteGlow;
+                Vector2 drawOrigin = glowTex.Size() / 2;
                 Color c = Color.Orange;
                 c.A = 0;
                 float cAlpha = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, .8f, 1f, .8f);
                 float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, .9f, 1f, .9f);
 
-                spriteBatch.Draw(glowTex, new Vector2(570 + 41, 20 + 31), null, c * cAlpha * fade, 0, drawOrigin, 0.6f * scale, 0, 0);
+                spriteBatch.Draw(glowTex.Value, new Vector2(570 + 33, 10 + 46), null, c * cAlpha * fade, 0, drawOrigin, 0.6f * scale, 0, 0);
             }
             fade = MathHelper.Clamp(fade, 0, 1);
+
+            Color color = Color.Lerp(Color.White, Color.Red.WithAlpha(0.9f), -(RedeWorld.Alignment / 10f));
+            Color color2 = Color.Lerp(Color.White, Color.Red.WithAlpha(0f), -(RedeWorld.Alignment / 10f));
+            if (RedeWorld.Alignment >= 0)
+            {
+                color = Color.Lerp(Color.White, Color.Cyan.WithAlpha(0), RedeWorld.Alignment / 10f);
+                color2 = Color.Lerp(Color.White, Color.Cyan.WithAlpha(0), RedeWorld.Alignment / 10f);
+            }
+
+            Asset<Texture2D> tex = TextureAssets.Npc[NPCType<Chalice_Intro>()];
+            Rectangle rect = tex.Frame(1, 6, 0, eyeFrame);
+            spriteBatch.Draw(tex.Value, new Vector2(570, 10), rect, Color.White, 0, Vector2.Zero, 1, 0, 0);
+
+            flameTex ??= Request<Texture2D>("Redemption/Items/Usable/AlignmentTeller2_Flame");
+            spriteBatch.Draw(flameTex.Value, new Vector2(570, 10), rect, color2, 0, Vector2.Zero, 1, 0, 0);
+
             base.Draw(spriteBatch);
+
+            eyeTex ??= Request<Texture2D>("Redemption/Items/Usable/AlignmentTeller2_Eye");
+            rect = eyeTex.Frame(1, 6, 0, eyeFrame);
+            Vector2 origin = rect.Size() / 2;
+
+            float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * MathHelper.TwoPi / 5f);
+            spriteBatch.Draw(eyeTex.Value, new Vector2(570 + 30, 10 + 11 + offset), rect, Color.White, 0, origin, 1, 0, 0);
+
+            eyeFlameTex ??= Request<Texture2D>("Redemption/Items/Usable/AlignmentTeller2_EyeFlame");
+            spriteBatch.Draw(eyeFlameTex.Value, new Vector2(570 + 30, 10 + 11 + offset), rect, color, 0, origin, 1, 0, 0);
         }
     }
 }

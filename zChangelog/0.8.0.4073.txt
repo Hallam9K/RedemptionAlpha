@@ -25,4 +25,8 @@
 2155. Added new track for Raveyard
 2161. Removed Holy element from the various Star Cloak stars, they're now just Celestial
 2162. Added elemental damage and resistance increases to some vanilla accessories, namely Anklet of the Wind, Celestial Stone, Celestial Shell, Arcane Flower, Mana Cloak, Bezoar, Countercurse Mantra, Cross Necklace, Fire Gauntlet, Flesh Knuckles, Frozen Turtle Shell, Frozen Shield, Hero Shield, Paladin's Shield, Medicated Bandage, Star Veil, Spore Sac, and Obsidian Skull
+2163. Added a Weird-Looking Flower
+2167. Resprited Chalice of Alignment, Item has its own sprite, the flames around the eye of the UI sprite changes colour based on your Alignment, and changed the yellow orb in "Chalice has something to say about this item" line to a new icon
+2168. Changed some lines the Chalice says when clicked on
+2169. Improved sprites of the Ability icons
 ===============

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using ReLogic.Content;
 using ReLogic.Graphics;
 using System.IO;
 using Terraria;
@@ -150,6 +151,8 @@ namespace Redemption.UI
             lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
             screenPos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2.3f);
         }
+        Asset<Texture2D> darkTexture;
+        Asset<Texture2D> chaliceIcon;
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (!Visible)
@@ -186,7 +189,8 @@ namespace Redemption.UI
             Color drawColor = new(255, 255, 255);
             Color shadowColor = new(25, 25, 25);
 
-            Texture2D darkTexture = ModContent.Request<Texture2D>("Redemption/Textures/BlackSquare").Value;
+            darkTexture ??= Request<Texture2D>("Redemption/Textures/BlackSquare");
+            chaliceIcon ??= Request<Texture2D>("Redemption/Textures/Elements/ChaliceIcon");
 
             int titleDrawX = centerX - (textLength / 2);
             int titleDrawY = centerY - (int)(textHeight * 0.6f);
@@ -242,7 +246,7 @@ namespace Redemption.UI
                 Vector2 actualdrawposition = topleft + fakeGaussianBlurEffect;
                 Rectangle rect = new((int)actualdrawposition.X, (int)actualdrawposition.Y, totalLength, totalHeight);
 
-                spriteBatch.Draw(darkTexture, rect, darkTexture.Bounds, new Color(0, 0, 0) * (opacity * 0.02f));
+                spriteBatch.Draw(darkTexture.Value, rect, darkTexture.Value.Bounds, new Color(0, 0, 0) * (opacity * 0.02f));
             }
             Vector2 textpos = new Vector2(centerX - (textLength / 2f), centerY - (textHeight / 2f)) + new Vector2(Main.rand.NextFloat(0, Shake)).RotatedByRandom(MathHelper.TwoPi);
             spriteBatch.DrawString(font, Text, textpos + new Vector2(2, 2), textShadowColor * opacity, 0, new Vector2(0, 0), FontScale, SpriteEffects.None, 0);
@@ -250,6 +254,8 @@ namespace Redemption.UI
             if (Title != null)
             {
                 Vector2 titlepos = new(titleDrawX - (titleLength / 2f), titleDrawY - ((float)titleHeight));
+
+                spriteBatch.Draw(chaliceIcon.Value, titlepos, null, textColor * opacity, 0, chaliceIcon.Size() / 2, 1, 0, 0);
 
                 spriteBatch.DrawString(font, Title, titlepos + new Vector2(1, 1), textShadowColor * opacity, 0, new Vector2(0, 0), FontScale * 0.7f, SpriteEffects.None, 0);
                 ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, Title, titlepos, textColor * opacity, 0, Vector2.Zero, new Vector2(FontScale) * 0.7f);

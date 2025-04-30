@@ -159,9 +159,9 @@ namespace Redemption.Globals
             }
             if (player.GetModPlayer<ExplosiveEnchantPlayer>().explosiveWeaponImbue)
             {
-                if (entity is Projectile proj && (proj.DamageType.CountsAsClass<MeleeDamageClass>() || ProjectileID.Sets.IsAWhip[proj.type]) && !proj.noEnchantments)
+                if (entity is Projectile proj && (proj.DamageType.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[proj.type]) && !proj.noEnchantments)
                     return Explosive;
-                else if (entity is Item item && item.DamageType.CountsAsClass<MeleeDamageClass>())
+                else if (entity is Item item && item.DamageType.CountsAsClass(DamageClass.Melee))
                     return Explosive;
             }
             return 0;

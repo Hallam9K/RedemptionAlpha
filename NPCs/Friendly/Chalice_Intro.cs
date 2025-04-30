@@ -1,20 +1,15 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
-using Redemption.Buffs.Debuffs;
-using Redemption.Effects;
 using Redemption.Globals;
-using Redemption.Items.Usable;
+using Redemption.Textures;
 using Redemption.UI;
-using Redemption.WorldGeneration;
 using ReLogic.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.GameContent;
-using Terraria.GameContent.Events;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -25,11 +20,11 @@ namespace Redemption.NPCs.Friendly
     {
         public ref float AITimer => ref NPC.ai[1];
         public ref float TimerRand => ref NPC.ai[2];
-        public override string Texture => "Redemption/Items/Usable/AlignmentTeller";
+        public override string Texture => "Redemption/Items/Usable/AlignmentTeller2";
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Chalice of Alignment");
-            Main.npcFrameCount[Type] = 4;
+            Main.npcFrameCount[Type] = 6;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -213,13 +208,14 @@ namespace Redemption.NPCs.Friendly
             if (NPC.frameCounter++ >= 4)
             {
                 NPC.frameCounter = 0;
-                NPC.frame.Y += frameHeight;
-                if (NPC.frame.Y > 3 * frameHeight)
+                NPC.frame.Y++;
+                if (NPC.frame.Y > 5)
                     NPC.frame.Y = 0;
             }
         }
         private float drawTimer;
         public float flareOpacity;
+        Asset<Texture2D> eyeTex;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (flareOpacity > 0)
@@ -239,17 +235,24 @@ namespace Redemption.NPCs.Friendly
             if (TimerRand >= 4)
                 return false;
 
-            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Vector2 origin = NPC.frame.Size() / 2;
+            Asset<Texture2D> texture = TextureAssets.Npc[Type];
+            Rectangle rect = texture.Frame(1, Main.npcFrameCount[Type], 0, NPC.frame.Y);
+            Vector2 origin = rect.Size() / 2;
 
-            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale);
-            Main.spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale, 0, 0);
+            RedeDraw.DrawTreasureBagEffect(spriteBatch, texture.Value, ref drawTimer, NPC.Center - screenPos, rect, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale);
+            spriteBatch.Draw(texture.Value, NPC.Center - screenPos, rect, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale, 0, 0);
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.BeginAdditive();
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteEyeFlare").Value;
-            Rectangle rect = new(0, 0, flare.Width, flare.Height);
-            Vector2 flareOrigin = new(flare.Width / 2, flare.Height / 2);
+            eyeTex ??= Request<Texture2D>(Texture + "_Eye");
+            rect = eyeTex.Frame(1, Main.npcFrameCount[Type], 0, NPC.frame.Y);
+            origin = rect.Size() / 2;
+
+            float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * MathHelper.TwoPi / 5f);
+            spriteBatch.Draw(eyeTex.Value, NPC.Center - new Vector2(3, 39 + offset) - screenPos, rect, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale, 0, 0);
+
+            spriteBatch.End();
+            spriteBatch.BeginAdditive();
+            Asset<Texture2D> flare = CommonTextures.WhiteEyeFlare;
+            Vector2 flareOrigin = flare.Size() / 2;
             for (int i = 0; i < 4; i++)
             {
                 Color colour = new(54, 193, 59);
@@ -262,34 +265,34 @@ namespace Redemption.NPCs.Friendly
                         colour = new(203, 189, 99);
                         break;
                     case 3:
-                        flare = ModContent.Request<Texture2D>("Redemption/Textures/BadRedeEyeFlare").Value;
+                        flare = Request<Texture2D>("Redemption/Textures/BadRedeEyeFlare");
                         colour = Color.White;
                         break;
                 }
 
-                Main.EntitySpriteDraw(flare, extraPos[i] - screenPos, new Rectangle?(rect), colour * (i == 3 ? extraAlpha2 : extraAlpha) * Main.rand.NextFloat(0.7f, 0.8f), NPC.rotation, flareOrigin, 1 * Main.rand.NextFloat(0.95f, 1f), SpriteEffects.None, 0);
-                Main.EntitySpriteDraw(flare, extraPos[i] - screenPos, new Rectangle?(rect), colour * (i == 3 ? extraAlpha2 : extraAlpha) * Main.rand.NextFloat(0.7f, 0.8f) * 0.4f, NPC.rotation, flareOrigin, 1.5f * Main.rand.NextFloat(0.95f, 1f), SpriteEffects.None, 0);
+                spriteBatch.Draw(flare.Value, extraPos[i] - screenPos, null, colour * (i == 3 ? extraAlpha2 : extraAlpha) * Main.rand.NextFloat(0.7f, 0.8f), NPC.rotation, flareOrigin, 1 * Main.rand.NextFloat(0.95f, 1f), SpriteEffects.None, 0);
+                spriteBatch.Draw(flare.Value, extraPos[i] - screenPos, null, colour * (i == 3 ? extraAlpha2 : extraAlpha) * Main.rand.NextFloat(0.7f, 0.8f) * 0.4f, NPC.rotation, flareOrigin, 1.5f * Main.rand.NextFloat(0.95f, 1f), SpriteEffects.None, 0);
             }
-            Main.spriteBatch.End();
-            Main.spriteBatch.BeginDefault();
+            spriteBatch.End();
+            spriteBatch.BeginDefault();
 
             for (int i = 0; i < 4; i++)
             {
-                Texture2D routeTex = ModContent.Request<Texture2D>("Redemption/Items/GoodRoute").Value;
+                Asset<Texture2D> routeTex = Request<Texture2D>("Redemption/Items/GoodRoute");
                 switch (i)
                 {
                     case 1:
-                        routeTex = ModContent.Request<Texture2D>("Redemption/Items/BadRoute").Value;
+                        routeTex = Request<Texture2D>("Redemption/Items/BadRoute");
                         break;
                     case 2:
-                        routeTex = ModContent.Request<Texture2D>("Redemption/Items/RedemptionRoute").Value;
+                        routeTex = Request<Texture2D>("Redemption/Items/RedemptionRoute");
                         break;
                     case 3:
-                        routeTex = ModContent.Request<Texture2D>("Redemption/Items/BadRedemptionRoute").Value;
+                        routeTex = Request<Texture2D>("Redemption/Items/BadRedemptionRoute");
                         break;
                 }
-                Vector2 origin2 = new(routeTex.Width / 2, routeTex.Height / 2);
-                Main.spriteBatch.Draw(routeTex, extraPos[i] - screenPos, null, Color.White * (i == 3 ? extraAlpha2 : extraAlpha), NPC.rotation, origin2, 1, SpriteEffects.None, 0);
+                Vector2 origin2 = routeTex.Size() / 2;
+                spriteBatch.Draw(routeTex.Value, extraPos[i] - screenPos, null, Color.White * (i == 3 ? extraAlpha2 : extraAlpha), NPC.rotation, origin2, 1, SpriteEffects.None, 0);
             }
             return false;
         }

@@ -1,9 +1,9 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Redemption.NPCs.Friendly;
+using ReLogic.Content;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
@@ -17,22 +17,16 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Chalice of Alignment");
-            /* Tooltip.SetDefault("Tells you your current alignment"
-                + "\n[c/ffea9b:A sentient treasure, cursed to judge those who wield it]"); */
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
-            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             ItemID.Sets.ItemsThatShouldNotBeInInventory[Type] = true;
 
             Item.ResearchUnlockCount = 1;
         }
 
-        private float glowRot = 0;
         private Vector2 chaliceIntroSpawnPosition;
         public override void SetDefaults()
         {
-            Item.width = 82;
-            Item.height = 64;
+            Item.width = 40;
+            Item.height = 40;
             Item.maxStack = 1;
             Item.value = 22000;
             Item.noUseGraphic = true;
@@ -63,7 +57,7 @@ namespace Redemption.Items.Usable
 
         public override bool CanUseItem(Player player)
         {
-            return !NPC.AnyNPCs(ModContent.NPCType<Chalice_Intro>());
+            return !NPC.AnyNPCs(NPCType<Chalice_Intro>());
         }
 
         public override void UpdateInventory(Player player)
@@ -99,7 +93,7 @@ namespace Redemption.Items.Usable
             {
                 RedeWorld.alignmentGiven = true;
                 RedeWorld.SyncData();
-                RedeHelper.SpawnNPC(Item.GetSource_FromAI(), (int)chaliceIntroSpawnPosition.X, (int)chaliceIntroSpawnPosition.Y, ModContent.NPCType<Chalice_Intro>());
+                RedeHelper.SpawnNPC(Item.GetSource_FromAI(), (int)chaliceIntroSpawnPosition.X, (int)chaliceIntroSpawnPosition.Y, NPCType<Chalice_Intro>());
             }
 
             Item.active = false;
@@ -111,37 +105,6 @@ namespace Redemption.Items.Usable
         public override void PostUpdate()
         {
             Lighting.AddLight(Item.Center, Color.Lime.ToVector3() * 0.6f * Main.essScale);
-            glowRot += 0.03f;
-        }
-
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-        {
-            Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
-            Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(211, 232, 169), new Color(247, 247, 169), new Color(211, 232, 169));
-            Vector2 origin = new(glow.Width / 2, glow.Height / 2);
-
-            spriteBatch.End();
-            spriteBatch.BeginAdditive();
-
-            spriteBatch.Draw(glow, Item.Center - Main.screenPosition - new Vector2(0f, 18f), new Rectangle(0, 0, glow.Width, glow.Height), color, glowRot, origin, scale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(glow, Item.Center - Main.screenPosition - new Vector2(0f, 18f), new Rectangle(0, 0, glow.Width, glow.Height), color, -glowRot, origin, scale, SpriteEffects.None, 0f);
-
-            spriteBatch.End();
-            spriteBatch.BeginDefault();
-
-            Texture2D texture = TextureAssets.Item[Item.type].Value;
-            Texture2D textureGlow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
-            Rectangle frame;
-            if (Main.itemAnimations[Item.type] != null)
-                frame = Main.itemAnimations[Item.type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);
-            else
-                frame = texture.Frame();
-
-            Vector2 origin2 = frame.Size() / 2f;
-
-            spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin2, scale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(textureGlow, Item.Center - Main.screenPosition, frame, Color.White, rotation, origin2, scale, SpriteEffects.None, 0f);
-            return false;
         }
     }
 }

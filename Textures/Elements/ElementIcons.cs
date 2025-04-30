@@ -30,4 +30,12 @@ namespace Redemption.Textures.Elements
     public class Thunder : Arcane { }
     public class Water : Arcane { }
     public class Wind : Arcane { }
+    public class ChaliceIcon : ModItem
+    {
+        public override void SetDefaults()
+        {
+            Item.width = 36;
+            Item.height = 36;
+        }
+    }
 }

@@ -33,7 +33,7 @@ namespace Redemption.Buffs
 
         public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (bileWeaponImbue && item.DamageType.CountsAsClass<MeleeDamageClass>())
+            if (bileWeaponImbue && item.DamageType.CountsAsClass(DamageClass.Melee))
             {
                 target.AddBuff(BuffType<BileDebuff>(), 60 * Main.rand.Next(3, 7));
             }
@@ -41,7 +41,7 @@ namespace Redemption.Buffs
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (bileWeaponImbue && (proj.DamageType.CountsAsClass<MeleeDamageClass>() || ProjectileID.Sets.IsAWhip[proj.type]) && !proj.noEnchantments)
+            if (bileWeaponImbue && (proj.DamageType.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[proj.type]) && !proj.noEnchantments)
             {
                 target.AddBuff(BuffType<BileDebuff>(), 60 * Main.rand.Next(3, 7));
             }
@@ -50,7 +50,7 @@ namespace Redemption.Buffs
         // MeleeEffects and EmitEnchantmentVisualsAt apply the visual effects of the weapon imbue to items and projectiles respectively.
         public override void MeleeEffects(Item item, Rectangle hitbox)
         {
-            if (bileWeaponImbue && item.DamageType.CountsAsClass<MeleeDamageClass>() && !item.noMelee && !item.noUseGraphic)
+            if (bileWeaponImbue && item.DamageType.CountsAsClass(DamageClass.Melee) && !item.noMelee && !item.noUseGraphic)
             {
                 if (Main.rand.NextBool(5))
                 {
@@ -62,7 +62,7 @@ namespace Redemption.Buffs
 
         public override void EmitEnchantmentVisualsAt(Projectile projectile, Vector2 boxPosition, int boxWidth, int boxHeight)
         {
-            if (bileWeaponImbue && (projectile.DamageType.CountsAsClass<MeleeDamageClass>() || ProjectileID.Sets.IsAWhip[projectile.type]) && !projectile.noEnchantments)
+            if (bileWeaponImbue && (projectile.DamageType.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[projectile.type]) && !projectile.noEnchantments)
             {
                 if (Main.rand.NextBool(5))
                 {
