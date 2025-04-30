@@ -2633,6 +2633,11 @@ Mods: {
 				DisplayName: Nebby
 				Description: Nebbity Nobbity Nibbity Nuu, this small star gril be followin' you
 			}
+
+			WeirdBloomBuff: {
+				DisplayName: Weird Bloom
+				Description: I am the original     Living Bloom
+			}
 		}
 
 		Biomes: {
@@ -10764,6 +10769,16 @@ Mods: {
 				DisplayName: Gloom Mushroom Block
 				Tooltip: ""
 			}
+
+			WeirdBloom: {
+				DisplayName: Weird-Looking Flower
+				Tooltip: Summons a pet... Living Bloom?
+			}
+
+			ChaliceIcon: {
+				DisplayName: Chalice Icon
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -11471,6 +11486,7 @@ Mods: {
 			Neb_Vortex.DisplayName: Cosmic Vortex
 			PoemTornado_Rock.DisplayName: Illmatar Rock
 			NebPet2_Proj.DisplayName: Nebby
+			WeirdBloomPet.DisplayName: Weird Bloom
 		}
 
 		NPCs: {
