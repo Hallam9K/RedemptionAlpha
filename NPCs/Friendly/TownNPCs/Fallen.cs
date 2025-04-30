@@ -5,6 +5,7 @@ using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items;
 using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Single;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.HM;
@@ -224,6 +225,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 .Add(new Item(ItemType<SunkenCaptainPainting>()) { shopCustomPrice = 12, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.DownedPlantera)
                 .Add(new Item(ItemID.Ectoplasm) { shopCustomPrice = 10, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.DownedPlantera)
                 .Add(new Item(ItemType<EmptyCruxCard>()) { shopCustomPrice = 30, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.HasSpiritWalker)
+                .Add(new Item(ItemType<SpiritExtractor>()) { shopCustomPrice = 40, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.HasSpiritWalker)
                 .Add(new Item(ItemType<DeadRinger>()) { shopCustomPrice = 30, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.DeadRingerGiven);
 
             npcShop.Register();
