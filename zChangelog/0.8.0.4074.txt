@@ -1,0 +1,37 @@
+=== 0.8 Beta .4074 === (Cross-Mod Patch)
+- Spirit Stranger dialogue box during cutscene with Calavia is correct theme (Cave)
+- Tentacle Spike no longer has Slash bonus and has Shadow element
+- Changed text saying "at day" to "during the day"
+- Reduced volume of Raveyard theme
+- Reduced visual effects of Bindeklinge
+- Reduced length of Keeper/Skull Digger Soul Charge trails
+- Iron Realm Sword and Dragon Cleaver no longer have infinite piercing (6 for Dragon Cleaver, 4 for Iron Realm Sword, +12 for the arctic spin slash)
+- Shortened Forest Nymph bestiary entry and home requirements dialogue
+- Eaglecrest Golem will stop the stomp attack if it hasn't touched the ground for 3 seconds
+- The Janitor always sets its target to player now
+1912. Removed rarity of Vagrant Spirits and King Slayer
+2059. Added Hastily-Assembled Pistol
+2170. Improved Nebuleus' Final Form's sky to become a shader instead of a rotating image, along with a config option to revert this for performance reasons
+2171. Added Water element to Drippler Crippler and Vampire Frog Staff
+2172. Added Android, Prototype Silver, and Space Paladin to the Humanoid list so they can be decapitated
+2173. Added visual and sound effect for decapitating enemies
+2174. Added Android Head (for all 3 colour variants), only dropped by decapitating an Android of that type
+2175. The following NPCs can no longer steal the player's money: Wielder Bot, Bramble Trap, and all Fowl Morning enemies
+2176. Nebuleus Final Form now has less mirages during her Piercing Nebula attacks
+2180. Added crossmod support for Spirit Reforged's Undead interactions and Potion Vats
+2181. Added crossmod support for Calamity Fables boss title cards
+2182. Reduced volume of guard breaking sound effect
+2183. Added crossmod support for Thorium's Flail-Cores, DoT and Status Effect debuff clearing effects, and Insect & Fish Repellents
+2184. Added crossmod support for New Beginnings, adding 4 new origins (Spirit Walker, Sky Squire, Madman, and Facility Guard)
+2185. Thorn is now considered Undead
+2186. Underground Portal and Spirit Tombs are now protected structures
+2187. Hall of Heroes now checks for protected structures when generating
+2188. Enemies won't spawn near friendly Skull Digger
+2189. Added visual to Keeper shrieking
+2190. Erhan's Scorching Ray and Ray of Guidance no longer deal knockback
+2191. Gave Spirit Currents and Sleeping Stones rarity for Lifeform Analyzer
+2192. Added Jungle biome to Chicken bestiary tags
+2193. The following NPCs can now be unlocked in bestiary by being nearby: Grand Larva, Devil's Tongue, Forest Nymph, Living Bloom, Dancing Skeleton
+2194. Added Mod Calls for getting Alignment value and all the structure coordinates
+2195. Changed Eaglecrest Spellscroll's tooltip to better describe what it does
+===============
