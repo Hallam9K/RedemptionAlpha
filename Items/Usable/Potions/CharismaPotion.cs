@@ -15,9 +15,9 @@ namespace Redemption.Items.Usable.Potions
             /* Tooltip.SetDefault("Shops have lower prices"
                 + "\nEnemies drop more gold"); */
             ItemID.Sets.DrinkParticleColors[Type] = new Color[3] {
-                new Color(249, 249, 175),
-                new Color(208, 191, 80),
-                new Color(158, 105, 41)
+                new Color(230, 220, 110),
+                new Color(255, 144, 207),
+                new Color(230, 120, 98)
             };
             Item.ResearchUnlockCount = 20;
         }

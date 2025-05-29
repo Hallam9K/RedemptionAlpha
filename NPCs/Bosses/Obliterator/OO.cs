@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
+using Redemption.CrossMod;
 using Redemption.Dusts;
 using Redemption.Effects;
 using Redemption.Globals;
@@ -410,7 +411,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     NPC.LookAtEntity(player);
                     ArmRot[0] = MathHelper.PiOver2 + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi);
                     if (AITimer++ == 0)
-                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.OO.Name"), 60, 90, 0.8f, Color.Red, NetworkText.FromKey("Mods.Redemption.TitleCard.OO.Modifier"));
+                        FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.OO.Name", "Mods.Redemption.TitleCard.OO.Modifier", 120, false, Color.Red, Color.Red, Color.Red, Color.Black, "Hailfire", "Universe");
 
                     if (AITimer < 60)
                         NPC.Move(DefaultPos2, 9, 10);

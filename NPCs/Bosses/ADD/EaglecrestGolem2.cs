@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.CrossMod;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Accessories.PreHM;
@@ -182,7 +183,8 @@ namespace Redemption.NPCs.Bosses.ADD
             {
                 case ActionState.Start:
                     NPC.target = RedeHelper.GetNearestAlivePlayer(NPC);
-                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Golem.Name"), 60, 90, 0.8f, Color.Gray, NetworkText.FromKey("Mods.Redemption.TitleCard.Golem.Modifier"));
+                    FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Golem.Name", "Mods.Redemption.TitleCard.Golem.Modifier", 90, false, Color.LightGoldenrodYellow, Color.Gray, Color.Gray, Color.LightGoldenrodYellow, "Dramatic4", "PeriTune");
+
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                         TimerRand = Main.rand.Next(300, 600);
                     AIState = ActionState.Idle;

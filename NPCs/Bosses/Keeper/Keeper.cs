@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Biomes;
+using Redemption.CrossMod;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
@@ -17,6 +18,7 @@ using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.NPCs.Friendly;
 using Redemption.NPCs.Minibosses.SkullDigger;
+using Redemption.Projectiles.Misc;
 using Redemption.UI;
 using Redemption.WorldGeneration.Soulless;
 using ReLogic.Content;
@@ -106,6 +108,8 @@ namespace Redemption.NPCs.Bosses.Keeper
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCShadow[Type] = true;
             ElementID.NPCBlood[Type] = true;
+
+            SpiritHelper.AddUndead(Type, true);
         }
 
         public override void SetDefaults()
@@ -280,9 +284,9 @@ namespace Redemption.NPCs.Bosses.Keeper
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             if (NPC.type == ModContent.NPCType<KeeperSpirit>())
-                                TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.KeeperSpirit.Name"), 60, 90, 0.8f, Color.LightCyan, NetworkText.FromKey("Mods.Redemption.TitleCard.KeeperSpirit.Modifier"));
+                                FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.KeeperSpirit.Name", "Mods.Redemption.TitleCard.KeeperSpirit.Modifier", 120, false, Color.LightCyan, Color.LightCyan, Color.LightCyan, Color.LightCyan, "Haunting Loneliness", "SpectralAves");
                             else
-                                TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Keeper.Name"), 60, 90, 0.8f, Color.MediumPurple, NetworkText.FromKey("Mods.Redemption.TitleCard.Keeper.Modifier"));
+                                FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Keeper.Name", "Mods.Redemption.TitleCard.Keeper.Modifier", 120, false, Color.MediumPurple, Color.MediumPurple, Color.MediumPurple, Color.IndianRed, "Haunting Loneliness", "SpectralAves");
 
                             NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 160 : player.Center.X + 160, player.Center.Y - 90);
                             NPC.netUpdate = true;
@@ -702,6 +706,14 @@ namespace Redemption.NPCs.Bosses.Keeper
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.Shriek, NPC.position);
 
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            int succ = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(4 * NPC.spriteDirection, -34), Vector2.Zero, ProjectileType<Scream>(), 0, 0f, Main.myPlayer, 220f, 400f);
+
+                            Scream succModProj = (Scream)Main.projectile[succ].ModProjectile;
+                            succModProj.effectColor = new Color(59, 17, 25);
+                        }
+
                         NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<VeilFX>(), 0, Vector2.Zero);
 
                         NPC.dontTakeDamage = true;
@@ -833,6 +845,14 @@ namespace Redemption.NPCs.Bosses.Keeper
                     {
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.Shriek, NPC.position);
+
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            int succ = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(4 * NPC.spriteDirection, -34), Vector2.Zero, ProjectileType<Scream>(), 0, 0f, Main.myPlayer, 200f, 400f);
+
+                            Scream succModProj = (Scream)Main.projectile[succ].ModProjectile;
+                            succModProj.effectColor = new Color(59, 17, 25);
+                        }
 
                         NPC.dontTakeDamage = true;
                         NPC.netUpdate = true;

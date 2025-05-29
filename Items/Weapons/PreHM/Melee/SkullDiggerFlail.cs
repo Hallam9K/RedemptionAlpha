@@ -50,10 +50,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     public class SkullDiggerFlail_Proj : Flail
     {
         public override string Texture => "Redemption/NPCs/Minibosses/SkullDigger/SkullDigger_FlailBlade";
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Skull Digger's Skull Digger");
-        }
 
         public override void SetDefaults()
         {

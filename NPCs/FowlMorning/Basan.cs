@@ -67,6 +67,9 @@ namespace Redemption.NPCs.FowlMorning
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 17;
+            NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+            NPCID.Sets.CantTakeLunchMoney[Type] = true;
+
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Hot);
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);

@@ -5409,6 +5409,8 @@ namespace Redemption.Base
                                 NetMessage.SendData(MessageID.SyncItem, -1, -1, null, num36);
                             }
                         }
+
+                        CombinedHooks.OnHitNPCWithProj(p, npc, strike, dmgAmt);
                     }
                     else
                     {
@@ -5416,8 +5418,9 @@ namespace Redemption.Base
                         npc.StrikeNPC(strike, false, true);
                         if (Main.netMode != NetmodeID.SinglePlayer)
                             NetMessage.SendStrikeNPC(npc, in strike);
+
+                        CombinedHooks.OnHitNPCWithProj(p, npc, strike, dmgAmt);
                     }
-                    CombinedHooks.OnHitNPCWithProj(p, npc, default, dmgAmt);
 
                     if (p.penetrate != 1) { npc.immune[p.owner] = 10; }
                 }

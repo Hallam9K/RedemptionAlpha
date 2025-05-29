@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
+using Redemption.CrossMod;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Accessories.PreHM;
@@ -179,7 +180,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                     switch (TimerRand)
                     {
                         case 0:
-                            TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.FowlEmperor.Name"), 60, 90, 0.8f, Color.PeachPuff, NetworkText.FromKey("Mods.Redemption.TitleCard.FowlEmperor.Modifier"));
+                            FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.FowlEmperor.Name", "Mods.Redemption.TitleCard.FowlEmperor.Modifier", 90, false, Color.PeachPuff, Color.PeachPuff, Color.PeachPuff, Color.DarkRed, "King's Gambit", "Sc0p3r");
 
                             NPC.noTileCollide = true;
                             NPC.noGravity = true;

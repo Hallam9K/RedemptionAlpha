@@ -5,6 +5,7 @@ using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.CrossMod;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Accessories.PostML;
@@ -308,7 +309,11 @@ namespace Redemption.NPCs.Bosses.Neb
                 case 0:
                     #region Dramatic Entrance
                     NPC.LookAtEntity(player);
-                    NPC.ai[2]++;
+                    if (NPC.ai[2]++ == 0)
+                    {
+                        FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Neb.Name", "Mods.Redemption.TitleCard.Neb.Modifier", 120, false, Color.Purple, Color.HotPink, Color.HotPink, Color.Purple, "Interstellar Isolation", "musicman");
+                    }
+
                     if (RedeBossDowned.nebDeath == 0 && NPC.type == NPCType<Nebuleus>())
                         ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Medium, 1200, 2400, 1200);
                     else
@@ -371,7 +376,6 @@ namespace Redemption.NPCs.Bosses.Neb
                             ArmAnimation(0, true);
                             NPC.ai[2] = 0;
                             NPC.ai[0] = 3;
-                            TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, Color.HotPink, NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Modifier"));
                             NPC.netUpdate = true;
                         }
                     }
@@ -388,7 +392,6 @@ namespace Redemption.NPCs.Bosses.Neb
                         }
                         if (NPC.ai[2] >= 500)
                         {
-                            TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, Color.HotPink, NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Modifier"));
                             ArmAnimation(0, true);
                             NPC.ai[2] = 0;
                             NPC.ai[0] = 3;

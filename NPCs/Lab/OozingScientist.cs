@@ -18,6 +18,8 @@ using Redemption.Items.Usable.Potions;
 using Redemption.Items.Usable;
 using System.IO;
 using Terraria.Localization;
+using Redemption.CrossMod;
+using Redemption.Items.Weapons.HM.Ranged;
 
 namespace Redemption.NPCs.Lab
 {
@@ -50,6 +52,8 @@ namespace Redemption.NPCs.Lab
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCWater[Type] = true;
             ElementID.NPCPoison[Type] = true;
+
+            SpiritHelper.AddUndead(Type);
         }
         public override void SetDefaults()
         {
@@ -244,6 +248,7 @@ namespace Redemption.NPCs.Lab
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EnergyCell>(), 20));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<StarliteDonut>(), 150));
             npcLoot.Add(ItemDropRule.OneFromOptions(50, ModContent.ItemType<SneakloneHelmet1>(), ModContent.ItemType<SneakloneHelmet2>(), ModContent.ItemType<SneakloneSuit>(), ModContent.ItemType<SneakloneLegs>()));
+            npcLoot.Add(ItemDropRule.Common(ItemType<LegoPistol>(), 200));
         }
 
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Biomes;
+using Redemption.CrossMod;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
@@ -316,7 +317,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         NPC.velocity.X = -4;
                     }
                     if (AITimer == 60)
-                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Gigapora.Name"), 60, 90, 0.8f, Color.Red, NetworkText.FromKey("Mods.Redemption.TitleCard.Gigapora.Modifier"));
+                        FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Gigapora.Name", "Mods.Redemption.TitleCard.Gigapora.Modifier", 120, true, Color.Red, Color.Red, Color.Red, Color.Black, "Armageddon Interface", "musicman");
+
                     if (AITimer >= 80 && AITimer < 140)
                     {
                         NPC.velocity *= 0.96f;

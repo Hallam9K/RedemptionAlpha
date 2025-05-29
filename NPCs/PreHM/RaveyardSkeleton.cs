@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
@@ -113,6 +114,8 @@ namespace Redemption.NPCs.PreHM
         }
         public override void AI()
         {
+            BestiaryNPC.ScanWorldForFinds(NPC);
+
             NPC.TargetClosest();
 
             if (Main.rand.NextBool(800) && !Main.dedServ)
@@ -254,6 +257,10 @@ namespace Redemption.NPCs.PreHM
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            CommonEnemyUICollectionInfoProvider provider1 = new(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type], false);
+            CritterUICollectionInfoProvider provider2 = new(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type]);
+            bestiaryEntry.UIInfoProvider = new HighestOfMultipleUICollectionInfoProvider(provider1, provider2);
+
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,

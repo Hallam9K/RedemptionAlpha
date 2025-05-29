@@ -246,6 +246,8 @@ namespace Redemption.NPCs.PreHM
         private int YippieeTimer;
         public override void AI()
         {
+            BestiaryNPC.ScanWorldForFinds(NPC);
+
             CustomFrames(94);
 
             Player player = Main.player[NPC.target];
@@ -987,7 +989,10 @@ namespace Redemption.NPCs.PreHM
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.UIInfoProvider = new CustomCollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], true, 1);
+            CustomCollectionInfoProvider provider1 = new(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], true, 1);
+            CritterUICollectionInfoProvider provider2 = new(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type]);
+            bestiaryEntry.UIInfoProvider = new HighestOfMultipleUICollectionInfoProvider(provider1, provider2);
+
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,

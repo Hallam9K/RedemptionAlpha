@@ -27,6 +27,7 @@ using Redemption.Globals.NPC;
 using Redemption.Helpers;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.UI;
+using Redemption.CrossMod;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -239,7 +240,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 NPC.velocity *= 0.9f;
                                 if (AITimer == 60)
                                 {
-                                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Akka.Name"), 60, 90, 0.8f, Color.PaleGreen, NetworkText.FromKey("Mods.Redemption.TitleCard.Akka.Modifier"));
+                                    FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Akka.Name", "Mods.Redemption.TitleCard.Akka.Modifier", 90, true, Color.PaleGreen, Color.PaleGreen, Color.PaleGreen, Color.PaleGreen);
 
                                     EmoteBubble.NewBubble(0, new WorldUIAnchor(NPC), 50);
                                 }
@@ -256,7 +257,7 @@ namespace Redemption.NPCs.Bosses.ADD
                     }
                     else
                     {
-                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Akka.Name"), 60, 90, 0.8f, Color.PaleGreen, NetworkText.FromKey("Mods.Redemption.TitleCard.Akka.Modifier"));
+                        FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Akka.Name", "Mods.Redemption.TitleCard.Akka.Modifier", 90, true, Color.PaleGreen, Color.PaleGreen, Color.PaleGreen, Color.PaleGreen);
 
                         AIState = ActionState.ResetVars;
                         AITimer = 0;

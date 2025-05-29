@@ -37,10 +37,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.width = 80;
             Projectile.height = 80;
             Projectile.friendly = false;
-            Projectile.penetrate = -1;
+            Projectile.penetrate = 6;
             Projectile.alpha = 255;
             Projectile.extraUpdates = 4;
             Projectile.usesOwnerMeleeHitCD = true;
+            Projectile.stopsDealingDamageAfterPenetrateHits = true;
         }
         Player Player => Main.player[Projectile.owner];
         private float startRotation;

@@ -6,6 +6,7 @@ using Redemption.BaseExtension;
 using Redemption.Buffs;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.CrossMod;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Accessories.PostML;
@@ -290,6 +291,9 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
 
                     if (NPC.ai[2] == 1)
                     {
+                        if (NPC.type == NPCType<Nebuleus2>())
+                            FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Neb.Name", "Mods.Redemption.TitleCard.Neb.Ultimate", 120, false, Color.Purple, Color.HotPink, Color.HotPink, Color.Purple, "Hypernova", "musicman");
+
                         DustHelper.DrawStar(NPC.Center, 58, 5, 4, 1, 4, 2, 0, noGravity: true);
                         DustHelper.DrawStar(NPC.Center, 59, 5, 5, 1, 4, 2, 0, noGravity: true);
                         DustHelper.DrawStar(NPC.Center, 60, 5, 6, 1, 4, 2, 0, noGravity: true);
@@ -343,7 +347,6 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             }
                             NPC.ai[3] = 0;
                             NPC.ai[0] = 2;
-                            TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, Color.HotPink, NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Ultimate"));
                             NPC.netUpdate = true;
                         }
                     }
@@ -351,9 +354,6 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                     {
                         if (NPC.ai[2] >= 120)
                         {
-                            if (NPC.type == NPCType<Nebuleus2>())
-                                TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, Color.HotPink, NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Ultimate"));
-
                             ArmAnimation(0, true);
                             NPC.ai[2] = 0;
                             NPC.ai[0] = 2;
@@ -1180,7 +1180,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             NPC.ai[2]++;
                             if (NPC.ai[2] == 20 || NPC.ai[2] == 40 || NPC.ai[2] == 60)
                                 ArmAnimation(5, true);
-                            if (NPC.ai[2] is 20 or 40 or 60)
+                            if (NPC.ai[2] is 20 or 40)
                                 NPC.Shoot(NPC.Center, ProjectileType<Neb2Mirage_PiercingNebula>(), (int)(NPC.damage * .67f), Vector2.Zero, NPC.whoAmI);
                             if (NPC.ai[2] == 30 || NPC.ai[2] == 50 || NPC.ai[2] == 70)
                             {
@@ -1200,8 +1200,6 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                         case 14:
                             NPC.LookAtEntity(player);
                             NPC.ai[2]++;
-                            if (NPC.ai[2] is 30 or 32 or 50 or 52)
-                                NPC.Shoot(NPC.Center, ProjectileType<Neb2Mirage_PiercingNebula>(), (int)(NPC.damage * .67f), Vector2.Zero, NPC.whoAmI);
                             if (NPC.ai[2] == 20 || NPC.ai[2] == 40 || NPC.ai[2] == 60)
                                 ArmAnimation(5, true);
                             if (NPC.ai[2] == 30 || NPC.ai[2] == 70)

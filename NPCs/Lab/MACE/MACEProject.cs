@@ -22,6 +22,7 @@ using Redemption.Dusts;
 using Terraria.Localization;
 using Redemption.Globals.NPC;
 using Redemption.UI;
+using Redemption.CrossMod;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -180,8 +181,8 @@ namespace Redemption.NPCs.Lab.MACE
                 case ActionState.Begin:
                     if (AITimer++ == 0)
                     {
-                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.MACE.Name"), 60, 90, 0.8f, Color.Yellow, NetworkText.FromKey("Mods.Redemption.TitleCard.MACE.Modifier"));
-
+                        FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.MACE.Name", "Mods.Redemption.TitleCard.MACE.Modifier", 90, false, Color.Yellow, Color.Yellow, Color.Yellow, Color.Gray, "Safety Violation", "inSignia");
+                        
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
 

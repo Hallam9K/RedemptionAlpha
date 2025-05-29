@@ -43,6 +43,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.localAI[2] = 80;
         }
 
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) => modifiers.Knockback *= 0;
         public override bool CanHitPlayer(Player target) => AITimer >= Projectile.localAI[2];
         public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= Projectile.localAI[2] ? null : false;
 

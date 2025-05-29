@@ -17,6 +17,7 @@ using Redemption.UI.ChatUI;
 using Terraria.Localization;
 using Redemption.Globals.NPC;
 using Redemption.UI;
+using Redemption.CrossMod;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -150,7 +151,7 @@ namespace Redemption.NPCs.Lab.Volt
             switch (AIState)
             {
                 case ActionState.Begin:
-                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Volt.Name"), 60, 90, 0.8f, Color.Yellow, NetworkText.FromKey("Mods.Redemption.TitleCard.Volt.Modifier"));
+                    FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Volt.Name", "Mods.Redemption.TitleCard.Volt.Modifier", 90, false, Color.Yellow, Color.Yellow, Color.Yellow, Color.Yellow, "Safety Violation", "inSignia");
 
                     AIState = ActionState.Fly;
                     NPC.netUpdate = true;

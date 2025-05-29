@@ -1,5 +1,6 @@
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
+using Redemption.CrossMod;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Armor.Vanity.Intruder;
@@ -31,6 +32,8 @@ namespace Redemption.NPCs.Wasteland
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCWater[Type] = true;
             ElementID.NPCPoison[Type] = true;
+
+            ThoriumHelper.AddFishRepellentNPCID(Type);
         }
 
         public override void SetDefaults()

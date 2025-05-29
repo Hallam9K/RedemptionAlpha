@@ -5,6 +5,7 @@ using Redemption.Buffs;
 using Redemption.Items.Armor.Vanity.TBot;
 using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.NPCs.HM;
 using Redemption.NPCs.Lab;
 using Redemption.NPCs.Minibosses.FowlEmperor;
 using Redemption.NPCs.Minibosses.SkullDigger;
@@ -69,6 +70,20 @@ namespace Redemption.Globals
             return false;
         }
         public bool CanShowItemDropInUI() => false;
+        public string GetConditionDescription() => "Drops when decapitated";
+    }
+    public class AndroidHeadCondition(int id = 0) : IItemDropRuleCondition
+    {
+        protected int ID = id;
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            if (!info.IsInSimulation && info.npc.type == NPCType<Android>() && info.npc.ai[3] == ID)
+            {
+                return info.npc.Redemption().decapitated;
+            }
+            return false;
+        }
+        public bool CanShowItemDropInUI() => ID == 0;
         public string GetConditionDescription() => "Drops when decapitated";
     }
     public class LostSoulCondition : IItemDropRuleCondition

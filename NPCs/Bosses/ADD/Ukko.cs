@@ -29,6 +29,7 @@ using Redemption.Globals.NPC;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.Items.Weapons.PostML.Summon;
 using Redemption.UI;
+using Redemption.CrossMod;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -286,23 +287,36 @@ namespace Redemption.NPCs.Bosses.ADD
             switch (AIState)
             {
                 case ActionState.Start:
-                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Ukko.Name"), 60, 90, 0.8f, Color.LightGoldenrodYellow, NetworkText.FromKey("Mods.Redemption.TitleCard.Ukko.Modifier"));
+                    FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Ukko.Name", "Mods.Redemption.TitleCard.Ukko.Modifier", 90, false, Color.LightGoldenrodYellow, Color.LightGoldenrodYellow, Color.LightGoldenrodYellow, Color.LightGoldenrodYellow, "Nature's Wrath", "Yuri O");
 
-                    NPC.Shoot(new Vector2(NPC.Center.X - (118 * 16) - 10, NPC.Center.Y + 8), ModContent.ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, 0, 1);
-                    NPC.Shoot(new Vector2(NPC.Center.X + (118 * 16) + 26, NPC.Center.Y + 8), ModContent.ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, 0, -1);
-                    NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y - (118 * 16) - 10), ModContent.ProjectileType<UkkoBarrierH>(), 0, Vector2.Zero, 0, 1);
-                    NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y + (118 * 16) + 26), ModContent.ProjectileType<UkkoBarrierH>(), 0, Vector2.Zero, 0, -1);
+                    NPC.velocity *= 0;
+                    NPC.ai[3] = 1;
 
-                    ArenaWorld.arenaBoss = "ADD";
-                    ArenaWorld.arenaTopLeft = new Vector2(NPC.Center.X - (120 * 16) + 8, NPC.Center.Y - (120 * 16) + 8);
-                    ArenaWorld.arenaSize = new Vector2(240 * 16, 240 * 16);
-                    ArenaWorld.arenaMiddle = NPC.Center;
-                    ArenaWorld.arenaActive = true;
-                    if (Main.netMode == NetmodeID.Server)
-                        NetMessage.SendData(MessageID.WorldData);
+                    if (AITimer++ == 0)
+                    {
+                        SoundEngine.PlaySound(CustomSounds.ThunderExplosion, NPC.position);
 
-                    NPC.ai[0]++;
-                    NPC.netUpdate = true;
+                        FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Ukko.Name", "Mods.Redemption.TitleCard.Ukko.Modifier", 90, false, Color.LightGoldenrodYellow, Color.LightGoldenrodYellow, Color.LightGoldenrodYellow, Color.LightGoldenrodYellow, "Nature's Wrath", "Yuri O");
+
+                        NPC.Shoot(new Vector2(NPC.Center.X - (118 * 16) - 10, NPC.Center.Y + 8), ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, 0, 1);
+                        NPC.Shoot(new Vector2(NPC.Center.X + (118 * 16) + 26, NPC.Center.Y + 8), ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, 0, -1);
+                        NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y - (118 * 16) - 10), ProjectileType<UkkoBarrierH>(), 0, Vector2.Zero, 0, 1);
+                        NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y + (118 * 16) + 26), ProjectileType<UkkoBarrierH>(), 0, Vector2.Zero, 0, -1);
+
+                        ArenaWorld.arenaBoss = "ADD";
+                        ArenaWorld.arenaTopLeft = new Vector2(NPC.Center.X - (120 * 16) + 8, NPC.Center.Y - (120 * 16) + 8);
+                        ArenaWorld.arenaSize = new Vector2(240 * 16, 240 * 16);
+                        ArenaWorld.arenaMiddle = NPC.Center;
+                        ArenaWorld.arenaActive = true;
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
+                    if (AITimer >= 70)
+                    {
+                        AITimer = 0;
+                        NPC.ai[0]++;
+                        NPC.netUpdate = true;
+                    }
                     break;
                 case ActionState.ResetVars:
                     if (mendingCooldown > 0)

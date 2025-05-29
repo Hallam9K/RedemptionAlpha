@@ -76,6 +76,8 @@ namespace Redemption
         public static Effect GlowTrailShader;
         public static TrailManager TrailManager;
 
+        public static Effect nebSkyEffect;
+
         private List<ILoadable> _loadCache;
 
         public static int AntiqueDorulCurrencyId;
@@ -135,24 +137,24 @@ namespace Redemption
             BetterDialogue.BetterDialogue.RegisterShoppableNPC(NPCType<JanitorBot_NPC>());
             #endregion
 
+            #region Add Equip Textures
+            dragonLeadCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back", EquipType.Back, GetInstance<DragonLeadRibplate>());
+            shinkiteCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PostML/Shinkite/ShinkiteChestplate_Back", EquipType.Back, GetInstance<ShinkiteChestplate>());
+            mercenaryCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/BLT/MercenarysChestplate_Back", EquipType.Back, GetInstance<MercenarysChestplate>());
+            archeMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs", EquipType.Legs, GetInstance<ArchePatreonVanityLegs>());
+            archeFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs", EquipType.Legs, GetInstance<ArchePatreonVanityLegs>(), "ArchePatreonVanityLegs_Female");
+            unconMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_Legs", EquipType.Legs, GetInstance<UnconLegs>());
+            unconFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_FemaleLegs", EquipType.Legs, GetInstance<UnconLegs>(), "UnconLegs_Female");
+            unconMaleLeg2ID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs2_Legs", EquipType.Legs, GetInstance<UnconLegs2>());
+            unconFemLeg2ID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs2_FemaleLegs", EquipType.Legs, GetInstance<UnconLegs2>(), "UnconLegs2_Female");
+            halmMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_Legs", EquipType.Legs, GetInstance<HallamLeggings>());
+            halmFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_FemaleLegs", EquipType.Legs, GetInstance<HallamLeggings>(), "HallamLeggings_Female");
+            #endregion
+
             if (!Main.dedServ)
             {
                 TrailManager = new TrailManager(this);
                 AdditiveCallManager.Load();
-
-                #region Add Equip Textures
-                dragonLeadCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back", EquipType.Back, GetInstance<DragonLeadRibplate>());
-                shinkiteCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PostML/Shinkite/ShinkiteChestplate_Back", EquipType.Back, GetInstance<ShinkiteChestplate>());
-                mercenaryCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/BLT/MercenarysChestplate_Back", EquipType.Back, GetInstance<MercenarysChestplate>());
-                archeMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs", EquipType.Legs, GetInstance<ArchePatreonVanityLegs>());
-                archeFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs", EquipType.Legs, GetInstance<ArchePatreonVanityLegs>(), "ArchePatreonVanityLegs_Female");
-                unconMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_Legs", EquipType.Legs, GetInstance<UnconLegs>());
-                unconFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_FemaleLegs", EquipType.Legs, GetInstance<UnconLegs>(), "UnconLegs_Female");
-                unconMaleLeg2ID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs2_Legs", EquipType.Legs, GetInstance<UnconLegs2>());
-                unconFemLeg2ID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs2_FemaleLegs", EquipType.Legs, GetInstance<UnconLegs2>(), "UnconLegs2_Female");
-                halmMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_Legs", EquipType.Legs, GetInstance<HallamLeggings>());
-                halmFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_FemaleLegs", EquipType.Legs, GetInstance<HallamLeggings>(), "HallamLeggings_Female");
-                #endregion
 
                 int width = Main.graphics.GraphicsDevice.Viewport.Width;
                 int height = Main.graphics.GraphicsDevice.Viewport.Height;
@@ -233,12 +235,19 @@ namespace Redemption
                     PremultiplyTexture(ref SkyTex);
                     Texture2D SkyTex2 = Request<Texture2D>("Redemption/Backgrounds/Skies/SkyTex2", immLoad).Value;
                     PremultiplyTexture(ref SkyTex2);
+                    Texture2D SkyTex3 = Request<Texture2D>("Redemption/Backgrounds/Skies/SkyTex3", immLoad).Value;
+                    PremultiplyTexture(ref SkyTex3);
                     Texture2D WastelandCorruptSkyTex = Request<Texture2D>("Redemption/Backgrounds/Skies/WastelandCorruptSkyTex", immLoad).Value;
                     PremultiplyTexture(ref WastelandCorruptSkyTex);
                     Texture2D WastelandCrimsonSkyTex = Request<Texture2D>("Redemption/Backgrounds/Skies/WastelandCrimsonSkyTex", immLoad).Value;
                     PremultiplyTexture(ref WastelandCrimsonSkyTex);
                     #endregion
                 });
+
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    nebSkyEffect = Request<Effect>("Redemption/Effects/nebSky", AssetRequestMode.ImmediateLoad).Value;
+                }
 
                 Filters.Scene["MoR:OOSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0f).UseOpacity(0.2f), EffectPriority.VeryHigh);
                 SkyManager.Instance["MoR:OOSky"] = new OOSky();

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Biomes;
+using Redemption.CrossMod;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
@@ -328,7 +329,9 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 case ActionState.Begin:
                     if (AITimer++ >= 978 || RedeConfigServer.Instance.NoPZBuildUp || Main.musicVolume <= 0)
                     {
-                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.PZ.Name"), 60, 90, 0.8f, Color.Green, NetworkText.FromKey("Mods.Redemption.TitleCard.PZ.Modifier")); AITimer = 0;
+                        FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.PZ.Name", "Mods.Redemption.TitleCard.PZ.Modifier", 120, false, Color.DarkGreen, Color.Green, Color.DarkGreen, Color.Green, "Xenostate", "Universe");
+
+                        AITimer = 0;
                         OpenEye = true;
                         NPC.dontTakeDamage = false;
                         AIState = ActionState.LaserAttacks;

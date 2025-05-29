@@ -65,6 +65,8 @@ namespace Redemption.NPCs.PreHM
         public int hitCooldown;
         public override void AI()
         {
+            BestiaryNPC.ScanWorldForFinds(NPC);
+
             NPC.TargetClosest();
             switch (AIState)
             {
@@ -135,6 +137,10 @@ namespace Redemption.NPCs.PreHM
         public override float SpawnChance(NPCSpawnInfo spawnInfo) => SpawnCondition.OverworldDayDesert.Chance * (spawnInfo.Player.ZoneBeach ? 0f : 0.3f);
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            CommonEnemyUICollectionInfoProvider provider1 = new(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type], false);
+            CritterUICollectionInfoProvider provider2 = new(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type]);
+            bestiaryEntry.UIInfoProvider = new HighestOfMultipleUICollectionInfoProvider(provider1, provider2);
+
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Desert,

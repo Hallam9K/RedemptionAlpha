@@ -33,6 +33,7 @@ using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Textures;
 using Redemption.DamageClasses;
 using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.CrossMod;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -317,6 +318,9 @@ namespace Redemption.NPCs.Bosses.KSIII
             switch (AIState)
             {
                 case ActionState.Begin:
+
+                    NPC.rarity = 0;
+
                     NPC.LookAtEntity(player);
                     BodyState = (int)BodyAnim.Crossed;
                     player.RedemptionScreen().Rumble(5, 5);
@@ -324,6 +328,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                     TeleGlow = true;
                     if (AITimer++ > 5)
                     {
+                        FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.KS3.Name", "Mods.Redemption.TitleCard.KS3.Modifier", 120, false, Color.Cyan, Color.Cyan, Color.Cyan, Color.DarkBlue, "Titanium Will", "Sc0p3r");
+
                         AITimer = 0;
                         AIState = ActionState.Dialogue;
                         NPC.netUpdate = true;
@@ -407,7 +413,6 @@ namespace Redemption.NPCs.Bosses.KSIII
                         }
                         if (AITimer >= 5060)
                         {
-                            TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.KS3.Name"), 60, 90, 0.8f, Color.Cyan, NetworkText.FromKey("Mods.Redemption.TitleCard.KS3.Modifier"));
                             ShootPos = new Vector2(Main.rand.Next(300, 400) * NPC.RightOfDir(player), Main.rand.Next(-60, 60));
                             if (RedeBossDowned.slayerDeath < 3 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
@@ -469,7 +474,6 @@ namespace Redemption.NPCs.Bosses.KSIII
                         }
                         if (AITimer >= 5060)
                         {
-                            TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.KS3.Name"), 60, 90, 0.8f, Color.Cyan, NetworkText.FromKey("Mods.Redemption.TitleCard.KS3.Modifier"));
                             NPC.dontTakeDamage = false;
                             ShootPos = new Vector2(Main.rand.Next(300, 400) * NPC.RightOfDir(player), Main.rand.Next(-60, 60));
                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, NPC.whoAmI);

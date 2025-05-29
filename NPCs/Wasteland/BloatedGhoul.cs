@@ -22,6 +22,7 @@ using Redemption.Items.Armor.Vanity.Intruder;
 using Redemption.Projectiles.Hostile;
 using System.IO;
 using Terraria.Localization;
+using Redemption.CrossMod;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -56,6 +57,8 @@ namespace Redemption.NPCs.Wasteland
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCPoison[Type] = true;
+
+            SpiritHelper.AddUndead(Type);
         }
         public override void SetDefaults()
         {

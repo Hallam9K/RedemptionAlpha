@@ -72,6 +72,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override bool HasRightHangingButton(Player player) => !RedeGlobalButton.talkActive && RedeQuest.calaviaVar >= 11 && RedeQuest.calaviaVar != 20;
 
         private static Texture2D Bubble => !Main.dedServ ? CommonTextures.TextBubble_Epidotra.Value : null;
+        private static Texture2D Bubble2 => !Main.dedServ ? CommonTextures.TextBubble_Cave.Value : null;
         private static readonly SoundStyle voice = CustomSounds.Voice1 with { Pitch = 0.6f };
 
         public bool HasShield;
@@ -138,17 +139,17 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         string s10 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Talk.10");
                         string s11 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Talk.11");
 
-                        chain.Add(new(spirit, s1, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble))
-                             .Add(new(spirit, s2, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble))
+                        chain.Add(new(spirit, s1, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble2))
+                             .Add(new(spirit, s2, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble2))
                              .Add(new(NPC, s3, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble))
-                             .Add(new(spirit, s4, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(spirit, s4, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble2))
                              .Add(new(NPC, s5, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble))
-                             .Add(new(spirit, s6, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble))
-                             .Add(new(spirit, s7, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(spirit, s6, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble2))
+                             .Add(new(spirit, s7, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble2))
                              .Add(new(NPC, s8, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble))
-                             .Add(new(spirit, s9, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(spirit, s9, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble2))
                              .Add(new(NPC, s10, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble))
-                             .Add(new(spirit, s11, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble, endID: 1));
+                             .Add(new(spirit, s11, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble2, endID: 1));
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;

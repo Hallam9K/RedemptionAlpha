@@ -21,6 +21,7 @@ using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Armor.Vanity.Intruder;
 using System.IO;
 using Terraria.Localization;
+using Redemption.CrossMod;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -54,6 +55,8 @@ namespace Redemption.NPCs.Wasteland
                 Velocity = 1f
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+
+            SpiritHelper.AddUndead(Type);
         }
         public override void SetDefaults()
         {

@@ -218,7 +218,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             float fromValue = Lighting.GetColor(proj.Center.ToTileCoordinates()).ToVector3().Length() / (float)Math.Sqrt(3.0);
             fromValue = Utils.Remap(fromValue, 0.2f, 1f, 0f, 1f);
             Color color = new(180, 160, 60); //dark color
-            Main.spriteBatch.Draw(asset.Value, vector, rectangle, color * fromValue * num3, proj.rotation + proj.ai[0] * ((float)Math.PI / 4f) * -1f * (1f - num2), origin, num, effects, 0f);
+            Main.spriteBatch.Draw(asset.Value, vector, rectangle, color * fromValue * num3 * .2f, proj.rotation + proj.ai[0] * ((float)Math.PI / 4f) * -1f * (1f - num2), origin, num, effects, 0f);
             Color color2 = new(255, 240, 150); //mid color
             Color color3 = new(255, 253, 162); //main color
             Color color4 = Color.White * num3 * 0.5f;
@@ -226,12 +226,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Color color5 = color4 * fromValue * 0.5f;
             color5.G = (byte)(color5.G * fromValue);
             color5.B = (byte)(color5.R * (0.25f + fromValue * 0.75f));
-            Main.spriteBatch.Draw(asset.Value, vector, rectangle, color5 * 0.15f, proj.rotation + proj.ai[0] * 0.01f, origin, num, effects, 0f);
-            Main.spriteBatch.Draw(asset.Value, vector, rectangle, color3 * fromValue * num3 * 0.3f, proj.rotation, origin, num, effects, 0f);
-            Main.spriteBatch.Draw(asset.Value, vector, rectangle, color2 * fromValue * num3 * 0.5f, proj.rotation, origin, num * num4, effects, 0f);
-            Main.spriteBatch.Draw(asset.Value, vector, asset.Frame(1, 4, 0, 3), Color.White * 0.6f * num3, proj.rotation + proj.ai[0] * 0.01f, origin, num, effects, 0f);
-            Main.spriteBatch.Draw(asset.Value, vector, asset.Frame(1, 4, 0, 3), Color.White * 0.5f * num3, proj.rotation + proj.ai[0] * -0.05f, origin, num * 0.8f, effects, 0f);
-            Main.spriteBatch.Draw(asset.Value, vector, asset.Frame(1, 4, 0, 3), Color.White * 0.4f * num3, proj.rotation + proj.ai[0] * -0.1f, origin, num * 0.6f, effects, 0f);
+            Main.spriteBatch.Draw(asset.Value, vector, rectangle, color5 * 0.15f * .2f, proj.rotation + proj.ai[0] * 0.01f, origin, num, effects, 0f);
+            Main.spriteBatch.Draw(asset.Value, vector, rectangle, color3 * fromValue * num3 * 0.3f * .2f, proj.rotation, origin, num, effects, 0f);
+            Main.spriteBatch.Draw(asset.Value, vector, rectangle, color2 * fromValue * num3 * 0.5f * .2f, proj.rotation, origin, num * num4, effects, 0f);
+            Main.spriteBatch.Draw(asset.Value, vector, asset.Frame(1, 4, 0, 3), Color.White * 0.6f * num3 * .2f, proj.rotation + proj.ai[0] * 0.01f, origin, num, effects, 0f);
+            Main.spriteBatch.Draw(asset.Value, vector, asset.Frame(1, 4, 0, 3), Color.White * 0.5f * num3 * .2f, proj.rotation + proj.ai[0] * -0.05f, origin, num * 0.8f, effects, 0f);
+            Main.spriteBatch.Draw(asset.Value, vector, asset.Frame(1, 4, 0, 3), Color.White * 0.4f * num3 * .2f, proj.rotation + proj.ai[0] * -0.1f, origin, num * 0.6f, effects, 0f);
             for (float num5 = 0f; num5 < 8f; num5 += 1f)
             {
                 float num6 = proj.rotation + proj.ai[0] * num5 * ((float)Math.PI * -2f) * 0.025f + Utils.Remap(num2, 0f, 1f, 0f, (float)Math.PI / 4f) * proj.ai[0];

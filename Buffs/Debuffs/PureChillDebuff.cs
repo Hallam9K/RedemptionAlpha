@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.CrossMod;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -12,6 +13,8 @@ namespace Redemption.Buffs.Debuffs
             // Description.SetDefault("Reduced movement and loss of life");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
+
+            ThoriumHelper.AddPlayerDoTBuffID(Type);
         }
         public override void Update(NPC npc, ref int buffIndex)
         {

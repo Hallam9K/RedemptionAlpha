@@ -4,6 +4,7 @@ using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.CrossMod;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Accessories.PreHM;
@@ -102,6 +103,8 @@ namespace Redemption.NPCs.Bosses.Thorn
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCNature[Type] = true;
+
+            SpiritHelper.AddUndead(Type, true);
         }
 
         public override void SetDefaults()
@@ -304,7 +307,8 @@ namespace Redemption.NPCs.Bosses.Thorn
                         NPC.active = false;
                     return;
                 case ActionState.Begin:
-                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Thorn.Name"), 60, 90, 0.8f, Color.LawnGreen, NetworkText.FromKey("Mods.Redemption.TitleCard.Thorn.Modifier"));
+                    FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Thorn.Name", "Mods.Redemption.TitleCard.Thorn.Modifier", 90, false, Color.LawnGreen, Color.LawnGreen, Color.LawnGreen, Color.Orange, "Every Rose...", "musicman");
+                    
                     AIState = ActionState.TeleportStart;
                     NPC.netUpdate = true;
                     break;

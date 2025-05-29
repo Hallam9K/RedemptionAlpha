@@ -24,6 +24,7 @@ using Redemption.Items.Weapons.PreHM.Magic;
 using Terraria.Localization;
 using Redemption.Globals.NPC;
 using Redemption.UI;
+using Redemption.CrossMod;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -235,7 +236,8 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                 NPC.alpha -= 4;
                             if (AITimer >= 180)
                             {
-                                TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.SoI.Name"), 60, 90, 0.8f, Color.ForestGreen, NetworkText.FromKey("Mods.Redemption.TitleCard.SoI.Modifier"));
+                                FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.SoI.Name", "Mods.Redemption.TitleCard.SoI.Modifier", 90, false, Color.DarkGreen, Color.ForestGreen, Color.DarkGreen, Color.ForestGreen, "Virogenesis", "musicman");
+                                
                                 NPC.dontTakeDamage = false;
                                 NPC.alpha = 0;
                                 TimerRand = 0;

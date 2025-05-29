@@ -95,7 +95,6 @@ namespace Redemption.NPCs.PreHM
             NPC.noTileCollide = true;
             NPC.alpha = 100;
             NPC.chaseable = false;
-            NPC.rarity = 1;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<VagrantSpiritBanner>();
         }

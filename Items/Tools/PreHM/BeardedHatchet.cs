@@ -222,20 +222,7 @@ namespace Redemption.Items.Tools.PreHM
             Dust.NewDustPerfect(target.Center + directionTo * 5 + new Vector2(0, 70) + Owner.velocity, DustType<DustSpark2>(), directionTo.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f) + 3.14f) * Main.rand.NextFloat(4f, 5f) + (Owner.velocity / 2), 0, Color.White * .8f, 2.5f);
 
             bool skele = NPCLists.SkeletonHumanoid.Contains(target.type);
-            bool humanoid = skele || NPCLists.Humanoid.Contains(target.type);
-            if (target.life < target.lifeMax && target.life < damageDone * 100 && humanoid)
-            {
-                if (Main.rand.NextBool(skele ? 20 : 80))
-                {
-                    CombatText.NewText(target.getRect(), Color.Orange, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Decapitated"));
-                    target.Redemption().decapitated = true;
-                    hit.Crit = true;
-                    target.StrikeInstantKill();
-
-                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Slash, false);
-                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Axe);
-                }
-            }
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit, skele ? 20 : 80);
 
             Projectile.localNPCImmunity[target.whoAmI] = 20;
             target.immune[Projectile.owner] = 0;

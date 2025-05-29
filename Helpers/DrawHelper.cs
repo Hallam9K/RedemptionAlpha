@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Redemption.Helpers;
 using System;
 using System.Reflection;
@@ -8,8 +7,8 @@ using Terraria.ID;
 
 namespace Redemption
 {
-	public static class DrawHelper
-	{
+    public static class DrawHelper
+    {
         public readonly struct SpriteBatchState
         {
             public readonly bool BeginCalled;
@@ -38,13 +37,13 @@ namespace Redemption
             if (spriteBatch.BeginCalled())
                 return new SpriteBatchState(
                     true,
-                    (SpriteSortMode)spriteBatch.GetType().GetField("sortMode", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(spriteBatch),
-                    (BlendState)spriteBatch.GetType().GetField("blendState", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(spriteBatch),
-                    (SamplerState)spriteBatch.GetType().GetField("samplerState", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(spriteBatch),
-                    (DepthStencilState)spriteBatch.GetType().GetField("depthStencilState", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(spriteBatch),
-                    (RasterizerState)spriteBatch.GetType().GetField("rasterizerState", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(spriteBatch),
-                    (Effect)spriteBatch.GetType().GetField("customEffect", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(spriteBatch),
-                    (Matrix)spriteBatch.GetType().GetField("transformMatrix", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(spriteBatch)
+                    (SpriteSortMode)ReflectionSystem.sbSortMode.GetValue(spriteBatch),
+                    (BlendState)ReflectionSystem.sbBlendState.GetValue(spriteBatch),
+                    (SamplerState)ReflectionSystem.sbSamplerState.GetValue(spriteBatch),
+                    (DepthStencilState)ReflectionSystem.sbDepthStencilState.GetValue(spriteBatch),
+                    (RasterizerState)ReflectionSystem.sbRasterizerState.GetValue(spriteBatch),
+                    (Effect)ReflectionSystem.sbCustomEffect.GetValue(spriteBatch),
+                    (Matrix)ReflectionSystem.sbTransformMatrix.GetValue(spriteBatch)
                 );
             else
                 return new SpriteBatchState(
@@ -96,7 +95,7 @@ namespace Redemption
         }
 
         public static bool BeginCalled(this SpriteBatch spriteBatch)
-            => (bool)spriteBatch.GetType().GetField("beginCalled", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(spriteBatch);
+            => (bool)ReflectionSystem.sbBeginCalled.GetValue(spriteBatch);
 
         public static readonly BasicEffect basicEffect = Main.dedServ ? null : new BasicEffect(Main.graphics.GraphicsDevice);
 

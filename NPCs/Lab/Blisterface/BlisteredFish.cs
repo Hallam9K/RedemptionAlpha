@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
+using Redemption.CrossMod;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using System.Collections.Generic;
@@ -31,6 +32,8 @@ namespace Redemption.NPCs.Lab.Blisterface
                 };
                 NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             }
+
+            ThoriumHelper.AddFishRepellentNPCID(Type);
         }
         public override void SetDefaults()
         {

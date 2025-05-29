@@ -17,6 +17,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         {
             Main.npcFrameCount[NPC.type] = 9;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+            NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Bleeding] = false;

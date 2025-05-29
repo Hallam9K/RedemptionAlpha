@@ -35,13 +35,14 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.width = 60;
             Projectile.height = 60;
             Projectile.friendly = true;
-            Projectile.penetrate = -1;
+            Projectile.penetrate = 4;
             Projectile.alpha = 255;
             Projectile.extraUpdates = 4;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 20;
             Projectile.ownerHitCheck = true;
             Projectile.ownerHitCheckDistance = 300f;
+            Projectile.stopsDealingDamageAfterPenetrateHits = true;
         }
         private Vector2 vector;
         private float startRotation;
@@ -191,6 +192,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         thickness = 40;
                         if (Timer++ == 0)
                         {
+                            Projectile.penetrate += 12;
+                            Projectile.damage = Projectile.originalDamage;
                         }
                         if (progress < 1)
                         {

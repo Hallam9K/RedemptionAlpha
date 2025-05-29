@@ -4,6 +4,7 @@ using ParticleLibrary;
 using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
+using Redemption.CrossMod;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Accessories.HM;
@@ -251,9 +252,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         break;
 
                     case ActionState.Begin:
-                        AITimer++;
-
-                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Cleaver.Name"), 60, 90, 0.8f, Color.Red, NetworkText.FromKey("Mods.Redemption.TitleCard.Cleaver.Modifier"));
+                        if (AITimer++ == 0)
+                            FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Cleaver.Name", "Mods.Redemption.TitleCard.Cleaver.Modifier", 120, false, Color.Red, Color.Red, Color.Red, Color.Black, "Armageddon Interface", "musicman");
+                        
                         player.RedemptionScreen().Rumble(20, 7);
                         rot = NPC.rotation;
                         if (AITimer > 20)

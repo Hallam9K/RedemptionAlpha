@@ -3,6 +3,7 @@ using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
 using Redemption.Items.Critters;
 using Redemption.Items.Placeable.Banners;
 using System;
@@ -78,8 +79,12 @@ namespace Redemption.NPCs.Critters
         }
         public override void AI()
         {
-            NPC.GetNearestAlivePlayer();
-            NPC.TargetClosest();
+            BestiaryNPC.ScanWorldForFinds(NPC);
+
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+                NPC.TargetClosest();
+
+            Player player = Main.player[NPC.target];
             NPC.LookByVelocity();
 
             if (hopCooldown > 0)
@@ -151,7 +156,7 @@ namespace Redemption.NPCs.Critters
 
         public void HopCheck()
         {
-            Player player = Main.player[NPC.GetNearestAlivePlayer()];
+            Player player = Main.player[NPC.target];
             if (hopCooldown == 0 && Main.rand.NextBool(200) && player.active && !player.dead && NPC.DistanceSQ(player.Center) <= 60 * 60 &&
                 BaseAI.HitTileOnSide(NPC, 3))
             {
@@ -226,6 +231,10 @@ namespace Redemption.NPCs.Critters
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            CommonEnemyUICollectionInfoProvider provider1 = new(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type], false);
+            CritterUICollectionInfoProvider provider2 = new(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type]);
+            bestiaryEntry.UIInfoProvider = new HighestOfMultipleUICollectionInfoProvider(provider1, provider2);
+
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,

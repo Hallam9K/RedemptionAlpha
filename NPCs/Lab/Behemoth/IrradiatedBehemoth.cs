@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
+using Redemption.CrossMod;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Lore;
@@ -57,6 +58,8 @@ namespace Redemption.NPCs.Lab.Behemoth
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCWater[Type] = true;
             ElementID.NPCPoison[Type] = true;
+
+            SpiritHelper.AddUndead(Type);
         }
         public override void SetDefaults()
         {
@@ -153,7 +156,8 @@ namespace Redemption.NPCs.Lab.Behemoth
                 case ActionState.Begin:
                     if (AITimer++ == 0)
                     {
-                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Behemoth.Name"), 60, 90, 0.8f, Color.Green, NetworkText.FromKey("Mods.Redemption.TitleCard.Behemoth.Modifier"));
+                        FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Behemoth.Name", "Mods.Redemption.TitleCard.Behemoth.Modifier", 180, false, Color.DarkGreen, Color.Green, Color.Green, Color.DarkGreen, "Safety Violation", "inSignia");
+                        
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
                     }

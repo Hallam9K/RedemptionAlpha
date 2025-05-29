@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.CrossMod;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -10,6 +11,8 @@ namespace Redemption.Buffs.Debuffs
 		{
 			Main.buffNoTimeDisplay[Type] = false;
             Main.debuff[Type] = true;
+
+            ThoriumHelper.AddPlayerDoTBuffID(Type);
         }
 
         public override void Update(Player player, ref int buffIndex)

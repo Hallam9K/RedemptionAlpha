@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.Audio;
+using Redemption.CrossMod;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -87,6 +88,7 @@ namespace Redemption.NPCs.PreHM
         public virtual void SetSafeStaticDefaults() { }
         public override void SetStaticDefaults()
         {
+            SpiritHelper.AddUndead(Type);
             SetSafeStaticDefaults();
         }
 

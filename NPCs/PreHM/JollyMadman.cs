@@ -26,6 +26,7 @@ using Terraria.Utilities;
 using Redemption.BaseExtension;
 using System.IO;
 using Terraria.Localization;
+using Redemption.CrossMod;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -61,6 +62,8 @@ namespace Redemption.NPCs.PreHM
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCBlood[Type] = true;
             ElementID.NPCShadow[Type] = true;
+
+            SpiritHelper.AddUndead(Type);
         }
         public override void SetDefaults()
         {

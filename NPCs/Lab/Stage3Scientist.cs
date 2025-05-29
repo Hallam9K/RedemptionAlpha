@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.CrossMod;
 using Redemption.Globals;
 using Redemption.UI;
 using Terraria;
@@ -49,7 +50,8 @@ namespace Redemption.NPCs.Lab
                 default:
                     if (NPC.ai[1]++ == 0)
                     {
-                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Stage3Scientist.Name"), 60, 90, 0.8f, Color.Green, NetworkText.FromKey("Mods.Redemption.TitleCard.Stage3Scientist.Modifier"));
+                        FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Stage3Scientist.Name", "Mods.Redemption.TitleCard.Stage3Scientist.Modifier", 90, false, Color.Green, Color.Green, Color.Green, Color.Green, "Safety Violation", "inSignia");
+                        
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
                     }

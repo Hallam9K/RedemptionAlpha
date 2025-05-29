@@ -2,6 +2,7 @@ using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Globals.World;
 using Redemption.Textures.Elements;
+using Redemption.WorldGeneration;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -52,6 +53,7 @@ namespace Redemption
             {
                 switch (content)
                 {
+                    #region Elements and Bonus Calls
                     case "addElementNPC":
                         if (args[1] is not int elementID)
                             throw new Exception($"Expected an argument of type int when setting element ID, but got type {args[1].GetType().Name} instead.");
@@ -418,8 +420,27 @@ namespace Redemption
                         }
 
                         return spearProj.Redemption().IsSpear = true;
+                    #endregion
                     case "RaveyardActive":
                         return RedeWorld.SkeletonInvasion;
+                    case "alignment":
+                        return RedeWorld.Alignment;
+                    case "bastionPos":
+                        return RedeGen.BastionVector;
+                    case "UGPortalPos":
+                        return RedeGen.gathicPortalVector;
+                    case "goldenGatewayPos":
+                        return RedeGen.GoldenGatewayVector;
+                    case "hallOfHeroesPos":
+                        return RedeGen.HallOfHeroesVector;
+                    case "natureShrinePos":
+                        return RedeGen.JoShrinePoint;
+                    case "labPos":
+                        return RedeGen.LabVector;
+                    case "surfacePortalPos":
+                        return RedeGen.newbCaveVector;
+                    case "slayerShipPos":
+                        return RedeGen.slayerShipVector;
                 }
             }
             /*

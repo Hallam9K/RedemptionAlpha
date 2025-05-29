@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
+using Redemption.CrossMod;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Accessories.PreHM;
@@ -342,7 +343,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 }
                                 if (AITimer >= 2000)
                                 {
-                                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Erhan.Name"), 60, 90, 0.8f, Color.Goldenrod, NetworkText.FromKey("Mods.Redemption.TitleCard.Erhan.Modifier"));
+                                    FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Erhan.Name", "Mods.Redemption.TitleCard.Erhan.Modifier", 120, false, Color.Goldenrod, Color.Goldenrod, Color.Red, Color.Goldenrod, "Holy Inquisition", "Sc0p3r");
 
                                     if (!Main.dedServ)
                                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
@@ -377,7 +378,11 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Resummon.Underworld.4"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 1, 0, false, null, Bubble, null, modifier, 4));
                                     }
                                     else
+                                    {
+                                        FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Erhan.Name", "Mods.Redemption.TitleCard.Erhan.Modifier", 160, true, Color.Goldenrod, Color.Goldenrod, Color.Red, Color.Goldenrod, "Holy Inquisition", "Sc0p3r");
+
                                         chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Resummon.Normal"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, Bubble, null, modifier, 2));
+                                    }
                                     chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                     chain.OnEndTrigger += Chain_OnEndTrigger;
                                     ChatUI.Visible = true;
@@ -386,8 +391,6 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                                 if (AITimer >= 2000)
                                 {
-                                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Erhan.Name"), 60, 90, 0.8f, Color.Goldenrod, NetworkText.FromKey("Mods.Redemption.TitleCard.Erhan.Modifier"));
-
                                     if (!Main.dedServ)
                                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
 

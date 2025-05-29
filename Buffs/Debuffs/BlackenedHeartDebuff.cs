@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.CrossMod;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -13,6 +14,8 @@ namespace Redemption.Buffs.Debuffs
             Main.pvpBuff[Type] = false;
             Main.buffNoSave[Type] = true;
             BuffID.Sets.LongerExpertDebuff[Type] = true;
+
+            ThoriumHelper.AddPlayerDoTBuffID(Type);
         }
         public override void Update(Player player, ref int buffIndex)
         {

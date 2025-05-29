@@ -186,28 +186,12 @@ namespace Redemption.Globals.NPC
         {
             // Decapitation
             bool humanoid = NPCLists.SkeletonHumanoid.Contains(npc.type) || NPCLists.Humanoid.Contains(npc.type);
-            if (npc.life < npc.lifeMax && npc.life < item.damage * 100 && item.CountsAsClass(DamageClass.Melee) && item.pick == 0 && item.hammer == 0 && !item.noUseGraphic && item.damage > 0 && item.useStyle == ItemUseStyleID.Swing && humanoid)
+            if (npc.life < npc.lifeMax && npc.life < item.damage * 100 && item.CountsAsClass(DamageClass.Melee) && !item.noUseGraphic && item.damage > 0 && item.useStyle == ItemUseStyleID.Swing && humanoid)
             {
-                if (Main.rand.NextBool(200) && !ItemLists.BluntSwing.Contains(item.type))
-                {
-                    CombatText.NewText(npc.getRect(), Color.Orange, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Decapitated"));
-                    decapitated = true;
-                    modifiers.SetInstantKill();
-                    modifiers.SetCrit();
-
-                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Slash, false);
-                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Axe);
-                }
-                else if (Main.rand.NextBool(80) && (item.axe > 0 || item.Redemption().TechnicallyAxe) && item.type != ItemType<BeardedHatchet>())
-                {
-                    CombatText.NewText(npc.getRect(), Color.Orange, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Decapitated"));
-                    decapitated = true;
-                    modifiers.SetInstantKill();
-                    modifiers.SetCrit();
-
-                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Slash, false);
-                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Axe);
-                }
+                if (Main.rand.NextBool(200) && !ItemLists.BluntSwing.Contains(item.type) && item.pick == 0 && item.hammer == 0)
+                    RedeProjectile.DecapitationEffect(npc, ref modifiers);
+                else if (Main.rand.NextBool(80) && (item.axe > 0 || item.Redemption().TechnicallyAxe))
+                    RedeProjectile.DecapitationEffect(npc, ref modifiers);
             }
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)

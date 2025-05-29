@@ -37,6 +37,7 @@ namespace Redemption.NPCs.Friendly
             NPC.noTileCollide = true;
             NPC.alpha = 255;
             NPC.npcSlots = 0;
+            NPC.rarity = 1;
         }
         public override bool CanHitNPC(NPC target) => false;
         public Point16 point;

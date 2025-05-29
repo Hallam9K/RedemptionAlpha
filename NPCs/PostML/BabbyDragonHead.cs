@@ -1,12 +1,17 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
+using Redemption.Globals.NPC;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PostML;
 using System;
+using Terraria;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Microsoft.Xna.Framework;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
-using Redemption.Globals;
-using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Materials.PostML;
 
 namespace Redemption.NPCs.PostML
 {
@@ -18,7 +23,13 @@ namespace Redemption.NPCs.PostML
             // DisplayName.SetDefault("Star Serpent");
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            {
+                CustomTexturePath = "Redemption/Textures/Bestiary/StarSerpent_Bestiary",
+                Position = new Vector2(50f, 24f),
+                PortraitPositionXOverride = 8f,
+                PortraitPositionYOverride = 12f
+            };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCCelestial[Type] = true;
         }
@@ -41,6 +52,18 @@ namespace Redemption.NPCs.PostML
             NPC.HitSound = SoundID.NPCHit56;
             NPC.DeathSound = SoundID.NPCDeath60;
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Celestial] *= .8f;
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.UIInfoProvider = new CustomCollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], false, 5);
+
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
+            {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
+
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.StarSerpent"))
+            });
         }
 
         public override bool PreAI()
@@ -81,20 +104,20 @@ namespace Redemption.NPCs.PostML
 
                     for (int i = 0; i < 4; ++i)
                     {
-                        latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BabbyDragonBody>(), NPC.whoAmI, 0, latestNPC);
+                        latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<BabbyDragonBody>(), NPC.whoAmI, i == 0 ? 1 : 0, latestNPC);
                         Main.npc[latestNPC].realLife = NPC.whoAmI;
                         Main.npc[latestNPC].ai[3] = NPC.whoAmI;
 
-                        latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BabbyDragonLeg>(), NPC.whoAmI, 0, latestNPC);
+                        latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<BabbyDragonLeg>(), NPC.whoAmI, 0, latestNPC);
                         Main.npc[latestNPC].realLife = NPC.whoAmI;
                         Main.npc[latestNPC].ai[3] = NPC.whoAmI;
                     }
 
-                    latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BabbyDragonTail1>(), NPC.whoAmI, 0, latestNPC);
+                    latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<BabbyDragonTail1>(), NPC.whoAmI, 0, latestNPC);
                     Main.npc[latestNPC].realLife = NPC.whoAmI;
                     Main.npc[latestNPC].ai[3] = NPC.whoAmI;
 
-                    latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BabbyDragonTail2>(), NPC.whoAmI, 0, latestNPC);
+                    latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<BabbyDragonTail2>(), NPC.whoAmI, 0, latestNPC);
                     Main.npc[latestNPC].realLife = NPC.whoAmI;
                     Main.npc[latestNPC].ai[3] = NPC.whoAmI;
 
@@ -102,19 +125,6 @@ namespace Redemption.NPCs.PostML
                     NPC.netUpdate = true;
                 }
             }
-
-            int minTilePosX = (int)(NPC.position.X / 16.0) - 1;
-            int maxTilePosX = (int)((NPC.position.X + NPC.width) / 16.0) + 2;
-            int minTilePosY = (int)(NPC.position.Y / 16.0) - 1;
-            int maxTilePosY = (int)((NPC.position.Y + NPC.height) / 16.0) + 2;
-            if (minTilePosX < 0)
-                minTilePosX = 0;
-            if (maxTilePosX > Main.maxTilesX)
-                maxTilePosX = Main.maxTilesX;
-            if (minTilePosY < 0)
-                minTilePosY = 0;
-            if (maxTilePosY > Main.maxTilesY)
-                maxTilePosY = Main.maxTilesY;
 
             bool collision = true;
 
@@ -237,10 +247,7 @@ namespace Redemption.NPCs.PostML
             {
                 NPC.velocity.Y = NPC.velocity.Y + 1f;
                 if (NPC.position.Y > Main.rockLayer * 16.0)
-                {
                     NPC.velocity.Y = NPC.velocity.Y + 1f;
-                    speed = 30f;
-                }
                 if (NPC.position.Y > Main.rockLayer * 16.0)
                 {
                     for (int num957 = 0; num957 < 200; num957++)
@@ -272,13 +279,16 @@ namespace Redemption.NPCs.PostML
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GildedStar>(), 1, 5, 10));
+            npcLoot.Add(ItemDropRule.Common(ItemType<GildedStar>(), 1, 5, 10));
             npcLoot.Add(ItemDropRule.Common(ItemID.SoulofFlight, 1, 15, 30));
-            npcLoot.Add(ItemDropRule.Common(ItemID.FragmentNebula, 2, 5, 10));
+            npcLoot.Add(ItemDropRule.Common(ItemID.FragmentNebula, 4, 5, 10));
+            npcLoot.Add(ItemDropRule.Common(ItemID.FragmentSolar, 4, 5, 10));
+            npcLoot.Add(ItemDropRule.Common(ItemID.FragmentStardust, 4, 5, 10));
+            npcLoot.Add(ItemDropRule.Common(ItemID.FragmentVortex, 4, 5, 10));
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            return SpawnCondition.Sky.Chance * (Main.hardMode && !NPC.AnyNPCs(ModContent.NPCType<BabbyDragonHead>()) && NPC.downedMoonlord && RedeBossDowned.downedPZ ? 0.1f : 0f);
+            return SpawnCondition.Sky.Chance * (Main.hardMode && !spawnInfo.PlayerSafe && !NPC.AnyNPCs(NPCType<BabbyDragonHead>()) && NPC.downedMoonlord && RedeBossDowned.downedPZ ? 0.1f : 0f);
         }
     }
 
@@ -290,7 +300,7 @@ namespace Redemption.NPCs.PostML
             // DisplayName.SetDefault("Star Serpent");
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -318,7 +328,7 @@ namespace Redemption.NPCs.PostML
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                if (!Main.npc[(int)NPC.ai[1]].active || Main.npc[(int)NPC.ai[3]].type != ModContent.NPCType<BabbyDragonHead>())
+                if (!Main.npc[(int)NPC.ai[1]].active || Main.npc[(int)NPC.ai[3]].type != NPCType<BabbyDragonHead>())
                 {
                     NPC.life = 0;
                     NPC.HitEffect(0, 10.0);
@@ -329,9 +339,9 @@ namespace Redemption.NPCs.PostML
 
             if (NPC.ai[1] < (double)Main.maxNPCs)
             {
-                Vector2 NPCCenter = new(NPC.position.X + NPC.width * 0.5f, NPC.position.Y + NPC.height * 0.5f);
-                float dirX = Main.npc[(int)NPC.ai[1]].position.X + Main.npc[(int)NPC.ai[1]].width / 2 - NPCCenter.X;
-                float dirY = Main.npc[(int)NPC.ai[1]].position.Y + Main.npc[(int)NPC.ai[1]].height / 2 - NPCCenter.Y;
+                Vector2 NPCCenter = NPC.Center;
+                float dirX = Main.npc[(int)NPC.ai[1]].Center.X - NPCCenter.X;
+                float dirY = Main.npc[(int)NPC.ai[1]].Center.Y - NPCCenter.Y;
                 NPC.rotation = (float)Math.Atan2(dirY, dirX) + 1.57f;
                 float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
                 float dist = (length - NPC.width) / length;
@@ -363,6 +373,27 @@ namespace Redemption.NPCs.PostML
         {
             return 0f;
         }
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (NPC.ai[0] != 1)
+                return;
+            Texture2D wingTex = Request<Texture2D>(Texture + "_Wing").Value;
+            Texture2D wingGlow = Request<Texture2D>(Texture + "_Wing_Glow").Value;
+            Vector2 WingPos = NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY);
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.HallowBossDye);
+
+            spriteBatch.Draw(wingTex, WingPos, new Rectangle?(new Rectangle(0, 0, wingTex.Width, wingTex.Height)), NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 14 : 16, 0), NPC.scale, effects, 0);
+
+            spriteBatch.End();
+            spriteBatch.BeginDefault(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
+            spriteBatch.Draw(wingGlow, WingPos, new Rectangle?(new Rectangle(0, 0, wingTex.Width, wingTex.Height)), NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 14 : 16, 0), NPC.scale, effects, 0);
+            spriteBatch.End();
+            spriteBatch.BeginDefault();
+            return;
+        }
     }
     public class BabbyDragonLeg : BabbyDragonHead
     {
@@ -372,7 +403,7 @@ namespace Redemption.NPCs.PostML
             // DisplayName.SetDefault("Star Serpent");
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -400,7 +431,7 @@ namespace Redemption.NPCs.PostML
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                if (!Main.npc[(int)NPC.ai[1]].active || Main.npc[(int)NPC.ai[3]].type != ModContent.NPCType<BabbyDragonHead>())
+                if (!Main.npc[(int)NPC.ai[1]].active || Main.npc[(int)NPC.ai[3]].type != NPCType<BabbyDragonHead>())
                 {
                     NPC.life = 0;
                     NPC.HitEffect(0, 10.0);
@@ -411,9 +442,9 @@ namespace Redemption.NPCs.PostML
 
             if (NPC.ai[1] < (double)Main.maxNPCs)
             {
-                Vector2 NPCCenter = new(NPC.position.X + NPC.width * 0.5f, NPC.position.Y + NPC.height * 0.5f);
-                float dirX = Main.npc[(int)NPC.ai[1]].position.X + Main.npc[(int)NPC.ai[1]].width / 2 - NPCCenter.X;
-                float dirY = Main.npc[(int)NPC.ai[1]].position.Y + Main.npc[(int)NPC.ai[1]].height / 2 - NPCCenter.Y;
+                Vector2 NPCCenter = NPC.Center;
+                float dirX = Main.npc[(int)NPC.ai[1]].Center.X - NPCCenter.X;
+                float dirY = Main.npc[(int)NPC.ai[1]].Center.Y - NPCCenter.Y;
                 NPC.rotation = (float)Math.Atan2(dirY, dirX) + 1.57f;
                 float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
                 float dist = (length - NPC.width) / length;
@@ -456,7 +487,7 @@ namespace Redemption.NPCs.PostML
         {
             // DisplayName.SetDefault("Star Serpent");
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -484,7 +515,7 @@ namespace Redemption.NPCs.PostML
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                if (!Main.npc[(int)NPC.ai[1]].active || Main.npc[(int)NPC.ai[3]].type != ModContent.NPCType<BabbyDragonHead>())
+                if (!Main.npc[(int)NPC.ai[1]].active || Main.npc[(int)NPC.ai[3]].type != NPCType<BabbyDragonHead>())
                 {
                     NPC.life = 0;
                     NPC.HitEffect(0, 10.0);
@@ -495,9 +526,9 @@ namespace Redemption.NPCs.PostML
 
             if (NPC.ai[1] < (double)Main.maxNPCs)
             {
-                Vector2 NPCCenter = new(NPC.position.X + NPC.width * 0.5f, NPC.position.Y + NPC.height * 0.5f);
-                float dirX = Main.npc[(int)NPC.ai[1]].position.X + Main.npc[(int)NPC.ai[1]].width / 2 - NPCCenter.X;
-                float dirY = Main.npc[(int)NPC.ai[1]].position.Y + Main.npc[(int)NPC.ai[1]].height / 2 - NPCCenter.Y;
+                Vector2 NPCCenter = NPC.Center;
+                float dirX = Main.npc[(int)NPC.ai[1]].Center.X - NPCCenter.X;
+                float dirY = Main.npc[(int)NPC.ai[1]].Center.Y - NPCCenter.Y;
                 NPC.rotation = (float)Math.Atan2(dirY, dirX) + 1.57f;
                 float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
                 float dist = (length - NPC.width) / length;
@@ -541,7 +572,7 @@ namespace Redemption.NPCs.PostML
             // DisplayName.SetDefault("Star Serpent");
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -569,7 +600,7 @@ namespace Redemption.NPCs.PostML
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                if (!Main.npc[(int)NPC.ai[1]].active || Main.npc[(int)NPC.ai[3]].type != ModContent.NPCType<BabbyDragonHead>())
+                if (!Main.npc[(int)NPC.ai[1]].active || Main.npc[(int)NPC.ai[3]].type != NPCType<BabbyDragonHead>())
                 {
                     NPC.life = 0;
                     NPC.HitEffect(0, 10.0);
@@ -580,9 +611,9 @@ namespace Redemption.NPCs.PostML
 
             if (NPC.ai[1] < (double)Main.maxNPCs)
             {
-                Vector2 NPCCenter = new(NPC.position.X + NPC.width * 0.5f, NPC.position.Y + NPC.height * 0.5f);
-                float dirX = Main.npc[(int)NPC.ai[1]].position.X + Main.npc[(int)NPC.ai[1]].width / 2 - NPCCenter.X;
-                float dirY = Main.npc[(int)NPC.ai[1]].position.Y + Main.npc[(int)NPC.ai[1]].height / 2 - NPCCenter.Y;
+                Vector2 NPCCenter = NPC.Center;
+                float dirX = Main.npc[(int)NPC.ai[1]].Center.X - NPCCenter.X;
+                float dirY = Main.npc[(int)NPC.ai[1]].Center.Y - NPCCenter.Y;
                 NPC.rotation = (float)Math.Atan2(dirY, dirX) + 1.57f;
                 float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
                 float dist = (length - NPC.width) / length;

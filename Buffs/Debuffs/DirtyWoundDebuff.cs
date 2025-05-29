@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Terraria.ID;
+using Redemption.CrossMod;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -14,6 +15,8 @@ namespace Redemption.Buffs.Debuffs
             Main.buffNoSave[Type] = true;
             BuffID.Sets.GrantImmunityWith[Type].Add(BuffID.Bleeding);
             BuffID.Sets.GrantImmunityWith[Type].Add(BuffID.BloodButcherer);
+
+            ThoriumHelper.AddPlayerDoTBuffID(Type);
         }
         public override void Update(Player player, ref int buffIndex)
         {

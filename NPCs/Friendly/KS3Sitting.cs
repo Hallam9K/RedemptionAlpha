@@ -238,10 +238,12 @@ namespace Redemption.NPCs.Friendly
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue11"));
                 }
                 if (NPC.downedMoonlord)
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue12"), 2);
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue12"), 3);
 
                 if (BasePlayer.HasHelmet(player, ItemType<KingSlayerMask>(), true))
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue13"));
+                if (BasePlayer.HasHelmet(player, ItemType<AndroidHead>(), true) || BasePlayer.HasHelmet(player, ItemType<AndroidHead2>(), true) || BasePlayer.HasHelmet(player, ItemType<AndroidHead3>(), true))
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.DialogueAndroidHead"), 2);
 
                 if (player.wellFed && RedeQuest.slayerRep < 2)
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue14"));
@@ -385,7 +387,7 @@ namespace Redemption.NPCs.Friendly
         public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
         {
             int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
-            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2)+300;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
             position.Y += 56;
         }
         public override string Text(NPC npc, Player player) => RedeQuest.slayerRep == 0 || !player.Redemption().foundHall ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.5");
@@ -412,7 +414,7 @@ namespace Redemption.NPCs.Friendly
         public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
         {
             int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
-            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2)+300;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
             position.Y += 56 + 46;
         }
         public override string Text(NPC npc, Player player) => RedeQuest.slayerRep == 0 || !player.Redemption().foundLab ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.6");

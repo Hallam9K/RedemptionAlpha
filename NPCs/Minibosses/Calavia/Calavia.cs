@@ -24,6 +24,7 @@ using Redemption.Textures;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.UI;
 using Redemption.Items.Placeable.Trophies;
+using Redemption.CrossMod;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -311,7 +312,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     origin = NPC.Center;
                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_IcefallArena>(), 0, Vector2.Zero, NPC.whoAmI);
 
-                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Calavia.Name"), 60, 90, 0.8f, Color.LightCyan, NetworkText.FromKey("Mods.Redemption.TitleCard.Calavia.Modifier"));
+                    FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Calavia.Name", "Mods.Redemption.TitleCard.Calavia.Modifier", 90, false, Color.LightCyan, Color.LightCyan, Color.LightCyan, Color.DarkCyan, "Dramatic4", "PeriTune");
 
                     AIState = ActionState.JumpToOrigin;
                     NPC.netUpdate = true;

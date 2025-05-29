@@ -113,6 +113,8 @@ namespace Redemption.NPCs.PreHM
         }
         public override void AI()
         {
+            BestiaryNPC.ScanWorldForFinds(NPC);
+
             Player player = Main.player[NPC.GetNearestAlivePlayer()];
             RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
@@ -560,6 +562,10 @@ namespace Redemption.NPCs.PreHM
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            CommonEnemyUICollectionInfoProvider provider1 = new(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type], false);
+            CritterUICollectionInfoProvider provider2 = new(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type]);
+            bestiaryEntry.UIInfoProvider = new HighestOfMultipleUICollectionInfoProvider(provider1, provider2);
+
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.CrossMod;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Accessories.PreHM;
@@ -70,6 +71,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCArcane[Type] = true;
+
+            SpiritHelper.AddUndead(Type, true);
         }
         public override void SetDefaults()
         {
@@ -236,7 +239,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                         case 0:
                             if (AITimer++ == 0)
                             {
-                                TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.SkullDigger.Name"), 60, 90, 0.8f, Color.LightCyan, NetworkText.FromKey("Mods.Redemption.TitleCard.SkullDigger.Modifier"));
+                                FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.SkullDigger.Name", "Mods.Redemption.TitleCard.SkullDigger.Modifier", 120, false, Color.LightCyan, Color.LightCyan, Color.DarkBlue, Color.DarkBlue, "The Loudness of Silence", "Yuri O");
 
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);

@@ -28,6 +28,9 @@ namespace Redemption.NPCs.FowlMorning
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 15;
+            NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+            NPCID.Sets.CantTakeLunchMoney[Type] = true;
+
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }

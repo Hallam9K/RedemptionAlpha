@@ -38,6 +38,8 @@ namespace Redemption
         public bool NoFlyBuzz;
 
         public bool DialogueInChat;
+
+        public bool LegacyNebSky;
     }
     public class RedeConfigServer : ModConfig
     {

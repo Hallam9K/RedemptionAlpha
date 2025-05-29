@@ -54,7 +54,7 @@ namespace Redemption
         public static readonly SoundStyle GigaLaserFire = new("Redemption/Sounds/Custom/GigaLaserFire") { Volume = 1.5f };
         public static readonly SoundStyle GravityHammerSlam = new("Redemption/Sounds/Custom/GravityHammerSlam") { Volume = 0.6f };
         public static readonly SoundStyle GrenadeLauncher = new("Redemption/Sounds/Custom/GrenadeLauncher") { Volume = .5f };
-        public static readonly SoundStyle GuardBreak = new("Redemption/Sounds/Custom/GuardBreak");
+        public static readonly SoundStyle GuardBreak = new("Redemption/Sounds/Custom/GuardBreak") { Volume = .7f };
         public static readonly SoundStyle Gun1KS = new("Redemption/Sounds/Custom/Gun1KS") { Volume = 1.5f };
         public static readonly SoundStyle Gun2KS = new("Redemption/Sounds/Custom/Gun2KS") { Volume = 1.5f };
         public static readonly SoundStyle Gun3KS = new("Redemption/Sounds/Custom/Gun3KS") { Volume = 1.5f };
@@ -157,6 +157,7 @@ namespace Redemption
         public static readonly SoundStyle Bell = new("Redemption/Sounds/Custom/Bell") { PitchVariance = .1f, Pitch = -.5f, Volume = .5f };
         public static readonly SoundStyle Kantele1 = new("Redemption/Sounds/Custom/Kantele1");
         public static readonly SoundStyle Kantele2 = new("Redemption/Sounds/Custom/Kantele2");
+        public static readonly SoundStyle LegoBreak = new("Redemption/Sounds/Custom/LegoBreak") { Volume = .6f };
 
         public static readonly SoundStyle Magic1 = new("Redemption/Sounds/Custom/Magic1") { PitchVariance = .1f };
         public static readonly SoundStyle Magic2 = new("Redemption/Sounds/Custom/Magic2") { PitchVariance = .1f };

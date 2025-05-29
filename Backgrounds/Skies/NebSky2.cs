@@ -2,6 +2,7 @@
 using Redemption.NPCs.Bosses.Neb;
 using System;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 
 namespace Redemption.Backgrounds.Skies
@@ -30,9 +31,10 @@ namespace Redemption.Backgrounds.Skies
         }
         private Color skyColor;
         public float Rotation = 0;
+        float uTime, speed;
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {
-            Texture2D SkyTex = Request<Texture2D>("Redemption/Backgrounds/Skies/NebSky2").Value;
+            Texture2D SkyTex = GetInstance<RedeConfigClient>().LegacyNebSky ? Request<Texture2D>("Redemption/Backgrounds/Skies/NebSky2").Value : TextureAssets.MagicPixel.Value;
             Texture2D SkyTex3 = Request<Texture2D>("Redemption/Backgrounds/Skies/SkyTex3").Value;
 
             bool beamActive = false;
@@ -46,6 +48,7 @@ namespace Redemption.Backgrounds.Skies
                 {
                     beamActive = true;
                     MoonbeamIntensity = proj.Opacity;
+                    speed = MathHelper.Lerp(speed, 50, 0.1f);
                     skyColor = Color.Cyan;
                     break;
                 }
@@ -53,6 +56,7 @@ namespace Redemption.Backgrounds.Skies
                 {
                     skyColor = Color.Orange;
                     beamActive = true;
+                    speed = MathHelper.Lerp(speed, 10, 0.1f);
                     MoonbeamIntensity += 0.05f;
                     break;
                 }
@@ -60,12 +64,16 @@ namespace Redemption.Backgrounds.Skies
                 {
                     skyColor = new(0, 242, 170);
                     beamActive = true;
+                    speed = MathHelper.Lerp(speed, 20, 0.1f);
                     MoonbeamIntensity += 0.01f;
                     break;
                 }
             }
             if (!beamActive)
+            {
+                speed = MathHelper.Lerp(speed, 1, 0.03f);
                 MoonbeamIntensity -= 0.01f;
+            }
             MoonbeamIntensity = MathHelper.Clamp(MoonbeamIntensity, 0, 1);
 
             if (maxDepth >= 3.40282347E+38f && minDepth < 3.40282347E+38f)
@@ -73,8 +81,46 @@ namespace Redemption.Backgrounds.Skies
                 Rotation -= .001f;
                 if (!Main.dayTime)
                 {
+                    if (!GetInstance<RedeConfigClient>().LegacyNebSky)
+                    {
+
+                        uTime += speed * 0.01f;
+                        DrawHelper.SpriteBatchState s = spriteBatch.SaveState();
+                        Texture2D starMap = Request<Texture2D>("Redemption/Textures/Noise/starNoise").Value;
+                        Texture2D seamlessNoise = Request<Texture2D>("Redemption/Textures/Noise/seamlessNoise").Value;
+                        Texture2D waterNoise = Request<Texture2D>("Redemption/Textures/Noise/waterNoise").Value;
+                        Texture2D maskano = Request<Texture2D>("Redemption/Textures/Noise/smearNoise").Value;
+
+                        spriteBatch.End();
+                        spriteBatch.Begin(s.SpriteSortMode, s.BlendState, Redemption.nebSkyEffect, s);
+
+                        float alpha = 1 + MoonbeamIntensity;
+                        Redemption.nebSkyEffect.Parameters["skyColor1"].SetValue(new Vector4(1, 0.15f, 1.5f, Intensity) * alpha);
+                        Redemption.nebSkyEffect.Parameters["skyColor2"].SetValue(new Vector4(1, 0.5f, 1.5f, Intensity) * alpha);
+                        Redemption.nebSkyEffect.Parameters["bgColor1"].SetValue(new Vector4(.1f, 0, 1.7f, Intensity) * 0.8f * alpha);
+                        Redemption.nebSkyEffect.Parameters["bgColor2"].SetValue(new Vector4(2, 0.15f, 1.5f, Intensity) * 0.5f * alpha);
+                        Redemption.nebSkyEffect.Parameters["gamma"].SetValue(1.5f);
+                        Redemption.nebSkyEffect.Parameters["starScale"].SetValue(2.5f);
+                        Redemption.nebSkyEffect.Parameters["gradientScale"].SetValue(2.5f);
+                        Redemption.nebSkyEffect.Parameters["gradientMax"].SetValue(2f);
+                        Redemption.nebSkyEffect.Parameters["gradientMin"].SetValue(0f);
+                        Redemption.nebSkyEffect.Parameters["uTime"].SetValue(uTime);
+                        Redemption.nebSkyEffect.Parameters["_stars"].SetValue(starMap);
+                        Redemption.nebSkyEffect.Parameters["_displace"].SetValue(seamlessNoise);
+                        Redemption.nebSkyEffect.Parameters["_mask"].SetValue(waterNoise);
+                        Redemption.nebSkyEffect.Parameters["_maskano"].SetValue(maskano);
+
+                        int size = Main.screenHeight > Main.screenWidth ? Main.screenHeight : Main.screenWidth;
+                        spriteBatch.Draw(SkyTex, new Rectangle(0, 0, size, size), Color.White);
+
+                        spriteBatch.End();
+                        spriteBatch.Begin(s);
+                    }
+
                     Vector2 SkyPos = new(Main.screenWidth / 2, Main.screenHeight / 2);
-                    spriteBatch.Draw(SkyTex, SkyPos, null, Color.White * .9f, Rotation, new Vector2(SkyTex.Width >> 1, SkyTex.Height >> 1), 2f, SpriteEffects.None, 1f);
+                    if (GetInstance<RedeConfigClient>().LegacyNebSky)
+                        spriteBatch.Draw(SkyTex, SkyPos, null, Color.White * .9f, Rotation, new Vector2(SkyTex.Width >> 1, SkyTex.Height >> 1), 2f, SpriteEffects.None, 1f);
+
                     if (MoonbeamIntensity > 0f)
                     {
                         float flicker = 1;

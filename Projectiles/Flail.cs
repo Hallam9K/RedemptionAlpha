@@ -4,12 +4,20 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Redemption.CrossMod;
 
 namespace Redemption.Projectiles
 {
     public abstract class Flail : ModProjectile
     {
-		public virtual void SetStats(ref int throwTime, ref float throwSpeed, ref float recoverDistance, ref float recoverDistance2, ref int attackCooldown)
+        public override void SetStaticDefaults()
+        {
+            ThoriumHelper.AddFlailProjectileID(Type);
+            SetSafeStaticDefaults();
+        }
+        public virtual void SetSafeStaticDefaults() { }
+
+        public virtual void SetStats(ref int throwTime, ref float throwSpeed, ref float recoverDistance, ref float recoverDistance2, ref int attackCooldown)
         {
         }
 		public override void AI()

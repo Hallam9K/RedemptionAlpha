@@ -6,6 +6,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.Localization;
+using Redemption.CrossMod;
 
 namespace Redemption.UI
 {
@@ -31,6 +32,22 @@ namespace Redemption.UI
             Icon.Append(IconHighlight);
 
             base.OnActivate();
+        }
+        public override void Update(GameTime gameTime)
+        {
+            if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker || !Main.playerInventory)
+                return;
+
+            if (SpiritHelper.HasBackpack(Main.LocalPlayer))
+            {
+                Icon.Left.Set(570 + 40, 0f);
+                Icon.Recalculate();
+            }
+            else
+            {
+                Icon.Left.Set(570, 0f);
+                Icon.Recalculate();
+            }
         }
         public override void MouseOver(UIMouseEvent evt)
         {

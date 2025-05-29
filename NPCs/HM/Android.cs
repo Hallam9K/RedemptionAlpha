@@ -28,6 +28,7 @@ using Redemption.Items.Usable;
 using System.IO;
 using Redemption.UI.ChatUI;
 using Redemption.Textures;
+using Redemption.Items.Armor.Vanity;
 
 namespace Redemption.NPCs.HM
 {
@@ -570,6 +571,21 @@ namespace Redemption.NPCs.HM
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AIChip>(), 8, 1, 1));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EnergyCell>(), 20));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<P0T4T0>(), 150));
+
+            for (int i = 0; i < 3; i++)
+            {
+                AndroidHeadCondition decapitationDropCondition = new(i);
+                IItemDropRule conditionalRule = new LeadingConditionRule(decapitationDropCondition);
+                var itemType = i switch
+                {
+                    1 => ItemType<AndroidHead2>(),
+                    2 => ItemType<AndroidHead3>(),
+                    _ => ItemType<AndroidHead>(),
+                };
+                IItemDropRule rule = ItemDropRule.Common(itemType);
+                conditionalRule.OnSuccess(rule);
+                npcLoot.Add(conditionalRule);
+            }
         }
         public override void HitEffect(NPC.HitInfo hit)
         {

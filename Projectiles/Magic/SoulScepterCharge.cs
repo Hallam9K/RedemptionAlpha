@@ -35,7 +35,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.timeLeft = 200;
         }
 
-        private readonly int NUMPOINTS = 70;
+        private readonly int NUMPOINTS = 40;
         public Color baseColor = Color.GhostWhite;
         private List<Vector2> cache;
         private List<Vector2> cache2;

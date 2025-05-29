@@ -57,7 +57,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             float adjustedItemScale2 = player.GetAdjustedItemScale(Item);
-            Projectile.NewProjectile(source, position, velocity, ProjectileType<PureIronSword_Proj>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
+            var projectile = Projectile.NewProjectileDirect(source, position, velocity, ProjectileType<PureIronSword_Proj>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
+            projectile.originalDamage = Item.damage;
             return false;
         }
 

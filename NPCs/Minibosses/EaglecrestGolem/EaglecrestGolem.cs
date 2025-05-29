@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
+using Redemption.CrossMod;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
@@ -203,6 +204,8 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         private int summonTimer;
         private float FlareTimer;
         private bool Flare;
+
+        private int failsafeTimer;
         public override void AI()
         {
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
@@ -228,7 +231,8 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             {
                 case ActionState.Start:
                     NPC.target = RedeHelper.GetNearestAlivePlayer(NPC);
-                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Golem.Name"), 60, 90, 0.8f, Color.Gray, NetworkText.FromKey("Mods.Redemption.TitleCard.Golem.Modifier"));
+                    FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Golem.Name", "Mods.Redemption.TitleCard.Golem.Modifier", 90, false, Color.LightGoldenrodYellow, Color.Gray, Color.Gray, Color.LightGoldenrodYellow, "Dramatic4", "PeriTune");
+                    
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                         TimerRand = Main.rand.Next(300, 700);
                     AIState = ActionState.Idle;
@@ -484,7 +488,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                         case 0:
                             if (AITimer++ == 0)
                                 NPC.velocity.Y = -10;
-                            if (NPC.velocity.Y >= 0)
+                            if (NPC.velocity.Y >= 0 || AITimer >= 120)
                             {
                                 AITimer = 0;
                                 TimerRand++;
@@ -500,6 +504,8 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                                 glowOpacity -= .1f;
                             if (AITimer-- <= 0 && BaseAI.HitTileOnSide(NPC, 3, false, NPC.Center.Y + 28 > player.Center.Y) && !Collision.SolidCollision(NPC.Center - Vector2.One, 2, 2) && glowOpacity < 1)
                             {
+                                failsafeTimer = 0;
+
                                 AITimer = 4;
                                 Vector2 pos = new(player.Center.X, BaseWorldGen.GetFirstTileFloor((int)player.Center.X / 16, (int)player.Center.Y / 16) * 16);
                                 Vector2 landingPos = NPCHelper.FindGroundVector(NPC, pos, 30);
@@ -550,6 +556,13 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                                     TimerRand++;
                             }
                             NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 28);
+
+                            if (failsafeTimer >= 180)
+                            {
+                                failsafeTimer = 0;
+                                TimerRand++;
+                                NPC.netUpdate = true;
+                            }
                             break;
                         case 2:
                             NPC.velocity.Y += .3f;

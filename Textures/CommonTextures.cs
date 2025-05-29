@@ -25,6 +25,7 @@ namespace Redemption.Textures
         public static Asset<Texture2D> RainbowParticle1;
         public static Asset<Texture2D> RainbowParticle2;
         public static Asset<Texture2D> RainbowParticle3;
+        public static Asset<Texture2D> Shockwave2;
 
 
         public override void Load()
@@ -49,6 +50,7 @@ namespace Redemption.Textures
             RainbowParticle1 = Request<Texture2D>("Redemption/Particles/RainbowParticle1");
             RainbowParticle2 = Request<Texture2D>("Redemption/Particles/RainbowParticle2");
             RainbowParticle3 = Request<Texture2D>("Redemption/Particles/RainbowParticle3");
+            Shockwave2 = Request<Texture2D>("Redemption/Textures/Shockwave2");
         }
     }
 }

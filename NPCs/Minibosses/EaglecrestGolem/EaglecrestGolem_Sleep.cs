@@ -36,6 +36,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.chaseable = false;
+            NPC.rarity = 1;
         }
         public override void HitEffect(NPC.HitInfo hit)
         {

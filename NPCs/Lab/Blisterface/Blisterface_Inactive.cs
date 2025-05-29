@@ -8,6 +8,7 @@ using Redemption.Base;
 using Redemption.Biomes;
 using Terraria.Localization;
 using Redemption.UI;
+using Redemption.CrossMod;
 
 namespace Redemption.NPCs.Lab.Blisterface
 {
@@ -60,7 +61,7 @@ namespace Redemption.NPCs.Lab.Blisterface
             Rectangle activeZone = new((int)(RedeGen.LabVector.X + 204) * 16, (int)(RedeGen.LabVector.Y + 168) * 16, 7 * 16, 20 * 16);
             if (player.Hitbox.Intersects(activeZone) && !player.dead && player.active)
             {
-                TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Blisterface.Name"), 60, 90, 0.8f, Color.Green, NetworkText.FromKey("Mods.Redemption.TitleCard.Blisterface.Modifier"));
+                FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Blisterface.Name", "Mods.Redemption.TitleCard.Blisterface.Modifier", 90, false, Color.DarkGreen, Color.Green, Color.Green, Color.DarkGreen, "Safety Violation", "inSignia");
 
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);

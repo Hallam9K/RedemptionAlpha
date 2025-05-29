@@ -83,18 +83,43 @@ namespace Redemption.Globals
             {
                 if (Main.rand.NextBool(chance))
                 {
-                    CombatText.NewText(target.getRect(), Color.Orange, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Decapitated"));
-                    target.Redemption().decapitated = true;
-                    crit = true;
-                    target.StrikeInstantKill();
-
-                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Slash, false);
-                    RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Axe);
+                    DecapitationEffect(target, ref crit);
                     return true;
                 }
             }
             return false;
         }
+        public static void DecapitationEffect(Terraria.NPC target, ref bool crit)
+        {
+            RedeDraw.SpawnExplosion(new Vector2(target.Center.X, target.position.Y + target.height / 4), Color.Orange, shakeAmount: 0, scale: .5f, noDust: true, rot: Main.rand.NextFloat(-0.1f, 0.1f), tex: "Redemption/Textures/SwordClash");
+
+            if (!Main.dedServ)
+                SoundEngine.PlaySound(CustomSounds.Slash2.WithPitchOffset(.3f), target.position);
+
+            CombatText.NewText(target.getRect(), Color.Orange, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Decapitated"));
+            target.Redemption().decapitated = true;
+            crit = true;
+            target.StrikeInstantKill();
+
+            RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Slash, false);
+            RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Axe);
+        }
+        public static void DecapitationEffect(Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
+        {
+            RedeDraw.SpawnExplosion(new Vector2(target.Center.X, target.position.Y + target.height / 4), Color.Orange, shakeAmount: 0, scale: .5f, noDust: true, rot: Main.rand.NextFloat(-0.1f, 0.1f), tex: "Redemption/Textures/SwordClash");
+
+            if (!Main.dedServ)
+                SoundEngine.PlaySound(CustomSounds.Slash2.WithPitchOffset(.3f), target.position);
+
+            CombatText.NewText(target.getRect(), Color.Orange, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Decapitated"));
+            target.Redemption().decapitated = true;
+            modifiers.SetInstantKill();
+            modifiers.SetCrit();
+
+            RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Slash, false);
+            RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Axe);
+        }
+
         public static bool SwordClashFriendly(Projectile projectile, Projectile target, Entity player, ref bool parried, int frame = 5)
         {
             Rectangle targetHitbox = target.Hitbox;

@@ -1,5 +1,6 @@
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
+using Redemption.CrossMod;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Accessories.HM;
@@ -34,6 +35,8 @@ namespace Redemption.NPCs.Wasteland
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCPoison[Type] = true;
+
+            ThoriumHelper.AddInsectRepellentNPCID(Type);
         }
 
         public override void SetDefaults()

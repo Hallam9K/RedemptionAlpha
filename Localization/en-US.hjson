@@ -268,7 +268,7 @@ Mods: {
 			Calavia: A Chief-Warrior of the Iron Realm, lost and troubled by her distant venture from her home of Khen Boldur, which was spurred on by the barons of Arum. Swordplay and smithing is her expertise, along with familiarity of Blizzard magic.
 			OO: An autonomous war machine mostly of Girus' own design with many integrated weapon systems, such as literal finger guns and an advanced heat dispersion system in the form of a giant beam, capable of obliterating anyone it engulfs - Also where Obliterator got its name from.
 			TreebarkDryad: A slow-thinking ent from Fairwood. Some say it is wise, some say it is mystical, but everyone can agree that it is, indeed, a tree.
-			Erhan: A high priest of Fairwood, tasked himself to purify the forest's curse after it consumed it's warden.
+			Erhan: A high priest of Fairwood, tasked himself to purify the forest's curse after it consumed its warden.
 			Behemoth: An unfortunate scientist, disfigured and mutilated beyond recognition by the Xenomite infection. This specimen is entering the final stage of the infection, and has had its body transform into a sludgy slurry on the ceiling... God, that must be agonizing.
 			Blisterface1: An unfortunate fish, disfigured and mutilated beyond recognition by the Xenomite infection. This strain seems to be similar to that of the Blistered Scientists...
 			Blisterface2: That's a bigass fish.
@@ -313,7 +313,7 @@ Mods: {
 			RaveyardSkeleton: Created when a corpse is bound by a soul, and the soul can still remember the last piece of music it heard. It will attempt to mimic the exact sounds it remembers. If it can't do that, then it will just dance uncontrollably. Some tunes are more deadly than others.
 			LivingBloom: A common creature native to Anglon, living in lush forests. They are made out of plant fibre and roots.
 			JollyMadman: The body of a noble knight of Gathuram, the soul of a criminal. Now dead and stuck under the earth in the dark labyrinthine caves, they have lost their split minds and gone insane.
-			ForestNymph: Rare humanoid creatures found in forests, far from civilization. They live in giant hollowed-out trees, usually near an enchanted pond. They are solitary and territorial beings, seldom enjoying the company of others. It is unknown how these creatures came to be, legends suggest they are the handiwork of Epidotra itself - grown from the earth same as all flora, but to blossom into the form of a human.
+			ForestNymph: Rare creatures found in deep forests, far from mankind. They are solitary and territorial beings, seldom enjoying the company of others.
 			VagrantSpirit: Souls without a compatible vessel to infuse with, trapped within the spirit realm for so long they seeped out and are now slightly visible to the naked eye. They shall roam the caverns for eternity.
 			BlisteredScientist: An unfortunate scientist, disfigured and mutilated beyond recognition by the Xenomite infection. This strain is somewhat aggressive and their skin is covered in blisters... God, do they look repulsive.
 			BloatedScientist: An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This strain is mildly aggressive, and has bloated their gastric track to monstrous sizes... God, that must feel vile...
@@ -346,6 +346,7 @@ Mods: {
 			BloatedClinger: Clingers irradiated by radioactive particles that have been disfigured by rapid, volatile cell growth.
 			Forret: A puckish animal from Gathuram's evergreen forests. Gathic folk from ages past brought these antlered ferrets through an underground gateway, where they found their way to this island's surface.
 			MoonflareSkeleton: Pilgrims with faith in the moon. They have mastered the specific class of magic designed to launch their enemies off of cliffs.
+			StarSerpent: Rare serpents from the highest skies of Ithon. They took a liking to a certain figure, and followed them through a Golden Gateway.
 		}
 
 		Bestiary.Android: Apidroids were an experiment with a highly durable metal from a distant star system. The metal - dubbed 'Rose Titanium' by King Slayer III - is one of the strongest materials discovered in the galaxy. However, King Slayer III hated its pink tinge, and so stubbornly refused to use it after making a few Androids out of it.
@@ -3029,9 +3030,9 @@ Mods: {
 				MysticBlossomDialogueAggressive: You... Goodness. Why would you possibly give me such a rarity! I cannot help but sense malicious intent. And yet, the World says you are good, and the World does not lie. In return for this, t
 				MysticBlossomDialogue: This is... To offer such rarity to me is bewildering, to say the least. What may I bestow that may rival this? My possessions are limited, however my blessings are boundless. T
 				MysticBlossomDialogueCont: ake my weapon, for it is the only tangible gift I have.
-				HomeDialogue1: We usually live in giant hollowed-out trees with a body of water nearby. The tree is only good for hiding, but the water is vital for our survival, as we cannot blossom without it. The living trees this island has are the closest things to the great oaks back through the portal, but they could use some sprucing up. They aren't exactly homely.
-				HomeDialogue2: Your fae spoke truthfully about you. If it wouldn't be too much work, I will accept a home you create for me. I have requirements, however. For one, I would prefer if it was made of living wood - I give you permission to renovate an existing living tree if so inclined, but as long as it's made of living wood I'll be satisfied. Secondly, I need a body of water nearby. A small one is fine, just as long as I can submerge my roots into it.
-				HomeDialogue3: I would prefer if it was made of living wood - I give you permission to renovate an existing living tree if so inclined, but as long as it's made of living wood I'll be satisfied. Secondly, I need a body of water nearby. A small one is fine, just as long as I can submerge my roots into it.
+				HomeDialogue1: We usually live in giant hollowed-out trees with a body of water nearby. The tree is only good for hiding, but the water is vital for our survival. The living trees of this land are the closest things to the great oaks back through the portal, but they could use some sprucing up. They aren't exactly homely.
+				HomeDialogue2: Your fae spoke truthfully about you. If it wouldn't be too much work, I will accept a home you create for me. I have requirements, however. For one, I would prefer if it was made of living wood - I give you permission to renovate an existing living tree if so inclined. Secondly, I need a body of water nearby. A small one is fine, just as long as I can submerge my roots into it.
+				HomeDialogue3: I would prefer if it was made of living wood - I give you permission to renovate an existing living tree if so inclined. Secondly, I need a body of water nearby. A small one is fine, just as long as I can submerge my roots into it.
 				HomeNeedWaterDialogueCalm: Make a nice body of water close at hand, and I'll accept this new home.
 				HomeNeedWaterDialogueShy: If you can, please create a body of water close to my new home.
 				HomeNeedWaterDialogueJolly: A small lake or pond is very important for us forest nymphs. I'll be most pleased if one was present.
@@ -3134,6 +3135,7 @@ Mods: {
 				Dialogue13: What have you got on your head? Are you trying to cosplay as me or something?
 				Dialogue14: Look at you all well fed... Good for you.
 				Dialogue15: How did a chicken break into my ship?
+				DialogueAndroidHead: I'm not stupid, I know one of my own androids when I see one.
 				Chat1: I can ask you the same question. If you've come here to just chit-chat after our fight I'm not interested.
 				Chat1B: Fixing this crashed ship, and just reflecting on our fight. Honestly I'm just doing it because I got nothing else to do.
 				Chat1C: The ship is fixed... I just can't be bothered to get up.
@@ -3342,7 +3344,7 @@ Mods: {
 				IntroLine7: I'll need it... Actually, would ye be a dear and get me some equipment to aid me? My shield and helm took quite a blow. Not like I can blame ye, I did initiate the clash.
 				IntroLine8: A new [i:Redemption/PureIronHelmet]Iron Realm Helmet, and some [i/s6:Redemption/PureIronAlloy]Pure-Iron Alloy for remaking my shield. That is all I ask of ye. If ye give me a [i:Redemption/GathicCryoFurnace]furnace I can offer some help back. I work as a blacksmith on the side.
 				IntroLine9: ... So ye think I can survive the catacombs as I stand? If ye won't assist me, I suppose I got no choice but to give it a shot. I still have some of this place's potions left over, they've come in real handy. Guess I'll stick around in case ye change your mind.
-				IntroLine10: Thank ye, stranger. I'll need a new [i:Redemption/PureIronHelmet]Iron Realm Helmet, and some [i/s6:Redemption/PureIronAlloy]Pure-Iron Alloy for remaking my shield. That is all I ask of ye. If ye give me a [i:Redemption/GathicCryoFurnace]furnace I can offer some help back. I work as a blacksmith on the side.
+				IntroLine10: Thank ye, stranger. I'll need a new [i:Redemption/PureIronHelmet]Iron Realm Helmet, and a few scraps of [i/s6:Redemption/PureIronAlloy]Pure-Iron Alloy for remaking my shield. That is all I ask of ye. If ye give me a [i:Redemption/GathicCryoFurnace]furnace I can offer some help back. I work as a blacksmith on the side.
 				IntroLine11: ... If ye insist. *sigh* This'll be a challenge, but I'll trust your judgement. I'll make it through to reunite with my squadron and finally return to my family, there is no better motivation than that. Farewell, stranger.
 				IntroLine12: Still something you need? Or do you not feel I'm ready?
 				ReadyLine: As ready as I can be. I still have a few potions from this place, I've never seen such concoctions before... They must've been created by a master alchemist.
@@ -7776,7 +7778,7 @@ Mods: {
 				Tooltip:
 					'''
 					Reawakens an ancient power...
-					Only usable at day
+					Only usable during the day
 					Not consumable
 					'''
 			}
@@ -7813,7 +7815,7 @@ Mods: {
 				DisplayName: Eaglecrest Spelltome
 				Tooltip:
 					'''
-					Calls upon Eaglecrest Golem
+					Sends a guiding light to the nearest sleeping stones
 					Sold by Zephos/Daerel after Eater of Worlds/Brain of Cthulhu is defeated
 					'''
 			}
@@ -7823,7 +7825,7 @@ Mods: {
 				Tooltip:
 					'''
 					Summons a regal rooster
-					Only usable at day
+					Only usable during the day
 					'''
 			}
 
@@ -10779,6 +10781,26 @@ Mods: {
 				DisplayName: Chalice Icon
 				Tooltip: ""
 			}
+
+			AndroidHead: {
+				DisplayName: Android Head
+				Tooltip: ""
+			}
+
+			AndroidHead2: {
+				DisplayName: Android Head
+				Tooltip: ""
+			}
+
+			AndroidHead3: {
+				DisplayName: Android Head (Rose Titanium)
+				Tooltip: ""
+			}
+
+			LegoPistol: {
+				DisplayName: Hastily-Assembled Pistol
+				Tooltip: "'One round is all I need'"
+			}
 		}
 
 		Projectiles: {
@@ -11487,6 +11509,7 @@ Mods: {
 			PoemTornado_Rock.DisplayName: Illmatar Rock
 			NebPet2_Proj.DisplayName: Nebby
 			WeirdBloomPet.DisplayName: Weird Bloom
+			Scream.DisplayName: Scream
 		}
 
 		NPCs: {
@@ -11507,7 +11530,7 @@ Mods: {
 				DisplayName: Ukko
 
 				BossChecklistIntegration: {
-					SpawnInfo: Use an [i:Redemption/AncientSigil] at day.
+					SpawnInfo: Use an [i:Redemption/AncientSigil] during the day.
 					EntryName: Ancient Deity Duo
 				}
 			}
@@ -11546,7 +11569,7 @@ Mods: {
 
 				BossChecklistIntegration: {
 					DespawnMessage: The emperor tires of your shenanigans...
-					SpawnInfo: Use an [i:Redemption/EggCrown] at day.
+					SpawnInfo: Use an [i:Redemption/EggCrown] during the day.
 				}
 			}
 
@@ -11574,7 +11597,7 @@ Mods: {
 
 			KS3: {
 				DisplayName: King Slayer III
-				BossChecklistIntegration.SpawnInfo: Use a [i:Redemption/CyberTech] at day, or attack Androids on the surface and allow them to teleport away.
+				BossChecklistIntegration.SpawnInfo: Use a [i:Redemption/CyberTech] during the day, or attack Androids on the surface and allow them to teleport away.
 			}
 
 			KS3_Clone.DisplayName: King Slayer III... ?
@@ -11900,7 +11923,7 @@ Mods: {
 
 			EaglecrestGolem: {
 				DisplayName: Eaglecrest Golem
-				BossChecklistIntegration.SpawnInfo: Naturally spawns on the surface at day after Eater of Worlds/Brain of Cthulhu is defeated.
+				BossChecklistIntegration.SpawnInfo: Naturally spawns on the surface during the day, after Eater of Worlds/Brain of Cthulhu is defeated.
 			}
 
 			EaglecrestGolem_Sleep.DisplayName: Sleeping Stones
@@ -12322,6 +12345,11 @@ Mods: {
 					Label: Log Cutscene Dialogue in Chat
 					Tooltip: Dialogue from cutscenes, Chalice of Alignment, and bosses will be also sent in the text chat
 				}
+
+				LegacyNebSky: {
+					Label: Legacy Nebuleus Sky
+					Tooltip: Reverts Nebuleus' Final Form sky to the old rotating image
+				}
 			}
 
 			RedeConfigServer: {
@@ -12421,6 +12449,32 @@ Mods: {
 			FowlMorning: {
 				SpawnInfo: Use a [i:Redemption/FowlWarHorn] before midday.
 				EntryName: Fowl Morning
+			}
+		}
+
+		Origins: {
+			SkySquire: {
+				DisplayName: Sky Squire
+				Flavor: A soldier of Southern Ithon who stumbled into a golden gateway. They would come to learn there was no way back.
+				Description: Starts with full sky squire vanity and a cloud in a bottle atop a floating island with a golden gateway.
+			}
+
+			SpiritWalker: {
+				DisplayName: Spirit Walker
+				Flavor: Peek into the realm of fulfilment, and you are bound to find friends.
+				Description: Starts with 80 max health, a trapped soul bauble, an infused crux card, 5 empty crux cards, 50 lost souls, 25 bone torches, and the spirit walker ability at an underground portal.
+			}
+
+			Madman: {
+				DisplayName: Madman
+				Flavor: You awake from your tomb, in a world unknown.
+				Description: Starts with 60 max health, a sunset helm, a deprived lantern, a zweihander, grave steel tools, and 20 antique doruls within a gathic tomb.
+			}
+
+			FacilityGuard: {
+				DisplayName: Facility Guard
+				Flavor: '''"Oh great! Where did that creature send me THIS time?"'''
+				Description: Starts with 120 max health, no mana, no tools, full facility guard vanity, 3 hastily-assembled pistols, a GPS, an outbreak locator, 3 silver bullets, and 99 chains.
 			}
 		}
 	}

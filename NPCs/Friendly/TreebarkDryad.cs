@@ -10,6 +10,7 @@ using Redemption.UI;
 using Redemption.UI.ChatUI;
 using ReLogic.Content;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -64,7 +65,7 @@ namespace Redemption.NPCs.Friendly
         private int EyeFrameX;
 
         public static TreebarkShop Shop;
-        public List<Item> shopItems = new();
+        public readonly static List<Item> shopItems = new();
 
         public override void SetStaticDefaults()
         {
@@ -253,16 +254,16 @@ namespace Redemption.NPCs.Friendly
         }
         public override void OnSpawn(IEntitySource source)
         {
-            shopItems = Shop.GenerateNewInventoryList();
+            shopItems.Clear();
+            shopItems.AddRange(Shop.GenerateNewInventoryList());
+
+            // In multi player, ensure the shop items are synced with clients (see TravelingMerchantSystem.cs)
+            if (Main.netMode == NetmodeID.Server)
+            {
+                NetMessage.SendData(MessageID.WorldData);
+            }
         }
-        public override void SaveData(TagCompound tag)
-        {
-            tag["itemIds"] = shopItems;
-        }
-        public override void LoadData(TagCompound tag)
-        {
-            shopItems = tag.Get<List<Item>>("shopItems");
-        }
+
         public override void AddShops()
         {
             Shop = new TreebarkShop(NPC.type);
@@ -537,7 +538,7 @@ namespace Redemption.NPCs.Friendly
                 return this;
             }
 
-            public Pool Add<T>(params Condition[] conditions) where T : ModItem => Add(ItemType<T>(), conditions);
+            public Pool Add<T>(params Condition[] conditions) where T : ModItem => Add(ModContent.ItemType<T>(), conditions);
             public Pool Add(int item, params Condition[] conditions) => Add(ContentSamples.ItemsByType[item], conditions);
 
             // Picks a number of items (up to Slots) from the entries list, provided conditions are met.
@@ -574,7 +575,7 @@ namespace Redemption.NPCs.Friendly
 
         // Some methods to add a pool with a single item
         public void Add(Item item, params Condition[] conditions) => AddPool(item.ModItem?.FullName ?? $"Terraria/{item.type}", slots: 1).Add(item, conditions);
-        public void Add<T>(params Condition[] conditions) where T : ModItem => Add(ItemType<T>(), conditions);
+        public void Add<T>(params Condition[] conditions) where T : ModItem => Add(ModContent.ItemType<T>(), conditions);
         public void Add(int item, params Condition[] conditions) => Add(ContentSamples.ItemsByType[item], conditions);
 
         // Here is where we actually 'roll' the contents of the shop
@@ -591,7 +592,7 @@ namespace Redemption.NPCs.Friendly
         public override void FillShop(ICollection<Item> items, NPC npc)
         {
             // use the items which were selected when the NPC spawned.
-            foreach (var item in ((TreebarkDryad)npc.ModNPC).shopItems)
+            foreach (var item in TreebarkDryad.shopItems)
             {
                 // make sure to add a clone of the item, in case any ModifyActiveShop hooks adjust the item when the shop is opened
                 items.Add(item.Clone());
@@ -603,7 +604,7 @@ namespace Redemption.NPCs.Friendly
             overflow = false;
             int i = 0;
             // use the items which were selected when the NPC spawned.
-            foreach (var item in ((TreebarkDryad)npc.ModNPC).shopItems)
+            foreach (var item in TreebarkDryad.shopItems)
             {
 
                 if (i == items.Length - 1)

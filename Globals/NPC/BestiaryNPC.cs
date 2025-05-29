@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -44,6 +46,21 @@ namespace Redemption.Globals.NPC
     }
     public class BestiaryNPC : GlobalNPC
     {
+        private static readonly List<int> _wasSeen = new();
+        public static void ScanWorldForFinds(Terraria.NPC npc)
+        {
+            if (_wasSeen.Contains(npc.netID))
+                return;
+
+            Rectangle hitbox = npc.Hitbox;
+            Rectangle playerHitbox = Main.LocalPlayer.HitboxForBestiaryNearbyCheck;
+            if (hitbox.Intersects(playerHitbox))
+            {
+                _wasSeen.Add(npc.netID);
+                Main.BestiaryTracker.Sights.SetWasSeenDirectly(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[npc.type]);
+            }
+        }
+
         public override void SetBestiary(Terraria.NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             string entry = Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Multiplier");

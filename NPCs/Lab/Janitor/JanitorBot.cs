@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Biomes;
+using Redemption.CrossMod;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
@@ -157,8 +158,8 @@ namespace Redemption.NPCs.Lab.Janitor
             switch (AIState)
             {
                 case ActionState.Begin:
-                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Janitor.Name"), 60, 90, 0.8f, Color.Yellow, NetworkText.FromKey("Mods.Redemption.TitleCard.Janitor.Modifier"));
-
+                    FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Janitor.Name", "Mods.Redemption.TitleCard.Janitor.Modifier", 90, false, Color.Yellow, Color.Yellow, Color.Yellow, Color.Gray, "Safety Violation", "inSignia");
+                    
                     AIState = ActionState.Jump;
                     NPC.netUpdate = true;
                     break;
