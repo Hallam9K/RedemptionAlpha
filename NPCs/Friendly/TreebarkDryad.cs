@@ -619,4 +619,46 @@ namespace Redemption.NPCs.Friendly
             }
         }
     }
+    public class TreebarkShopSystem : ModSystem
+    {
+        public override void SaveWorldData(TagCompound tag)
+        {
+            tag["shopItems"] = TreebarkDryad.shopItems;
+        }
+
+        public override void LoadWorldData(TagCompound tag)
+        {
+            TreebarkDryad.shopItems.Clear();
+            TreebarkDryad.shopItems.AddRange(tag.Get<List<Item>>("shopItems"));
+        }
+
+        public override void ClearWorld()
+        {
+            TreebarkDryad.shopItems.Clear();
+        }
+
+        public override void NetSend(BinaryWriter writer)
+        {
+            // Note that NetSend is called whenever WorldData packet is sent.
+            // We use this so that shop items can easily be synced to joining players
+            // We recommend modders avoid sending WorldData too often, or filling it with too much data, lest too much bandwidth be consumed sending redundant data repeatedly
+            // Consider sending a custom packet instead of WorldData if you have a significant amount of data to synchronise
+
+            writer.Write(TreebarkDryad.shopItems.Count);
+            foreach (Item item in TreebarkDryad.shopItems)
+            {
+                ItemIO.Send(item, writer, writeStack: true);
+            }
+        }
+
+        public override void NetReceive(BinaryReader reader)
+        {
+            TreebarkDryad.shopItems.Clear();
+            int count = reader.ReadInt32();
+            for (int i = 0; i < count; i++)
+            {
+                TreebarkDryad.shopItems.Add(ItemIO.Receive(reader, readStack: true));
+            }
+        }
+    }
 }
