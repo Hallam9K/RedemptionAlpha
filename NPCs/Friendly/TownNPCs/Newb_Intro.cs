@@ -135,6 +135,10 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                     break;
             }
         }
+        public override bool CheckActive()
+        {
+            return false;
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;

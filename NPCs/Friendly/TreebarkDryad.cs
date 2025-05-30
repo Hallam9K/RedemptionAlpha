@@ -273,6 +273,9 @@ namespace Redemption.NPCs.Friendly
             Shop.Add(ItemID.Acorn);
             Shop.Add(ItemID.Mushroom);
 
+            if (CrossMod.CrossMod.Reforged.Enabled && CrossMod.CrossMod.Reforged.TryFind("StarPowder", out ModItem starPowder))
+                Shop.Add(new Item(starPowder.Type) { shopCustomPrice = 75 });
+
             Shop.AddPool("Moss", 1)
                 .Add(new Item(ItemID.BlueMoss) { shopCustomPrice = 20 })
                 .Add(new Item(ItemID.BrownMoss) { shopCustomPrice = 20 })
@@ -287,6 +290,18 @@ namespace Redemption.NPCs.Friendly
                 .Add(new Item(ItemID.XenonMoss) { shopCustomPrice = 40 }, Condition.DownedSkeletron)
                 .Add(new Item(ItemID.VioletMoss) { shopCustomPrice = 40 }, Condition.DownedSkeletron)
                 .Add(new Item(ItemID.RainbowMoss) { shopCustomPrice = 40 }, Condition.DownedSkeletron);
+
+            if (CrossMod.CrossMod.Reforged.Enabled && CrossMod.CrossMod.Reforged.TryFind("RadonMossItem", out ModItem radonMoss) && CrossMod.CrossMod.Reforged.TryFind("OganessonMossItem", out ModItem oganessonMoss))
+            {
+                for (int i = 0; i < Shop.Pools.Count; i++)
+                {
+                    if (Shop.Pools[i].Name == "GlowMoss")
+                    {
+                        Shop.Pools[i].Add(new Item(radonMoss.Type) { shopCustomPrice = 40 }, Condition.DownedSkeletron)
+                                     .Add(new Item(oganessonMoss.Type) { shopCustomPrice = 40 }, Condition.DownedSkeletron);
+                    }
+                }
+            }
 
             Shop.AddPool("Fruit", 1)
                 .Add(ItemID.Apple)

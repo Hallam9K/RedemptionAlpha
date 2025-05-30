@@ -8,18 +8,19 @@
 - Iron Realm Sword and Dragon Cleaver no longer have infinite piercing (6 for Dragon Cleaver, 4 for Iron Realm Sword, +12 for the arctic spin slash)
 - Shortened Forest Nymph bestiary entry and home requirements dialogue
 - Eaglecrest Golem will stop the stomp attack if it hasn't touched the ground for 3 seconds
+- The Fool during his intro cutscene can no longer despawn
 1699. Star Serpent can drop any lunar fragment
 1727. Gave Baby Star Serpent the wings of the now unused Giant Star Serpent
 1912. Removed rarity of Vagrant Spirits and King Slayer
 2059. Added Hastily-Assembled Pistol
 2170. Improved Nebuleus' Final Form's sky to become a shader instead of a rotating image, along with a config option to revert this for performance reasons
-2171. Added Water element to Drippler Crippler and Vampire Frog Staff
+2171. Added Water element to Drippler Crippler, Vampire Frog Staff, and Mini Sharkron from Tempest Staff
 2172. Added Android, Prototype Silver, and Space Paladin to the Humanoid list so they can be decapitated
 2173. Added visual and sound effect for decapitating enemies
 2174. Added Android Head (for all 3 colour variants), only dropped by decapitating an Android of that type
 2175. The following NPCs can no longer steal the player's money: Wielder Bot, Bramble Trap, and all Fowl Morning enemies
 2176. Nebuleus Final Form now has less mirages during her Piercing Nebula attacks
-2180. Added crossmod support for Spirit Reforged's Undead interactions and Potion Vats
+2180. Added crossmod support for Spirit Reforged's Undead interactions and Potion Vats; and Treebark Dryad sells Star Powder and their 2 new glowing mosses (Radon & Oganesson)
 2181. Added crossmod support for Calamity Fables boss title cards
 2182. Reduced volume of guard breaking sound effect
 2183. Added crossmod support for Thorium's Flail-Cores, DoT and Status Effect debuff clearing effects, and Insect & Fish Repellents
