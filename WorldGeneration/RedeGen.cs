@@ -654,14 +654,15 @@ namespace Redemption.WorldGeneration
                         while (!placed && attempts < 10000)
                         {
                             attempts++;
-                            int tilesX = WorldGen.genRand.Next(12, Main.maxTilesX - 12);
-                            int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .65f), (int)(Main.maxTilesY * .8));
-                            if (!WorldGen.InWorld(tilesX, tilesY))
-                                continue;
 
                             int index = WorldGen.genRand.Next(11);
                             Point16 dims = new();
                             StructureHelper.API.Legacy.LegacyGenerator.GetMultistructureDimensions("WorldGeneration/DragonLeadM", Mod, index, ref dims);
+
+                            int tilesX = WorldGen.genRand.Next(40, Main.maxTilesX - 40 - dims.X);
+                            int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .65f), (int)(Main.maxTilesY * .8));
+                            if (!WorldGen.InWorld(tilesX, tilesY))
+                                continue;
 
                             bool whitelist = false;
                             int stoneScore = 0;
