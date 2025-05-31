@@ -153,7 +153,7 @@ namespace Redemption.UI.Dialect
 
         public override string ModifyNameText(NPC npc)
         {
-            if (npc.type == NPCType<TreebarkDryad>() && npc.ModNPC is TreebarkDryad dryad)
+            if (npc.ModNPC != null && npc.ModNPC is TreebarkDryad dryad)
                 return dryad.setName;
             return null;
         }

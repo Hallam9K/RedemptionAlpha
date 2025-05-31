@@ -11862,6 +11862,11 @@ Mods: {
 				Name1Willow: Willowbark
 				Name1Sakura: Cherrysplinter
 				Name2Sakura: Blossomwood
+				Name1Acacia: Drywood
+				Name2Acacia: Needlebark
+				Name3Acacia: Antshade
+				Name4Acacia: Sapwarden
+				Name5Acacia: Gumroot
 			}
 
 			WraithSlayer_Samurai.DisplayName: Cursed Samurai
@@ -12012,6 +12017,7 @@ Mods: {
 			BrambleTrap.DisplayName: Bramble Trap
 			Forret.DisplayName: Forret
 			MoonflareSkeleton.DisplayName: Moonflare Caster
+			TreebarkDryad_Savanna.DisplayName: "{$Mods.Redemption.NPCs.TreebarkDryad.DisplayName}"
 		}
 
 		Tiles: {
@@ -12306,6 +12312,8 @@ Mods: {
 			OldTophat: While the hanging skeleton is gone
 			ElementBookObtained: After being given the book by the Wayfarer
 			ElementBookQuest: After filling out the Book of Bonuses
+			InSavanna: While in the Savanna
+			NotInSavanna: While outside the Savanna
 		}
 
 		Configs: {

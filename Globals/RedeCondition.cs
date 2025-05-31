@@ -14,6 +14,7 @@ using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ModLoader;
 
 namespace Redemption.Globals
 {
@@ -58,6 +59,18 @@ namespace Redemption.Globals
         public static Condition OldTophat = new("Mods.Redemption.Conditions.OldTophat", () => Main.LocalPlayer.HasItemInAnyInventory(ItemType<CruxCardTied>()) || RedeGen.HangingTiedPoint.X == 0);
         public static Condition ElementBookObtained = new("Mods.Redemption.Conditions.ElementBookObtained", () => RedeQuest.adviceSeen[(int)RedeQuest.Advice.Elements]);
         public static Condition ElementBookQuest = new("Mods.Redemption.Conditions.ElementBookQuest", () => RedeQuest.bonusQuestComplete);
+        public static Condition InSavanna = new("Mods.Redemption.Conditions.InSavanna", () => InSavannaBiome());
+        public static Condition NotInSavanna = new("Mods.Redemption.Conditions.NotInSavanna", () => !InSavannaBiome());
+
+        private static bool InSavannaBiome()
+        {
+            if (!CrossMod.CrossMod.Reforged.Enabled)
+                return false;
+
+            if (CrossMod.CrossMod.Reforged.TryFind("SavannaBiome", out ModBiome savanna))
+                return Main.LocalPlayer.InModBiome(savanna);
+            return false;
+        }
     }
     public class DecapitationCondition : IItemDropRuleCondition
     {

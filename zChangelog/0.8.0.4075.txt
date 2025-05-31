@@ -20,7 +20,7 @@
 2174. Added Android Head (for all 3 colour variants), only dropped by decapitating an Android of that type
 2175. The following NPCs can no longer steal the player's money: Wielder Bot, Bramble Trap, and all Fowl Morning enemies
 2176. Nebuleus Final Form now has less mirages during her Piercing Nebula attacks
-2180. Added crossmod support for Spirit Reforged's Undead interactions and Potion Vats; and Treebark Dryad sells Star Powder and their 2 new glowing mosses (Radon & Oganesson)
+2180. Added crossmod support for Spirit Reforged's Undead interactions and Potion Vats; and Treebark Dryad sells Star Powder and their 2 new glowing mosses (Radon & Oganesson); and added an Acacia variant of Treebark Dryad that spawns in the Savanna
 2181. Added crossmod support for Calamity Fables boss title cards
 2182. Reduced volume of guard breaking sound effect
 2183. Added crossmod support for Thorium's Flail-Cores, DoT and Status Effect debuff clearing effects, and Insect & Fish Repellents

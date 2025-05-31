@@ -35,14 +35,16 @@ namespace Redemption.NPCs.Friendly
         private static Asset<Texture2D> HeadIcon1;
         private static Asset<Texture2D> HeadIcon2;
         private static Asset<Texture2D> HeadIcon3;
+        private static Asset<Texture2D> HeadIcon_Savanna;
 
         public override void Load()
         {
             if (Main.dedServ)
                 return;
-            HeadIcon1 = Request<Texture2D>(Texture + "_Head");
-            HeadIcon2 = Request<Texture2D>(Texture + "_Head2");
-            HeadIcon3 = Request<Texture2D>(Texture + "_Head3");
+            HeadIcon1 = Request<Texture2D>("Redemption/NPCs/Friendly/TreebarkDryad_Head");
+            HeadIcon2 = Request<Texture2D>("Redemption/NPCs/Friendly/TreebarkDryad_Head2");
+            HeadIcon3 = Request<Texture2D>("Redemption/NPCs/Friendly/TreebarkDryad_Head3");
+            HeadIcon_Savanna = Request<Texture2D>("Redemption/NPCs/Friendly/TreebarkDryad_Savanna_Head");
         }
 
         public enum ActionState
@@ -269,12 +271,16 @@ namespace Redemption.NPCs.Friendly
             Shop = new TreebarkShop(NPC.type);
 
             Shop.Add<LivingTwig>();
-            Shop.Add(ItemID.GrassSeeds);
-            Shop.Add(ItemID.Acorn);
-            Shop.Add(ItemID.Mushroom);
 
             if (CrossMod.CrossMod.Reforged.Enabled && CrossMod.CrossMod.Reforged.TryFind("StarPowder", out ModItem starPowder))
-                Shop.Add(new Item(starPowder.Type) { shopCustomPrice = 75 });
+                Shop.Add(new Item(starPowder.Type) { shopCustomPrice = 75 }, RedeConditions.NotInSavanna);
+
+            Shop.Add(ItemID.GrassSeeds, RedeConditions.NotInSavanna);
+            if (CrossMod.CrossMod.Reforged.Enabled && CrossMod.CrossMod.Reforged.TryFind("SavannaGrassSeeds", out ModItem savannaGrassSeeds))
+                Shop.Add(savannaGrassSeeds.Type, RedeConditions.InSavanna);
+
+            Shop.Add(ItemID.Acorn);
+            Shop.Add(ItemID.Mushroom, RedeConditions.NotInSavanna);
 
             Shop.AddPool("Moss", 1)
                 .Add(new Item(ItemID.BlueMoss) { shopCustomPrice = 20 })
@@ -304,11 +310,19 @@ namespace Redemption.NPCs.Friendly
             }
 
             Shop.AddPool("Fruit", 1)
-                .Add(ItemID.Apple)
-                .Add(ItemID.Apricot)
-                .Add(ItemID.Grapefruit)
-                .Add(ItemID.Lemon)
-                .Add(ItemID.Peach);
+                .Add(ItemID.Apple, RedeConditions.NotInSavanna)
+                .Add(ItemID.Apricot, RedeConditions.NotInSavanna)
+                .Add(ItemID.Grapefruit, RedeConditions.NotInSavanna)
+                .Add(ItemID.Lemon, RedeConditions.NotInSavanna)
+                .Add(ItemID.Peach, RedeConditions.NotInSavanna);
+
+            if (CrossMod.CrossMod.Reforged.Enabled && CrossMod.CrossMod.Reforged.TryFind("BaobabFruit", out ModItem baobabFruit) && CrossMod.CrossMod.Reforged.TryFind("Caryocar", out ModItem caryocar) && CrossMod.CrossMod.Reforged.TryFind("CustardApple", out ModItem custardApple))
+            {
+                Shop.AddPool("Fruit2", 1)
+                    .Add(baobabFruit.Type, RedeConditions.InSavanna)
+                    .Add(caryocar.Type, RedeConditions.InSavanna)
+                    .Add(custardApple.Type, RedeConditions.InSavanna);
+            }
 
             Shop.Add(ItemID.WandofSparking);
             Shop.Add(ItemID.BabyBirdStaff);
@@ -515,12 +529,18 @@ namespace Redemption.NPCs.Friendly
                     if (npc.ModNPC is not TreebarkDryad treebarkNPC)
                         continue;
 
-                    Asset<Texture2D> asset = npc.ai[3] switch
+                    Asset<Texture2D> asset;
+                    if (npc.type == NPCType<TreebarkDryad_Savanna>())
+                        asset = HeadIcon_Savanna;
+                    else
                     {
-                        1 => HeadIcon2,
-                        2 => HeadIcon3,
-                        _ => HeadIcon1,
-                    };
+                        asset = npc.ai[3] switch
+                        {
+                            1 => HeadIcon2,
+                            2 => HeadIcon3,
+                            _ => HeadIcon1,
+                        };
+                    }
                     Vector2 position = treebarkNPC.NPC.Center.ToTileCoordinates().ToVector2();
                     if (context.Draw(asset.Value, position, Color.White, new SpriteFrame(1, 1, 0, 0), scale, scale, Alignment.Center).IsMouseOver)
                         text = npc.TypeName;

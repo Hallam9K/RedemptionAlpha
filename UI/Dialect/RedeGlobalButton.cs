@@ -110,7 +110,7 @@ namespace Redemption.UI.Dialect
                 if (npc.type == NPCType<Newb>() && RedeBossDowned.downedNebuleus)
                     return false;
             }
-            if (chatButton == ChatButton.Shop && npc.type == NPCType<TreebarkDryad>() && RedeBossDowned.downedTreebark)
+            if (chatButton == ChatButton.Shop && npc.ModNPC is TreebarkDryad && RedeBossDowned.downedTreebark)
                 return false;
             if (chatButton != ChatButton.Exit && chatButton is not ReviveButton && npc.IsRedeNPC(ref redeNPC) && redeNPC.HasReviveButton())
                 return false;
