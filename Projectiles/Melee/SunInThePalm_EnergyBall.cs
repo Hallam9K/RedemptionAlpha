@@ -190,9 +190,9 @@ namespace Redemption.Projectiles.Melee
             Player player = Main.player[Projectile.owner];
             player.RedemptionScreen().ScreenShakeIntensity += 20 * (Projectile.scale * 2);
             for (int i = 0; i < 40; i++)
-                ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new EmberParticle(), Color.Red, 3 * Projectile.scale, 0, 2);
+                RedeParticleManager.CreateEmberBurstParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), 3 * Projectile.scale, RedeParticleManager.redColors, Main.rand.Next(90, 121), .9f);
             for (int i = 0; i < 20; i++)
-                ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new EmberParticle(), Color.Red, 1, 0);
+                RedeParticleManager.CreateEmberParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), 1, RedeParticleManager.redColors, Main.rand.Next(90, 121));
             SoundEngine.PlaySound(CustomSounds.MissileExplosion with { Volume = 1 * Projectile.scale, Pitch = -.5f }, Projectile.position);
 
             int boomOrigin = (int)(140 * Projectile.scale);

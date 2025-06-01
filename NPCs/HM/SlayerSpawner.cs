@@ -174,7 +174,7 @@ namespace Redemption.NPCs.HM
             }
             for (int j = 0; j < 15; j++)
             {
-                ParticleManager.NewParticle(pos - new Vector2(0, 22), RedeHelper.Spread(4), new LightningParticle(), Color.White, 3);
+                RedeParticleManager.CreateLightningParticle(pos - new Vector2(0, 22), RedeHelper.Spread(4), 3, RedeParticleManager.lightningColors);
                 int dust = Dust.NewDust(pos - new Vector2(0, 22), 2, 2, DustID.Frost, Scale: 3f);
                 Main.dust[dust].velocity *= 6f;
                 Main.dust[dust].noGravity = true;
@@ -196,7 +196,7 @@ namespace Redemption.NPCs.HM
             }
             for (int j = 0; j < 15; j++)
             {
-                ParticleManager.NewParticle(pos - new Vector2(0, 64), RedeHelper.Spread(4), new LightningParticle(), Color.White, 3);
+                RedeParticleManager.CreateLightningParticle(pos - new Vector2(0, 64), RedeHelper.Spread(4), 3, RedeParticleManager.lightningColors);
                 int dust = Dust.NewDust(pos - new Vector2(0, 64), 2, 2, DustID.Frost, Scale: 3f);
                 Main.dust[dust].velocity *= 6f;
                 Main.dust[dust].noGravity = true;
@@ -217,7 +217,7 @@ namespace Redemption.NPCs.HM
             }
             for (int j = 0; j < 25; j++)
             {
-                ParticleManager.NewParticle(pos - new Vector2(0, 64), RedeHelper.Spread(4), new LightningParticle(), Color.White, 3);
+                RedeParticleManager.CreateLightningParticle(pos - new Vector2(0, 64), RedeHelper.Spread(4), 3, RedeParticleManager.lightningColors);
                 int dust = Dust.NewDust(pos - new Vector2(0, 64), 2, 2, DustID.Frost, Scale: 3f);
                 Main.dust[dust].velocity *= 6f;
                 Main.dust[dust].noGravity = true;

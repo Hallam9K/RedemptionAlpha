@@ -1,14 +1,13 @@
-using Microsoft.Xna.Framework;
+using Redemption.Buffs.Cooldowns;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Projectiles.Ranged;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Redemption.Buffs.Cooldowns;
 
 namespace Redemption.Items.Weapons.PostML.Ranged
 {
@@ -41,7 +40,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.rare = ItemRarityID.Purple;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<XeniumElectrolaser_Beam>();
+            Item.shoot = ProjectileType<XeniumElectrolaser_Beam>();
             Item.shootSpeed = 3;
         }
         public override bool AltFunctionUse(Player player) => true;
@@ -50,7 +49,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             if (player.altFunctionUse == 2)
                 damage *= 3;
 
-            type = ModContent.ProjectileType<XeniumElectrolaser_Proj>();
+            type = ProjectileType<XeniumElectrolaser_Proj>();
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -60,7 +59,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                     return false;
 
                 Projectile.NewProjectile(source, position, velocity, type, damage, knockback, Main.myPlayer, 0, 1);
-                player.AddBuff(ModContent.BuffType<XeniumElectrolaserCooldown>(), 5 * 60);
+                player.AddBuff(BuffType<XeniumElectrolaserCooldown>(), 5 * 60);
                 return false;
             }
             return true;
@@ -72,10 +71,10 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<XeniumAlloy>(), 14)
-                .AddIngredient(ModContent.ItemType<Capacitor>(), 2)
-                .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 6)
-                .AddTile(ModContent.TileType<XeniumRefineryTile>())
+                .AddIngredient(ItemType<XeniumAlloy>(), 14)
+                .AddIngredient(ItemType<Capacitor>(), 2)
+                .AddIngredient(ItemType<CarbonMyofibre>(), 6)
+                .AddTile(TileType<XeniumRefineryTile>())
                 .Register();
         }
     }

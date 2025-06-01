@@ -39,14 +39,10 @@ namespace Redemption.Projectiles.Ranged
         }
         public override void AI()
         {
-            if (Projectile.localAI[0]++ > 20f)
+            if (Projectile.localAI[0]++ >= 10f && Projectile.localAI[0] % 10 == 0)
             {
-                for (int i = 0; i < 1; i++)
-                {
-                    Vector2 v = Projectile.position;
-                    v -= Projectile.velocity * (i * 0.25f);
-                    ParticleManager.NewParticle(v, Vector2.Zero, new LightningParticle(), Color.White, Main.rand.NextFloat(0.6f, 0.8f));
-                }
+                Vector2 drawPos = Projectile.Center;
+                RedeParticleManager.CreateLaserParticle(drawPos, Projectile.velocity, 2f, Color.LightCyan);
             }
         }
         public override void OnKill(int timeLeft)

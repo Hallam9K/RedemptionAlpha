@@ -26,12 +26,14 @@ namespace Redemption.Projectiles.Hostile
             Projectile.height = 4;
             Projectile.friendly = true;
             Projectile.hostile = true;
-            Projectile.extraUpdates = 100;
+            Projectile.extraUpdates = 70;
             Projectile.timeLeft = 1400;
+            timeLeftMax = Projectile.timeLeft;
             Projectile.penetrate = -1;
             Projectile.tileCollide = true;
             Projectile.Redemption().friendlyHostile = true;
         }
+        private int timeLeftMax;
         public override bool? CanHitNPC(NPC target)
         {
             if (target.Redemption().spiritSummon)
@@ -52,14 +54,16 @@ namespace Redemption.Projectiles.Hostile
         }
         public override void AI()
         {
-            if (Projectile.localAI[0]++ > 0f)
+            if (Projectile.localAI[0]++ > 0f && Projectile.localAI[0] % 2 == 0)
             {
-                for (int i = 0; i < 1; i++)
-                {
-                    Vector2 v = Projectile.position;
-                    v -= Projectile.velocity * (i * 0.25f);
-                    ParticleManager.NewParticle(v, Vector2.Zero, new LightningParticle(), Color.White, Main.rand.NextFloat(0.6f, 0.8f));
-                }
+                Vector2 v = Projectile.position;
+                Color bright = Color.Multiply(new(255, 255, 255, 0), 1);
+                Color mid = Color.Multiply(new(161, 255, 253, 0), 1);
+                Color dark = Color.Multiply(new(40, 186, 242, 0), 1);
+
+                Color emberColor = Color.Multiply(Color.Lerp(bright, dark, (float)(timeLeftMax - Projectile.timeLeft) / timeLeftMax), 1);
+                Color glowColor = Color.Multiply(Color.Lerp(mid, dark, (float)(timeLeftMax - Projectile.timeLeft) / timeLeftMax), 1f);
+                RedeParticleManager.CreateQuadParticle2(v, Vector2.Zero, new Vector2(.3f), emberColor, glowColor, 6);
             }
         }
         public override void OnKill(int timeLeft)

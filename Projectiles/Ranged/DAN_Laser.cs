@@ -36,12 +36,12 @@ namespace Redemption.Projectiles.Ranged
             {
                 if (Projectile.ai[1] == 1)
                 {
-                    ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new LightningParticle(), Color.White, 3, 2);
-                    ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new LightningParticle(), Color.White, 2, 2);
+                    RedeParticleManager.CreateLightningParticle(Projectile.Center, Vector2.Zero, 3, RedeParticleManager.redColors, true);
+                    RedeParticleManager.CreateLightningParticle(Projectile.Center, Vector2.Zero, 2, RedeParticleManager.redColors, true);
                     return;
                 }
-                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new LightningParticle(), Color.White, 3, 3);
-                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new LightningParticle(), Color.White, 2, 4);
+                RedeParticleManager.CreateLightningParticle(Projectile.Center, Vector2.Zero, 3, RedeParticleManager.purpleColors, true);
+                RedeParticleManager.CreateLightningParticle(Projectile.Center, Vector2.Zero, 2, RedeParticleManager.goldColors, true);
             }
         }
         public override bool OnTileCollide(Vector2 oldVelocity)

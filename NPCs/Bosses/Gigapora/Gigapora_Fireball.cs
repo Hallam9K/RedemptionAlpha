@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 3; i++)
-                ParticleManager.NewParticle(Projectile.Center, RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 3);
+                RedeParticleManager.CreateEmberParticle(Projectile.Center, RedeHelper.SpreadUp(1), 3, Main.rand.Next(90, 121));
 
             for (int i = 0; i < 6; i++)
             {

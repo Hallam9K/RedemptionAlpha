@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
+using ParticleLibrary.Core;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Cooldowns;
@@ -397,9 +398,9 @@ namespace Redemption.Items.Weapons.HM.Melee
             thrustPos1 = Projectile.Center + RedeHelper.PolarVector(26, Projectile.rotation) + RedeHelper.PolarVector(-74, Projectile.rotation - (float)Math.PI / 2) + Projectile.velocity;
             thrustPos2 = Projectile.Center + RedeHelper.PolarVector(-26, Projectile.rotation) + RedeHelper.PolarVector(-74, Projectile.rotation - (float)Math.PI / 2) + Projectile.velocity;
             for (int i = 0; i < 4; i++)
-                ParticleManager.NewParticle(thrustPos1, RedeHelper.PolarVector(Main.rand.Next(6, 15), Projectile.rotation + (float)Math.PI / 2 + Main.rand.NextFloat(-.01f, .01f)) - (Projectile.velocity / 4), new RedThrusterParticle(), Color.White, 1f * Projectile.Opacity, Layer: Particle.Layer.BeforeNPCs);
+                RedeParticleManager.CreateGlowParticle(thrustPos1, RedeHelper.PolarVector(Main.rand.Next(6, 15), Projectile.rotation + (float)Math.PI / 2 + Main.rand.NextFloat(-.01f, .01f)) - (Projectile.velocity / 4), 1f * Projectile.Opacity, RedeParticleManager.redThrusterColors, Main.rand.Next(10, 30), layer: Layer.BeforeNPCs);
             for (int i = 0; i < 4; i++)
-                ParticleManager.NewParticle(thrustPos2, RedeHelper.PolarVector(Main.rand.Next(6, 15), Projectile.rotation + (float)Math.PI / 2 + Main.rand.NextFloat(-.01f, .01f)) - (Projectile.velocity / 4), new RedThrusterParticle(), Color.White, 1f * Projectile.Opacity, Layer: Particle.Layer.BeforeNPCs);
+                RedeParticleManager.CreateGlowParticle(thrustPos2, RedeHelper.PolarVector(Main.rand.Next(6, 15), Projectile.rotation + (float)Math.PI / 2 + Main.rand.NextFloat(-.01f, .01f)) - (Projectile.velocity / 4), 1f * Projectile.Opacity, RedeParticleManager.redThrusterColors, Main.rand.Next(10, 30), layer: Layer.BeforeNPCs);
 
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
                 oldrot[k] = oldrot[k - 1];

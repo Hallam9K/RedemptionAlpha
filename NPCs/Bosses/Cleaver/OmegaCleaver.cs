@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
+using ParticleLibrary.Core;
 using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
@@ -827,9 +828,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
             thrustPos1 = NPC.Center + RedeHelper.PolarVector(26, NPC.rotation) + RedeHelper.PolarVector(-74, NPC.rotation - (float)Math.PI / 2) + NPC.velocity;
             thrustPos2 = NPC.Center + RedeHelper.PolarVector(-26, NPC.rotation) + RedeHelper.PolarVector(-74, NPC.rotation - (float)Math.PI / 2) + NPC.velocity;
             for (int i = 0; i < 4; i++)
-                ParticleManager.NewParticle(thrustPos1, RedeHelper.PolarVector(Main.rand.Next(6, 15), NPC.rotation + (float)Math.PI / 2 + Main.rand.NextFloat(-.01f, .01f)) - (NPC.velocity / 4), new RedThrusterParticle(), Color.White, 1f, Layer: Particle.Layer.BeforeNPCs);
+                RedeParticleManager.CreateGlowParticle(thrustPos1, RedeHelper.PolarVector(Main.rand.Next(6, 15), NPC.rotation + (float)Math.PI / 2 + Main.rand.NextFloat(-.01f, .01f)) - (NPC.velocity / 4), 1f * NPC.Opacity, RedeParticleManager.redThrusterColors, Main.rand.Next(10, 30), layer: Layer.BeforeNPCs);
             for (int i = 0; i < 4; i++)
-                ParticleManager.NewParticle(thrustPos2, RedeHelper.PolarVector(Main.rand.Next(6, 15), NPC.rotation + (float)Math.PI / 2 + Main.rand.NextFloat(-.01f, .01f)) - (NPC.velocity / 4), new RedThrusterParticle(), Color.White, 1f, Layer: Particle.Layer.BeforeNPCs);
+                RedeParticleManager.CreateGlowParticle(thrustPos2, RedeHelper.PolarVector(Main.rand.Next(6, 15), NPC.rotation + (float)Math.PI / 2 + Main.rand.NextFloat(-.01f, .01f)) - (NPC.velocity / 4), 1f * NPC.Opacity, RedeParticleManager.redThrusterColors, Main.rand.Next(10, 30), layer: Layer.BeforeNPCs);
 
             for (int k = NPC.oldPos.Length - 1; k > 0; k--)
                 oldrot[k] = oldrot[k - 1];

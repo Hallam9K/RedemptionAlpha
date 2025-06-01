@@ -111,8 +111,8 @@ namespace Redemption.NPCs.Lab.MACE
 
             if (Projectile.timeLeft > 30 && Main.rand.NextBool(10))
             {
-                DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90, RedeHelper.RandomRotation()), 1, 20, 0.1f);
-                DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90, RedeHelper.RandomRotation()), 1, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90, RedeHelper.RandomRotation()), 1, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90, RedeHelper.RandomRotation()), 1, 20, 0.1f);
             }
 
             if (Projectile.timeLeft <= 60)

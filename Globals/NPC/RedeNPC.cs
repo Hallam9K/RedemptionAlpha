@@ -260,8 +260,6 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.Common(ItemType<SmolderedScale>(), 20));
             if (npc.type is NPCID.Ghost or NPCID.Wraith)
                 npcLoot.Add(ItemDropRule.Food(ItemType<Soulshake>(), 150));
-            if (npc.type is NPCID.AngryBones or NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.CursedSkull or NPCID.DarkCaster)
-                npcLoot.Add(ItemDropRule.Common(ItemType<Incisor>(), 100));
             if (npc.type is NPCID.Demon or NPCID.VoodooDemon or NPCID.FireImp or NPCID.RedDevil)
                 npcLoot.Add(ItemDropRule.Common(ItemType<ForgottenSword>(), 100));
             if (npc.type is NPCID.GraniteFlyer or NPCID.GraniteGolem)

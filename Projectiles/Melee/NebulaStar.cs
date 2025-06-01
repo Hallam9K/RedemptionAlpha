@@ -81,8 +81,8 @@ namespace Redemption.Projectiles.Melee
                 else
                     Projectile.velocity *= 0.98f;
             }
-            if (Main.rand.NextBool(10))
-                ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(2), new RainbowParticle(), Color.White, 0.2f);
+            if (Main.rand.NextBool(20))
+                RedeParticleManager.CreateRainbowParticle(Projectile.Center, RedeHelper.Spread(2), 0.15f);
         }
 
         public override bool? CanHitNPC(NPC target) => false;
@@ -104,8 +104,8 @@ namespace Redemption.Projectiles.Melee
         }
         public override void OnKill(int timeLeft)
         {
-            for (int i = 0; i < 5; i++)
-                ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(6), new RainbowParticle(), Color.White, 0.3f);
+            for (int i = 0; i < 2; i++)
+                RedeParticleManager.CreateRainbowParticle(Projectile.Center, RedeHelper.Spread(6), 0.2f);
         }
     }
     public class NebulaSpark : ModProjectile, ITrailProjectile

@@ -53,7 +53,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                             SoundEngine.PlaySound(CustomSounds.Spark1, Projectile.position);
 
                         if (Projectile.ai[1] >= 30 && (Projectile.ai[1] >= 60 ? Main.rand.NextBool(6) : Main.rand.NextBool(10)))
-                            DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center + new Vector2(32 * player.direction, -32), Projectile.Center + new Vector2(32 * player.direction, -32) + RedeHelper.PolarVector(30 * (glow + 1), RedeHelper.RandomRotation()), .2f, 5, 0.1f);
+                            DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(30 * player.direction, -30), Projectile.Center + new Vector2(32 * player.direction, -32) + RedeHelper.PolarVector(30 * (glow + 1), RedeHelper.RandomRotation()), 0.2f, 5, 0.1f);
 
                         if (!player.channel || glow >= 0.8f)
                         {
@@ -72,8 +72,8 @@ namespace Redemption.Items.Weapons.HM.Magic
                             SoundEngine.PlaySound(CustomSounds.ElectricNoise, Projectile.position);
                         DustHelper.DrawCircle(Projectile.Center + new Vector2(36 * player.direction, -36), DustID.Electric, 3, 2, 1, 1, 1, nogravity: true);
                         int dmg = (int)Projectile.ai[1] * 2;
-                        DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center + new Vector2(36 * player.direction, -36), Main.MouseWorld, 1.3f, 30, 0.05f);
-                        DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center + new Vector2(36 * player.direction, -36), Main.MouseWorld, 1.3f, 30, 0.05f);
+                        DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(30 * player.direction, -30), Main.MouseWorld, .51f, 20, 0.05f);
+                        DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(30 * player.direction, -30), Main.MouseWorld, .5f, 20, 0.05f);
                         if (glow < 0.8f)
                         {
                             for (int i = 0; i < Main.maxNPCs; i++)
@@ -105,8 +105,8 @@ namespace Redemption.Items.Weapons.HM.Magic
                                 if (Projectile.DistanceSQ(npc.Center) > 400 * 400 || Main.rand.NextBool((int)Projectile.ai[1] / 10))
                                     continue;
                             }
-                            DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center + new Vector2(36 * player.direction, -36), npc.Center, 1.3f, 30, 0.05f);
-                            DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center + new Vector2(36 * player.direction, -36), npc.Center, 1.3f, 30, 0.05f);
+                            DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(36 * player.direction, -36), npc.Center, 1.3f, 30, 0.05f);
+                            DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(36 * player.direction, -36), npc.Center, 1.3f, 30, 0.05f);
                             int hitDirection = npc.RightOfDir(Projectile);
                             if (glow >= 0.8f)
                                 BaseAI.DamageNPC(npc, Projectile.damage * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());

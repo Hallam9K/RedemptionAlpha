@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using ParticleLibrary;
+using ParticleLibrary.Utilities;
 using Redemption.Globals;
 using Redemption.Particles;
 using Terraria;
@@ -68,14 +69,14 @@ namespace Redemption.Projectiles.Magic
                     {
                         int steps = (int)Projectile.Distance(closeProj.Center) / 3;
                         for (int i = 0; i < steps; i++)
-                            ParticleManager.NewParticle(Vector2.Lerp(Projectile.Center, closeProj.Center, (float)i / steps), Vector2.Zero, new GlowParticle2(), Color.White, 0.14f, .45f, Main.rand.Next(50, 60));
+                            RedeParticleManager.CreateQuadParticle(Vector2.Lerp(Projectile.Center, closeProj.Center, (float)i / steps), Vector2.Zero, new Vector2(.1f), Color.White.WithAlpha(0), Color.White.WithAlpha(0), 30);
                     }
                 }
                 else
                 {
                     int steps = (int)Projectile.Distance(pos) / 3;
                     for (int i = 0; i < steps; i++)
-                        ParticleManager.NewParticle(Vector2.Lerp(Projectile.Center, pos, (float)i / steps), Vector2.Zero, new GlowParticle2(), Color.White, 0.14f, .45f, Main.rand.Next(50, 60));
+                        RedeParticleManager.CreateQuadParticle(Vector2.Lerp(Projectile.Center, pos, (float)i / steps), Vector2.Zero, new Vector2(.1f), Color.White.WithAlpha(0), Color.White.WithAlpha(0), 30);
                 }
                 Projectile.ai[0] = 1;
             }

@@ -1,6 +1,7 @@
 using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Redemption.Globals;
+using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Usable.Potions;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -31,8 +32,8 @@ namespace Redemption.NPCs.Critters
             NPC.damage = 21;
             NPC.lifeMax = 80;
             NPC.value = 500;
-            Banner = 0;
-            BannerItem = Item.BannerToItem(Banner);
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<ViciousChickenBanner>();
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState is ActionState.Alert;
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

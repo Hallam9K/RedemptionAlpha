@@ -37,7 +37,7 @@ namespace Redemption.Projectiles.Melee
                 {
                     Vector2 v = Projectile.position;
                     v -= Projectile.velocity * (i * 0.25f);
-                    ParticleManager.NewParticle(v, Vector2.Zero, new GlowParticle2(), Color.HotPink, Main.rand.NextFloat(0.3f, 0.4f), .45f, Main.rand.Next(10, 20));
+                    RedeParticleManager.CreateGlowParticle(v, Vector2.Zero, Main.rand.NextFloat(0.3f, 0.4f), Color.HotPink, Main.rand.Next(10, 20));
                 }
             }
         }

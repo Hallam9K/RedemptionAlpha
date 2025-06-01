@@ -55,8 +55,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
             {
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(CustomSounds.Zap2, Projectile.position);
-                DustHelper.DrawParticleElectricity<LightningParticle>(host.Center, Projectile.Center, 2f, 20, 0.1f, 2);
-                DustHelper.DrawParticleElectricity<LightningParticle>(host.Center, Projectile.Center, 2f, 20, 0.1f, 2);
+                DustHelper.DrawParticleElectricity(host.Center, Projectile.Center, 2f, 20, 0.1f, 2);
+                DustHelper.DrawParticleElectricity(host.Center, Projectile.Center, 2f, 20, 0.1f, 2);
                 Flare = true;
             }
             if (Flare)

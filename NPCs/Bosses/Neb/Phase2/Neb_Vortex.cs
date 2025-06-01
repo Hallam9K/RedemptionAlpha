@@ -90,7 +90,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                         Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
                         Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 70;
                         for (int i = 0; i < 30; i++)
-                            ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(25), new RainbowParticle(), Color.White, Main.rand.NextFloat(1.4f, 1.8f), AI4: Main.rand.Next(60, 90));
+                            RedeParticleManager.CreateRainbowParticle(Projectile.Center, RedeHelper.Spread(25), Main.rand.NextFloat(1.4f, 1.8f), 1, Main.rand.Next(60, 90));
                         for (int i = 0; i < 60; i++)
                         {
                             Vector2 pos = Projectile.Center + RedeHelper.PolarVector(Main.rand.Next(0, 400), RedeHelper.RandomRotation());

@@ -6,6 +6,7 @@ using Terraria.Localization;
 using Redemption.BaseExtension;
 using ParticleLibrary;
 using Redemption.Particles;
+using ParticleLibrary.Core;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -86,8 +87,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             if (Projectile.ai[1]++ % 12 == 0)
             {
                 Vector2 spawnPos = new Vector2(0f, -50f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-
-                ParticleManager.NewParticle(Projectile.Center, spawnPos.RotatedBy(Main.rand.NextFloat(-30f, 30f)), new AnglonPortal_EnergyGather(), Color.White, 1f, Projectile.Center.X, Projectile.Center.Y);
+                ParticleSystem.NewParticle(Projectile.Center, spawnPos.RotatedBy(Main.rand.NextFloat(-30f, 30f)), new AnglonPortal_EnergyGather(Projectile.Center), Color.White, 1f);
             }
 
             if (Projectile.ai[0] == 0)

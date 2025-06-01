@@ -157,7 +157,7 @@ namespace Redemption.NPCs.HM
                     DustHelper.DrawDustImage(NPC.Center, DustID.Frost, 0.1f, "Redemption/Effects/DustImages/WarpShape", 2, true, 0);
                     for (int i = 0; i < 15; i++)
                     {
-                        ParticleManager.NewParticle(NPC.RandAreaInEntity(), RedeHelper.SpreadUp(1), new LightningParticle(), Color.White, 3);
+                        RedeParticleManager.CreateLightningParticle(NPC.RandAreaInEntity(), RedeHelper.SpreadUp(1), 3, RedeParticleManager.lightningColors);
                         int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Frost, Scale: 3f);
                         Main.dust[dust].velocity *= 6f;
                         Main.dust[dust].noGravity = true;
@@ -392,7 +392,7 @@ namespace Redemption.NPCs.HM
                         DustHelper.DrawDustImage(NPC.Center, DustID.Frost, 0.1f, "Redemption/Effects/DustImages/WarpShape", 2, true, 0);
                         for (int i = 0; i < 15; i++)
                         {
-                            ParticleManager.NewParticle(NPC.RandAreaInEntity(), RedeHelper.SpreadUp(1), new LightningParticle(), Color.White, 3);
+                            RedeParticleManager.CreateLightningParticle(NPC.RandAreaInEntity(), RedeHelper.SpreadUp(1), 3, RedeParticleManager.lightningColors);
                             int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Frost, Scale: 3f);
                             Main.dust[dust].velocity *= 6f;
                             Main.dust[dust].noGravity = true;

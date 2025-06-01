@@ -166,13 +166,13 @@ namespace Redemption.Items.Weapons.HM.Magic
             }
             if (Main.rand.NextBool(10))
             {
-                DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale, RedeHelper.RandomRotation()), 1.5f, 20, 0.1f);
-                DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale, RedeHelper.RandomRotation()), 1.5f, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale, RedeHelper.RandomRotation()), 1.5f, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale, RedeHelper.RandomRotation()), 1.5f, 20, 0.1f);
             }
             if (Projectile.ai[1] < 0 && Main.rand.NextBool(2))
             {
-                DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(180 * Projectile.scale, RedeHelper.RandomRotation()), 1.5f, 20, 0.1f);
-                DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(180 * Projectile.scale, RedeHelper.RandomRotation()), 1.5f, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(180 * Projectile.scale, RedeHelper.RandomRotation()), 1.5f, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(180 * Projectile.scale, RedeHelper.RandomRotation()), 1.5f, 20, 0.1f);
             }
 
             if (Projectile.owner == Main.myPlayer)
@@ -218,8 +218,8 @@ namespace Redemption.Items.Weapons.HM.Magic
                                 if (Projectile.DistanceSQ(npc.Center) > 600 * 600)
                                     continue;
 
-                                DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, npc.Center, 2f, 20, 0.05f);
-                                DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, npc.Center, 2f, 20, 0.05f);
+                                DustHelper.DrawParticleElectricity(Projectile.Center, npc.Center, 2f, 20, 0.05f);
+                                DustHelper.DrawParticleElectricity(Projectile.Center, npc.Center, 2f, 20, 0.05f);
                                 int hitDirection = npc.RightOfDir(Projectile);
                                 BaseAI.DamageNPC(npc, Projectile.damage * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                             }
@@ -304,8 +304,8 @@ namespace Redemption.Items.Weapons.HM.Magic
 
             for (int i = 0; i < 4; i++)
             {
-                DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale * f, RedeHelper.RandomRotation()), 1.5f * f, 20, 0.1f);
-                DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale * f, RedeHelper.RandomRotation()), 1.5f * f, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale * f, RedeHelper.RandomRotation()), 1.5f * f, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale * f, RedeHelper.RandomRotation()), 1.5f * f, 20, 0.1f);
             }
         }
         public override bool PreDraw(ref Color lightColor)

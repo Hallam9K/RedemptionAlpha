@@ -10801,6 +10801,16 @@ Mods: {
 				DisplayName: Hastily-Assembled Pistol
 				Tooltip: "'One round is all I need'"
 			}
+
+			CorruptChickenBanner: {
+				DisplayName: Corrupt Chicken Banner
+				Tooltip: ""
+			}
+
+			ViciousChickenBanner: {
+				DisplayName: Vicious Chicken Banner
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -11439,9 +11449,7 @@ Mods: {
 			Bindeklinge_Slash.DisplayName: "{$Mods.Redemption.Items.Bindeklinge.DisplayName}"
 			TileLine_Proj.DisplayName: ""
 			ShootingStar.DisplayName: Shooting Star
-			TwinklestarHoldout.DisplayName: "{$Mods.Redemption.Items.Twinklestar.DisplayName}"
 			TwinklestarRadius.DisplayName: ""
-			TwinklestarTinyStar.DisplayName: Tiny Twinklestar
 			Fallen_BeardedHatchet_Proj.DisplayName: "{$Mods.Redemption.Items.BeardedHatchet.DisplayName}"
 			Zephos_SwordSlicer_Slash.DisplayName: "{$Mods.Redemption.Items.SwordSlicer.DisplayName}"
 			VasaraRock_Proj.DisplayName: Vasara Rock
@@ -11510,6 +11518,9 @@ Mods: {
 			NebPet2_Proj.DisplayName: Nebby
 			WeirdBloomPet.DisplayName: Weird Bloom
 			Scream.DisplayName: Scream
+			Twinklestar_Holdout.DisplayName: "{$Mods.Redemption.Items.Twinklestar.DisplayName}"
+			Twinklestar_ShootingStar.DisplayName: Shooting Star
+			Twinklestar_TinyStar.DisplayName: Tiny Twinklestar
 		}
 
 		NPCs: {

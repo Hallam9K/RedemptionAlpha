@@ -1,5 +1,6 @@
 using Redemption.BaseExtension;
 using Redemption.Dusts;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -26,6 +27,8 @@ namespace Redemption.NPCs.Critters
             NPC.defense = 4;
             NPC.damage = 19;
             NPC.lifeMax = 75;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<CorruptChickenBanner>();
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {

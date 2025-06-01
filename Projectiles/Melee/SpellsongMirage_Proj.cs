@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary.Core;
+using ParticleLibrary.Utilities;
 using Redemption.Globals;
 using Redemption.Particles;
 using System;
@@ -89,8 +90,8 @@ namespace Redemption.Projectiles.Melee
 
             Vector2 dir = Projectile.Center.DirectionFrom(target.Center);
             Vector2 drawPos = Vector2.Lerp(Projectile.Center, target.Center, 0.9f);
-            ParticleSystem.NewParticle(drawPos, dir.RotateRandom(.5f) * 100, new SlashParticleAlt(), Color.BlueViolet, 1);
-            ParticleSystem.NewParticle(drawPos, Vector2.Zero, new DevilsPactParticle(DustID.PurpleCrystalShard), Color.BlueViolet with { A = 0 }, .75f);
+            RedeParticleManager.CreateSlashParticle(drawPos, dir.RotateRandom(.5f) * 100, 1, Color.BlueViolet);
+            RedeParticleManager.CreateDevilsPactParticle(drawPos, Vector2.Zero, .75f, Color.BlueViolet.WithAlpha(0), DustID.PurpleCrystalShard);
         }
         public override bool? CanHitNPC(NPC target)
         {

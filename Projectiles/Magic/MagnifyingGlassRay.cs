@@ -78,9 +78,9 @@ namespace Redemption.Projectiles.Magic
                 if (Main.rand.NextBool() && (AITimer - 80) % 4 == 0)
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), endPoint, new Vector2(0), ModContent.ProjectileType<MagnifyingGlassRayRemain>(), Projectile.damage / 2, 0, Projectile.owner, Projectile.whoAmI);
                 if (Main.dayTime)
-                    ParticleManager.NewParticle(endPoint, RedeHelper.PolarVector(1, -Projectile.rotation), new EmberParticle(), Color.White, 1);
+                    RedeParticleManager.CreateEmberParticle(endPoint, RedeHelper.PolarVector(1, -Projectile.rotation), 1, Main.rand.Next(90, 121));
                 else
-                    ParticleSystem.NewParticle<BlueEmberParticle>(endPoint, RedeHelper.PolarVector(1, -Projectile.rotation), Color.White, 1);
+                    RedeParticleManager.CreateEmberParticle(endPoint, RedeHelper.PolarVector(1, -Projectile.rotation), 1, RedeParticleManager.blueEmberColors, Main.rand.Next(90, 121));
             }
 
             if (AITimer >= 80 && AITimer % 20 == 0)

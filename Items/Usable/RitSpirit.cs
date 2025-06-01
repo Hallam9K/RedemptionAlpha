@@ -4,6 +4,7 @@ using ParticleLibrary;
 using Redemption.Globals;
 using Redemption.Globals.Player;
 using Redemption.Particles;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -29,26 +30,29 @@ namespace Redemption.Items.Usable
         public override bool OnPickup(Player player)
         {
             SoundEngine.PlaySound(SoundID.Grab, player.position);
+            float num = Item.scale;
             for (int i = 0; i < 14; i++)
             {
-                ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Item), RedeHelper.Spread(2), new SpiritParticle(), Color.White, 0.5f * Item.scale, 0, 1);
+                RedeParticleManager.CreateSpiritParticle(RedeHelper.RandAreaInEntity(Item), RedeHelper.SpreadUp(1), 0.5f * num, Main.rand.Next(20, 30));
             }
             player.GetModPlayer<RitualistPlayer>().SpiritGauge += 5 * Item.scale;
             return false;
         }
         public override void PostUpdate()
         {
+            float particleScale = MathF.Pow(Item.scale, 0.5f);
+
             Lighting.AddLight(Item.Center, Color.GhostWhite.ToVector3() * 0.6f * Main.essScale);
             if (Item.timeSinceItemSpawned >= 600)
             {
                 for (int i = 0; i < 14; i++)
                 {
-                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Item), RedeHelper.Spread(2), new SpiritParticle(), Color.White, 0.5f * Item.scale, 0, 1);
+                    RedeParticleManager.CreateSpiritParticle(RedeHelper.RandAreaInEntity(Item), RedeHelper.SpreadUp(1), particleScale, Main.rand.Next(20, 30));
                 }
                 Item.active = false;
                 NetMessage.SendData(MessageID.SyncItem, -1, -1, null, Item.whoAmI);
             }
-            ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Item), Vector2.Zero, new SpiritParticle(), Color.White, 0.5f * Item.scale, 0, 1);
+            RedeParticleManager.CreateSpiritParticle(RedeHelper.RandAreaInEntity(Item), RedeHelper.SpreadUp(1), particleScale, Main.rand.Next(20, 30));
         }
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {

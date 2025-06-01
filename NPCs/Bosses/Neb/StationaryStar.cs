@@ -50,7 +50,7 @@ namespace Redemption.NPCs.Bosses.Neb
                 SoundEngine.PlaySound(CustomSounds.NebSound3, Projectile.position);
             target.RedemptionScreen().ScreenShakeIntensity += 70;
             for (int d = 0; d < 16; d++)
-                ParticleManager.NewParticle<RainbowParticle>(Projectile.Center, RedeHelper.Spread(6), Color.White, Main.rand.NextFloat(.4f, 1f));
+                RedeParticleManager.CreateRainbowParticle(Projectile.Center, RedeHelper.Spread(6), Main.rand.NextFloat(.4f, 1f));
         }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {

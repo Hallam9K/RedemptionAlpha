@@ -100,7 +100,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             else
             {
                 if (Main.rand.NextBool(3))
-                    ParticleManager.NewParticle(Projectile.Center + Projectile.velocity, RedeHelper.Spread(1), new RainbowParticle(), Color.White, Main.rand.NextFloat(.4f, .6f) * Projectile.Opacity, 0, 0, 0, 0, Main.rand.Next(20, 40), Projectile.Opacity * .5f);
+                    RedeParticleManager.CreateRainbowParticle(Projectile.Center + Projectile.velocity, RedeHelper.Spread(1), Main.rand.NextFloat(.4f, .6f) * Projectile.Opacity, Projectile.Opacity * .5f, Main.rand.Next(20, 40));
                 for (int i = 0; i < 3; i++)
                 {
                     Dust dust = Main.dust[Dust.NewDust(Projectile.Center, 2, 2, DustType<GlowDust>(), Scale: 2 * Projectile.Opacity)];

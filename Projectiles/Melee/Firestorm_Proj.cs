@@ -108,7 +108,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.Center = player.MountedCenter - new Vector2(0, 96);
 
             if (Projectile.alpha < 20 && Main.rand.NextBool(3))
-                ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Projectile), new Vector2(Main.rand.Next(-4, 5), 0), new EmberParticle(), Color.White, 2);
+                RedeParticleManager.CreateEmberParticle(RedeHelper.RandAreaInEntity(Projectile), new Vector2(Main.rand.Next(-4, 5), 0), 2, Main.rand.Next(90, 121));
         }
         public override bool? CanHitNPC(NPC target) => Projectile.alpha <= 100 ? null : false;
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

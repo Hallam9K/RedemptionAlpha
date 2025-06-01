@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using ParticleLibrary.Core;
+using ParticleLibrary.Utilities;
 using Redemption.Globals;
 using Redemption.NPCs.Bosses.Obliterator;
 using Redemption.Particles;
@@ -35,14 +36,14 @@ namespace Redemption.Items.Weapons.PostML.Magic
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            ParticleSystem.NewParticle(Projectile.Center + Projectile.velocity, Projectile.velocity, new SlashParticleAlt(10, 1), Color.IndianRed, 2f, layer: Layer.BeforePlayers);
+            RedeParticleManager.CreateSlashParticle(Projectile.Center + Projectile.velocity, Projectile.velocity, 2f, Color.IndianRed, 10);
             for (int i = 0; i < 3; i++)
             {
                 float randomRotation = Main.rand.NextFloat(-0.5f, 0.5f);
                 float randomVel = Main.rand.NextFloat(2f, 3f);
                 Vector2 direction = target.Center.DirectionFrom(Main.player[Projectile.owner].Center);
                 Vector2 position = target.Center - direction * 10;
-                ParticleSystem.NewParticle(position, direction.RotatedBy(randomRotation) * randomVel * 12, new SpeedParticle(), Color.IndianRed, 1f);
+                RedeParticleManager.CreateSpeedParticle(position, direction.RotatedBy(randomRotation) * randomVel * 12, 1f, Color.IndianRed.WithAlpha(0));
             }
         }
     }

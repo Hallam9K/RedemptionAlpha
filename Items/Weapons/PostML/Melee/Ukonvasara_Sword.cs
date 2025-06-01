@@ -376,7 +376,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 if (Main.rand.NextBool(5) && !teleport)
                 {
                     for (int i = 0; i < 2; i++)
-                        DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center - new Vector2(20 * Projectile.direction, 0), Projectile.Center - new Vector2(20 * Projectile.direction, 0) + RedeHelper.PolarVector(Main.rand.Next(70, 121), RedeHelper.RandomRotation()), .8f, 10, 0.2f);
+                        DustHelper.DrawParticleElectricity(Projectile.Center - new Vector2(20 * Projectile.direction, 0), Projectile.Center - new Vector2(20 * Projectile.direction, 0) + RedeHelper.PolarVector(Main.rand.Next(70, 121), RedeHelper.RandomRotation()), .8f, 10, 0.2f);
                 }
 
                 Owner.ChangeDir(Projectile.Center.X < Owner.Center.X ? -1 : 1);

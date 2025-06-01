@@ -147,7 +147,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             Vector2 dir = target.DirectionTo(player.Center);
             Vector2 drawPos = Vector2.Lerp(Projectile.Center, target.Center, 0.9f);
-            ParticleSystem.NewParticle(drawPos, dir.RotatedBy(Main.rand.NextFloat(-0.01f, 0.01f) + player.direction * MathHelper.PiOver4) * 50, new SlashParticle(), Color.LightCyan, 1.5f, layer: Layer.BeforePlayers);
+            RedeParticleManager.CreateSlashParticle(drawPos, dir.RotatedBy(Main.rand.NextFloat(-0.01f, 0.01f) + player.direction * MathHelper.PiOver4) * 80, 1f, Color.White, 8);
 
             RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
         }

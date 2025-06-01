@@ -336,4 +336,14 @@ namespace Redemption.Tiles.Banners
         protected override int NPC => ModContent.NPCType<Forret>();
         protected override Color MapColor => Color.Brown;
     }
+    public class CorruptChickenBannerTile : BaseBannerTile
+    {
+        protected override int NPC => ModContent.NPCType<CorruptChicken>();
+        protected override Color MapColor => Color.Purple;
+    }
+    public class ViciousChickenBannerTile : BaseBannerTile
+    {
+        protected override int NPC => ModContent.NPCType<ViciousChicken>();
+        protected override Color MapColor => Color.IndianRed;
+    }
 }

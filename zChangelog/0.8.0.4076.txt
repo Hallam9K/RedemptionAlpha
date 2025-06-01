@@ -1,0 +1,6 @@
+=== 0.8 Beta .4076 === (v3.0 Particle Patch)
+- Stopped a ritualist weapon being dropped accidentally
+- Added banners for Corrupt Chicken and Vicious Chicken
+2165. Upgraded particles to the 3.0 API of ParticleLibrary, improving their performance and visuals of a few things that uses particles
+2166. Ember particles have new movement
+===============

@@ -616,7 +616,7 @@ namespace Redemption.NPCs.PreHM
             }
             if (!Main.rand.NextBool(20) || !Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                 return;
-            ParticleManager.NewParticle(NPC.RandAreaInEntity(), RedeHelper.Spread(2), new SpiritParticle(), Color.White, .5f);
+            RedeParticleManager.CreateSpiritParticle(NPC.RandAreaInEntity(), RedeHelper.Spread(2), .5f, Main.rand.Next(90, 121));
         }
         private void CustomFrames(int frameHeight)
         {

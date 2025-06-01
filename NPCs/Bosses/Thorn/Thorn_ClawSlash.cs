@@ -99,7 +99,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             {
                 Vector2 velocity = directionTo.RotatedBy(Main.rand.NextFloat(-1f, 1f) + 3.14f + Projectile.spriteDirection * MathHelper.PiOver4) * Main.rand.NextFloat(1f, 1.5f) + (Projectile.velocity / 16);
                 Dust.NewDustPerfect(target.Center + directionTo * 10 + Projectile.velocity, DustID.Blood, velocity, 0, Scale: Main.rand.NextFloat(1f, 2f));
-                ParticleSystem.NewParticle(Main.rand.NextVector2FromRectangle(target.Hitbox), velocity * 10, new SpeedParticle(isAdditive: false), Color.DarkRed, 1f);
+                RedeParticleManager.CreateSpeedParticle(Main.rand.NextVector2FromRectangle(target.Hitbox), velocity * 10, 1f, Color.DarkRed);
             }
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.Slash2, Projectile.position);
@@ -111,7 +111,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             {
                 Vector2 velocity = directionTo.RotatedBy(Main.rand.NextFloat(-1f, 1f) + 3.14f + Projectile.spriteDirection * MathHelper.PiOver4) * Main.rand.NextFloat(1f, 1.5f) + (Projectile.velocity / 16);
                 Dust.NewDustPerfect(target.Center + directionTo * 10 + Projectile.velocity, DustID.Blood, velocity, 0, Scale: Main.rand.NextFloat(1f, 2f));
-                ParticleSystem.NewParticle(Main.rand.NextVector2FromRectangle(target.Hitbox), velocity * 10, new SpeedParticle(isAdditive: false), Color.DarkRed, 1f);
+                RedeParticleManager.CreateSpeedParticle(Main.rand.NextVector2FromRectangle(target.Hitbox), velocity * 10, 1f, Color.DarkRed);
             }
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.Slash2, Projectile.position);

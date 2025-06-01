@@ -45,16 +45,16 @@ namespace Redemption.Projectiles.Magic
             if (Main.dayTime)
             {
                 if (Projectile.timeLeft % 10 == 0)
-                    ParticleSystem.NewParticle<EmberParticleRemain>(Projectile.Bottom, RedeHelper.PolarVector(0, 0), Projectile.GetAlpha(Color.White), 1);
+                    RedeParticleManager.CreateEmberBurstParticle(Projectile.Bottom, Vector2.Zero, 1, Main.rand.Next(90, 121));
                 if (Projectile.timeLeft % 30 == 0)
-                    ParticleManager.NewParticle(Projectile.Center, RedeHelper.PolarVector(0, 0), new EmberParticle(), Color.White, .6f);
+                    RedeParticleManager.CreateEmberParticle(Projectile.Center, Vector2.Zero, .6f, Main.rand.Next(90, 121));
             }
             else
             {
                 if (Projectile.timeLeft % 10 == 0)
-                    ParticleSystem.NewParticle<BlueEmberParticleRemain>(Projectile.Bottom, RedeHelper.PolarVector(0, 0), Projectile.GetAlpha(Color.White), 1);
+                    RedeParticleManager.CreateEmberBurstParticle(Projectile.Bottom, Vector2.Zero, 1, RedeParticleManager.blueEmberColors, Main.rand.Next(90, 121));
                 if (Projectile.timeLeft % 30 == 0)
-                    ParticleSystem.NewParticle<BlueEmberParticle>(Projectile.Center, RedeHelper.PolarVector(0, 0), Color.White, .6f);
+                    RedeParticleManager.CreateEmberParticle(Projectile.Center, Vector2.Zero, .6f, RedeParticleManager.blueEmberColors, Main.rand.Next(90, 121));
             }
         }
     }

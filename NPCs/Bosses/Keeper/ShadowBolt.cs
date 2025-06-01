@@ -54,9 +54,9 @@ namespace Redemption.NPCs.Bosses.Keeper
                 Projectile.localAI[0] = 1f;
             }
             if (Main.rand.NextBool(2))
-                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), new Color(94, 53, 104), 1f, .45f, Main.rand.Next(10, 20));
+                RedeParticleManager.CreateGlowParticle(Projectile.Center, Vector2.Zero, 1f, new Color(94, 53, 104), Main.rand.Next(10, 20));
             if (Main.rand.NextBool(2))
-                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), new Color(117, 10, 47), 1f, .45f, Main.rand.Next(10, 20));
+                RedeParticleManager.CreateGlowParticle(Projectile.Center, Vector2.Zero, 1f, new Color(117, 10, 47), Main.rand.Next(10, 20));
 
             flareScale += Main.rand.NextFloat(-.02f, .02f);
             flareScale = MathHelper.Clamp(flareScale, .1f, .3f);

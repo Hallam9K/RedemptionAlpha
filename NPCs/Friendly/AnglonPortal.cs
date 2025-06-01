@@ -10,6 +10,7 @@ using Terraria.Audio;
 using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.NPCs.Friendly.TownNPCs;
+using ParticleLibrary.Core;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -77,7 +78,7 @@ namespace Redemption.NPCs.Friendly
                 {
                     Vector2 spawnPos = new Vector2(0f, -50f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
 
-                    ParticleManager.NewParticle(NPC.Center + spawnPos, spawnPos.RotatedBy(Main.rand.NextFloat(-10f, 10f)), new AnglonPortal_EnergyGather(), Color.White, 1f, NPC.Center.X, NPC.Center.Y);
+                    ParticleSystem.NewParticle(NPC.Center + spawnPos, spawnPos.RotatedBy(Main.rand.NextFloat(-10f, 10f)), new AnglonPortal_EnergyGather(NPC.Center), Color.White, 1f);
                 }
 
                 RotTime += (float)Math.PI / 120;

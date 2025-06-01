@@ -28,6 +28,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using ParticleLibrary.Core;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -176,17 +177,17 @@ namespace Redemption.NPCs.FowlMorning
 
             if (Main.rand.NextBool(3))
             {
-                ParticleManager.NewParticle(NPC.Center + new Vector2(2 + Main.rand.Next(26) * NPC.spriteDirection, -40 + Main.rand.Next(0, 6)), new Vector2(Main.rand.Next(-2, 3), -Main.rand.Next(0, 3)), new EmberParticle(), Color.White, .6f, 0, 2, Layer: Particle.Layer.BeforeNPCs);
+                RedeParticleManager.CreateEmberBurstParticle(NPC.Center + new Vector2(2 + Main.rand.Next(26) * NPC.spriteDirection, -40 + Main.rand.Next(0, 6)), new Vector2(Main.rand.Next(-2, 3), -Main.rand.Next(0, 3)), .6f, Main.rand.Next(90, 121), 0.9f, layer: Layer.BeforeNPCs);
             }
             if (Main.rand.NextBool(50))
             {
-                ParticleManager.NewParticle(NPC.Center + new Vector2(2 + Main.rand.Next(26) * NPC.spriteDirection, -40 + Main.rand.Next(0, 6)), new Vector2(Main.rand.Next(-1, 2), -Main.rand.Next(1, 3)), new EmberParticle(), Color.White, Main.rand.NextFloat(.4f, 1f), Layer: Particle.Layer.BeforeNPCs);
-                ParticleManager.NewParticle(NPC.Center + new Vector2(2 + Main.rand.Next(26) * NPC.spriteDirection, -48 + Main.rand.Next(0, 6)), new Vector2(Main.rand.Next(-1, 2), -Main.rand.Next(1, 3)), new EmberParticle(), Color.White, Main.rand.NextFloat(.4f, 1f));
+                RedeParticleManager.CreateEmberParticle(NPC.Center + new Vector2(2 + Main.rand.Next(26) * NPC.spriteDirection, -40 + Main.rand.Next(0, 6)), new Vector2(Main.rand.Next(-1, 2), -Main.rand.Next(1, 3)), Main.rand.NextFloat(.4f, 1f), Main.rand.Next(90, 121), layer: Layer.BeforeNPCs);
+                RedeParticleManager.CreateEmberParticle(NPC.Center + new Vector2(2 + Main.rand.Next(26) * NPC.spriteDirection, -48 + Main.rand.Next(0, 6)), new Vector2(Main.rand.Next(-1, 2), -Main.rand.Next(1, 3)), Main.rand.NextFloat(.4f, 1f), Main.rand.Next(90, 121));
             }
             if (Main.rand.NextBool(20))
             {
-                ParticleManager.NewParticle(NPC.Center + new Vector2((-60 + Main.rand.Next(24)) * NPC.spriteDirection, -26 + Main.rand.Next(0, 30)), new Vector2(Main.rand.Next(-1, 2), -Main.rand.Next(1, 3)), new EmberParticle(), Color.White, Main.rand.NextFloat(.4f, 1f), Layer: Particle.Layer.BeforeNPCs);
-                ParticleManager.NewParticle(NPC.Center + new Vector2((-60 + Main.rand.Next(24)) * NPC.spriteDirection, -26 + Main.rand.Next(0, 30)), new Vector2(Main.rand.Next(-1, 2), -Main.rand.Next(1, 3)), new EmberParticle(), Color.White, Main.rand.NextFloat(.4f, 1f));
+                RedeParticleManager.CreateEmberParticle(NPC.Center + new Vector2((-60 + Main.rand.Next(24)) * NPC.spriteDirection, -26 + Main.rand.Next(0, 30)), new Vector2(Main.rand.Next(-1, 2), -Main.rand.Next(1, 3)), Main.rand.NextFloat(.4f, 1f), Main.rand.Next(90, 121), layer: Layer.BeforeNPCs);
+                RedeParticleManager.CreateEmberParticle(NPC.Center + new Vector2((-60 + Main.rand.Next(24)) * NPC.spriteDirection, -26 + Main.rand.Next(0, 30)), new Vector2(Main.rand.Next(-1, 2), -Main.rand.Next(1, 3)), Main.rand.NextFloat(.4f, 1f), Main.rand.Next(90, 121));
             }
             if (NPC.life <= NPC.lifeMax / 2)
                 attackSpeed = 4;
@@ -435,8 +436,8 @@ namespace Redemption.NPCs.FowlMorning
                                 SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, NPC.position);
                                 for (int i = 0; i < 20; i++)
                                 {
-                                    ParticleManager.NewParticle(NPC.Center + new Vector2(-52 + Main.rand.Next(102), -4 + Main.rand.Next(34)), new Vector2(Main.rand.Next(-3, 4), -Main.rand.Next(0, 2)), new EmberParticle(), Color.White, Main.rand.NextFloat(.4f, 1f), Layer: Particle.Layer.BeforeNPCs);
-                                    ParticleManager.NewParticle(NPC.Center + new Vector2(-52 + Main.rand.Next(102), -4 + Main.rand.Next(34)), new Vector2(Main.rand.Next(-3, 4), -Main.rand.Next(0, 2)), new EmberParticle(), Color.White, Main.rand.NextFloat(.4f, 1f));
+                                    RedeParticleManager.CreateEmberParticle(NPC.Center + new Vector2(-52 + Main.rand.Next(102), -4 + Main.rand.Next(34)), new Vector2(Main.rand.Next(-3, 4), -Main.rand.Next(0, 2)), Main.rand.NextFloat(.4f, 1f), Main.rand.Next(90, 121), layer: Layer.BeforeNPCs);
+                                    RedeParticleManager.CreateEmberParticle(NPC.Center + new Vector2(-52 + Main.rand.Next(102), -4 + Main.rand.Next(34)), new Vector2(Main.rand.Next(-3, 4), -Main.rand.Next(0, 2)), Main.rand.NextFloat(.4f, 1f), Main.rand.Next(90, 121));
                                 }
                             }
 
@@ -459,8 +460,8 @@ namespace Redemption.NPCs.FowlMorning
                         {
                             for (int i = 0; i < 20; i++)
                             {
-                                ParticleManager.NewParticle(NPC.Center + new Vector2(-52 + Main.rand.Next(102), -14 + Main.rand.Next(54)), new Vector2(Main.rand.Next(3, 7) * NPC.spriteDirection, 0), new EmberParticle(), Color.White, Main.rand.NextFloat(.4f, 1f), Layer: Particle.Layer.BeforeNPCs);
-                                ParticleManager.NewParticle(NPC.Center + new Vector2(-52 + Main.rand.Next(102), -14 + Main.rand.Next(54)), new Vector2(Main.rand.Next(3, 7) * NPC.spriteDirection, 0), new EmberParticle(), Color.White, Main.rand.NextFloat(.4f, 1f));
+                                RedeParticleManager.CreateEmberParticle(NPC.Center + new Vector2(-52 + Main.rand.Next(102), -14 + Main.rand.Next(54)), new Vector2(Main.rand.Next(3, 7) * NPC.spriteDirection, 0), Main.rand.NextFloat(.4f, 1f), Main.rand.Next(90, 121), layer: Layer.BeforeNPCs);
+                                RedeParticleManager.CreateEmberParticle(NPC.Center + new Vector2(-52 + Main.rand.Next(102), -14 + Main.rand.Next(54)), new Vector2(Main.rand.Next(3, 7) * NPC.spriteDirection, 0), Main.rand.NextFloat(.4f, 1f), Main.rand.Next(90, 121));
                             }
                         }
                         if (NPC.frame.Y > 7 * frameHeight)

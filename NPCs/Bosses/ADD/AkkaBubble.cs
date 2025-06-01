@@ -42,7 +42,7 @@ namespace Redemption.NPCs.Bosses.ADD
             if (ZAPPED)
             {
                 if (Main.rand.NextBool(2))
-                    DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(38, RedeHelper.RandomRotation()), 1f, 30, 0.1f);
+                    DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(38, RedeHelper.RandomRotation()), 1f, 30, 0.1f);
 
                 Projectile.velocity *= 0.5f;
                 Projectile.velocity += new Vector2(Main.rand.Next(-1, 2), Main.rand.Next(-1, 2));

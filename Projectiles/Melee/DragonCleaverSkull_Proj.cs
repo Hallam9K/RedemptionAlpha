@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary.Core;
+using ParticleLibrary.Utilities;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
@@ -117,7 +118,7 @@ namespace Redemption.Projectiles.Melee
                 float randomVel = Main.rand.NextFloat(2f, 4f);
                 Vector2 direction = Projectile.velocity.SafeNormalize(default);
                 Vector2 position = target.Center - direction * 10;
-                ParticleSystem.NewParticle(position, direction.RotatedBy(randomRotation) * randomVel * 10, new SpeedParticle(), Color.Salmon, 0.8f);
+                RedeParticleManager.CreateSpeedParticle(position, direction.RotatedBy(randomRotation) * randomVel * 10, 0.8f, Color.Salmon.WithAlpha(0));
             }
 
             target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);

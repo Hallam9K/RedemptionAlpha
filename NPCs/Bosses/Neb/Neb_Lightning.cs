@@ -136,12 +136,8 @@ namespace Redemption.NPCs.Bosses.Neb
             Color emberColor = Color.Multiply(Color.Lerp(bright, dark, (float)(timeLeftMax - Projectile.timeLeft) / timeLeftMax), 1f);
             Color glowColor = Color.Multiply(Color.Lerp(mid, dark, (float)(timeLeftMax - Projectile.timeLeft) / timeLeftMax), 1f);
 
-            RedeParticleSystemManager.RedeQuadSystem.NewParticle(Projectile.Center, Vector2.Zero, new QuadParticle()
-            {
-                StartColor = emberColor,
-                EndColor = glowColor,
-                Scale = new Vector2(.4f),
-            }, 10);
+            RedeParticleManager.CreateQuadParticle(Projectile.Center, Vector2.Zero, new Vector2(.4f), emberColor, glowColor, 10);
+
             if (Projectile.ai[0]++ % 5 == 0)
             {
                 Projectile.velocity = originalVector.RotatedByRandom(Main.rand.NextFloat(-1f, 1f));

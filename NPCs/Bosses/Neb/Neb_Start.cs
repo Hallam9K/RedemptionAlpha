@@ -148,12 +148,12 @@ namespace Redemption.NPCs.Bosses.Neb
                         SoundEngine.PlaySound(CustomSounds.NebSound3, NPC.position);
                         SoundEngine.PlaySound(CustomSounds.Teleport2, NPC.position);
                     }
-                    DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.IndianRed, 5, 4, 3, 1, 2, 0, ai0: .05f, ai1: Main.rand.Next(50, 60));
-                    DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.Pink, 5, 5, 3, 1, 2, 0, ai0: .05f, ai1: Main.rand.Next(50, 60));
-                    DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.Purple, 5, 6, 3, 1, 2, 0, ai0: .05f, ai1: Main.rand.Next(50, 60));
-                    DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.Blue, 5, 7, 1, 3, 2, 0, ai0: .05f, ai1: Main.rand.Next(50, 60));
+                    DustHelper.DrawParticleStar(NPC.Center, Color.IndianRed, 5, 4, 4, 1, 2, 0, ai1: Main.rand.Next(50, 60));
+                    DustHelper.DrawParticleStar(NPC.Center, Color.Pink, 5, 5, 4, 1, 2, 0, ai1: Main.rand.Next(50, 60));
+                    DustHelper.DrawParticleStar(NPC.Center, Color.Purple, 5, 6, 4, 1, 2, 0, ai1: Main.rand.Next(50, 60));
+                    DustHelper.DrawParticleStar(NPC.Center, Color.Blue, 5, 7, 1, 4, 2, 0, ai1: Main.rand.Next(50, 60));
                     for (int d = 0; d < 16; d++)
-                        ParticleManager.NewParticle<RainbowParticle>(NPC.Center, RedeHelper.Spread(6), Color.White, 1);
+                        RedeParticleManager.CreateRainbowParticle(NPC.Center, RedeHelper.Spread(6), 1);
 
                     RedeDraw.SpawnExplosion(NPC.Center, Color.White * 0.4f, scale: 6, noDust: true);
                     RedeDraw.SpawnExplosion(NPC.Center, Color.White * 0.2f, shakeAmount: 150, scale: 12, noDust: true);

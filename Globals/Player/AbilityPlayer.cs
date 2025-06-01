@@ -87,7 +87,7 @@ namespace Redemption.Globals.Player
             if (SpiritwalkerActive)
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(20))
-                    ParticleManager.NewParticle(Player.position + RedeHelper.Spread(1100), RedeHelper.SpreadUp(2), new SpiritParticle(), Color.White, 3);
+                    RedeParticleManager.CreateSpiritParticle(Player.position + RedeHelper.Spread(1100), RedeHelper.SpreadUp(2), 3, Main.rand.Next(90, 121), 0, Main.rand.NextFloat(.5f, 1.5f));
 
                 Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.5f).UseIntensity(1f)
                     .UseColor(new Color(180, 255, 255)).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/SwirlyPerly", AssetRequestMode.ImmediateLoad).Value);

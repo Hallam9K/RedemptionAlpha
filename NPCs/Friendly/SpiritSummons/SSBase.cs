@@ -67,7 +67,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             }
             if (!Main.rand.NextBool(40) || NoSpiritEffect(npc))
                 return;
-            ParticleManager.NewParticle(npc.RandAreaInEntity(), RedeHelper.Spread(2), new SpiritParticle(), Color.White, 1);
+            RedeParticleManager.CreateSpiritParticle(npc.RandAreaInEntity(), RedeHelper.Spread(2), 1, Main.rand.Next(90, 121));
         }
         public static bool CheckActive(Player owner)
         {
@@ -87,7 +87,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             npc.noTileCollide = true;
             aiTimer = 0;
 
-            ParticleManager.NewParticle(npc.Center + RedeHelper.Spread(10) + npc.velocity, Vector2.Zero, new SpiritParticle(), Color.White, particleScale, 0, 1);
+            RedeParticleManager.CreateSpiritParticle(npc.Center + RedeHelper.Spread(10) + npc.velocity, Vector2.Zero, particleScale, RedeParticleManager.spiritColors, Main.rand.Next(20, 30));
 
             for (int i = 0; i < 2; i++)
             {

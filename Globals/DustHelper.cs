@@ -1,12 +1,11 @@
+using Microsoft.Xna.Framework.Graphics;
+using ParticleLibrary.Core;
+using ParticleLibrary.Utilities;
+using Redemption.Particles;
+using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using ParticleLibrary;
-using Terraria.Graphics.Renderers;
 
 namespace Redemption.Globals
 {
@@ -60,7 +59,7 @@ namespace Redemption.Globals
             if (!Main.dedServ)
             {
                 float rotation = Main.rand.NextFloat(0 - rot, rot);
-                Texture2D glyphTexture = ModContent.Request<Texture2D>(imagePath, AssetRequestMode.ImmediateLoad).Value;
+                Texture2D glyphTexture = Request<Texture2D>(imagePath, AssetRequestMode.ImmediateLoad).Value;
                 Color[] data = new Color[glyphTexture.Width * glyphTexture.Height];
                 glyphTexture.GetData(data);
                 for (int i = 0; i < glyphTexture.Width; i += 2)
@@ -89,7 +88,7 @@ namespace Redemption.Globals
             if (Main.netMode != NetmodeID.Server)
             {
                 float rotation = Main.rand.NextFloat(0 - rot, rot);
-                Texture2D glyphTexture = ModContent.Request<Texture2D>(imagePath, AssetRequestMode.ImmediateLoad).Value;
+                Texture2D glyphTexture = Request<Texture2D>(imagePath, AssetRequestMode.ImmediateLoad).Value;
                 Color[] data = new Color[glyphTexture.Width * glyphTexture.Height];
                 glyphTexture.GetData(data);
                 for (int i = 0; i < glyphTexture.Width; i += 2)
@@ -132,7 +131,7 @@ namespace Redemption.Globals
                 }
             }
         }
-        public static void DrawParticleElectricity<T>(Vector2 point1, Vector2 point2, float scale = 1, int armLength = 30, float density = 0.05f, float ai0 = 0) where T : Particle
+        public static void DrawParticleElectricity(Vector2 point1, Vector2 point2, float scale = 1, int armLength = 30, float density = 0.05f, byte colorType = 0)
         {
             int nodeCount = (int)Vector2.Distance(point1, point2) / armLength;
             Vector2[] nodes = new Vector2[nodeCount + 1];
@@ -150,11 +149,51 @@ namespace Redemption.Globals
                 for (float i = 0; i < 1; i += density)
                 {
                     float size = MathHelper.Lerp(scale, 0f, (float)k / nodes.Length);
-                    ParticleManager.NewParticle<T>(Vector2.Lerp(prevPos, nodes[k], i), Vector2.Zero, Color.White, size, ai0);
+                    Vector2 lerp = Vector2.Lerp(prevPos, nodes[k], i);
+                    Color bright;
+                    Color mid;
+                    Color dark;
+                    switch (colorType)
+                    {
+                        default:
+                            bright = RedeParticleManager.lightningColors[0];
+                            mid = RedeParticleManager.lightningColors[1];
+                            dark = RedeParticleManager.lightningColors[2];
+                            break;
+                        case 1:
+                            bright = RedeParticleManager.yellowLightningColors[0];
+                            mid = RedeParticleManager.yellowLightningColors[1];
+                            dark = RedeParticleManager.yellowLightningColors[2];
+                            break;
+                        case 2:
+                            bright = RedeParticleManager.redColors[0];
+                            mid = RedeParticleManager.redColors[1];
+                            dark = RedeParticleManager.redColors[2];
+                            break;
+                        case 3:
+                            bright = RedeParticleManager.purpleColors[0];
+                            mid = RedeParticleManager.purpleColors[1];
+                            dark = RedeParticleManager.purpleColors[2];
+                            break;
+                        case 4:
+                            bright = RedeParticleManager.goldColors[0];
+                            mid = RedeParticleManager.goldColors[1];
+                            dark = RedeParticleManager.goldColors[2];
+                            break;
+                        case 5:
+                            bright = RedeParticleManager.greenColors[0];
+                            mid = RedeParticleManager.greenColors[1];
+                            dark = RedeParticleManager.greenColors[2];
+                            break;
+                    }
+                    Color emberColor = Color.Multiply(Color.Lerp(bright, dark, MathHelper.Lerp(1f, 0f, (float)k / nodes.Length)), 1f);
+                    Color glowColor = Color.Multiply(Color.Lerp(mid, dark, MathHelper.Lerp(1f, 0f, (float)k / nodes.Length)), 1f);
+
+                    RedeParticleManager.CreateQuadParticle2(lerp, Vector2.Zero, new Vector2(size * Main.rand.NextFloat(2f, 4f) / 10f), emberColor, glowColor, Main.rand.Next(5, 7));
                 }
             }
         }
-        public static void DrawParticleStar<T>(Vector2 position, Color color, float pointAmount = 5, float mainSize = 1, float dustDensity = 1, float dustSize = 1f, float pointDepthMult = 1f, float pointDepthMultOffset = 0.5f, float randomAmount = 0, float rotationAmount = -1, float ai0 = 0.45f, int ai1 = 0) where T : Particle
+        public static void DrawParticleStar(Vector2 position, Color color, float pointAmount = 5, float mainSize = 1, float dustDensity = 1, float dustSize = 1f, float pointDepthMult = 1f, float pointDepthMultOffset = 0.5f, float randomAmount = 0, float rotationAmount = -1, int ai1 = 0)
         {
             float rot;
             if (rotationAmount < 0) { rot = Main.rand.NextFloat(0, (float)Math.PI * 2); } else { rot = rotationAmount; }
@@ -169,7 +208,9 @@ namespace Redemption.Globals
                 float x = (float)Math.Cos(k + rand);
                 float y = (float)Math.Sin(k + rand);
                 float mult = (Math.Abs((k * (pointAmount / 2) % (float)Math.PI) - (float)Math.PI / 2) * pointDepthMult) + pointDepthMultOffset;//triangle wave function
-                ParticleManager.NewParticle<T>(position, new Vector2(x, y).RotatedBy(rot) * mult * mainSize, color, dustSize, ai0, ai1);
+
+                RedeParticleManager.CreateQuadParticle(position, new Vector2(x, y).RotatedBy(rot) * mult * mainSize, new Vector2(dustSize) * Main.rand.NextFloat(5f, 11f) / 10f, color.WithAlpha(0), color.WithAlpha(0), ai1, .96f);
+                RedeParticleManager.CreateQuadParticle2(position, new Vector2(x, y).RotatedBy(rot) * mult * mainSize, new Vector2(dustSize) * Main.rand.NextFloat(5f, 11f) / 10f, color.WithAlpha(0f), color.WithAlpha(0f), ai1, .96f);
             }
         }
     }

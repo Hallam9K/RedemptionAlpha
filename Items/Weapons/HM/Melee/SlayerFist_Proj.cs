@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary.Core;
+using ParticleLibrary.Utilities;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
@@ -169,7 +170,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             dust.noGravity = true;
 
             if (timer % 4 == 3)
-                ParticleSystem.NewParticle(Main.rand.NextVector2FromRectangle(Player.Hitbox), -Player.velocity * 3, new SpeedParticle(), Color.Cyan, 1);
+                RedeParticleManager.CreateSpeedParticle(Main.rand.NextVector2FromRectangle(Player.Hitbox), -Player.velocity * 3, 1, Color.Cyan.WithAlpha(0));
         }
         public override void OnKill(int timeLeft)
         {

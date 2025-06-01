@@ -81,7 +81,7 @@ namespace Redemption.NPCs.Friendly
         }
         public override void AI()
         {
-            ParticleManager.NewParticle(NPC.RandAreaInEntity() + (NPC.velocity * 10), Vector2.Zero, new SpiritParticle(), Color.White, 0.6f * NPC.scale, 0, 1);
+            RedeParticleManager.CreateSpiritParticle(NPC.RandAreaInEntity() + (NPC.velocity * 10), Vector2.Zero, 0.6f * NPC.scale, Main.rand.Next(20, 30));
 
             NPC.scale = 1 + Scale;
             NPC.rotation = NPC.velocity.ToRotation() + MathHelper.Pi;

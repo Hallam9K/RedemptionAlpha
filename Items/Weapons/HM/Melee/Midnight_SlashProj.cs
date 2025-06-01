@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
 using ParticleLibrary.Core;
+using ParticleLibrary.Utilities;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Redemption.Globals;
@@ -111,8 +112,11 @@ namespace Redemption.Items.Weapons.HM.Melee
                             }
                             player.velocity.X += 2 * player.direction;
 
-                            for (int i = 0; i < 12; i++)
-                                ParticleManager.NewParticle(RedeHelper.RandomPointInArea(Projectile.Redemption().swordHitbox), RedeHelper.Spread(4), new RainbowParticle(), Color.White, 0.2f);
+                            for (int i = 0; i < 3; i++)
+                            {
+                                RedeParticleManager.CreateRainbowParticle(RedeHelper.RandomPointInArea(Projectile.Redemption().swordHitbox), Vector2.Zero, Main.rand.NextFloat(.3f, .5f), Color.MediumPurple);
+                                RedeParticleManager.CreateSimpleStarParticle(RedeHelper.RandomPointInArea(Projectile.Redemption().swordHitbox), Vector2.Zero, Main.rand.NextFloat(.3f, .5f), Color.Pink.WithAlpha(0));
+                            }
                         }
                         if (Projectile.frame > 8)
                         {

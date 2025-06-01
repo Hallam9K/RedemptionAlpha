@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary.Core;
+using ParticleLibrary.Utilities;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Effects;
@@ -212,15 +213,15 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             Vector2 dir = Projectile.Center.DirectionFrom(target.Center);
             Vector2 drawPos = Vector2.Lerp(Projectile.Center, target.Center, 0.9f);
-            ParticleSystem.NewParticle(drawPos, dir.RotateRandom(1f) * 60, new SlashParticleAlt(10, 1), Color.Salmon, .75f, layer: Layer.BeforePlayers);
-            ParticleSystem.NewParticle(drawPos, Vector2.Zero, new DevilsPactParticle(127), Color.Salmon with { A = 0 }, 2f, layer: Layer.BeforePlayers);
+            RedeParticleManager.CreateSlashParticle(drawPos, dir.RotateRandom(1f) * 60, .75f, Color.Salmon, 10);
+            RedeParticleManager.CreateDevilsPactParticle(drawPos, Vector2.Zero, 2f, Color.Salmon.WithAlpha(0), 127);
             for (int i = 0; i < 4; i++)
             {
                 float randomRotation = Main.rand.NextFloat(-0.5f, 0.5f);
                 float randomVel = Main.rand.NextFloat(2f, 4f);
                 Vector2 direction = target.DirectionFrom(Player.Center);
                 Vector2 position = target.Center - direction * 10;
-                ParticleSystem.NewParticle(position, direction.RotatedBy(randomRotation) * randomVel * 12, new SpeedParticle(), Color.Salmon, 0.8f);
+                RedeParticleManager.CreateSpeedParticle(position, direction.RotatedBy(randomRotation) * randomVel * 12, 0.8f, Color.Salmon.WithAlpha(0));
             }
         }
         #region draw trail

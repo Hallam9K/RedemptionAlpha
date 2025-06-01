@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary.Core;
+using ParticleLibrary.Utilities;
 using Redemption.BaseExtension;
 using Redemption.Buffs;
 using Redemption.Buffs.Minions;
@@ -178,14 +179,14 @@ namespace Redemption.Items.Weapons.HM.Melee
             float Rot = Projectile.ai[0] == 0 ? 1 : -1;
             Vector2 dir = Projectile.Center.DirectionFrom(target.Center);
             Vector2 drawPos = Vector2.Lerp(Projectile.Center, target.Center, 0.9f);
-            ParticleSystem.NewParticle(drawPos, dir.RotatedBy(0.4f * Rot * Player.direction) * 80, new SlashParticleAlt(12, 1), Color.MediumPurple, 1f);
+            RedeParticleManager.CreateSlashParticle(drawPos, dir.RotatedBy(0.4f * Rot * Player.direction) * 80, 1, Color.MediumPurple, 8);
             for (int i = 0; i < 5; i++)
             {
                 float randomRotation = Main.rand.NextFloat(-0.4f, 0.4f);
                 float randomVel = Main.rand.NextFloat(2f, 3f);
                 Vector2 direction = target.Center.DirectionFrom(Player.Center);
                 Vector2 position = target.Center - direction * 30;
-                ParticleSystem.NewParticle(position, direction.RotatedBy(randomRotation) * randomVel * 12, new SpeedParticle(), Color.MediumPurple, .8f);
+                RedeParticleManager.CreateSpeedParticle(position, direction.RotatedBy(randomRotation) * randomVel * 12, .8f, Color.MediumPurple.WithAlpha(0));
             }
 
             RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);

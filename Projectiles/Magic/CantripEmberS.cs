@@ -98,7 +98,7 @@ namespace Redemption.Projectiles.Magic
                     SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
 
                 for (int i = 0; i < 6; i++)
-                    ParticleManager.NewParticle(Projectile.Center, RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 1);
+                    RedeParticleManager.CreateEmberParticle(Projectile.Center, RedeHelper.SpreadUp(1), 1, Main.rand.Next(90, 121));
 
                 for (int i = 0; i < 12; i++)
                 {
@@ -172,7 +172,7 @@ namespace Redemption.Projectiles.Magic
                 SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
 
             for (int i = 0; i < 6; i++)
-                ParticleManager.NewParticle(Projectile.Center, RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 1);
+                RedeParticleManager.CreateEmberParticle(Projectile.Center, RedeHelper.SpreadUp(1), 1, Main.rand.Next(90, 121));
 
             for (int i = 0; i < 12; i++)
             {

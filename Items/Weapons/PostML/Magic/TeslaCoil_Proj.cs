@@ -63,7 +63,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
                                 for (int k = 0; k < Main.rand.Next(2, 4); k++)
                                 {
                                     Vector2 lightningArc = coilPos + RedeHelper.PolarVector(Main.rand.Next(40, 71), -MathHelper.Pi + Main.rand.NextFloat(0, MathHelper.Pi));
-                                    DustHelper.DrawParticleElectricity<LightningParticle>(lightningArc, coilPos, 1f, 20, 0.05f);
+                                    DustHelper.DrawParticleElectricity(lightningArc, coilPos, 1f, 20, 0.05f);
                                     int side = -1;
                                     if (lightningArc.X > coilPos.X)
                                         side = 1;
@@ -98,7 +98,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
                                     float lagReduce = 0.05f;
                                     if (lightningArc.DistanceSQ(lightningArc2) > 400 * 400)
                                         lagReduce = 0.2f;
-                                    DustHelper.DrawParticleElectricity<LightningParticle>(lightningArc, lightningArc2, 1f, 20, lagReduce);
+                                    DustHelper.DrawParticleElectricity(lightningArc, lightningArc2, 1f, 20, 0.05f);
                                     for (int i = 0; i < Main.maxNPCs; i++)
                                     {
                                         NPC npc = Main.npc[i];

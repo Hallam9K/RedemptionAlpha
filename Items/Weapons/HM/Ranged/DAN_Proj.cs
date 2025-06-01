@@ -193,8 +193,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
                                 double angle = Main.rand.NextDouble() * 2d * Math.PI;
                                 dVector.X = (float)(Math.Sin(angle) * 40);
                                 dVector.Y = (float)(Math.Cos(angle) * 40);
-                                ParticleManager.NewParticle(dustPos + dVector, (dustPos + dVector).DirectionTo(dustPos) * 10f, new LightningParticle(), Color.White, 3, 3);
-                                ParticleManager.NewParticle(dustPos + dVector, (dustPos + dVector).DirectionTo(dustPos) * 10f, new LightningParticle(), Color.White, 2, 4);
+                                RedeParticleManager.CreateLightningParticle(dustPos + dVector, (dustPos + dVector).DirectionTo(dustPos) * 10f, 3, RedeParticleManager.purpleColors);
+                                RedeParticleManager.CreateLightningParticle(dustPos + dVector, (dustPos + dVector).DirectionTo(dustPos) * 10f, 2, RedeParticleManager.goldColors);
                             }
                             shake += 0.3f;
                             Projectile.position += new Vector2(Main.rand.NextFloat(-shake, shake), Main.rand.NextFloat(-shake, shake));

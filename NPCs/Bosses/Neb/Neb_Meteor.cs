@@ -204,13 +204,13 @@ namespace Redemption.NPCs.Bosses.Neb
             {
                 RedeDraw.SpawnExplosion(Projectile.Center, Color.OrangeRed, scale: 2);
                 for (int i = 0; i < 20; i++)
-                    ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(16), new EmberParticle(), Color.White, 5, 0, 0, 2);
+                    RedeParticleManager.CreateEmberBurstParticle(Projectile.Center, RedeHelper.Spread(16), 5, Main.rand.Next(90, 121), 0.9f);
             }
             else
             {
                 RedeDraw.SpawnExplosion(Projectile.Center, Color.OrangeRed);
                 for (int i = 0; i < 20; i++)
-                    ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10), new EmberParticle(), Color.White, 3, 0, 0, 2);
+                    RedeParticleManager.CreateEmberBurstParticle(Projectile.Center, RedeHelper.Spread(10), 3, Main.rand.Next(90, 121), 0.9f);
             }
 
             for (int i = 0; i < 24; i++)

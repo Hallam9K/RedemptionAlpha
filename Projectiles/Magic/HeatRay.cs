@@ -55,7 +55,7 @@ namespace Redemption.Projectiles.Magic
             Projectile host = Main.projectile[(int)Projectile.ai[0]];
             Projectile.rotation = host.rotation + (host.spriteDirection == -1 ? (float)Math.PI : 0);
 
-            ParticleManager.NewParticle(Projectile.position + new Vector2(Main.rand.Next(0, Projectile.width), Main.rand.Next(0, Projectile.height)), RedeHelper.PolarVector(5, Projectile.rotation), new EmberParticle(), Color.White, 1);
+            RedeParticleManager.CreateEmberParticle(Projectile.position + new Vector2(Main.rand.Next(0, Projectile.width), Main.rand.Next(0, Projectile.height)), RedeHelper.PolarVector(5, Projectile.rotation), 1, Main.rand.Next(90, 121));
 
             #region Beginning And End Effects
             if (AITimer == 0)

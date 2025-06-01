@@ -54,9 +54,9 @@ namespace Redemption.NPCs.Friendly
         }
         public override void AI()
         {
-            ParticleManager.NewParticle(NPC.RandAreaInEntity() + (NPC.velocity * 2), Vector2.Zero, new SpiritParticle(), Color.White, 0.6f * NPC.scale, 0, 1);
+            RedeParticleManager.CreateSpiritParticle(NPC.RandAreaInEntity() + (NPC.velocity * 2), Vector2.Zero, 0.6f * NPC.scale, Main.rand.Next(20, 30));
             if (Main.rand.NextBool(3))
-                ParticleManager.NewParticle(NPC.Center, RedeHelper.Spread(2), new SpiritParticle(), Color.White, 1);
+                RedeParticleManager.CreateSpiritParticle(NPC.Center, RedeHelper.Spread(2), 1, Main.rand.Next(90, 121));
 
             NPC.rotation = NPC.velocity.ToRotation() + MathHelper.Pi;
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
@@ -133,7 +133,7 @@ namespace Redemption.NPCs.Friendly
                         NPC.Shoot(player.Center, ModContent.ProjectileType<SpiritwalkerIconFade>(), 0, Vector2.Zero, player.whoAmI);
                         for (int i = 0; i < 20; i++)
                         {
-                            ParticleManager.NewParticle(player.Center, RedeHelper.Spread(10), new SpiritParticle(), Color.White, 2);
+                            RedeParticleManager.CreateSpiritParticle(player.Center, RedeHelper.Spread(10), 2, Main.rand.Next(90, 121));
 
                             int dust2 = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.DungeonSpirit,
                                 NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2);

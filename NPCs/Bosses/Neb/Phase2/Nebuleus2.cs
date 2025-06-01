@@ -299,7 +299,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                         DustHelper.DrawStar(NPC.Center, 60, 5, 6, 1, 4, 2, 0, noGravity: true);
                         DustHelper.DrawStar(NPC.Center, 62, 5, 7, 1, 4, 2, 0, noGravity: true);
                         for (int d = 0; d < 32; d++)
-                            ParticleManager.NewParticle<RainbowParticle>(NPC.Center, RedeHelper.Spread(8), Color.White, 1);
+                            RedeParticleManager.CreateRainbowParticle(NPC.Center, RedeHelper.Spread(8), 1);
                     }
                     if (++NPC.ai[2] >= 10)
                     {
@@ -994,7 +994,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             if (NPC.ai[2] > 65 && NPC.ai[2] < 86)
                             {
                                 for (int i = 0; i < 2; i++)
-                                    ParticleManager.NewParticle(NPC.Center + NPC.velocity, RedeHelper.Spread(3), new RainbowParticle(), Color.White, Main.rand.NextFloat(.4f, .8f), AI4: Main.rand.Next(20, 40));
+                                    RedeParticleManager.CreateRainbowParticle(NPC.Center + NPC.velocity, RedeHelper.Spread(3), Main.rand.NextFloat(.4f, .8f), 1, Main.rand.Next(20, 40));
                                 for (int i = 0; i < 5; i++)
                                 {
                                     Dust dust = Main.dust[Dust.NewDust(NPC.Center, 2, 2, DustType<GlowDust>(), Scale: 1)];
@@ -1144,7 +1144,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             if (NPC.velocity.Length() >= 30)
                             {
                                 for (int i = 0; i < 2; i++)
-                                    ParticleManager.NewParticle(NPC.Center + NPC.velocity, RedeHelper.Spread(3), new RainbowParticle(), Color.White, Main.rand.NextFloat(.4f, .8f), AI4: Main.rand.Next(20, 40));
+                                    RedeParticleManager.CreateRainbowParticle(NPC.Center + NPC.velocity, RedeHelper.Spread(3), Main.rand.NextFloat(.4f, .8f), 1, Main.rand.Next(20, 40));
                                 for (int i = 0; i < 5; i++)
                                 {
                                     Dust dust = Main.dust[Dust.NewDust(NPC.Center, 2, 2, DustType<GlowDust>(), Scale: 1)];
@@ -1258,7 +1258,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             else
                             {
                                 for (int i = 0; i < 2; i++)
-                                    ParticleManager.NewParticle(NPC.Center + NPC.velocity, RedeHelper.Spread(3), new RainbowParticle(), Color.White, Main.rand.NextFloat(.4f, .8f), AI4: Main.rand.Next(20, 40));
+                                    RedeParticleManager.CreateRainbowParticle(NPC.Center + NPC.velocity, RedeHelper.Spread(3), Main.rand.NextFloat(.4f, .8f), 1, Main.rand.Next(20, 40));
                                 for (int i = 0; i < 5; i++)
                                 {
                                     Dust dust = Main.dust[Dust.NewDust(NPC.Center, 2, 2, DustType<GlowDust>(), Scale: 1)];
@@ -1476,14 +1476,14 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                 offset = -600;
                             if (NPC.ai[2] > 60 && NPC.ai[2] < 190)
                             {
-                                ParticleManager.NewParticle(new Vector2(player.Center.X + offset, player.Center.Y - (Main.screenHeight / 2)) + new Vector2(Main.rand.Next(-234, 234), Main.rand.Next(0, Main.screenHeight)), new Vector2(0, -Main.rand.NextFloat(1, 3)), new RainbowParticle(), Color.Cyan, Main.rand.NextFloat(.1f, .4f), 0, 0, 0, 0, Main.rand.Next(10, 20), (NPC.ai[2] - 60) / 190);
+                                RedeParticleManager.CreateRainbowParticle(new Vector2(player.Center.X + offset, player.Center.Y - (Main.screenHeight / 2)) + new Vector2(Main.rand.Next(-234, 234), Main.rand.Next(0, Main.screenHeight)), new Vector2(0, -Main.rand.NextFloat(1, 3)), Main.rand.NextFloat(.1f, .4f), new Color(206, 228, 236), (NPC.ai[2] - 60) / 190, Main.rand.Next(10, 20));
                             }
                             if (NPC.ai[2] == 190)
                             {
                                 for (int i = 0; i < 40; i++)
                                 {
-                                    ParticleManager.NewParticle(new Vector2(player.Center.X - 234 + offset, player.Center.Y - (Main.screenHeight / 2)) + new Vector2(0, Main.rand.Next(0, Main.screenHeight)), new Vector2(0, -Main.rand.NextFloat(4, 7)), new RainbowParticle(), Color.Cyan, Main.rand.NextFloat(.1f, .4f), AI4: Main.rand.Next(60, 90));
-                                    ParticleManager.NewParticle(new Vector2(player.Center.X + 234 + offset, player.Center.Y - (Main.screenHeight / 2)) + new Vector2(0, Main.rand.Next(0, Main.screenHeight)), new Vector2(0, -Main.rand.NextFloat(4, 7)), new RainbowParticle(), Color.Cyan, Main.rand.NextFloat(.1f, .4f), AI4: Main.rand.Next(60, 90));
+                                    RedeParticleManager.CreateRainbowParticle(new Vector2(player.Center.X - 234 + offset, player.Center.Y - (Main.screenHeight / 2)) + new Vector2(0, Main.rand.Next(0, Main.screenHeight)), new Vector2(0, -Main.rand.NextFloat(4, 7)), Main.rand.NextFloat(.1f, .4f), new Color(206, 228, 236), 1, Main.rand.Next(60, 90));
+                                    RedeParticleManager.CreateRainbowParticle(new Vector2(player.Center.X + 234 + offset, player.Center.Y - (Main.screenHeight / 2)) + new Vector2(0, Main.rand.Next(0, Main.screenHeight)), new Vector2(0, -Main.rand.NextFloat(4, 7)), Main.rand.NextFloat(.1f, .4f), new Color(206, 228, 236), 1, Main.rand.Next(60, 90));
                                 }
                                 vector = player.Center + new Vector2(offset, 0);
                                 SoundEngine.PlaySound(CustomSounds.NebSound2 with { Pitch = .5f }, player.Center);
@@ -1743,10 +1743,10 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         public void Teleport(bool specialPos, Vector2 teleportPos)
         {
             Player player = Main.player[NPC.target];
-            DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.Blue * 0.4f, 5, 0.8f, 1, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
-            DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.Purple * 0.4f, 5, 1.6f, 1, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
-            DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.Pink * 0.4f, 5, 2.4f, 1, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
-            DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.IndianRed * 0.4f, 5, 3.2f, 1, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+            DustHelper.DrawParticleStar(NPC.Center, Color.Blue * 0.4f, 5, 0.8f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+            DustHelper.DrawParticleStar(NPC.Center, Color.Purple * 0.4f, 5, 1.6f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+            DustHelper.DrawParticleStar(NPC.Center, Color.Pink * 0.4f, 5, 2.4f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+            DustHelper.DrawParticleStar(NPC.Center, Color.IndianRed * 0.4f, 5, 3.2f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
             teleGlow = true;
             teleGlowTimer = 0;
             teleVector = NPC.Center;
@@ -1804,12 +1804,12 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 for (int d = 0; d < 16; d++)
-                    ParticleManager.NewParticle(NPC.Center, RedeHelper.Spread(6), new RainbowParticle(), Color.White, Main.rand.NextFloat(1f, 1.4f), AI4: Main.rand.Next(20, 40));
+                    RedeParticleManager.CreateRainbowParticle(NPC.Center, RedeHelper.Spread(6), Main.rand.NextFloat(1f, 1.4f), 1, Main.rand.Next(20, 40));
 
-                DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.IndianRed, 5, 0.8f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
-                DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.Pink, 5, 1.6f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
-                DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.Purple, 5, 2.4f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
-                DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.Blue, 5, 3.2f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+                DustHelper.DrawParticleStar(NPC.Center, Color.IndianRed, 5, 0.8f, 3, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+                DustHelper.DrawParticleStar(NPC.Center, Color.Pink, 5, 1.6f, 3, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+                DustHelper.DrawParticleStar(NPC.Center, Color.Purple, 5, 2.4f, 3, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+                DustHelper.DrawParticleStar(NPC.Center, Color.Blue, 5, 3.2f, 3, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
             }
         }
         private void ArmAnimation(int ID, bool resetFrame = false)

@@ -230,9 +230,9 @@ namespace Redemption.Items.Weapons.HM.Magic
             Player player = Main.player[staff.owner];
             player.RedemptionScreen().ScreenShakeIntensity += 20 * (Projectile.scale * 2);
             for (int i = 0; i < 80; i++)
-                ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new EmberParticle(), Color.White, 3 * Projectile.scale, 0, 2);
+                RedeParticleManager.CreateEmberBurstParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), 3 * Projectile.scale, Main.rand.Next(90, 121), 0.9f);
             for (int i = 0; i < 20; i++)
-                ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new EmberParticle(), Color.White, 1, 0);
+                RedeParticleManager.CreateEmberParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), 1, Main.rand.Next(90, 121));
             SoundEngine.PlaySound(SoundID.Item100 with { Volume = 1 * Projectile.scale, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest }, Projectile.position);
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.FlameRise with { Pitch = -.3f }, Projectile.position);

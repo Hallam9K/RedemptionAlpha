@@ -53,13 +53,9 @@ namespace Redemption.Projectiles.Magic
                     scale *= 1.5f;
 
                 if (Main.rand.NextBool(Projectile.ai[0] > 70 ? 40 : 20))
-                {
-                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Projectile), Projectile.velocity * 0.5f * velIncrease, new EmberParticle(), Color.White, scale * 0.6f, 10);
-                }
+                    RedeParticleManager.CreateEmberParticle(RedeHelper.RandAreaInEntity(Projectile), Projectile.velocity * 0.5f * velIncrease, scale * 0.6f, Main.rand.Next(90, 121), 10);
                 if (Main.rand.NextBool(Projectile.ai[0] > 70 ? 4 : 2))
-                {
-                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Projectile), Projectile.velocity * 0.5f * velIncrease, new EmberParticle(), Color.White, scale * 1f, 10, 1);
-                }
+                    RedeParticleManager.CreateEmberBurstParticle(RedeHelper.RandAreaInEntity(Projectile), Projectile.velocity * 0.5f * velIncrease, scale * 1f, Main.rand.Next(12, 17), .9f);
             }
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)

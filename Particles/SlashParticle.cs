@@ -1,53 +1,30 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary.Core;
-using Terraria;
-using Terraria.GameContent;
+using ParticleLibrary.Core.V3.Particles;
+using static Redemption.Particles.ParticleBehaviors;
 
 namespace Redemption.Particles
 {
-    public class SlashParticle : Particle
+    public class SlashParticleBehavior : Behavior<ParticleInfo>
     {
-        public override string Texture => "Terraria/Images/Projectile_536";
-        public float TimerMax;
-        public SlashParticle() : this(6) { }
-        public SlashParticle(float timerMax)
+        public override string Texture { get; } = "Redemption/Particles/RainbowParticle2";
+        public override void Update(ref ParticleInfo info)
         {
-            TimerMax = timerMax;
+            ParticleFlags2 behavior = (ParticleFlags2)((int?)(info.Data.Length > 0 ? info.Data[0] : 0) ?? 0);
+            if (behavior.HasFlag(ParticleFlags2.DaggerSlash))
+                DaggerSlashBehavior(ref info);
+            if (behavior.HasFlag(ParticleFlags2.EmeraldCutter))
+                EmeraldCutterBehavior(ref info);
         }
-        public float timer;
-        private Vector2 startPos;
-        private Vector2 endPos;
-        private float progress;
-        public override void Spawn()
+    }
+    public class SlashAltParticleBehavior : Behavior<ParticleInfo>
+    {
+        public override string Texture { get; } = "Terraria/Images/Extra_98";
+        public override void Update(ref ParticleInfo info)
         {
-            TimeLeft = 18;
-            timer = TimerMax;
-            TileCollide = false;
-            Rotation = Velocity.ToRotation();
-            startPos = Position + Velocity;
-            endPos = Position - Velocity;
-        }
-        public override void Update()
-        {
-            timer--;
-            progress = 1 - timer / TimerMax;
-        }
-        public override void Draw(SpriteBatch spriteBatch, Vector2 location)
-        {
-            Texture2D texture = TextureAssets.Extra[98].Value;
-            Rectangle rect = texture.Frame(1, 1);
-            Vector2 origin = rect.Size() / 2;
-            Vector2 scale = new Vector2(0.15f, 1) * Scale;
-            Color color = Color.Multiply(Color with { A = 0 }, 1);
-            for (float num7 = 0f; num7 <= 1f; num7 += 0.1f)
-            {
-                float x = (num7 - progress + 0.4f) * 8;
-                float opacity = 1 / (1 + x * x);
-                Vector2 drawPos = Vector2.Lerp(startPos, endPos, num7);
-                spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * opacity * 1f, Rotation + MathHelper.PiOver2, origin, scale, 0, 0);
-                spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * opacity * 1f, Rotation + MathHelper.PiOver2, origin, scale, 0, 0);
-            }
+            ParticleFlags2 behavior = (ParticleFlags2)((int?)(info.Data.Length > 0 ? info.Data[0] : 0) ?? 0);
+            if (behavior.HasFlag(ParticleFlags2.Slash))
+                SlashBehavior(ref info);
+            if (behavior.HasFlag(ParticleFlags2.DevilsPact))
+                DevilsPactBehavior(ref info);
         }
     }
 }

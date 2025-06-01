@@ -91,7 +91,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.Center = player.MountedCenter;
 
             if (Main.rand.NextBool(8))
-                ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Projectile), RedeHelper.Spread(2), new EmberParticle(), Color.White, 1);
+                RedeParticleManager.CreateEmberParticle(RedeHelper.RandAreaInEntity(Projectile), RedeHelper.Spread(2), 1, Main.rand.Next(90, 121));
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {

@@ -103,11 +103,8 @@ namespace Redemption.Projectiles.Magic
         {
             if (fakeTimer++ == 0)
             {
-                if (!Projectile.wet && Projectile.type == ModContent.ProjectileType<Firebreak_Proj>())
-                    SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode with { Volume = .4f }, Projectile.position);
-
                 for (int i = 0; i < 3; i++)
-                    ParticleManager.NewParticle(Projectile.Center, RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 1);
+                    RedeParticleManager.CreateEmberParticle(Projectile.Center, RedeHelper.SpreadUp(1), 1, Main.rand.Next(90, 121));
 
                 for (int i = 0; i < 6; i++)
                 {
@@ -146,7 +143,7 @@ namespace Redemption.Projectiles.Magic
             if (fakeTimer > 0)
                 return;
             for (int i = 0; i < 3; i++)
-                ParticleManager.NewParticle(Projectile.Center, RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 1);
+                RedeParticleManager.CreateEmberParticle(Projectile.Center, RedeHelper.SpreadUp(1), 1, Main.rand.Next(90, 121));
 
             for (int i = 0; i < 6; i++)
             {

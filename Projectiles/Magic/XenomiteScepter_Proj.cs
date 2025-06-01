@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
 using ParticleLibrary.Core;
+using ParticleLibrary.Utilities;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Redemption.Effects;
@@ -99,8 +100,12 @@ namespace Redemption.Projectiles.Magic
                 int pieCut = 20;
                 for (int m = 0; m < pieCut; m++)
                 {
-                    ParticleManager.NewParticle(Projectile.Center, BaseUtility.RotateVector(default, new Vector2(2f, 0f), m / (float)pieCut * 6.28f), new GlowParticle2(), Color.Green, 0.6f, .45f, Main.rand.Next(50, 60));
-                    ParticleSystem.NewParticle(Projectile.Center, BaseUtility.RotateVector(default, new Vector2(15f, 0f), m / (float)pieCut * 6.28f), new SpeedParticle(), Color.Green, 1f);
+                    RedeParticleManager.CreateGlowParticle(Projectile.Center, BaseUtility.RotateVector(default, new Vector2(2f, 0f), m / (float)pieCut * 6.28f), 0.6f, Color.Green, Main.rand.Next(50, 60));
+                    RedeParticleManager.CreateSpeedParticle(Projectile.Center, BaseUtility.RotateVector(default, new Vector2(15f, 0f), m / (float)pieCut * 6.28f), 1f, Color.Green.WithAlpha(0));
+                }
+                for (int m = 0; m < pieCut; m++)
+                {
+                    RedeParticleManager.CreateGlowParticle(Projectile.Center, BaseUtility.RotateVector(default, new Vector2(4f, 0f), m / (float)pieCut * 6.28f), 0.6f, Color.Green, Main.rand.Next(50, 60));
                 }
                 SoundEngine.PlaySound(SoundID.Item62, Projectile.position);
             }

@@ -33,7 +33,7 @@ namespace Redemption.Projectiles.Melee
             if (Main.rand.NextBool(6))
             {
                 for (int i = 0; i < 2; i++)
-                    DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center + RedeHelper.Spread(80), Projectile.Center + RedeHelper.Spread(80), 0.5f, 10, 0.2f);
+                    DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(Main.rand.Next(40, 81), RedeHelper.RandomRotation()), .5f, 10, 0.2f);
             }
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

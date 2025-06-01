@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary.Core;
+using ParticleLibrary.Utilities;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
@@ -152,12 +153,12 @@ namespace Redemption.Items.Weapons.PostML.Melee
             if (launch)
             {
                 if (timer % 3 == 2)
-                    ParticleSystem.NewParticle(drawPos, velocity, new SpeedParticle(), Color.ForestGreen, .75f);
+                    RedeParticleManager.CreateSpeedParticle(drawPos, velocity, .75f, Color.ForestGreen.WithAlpha(0));
             }
             else
             {
                 if (timer % 2 == 1)
-                    ParticleSystem.NewParticle(default, default, new ChargeParticle(Player, Projectile, velocity, 25, 40), Color.ForestGreen, 3);
+                    RedeParticleManager.CreateChargeParticle(3, Color.ForestGreen, Player.whoAmI, Projectile.whoAmI, velocity, 25, 40);
             }
         }
         public override bool? CanHitNPC(NPC target) => launch && Player.velocity.Length() > 0.5f ? null : false;
@@ -178,7 +179,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 target.AddBuff(BuffType<StunnedDebuff>(), 15);
 
             Vector2 drawPos = Vector2.Lerp(Projectile.Center, target.Center, 0.5f);
-            ParticleSystem.NewParticle(drawPos, dirVec, new LaserParticle(4), Color.LightGreen, 4f);
+            RedeParticleManager.CreateLaserParticle(drawPos, dirVec, 4f, Color.LightGreen, 4);
 
             for (int i = 0; i < 12; i++)
             {

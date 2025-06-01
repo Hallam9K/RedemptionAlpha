@@ -247,4 +247,12 @@ namespace Redemption.Items.Placeable.Banners
     {
         protected override int Tile => ModContent.TileType<ForretBannerTile>();
     }
+    public class CorruptChickenBanner : BaseBannerItem
+    {
+        protected override int Tile => ModContent.TileType<CorruptChickenBannerTile>();
+    }
+    public class ViciousChickenBanner : BaseBannerItem
+    {
+        protected override int Tile => ModContent.TileType<ViciousChickenBannerTile>();
+    }
 }

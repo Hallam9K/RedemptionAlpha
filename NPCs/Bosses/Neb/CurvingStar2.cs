@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 3; i++)
-                ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(2), new RainbowParticle(), Color.White, 1);
+                RedeParticleManager.CreateRainbowParticle(Projectile.Center, RedeHelper.Spread(2), 1);
         }
         public override bool PreDraw(ref Color lightColor)
         {

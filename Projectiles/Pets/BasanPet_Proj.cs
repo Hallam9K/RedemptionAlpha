@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
+using ParticleLibrary.Core;
 using Redemption.Buffs.Pets;
 using Redemption.Globals;
 using Redemption.Particles;
@@ -40,12 +41,12 @@ namespace Redemption.Projectiles.Pets
             Lighting.AddLight(Projectile.Center, .5f * Projectile.Opacity, .3f * Projectile.Opacity, .1f * Projectile.Opacity);
             if (Main.rand.NextBool(8))
             {
-                ParticleManager.NewParticle(Projectile.Center - new Vector2(5 + Main.rand.Next(12) * Projectile.spriteDirection, -14 + Main.rand.Next(6)), new Vector2(Main.rand.Next(-2, 3), -Main.rand.Next(0, 3)), new EmberParticle(), Color.White, .6f, 0, 2, Layer: Particle.Layer.BeforeNPCs);
+                RedeParticleManager.CreateEmberBurstParticle(Projectile.Center - new Vector2(5 + Main.rand.Next(12) * Projectile.spriteDirection, -14 + Main.rand.Next(6)), new Vector2(Main.rand.Next(-2, 3), -Main.rand.Next(0, 3)), .6f, Main.rand.Next(90, 121), .9f, layer: Layer.BeforeNPCs);
             }
             if (Main.rand.NextBool(100))
             {
-                ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Projectile), new Vector2(Main.rand.Next(-1, 2), -Main.rand.Next(1, 3)), new EmberParticle(), Color.White, Main.rand.NextFloat(.4f, 1f), Layer: Particle.Layer.BeforeNPCs);
-                ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Projectile), new Vector2(Main.rand.Next(-1, 2), -Main.rand.Next(1, 3)), new EmberParticle(), Color.White, Main.rand.NextFloat(.4f, 1f));
+                RedeParticleManager.CreateEmberParticle(RedeHelper.RandAreaInEntity(Projectile), new Vector2(Main.rand.Next(-1, 2), -Main.rand.Next(1, 3)), Main.rand.NextFloat(.4f, 1f), Main.rand.Next(90, 121), layer: Layer.BeforeNPCs);
+                RedeParticleManager.CreateEmberParticle(RedeHelper.RandAreaInEntity(Projectile), new Vector2(Main.rand.Next(-1, 2), -Main.rand.Next(1, 3)), Main.rand.NextFloat(.4f, 1f), Main.rand.Next(90, 121));
             }
             if (pecking)
             {

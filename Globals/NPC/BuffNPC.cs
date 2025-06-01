@@ -510,7 +510,7 @@ namespace Redemption.Globals.NPC
             {
                 drawColor = Color.Lerp(drawColor, new Color(220, 150, 150), 0.5f);
                 if (Main.rand.NextBool(5) && !Main.gamePaused)
-                    ParticleManager.NewParticle(npc.RandAreaInEntity(), RedeHelper.SpreadUp(1), new EmberParticle(), Color.OrangeRed, 1);
+                    RedeParticleManager.CreateEmberParticle(npc.RandAreaInEntity(), RedeHelper.SpreadUp(1), 1, new Color(240, 100, 46, 0), new Color(187, 25, 27, 0), new Color(131, 23, 64, 0), Main.rand.Next(90, 121));
             }
             if (iceFrozen)
             {
@@ -550,8 +550,8 @@ namespace Redemption.Globals.NPC
             {
                 if (Main.rand.NextBool(10) && !Main.gamePaused)
                 {
-                    DustHelper.DrawParticleElectricity<LightningParticle>(new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), .5f, 10, 0.2f);
-                    DustHelper.DrawParticleElectricity<LightningParticle>(new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), .5f, 10, 0.2f);
+                    DustHelper.DrawParticleElectricity(new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), .5f, 10, 0.2f);
+                    DustHelper.DrawParticleElectricity(new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), .5f, 10, 0.2f);
                 }
             }
             if (hydraAcid)
@@ -563,7 +563,7 @@ namespace Redemption.Globals.NPC
             if (holyFire)
             {
                 if (Main.rand.NextBool(4) && !Main.gamePaused)
-                    ParticleManager.NewParticle(npc.RandAreaInEntity(), new Vector2(0, -1), new GlowParticle2(), Color.LightGoldenrodYellow, 1, .45f, Main.rand.Next(50, 60));
+                    RedeParticleManager.CreateGlowParticle(npc.RandAreaInEntity(), new Vector2(0, -1), 1, Color.LightGoldenrodYellow, Main.rand.Next(50, 60));
             }
             if (soaked)
             {

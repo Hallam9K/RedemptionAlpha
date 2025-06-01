@@ -1,18 +1,21 @@
-﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary;
+using ParticleLibrary.Core;
 using Redemption.Effects;
 using Redemption.Globals;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Redemption.Particles
 {
     public class AnglonPortal_EnergyGather : Particle
     {
+        public AnglonPortal_EnergyGather() : this(Vector2.Zero) { }
+        public AnglonPortal_EnergyGather(Vector2 seekEntityPos)
+        {
+            SeekEntityPos = seekEntityPos;
+        }
         public override string Texture => Redemption.EMPTY_TEXTURE;
         private readonly int NUMPOINTS = 30;
 
@@ -21,7 +24,8 @@ namespace Redemption.Particles
         public Color edgeColor = new(14, 25, 13);
 
         public Entity seekEntity = null;
-        public Vector2 seekEntityOffset = Vector2.Zero;
+        public Vector2 seekEntityOffset;
+        public Vector2 SeekEntityPos;
 
         public float killRange = 32;
 
@@ -34,55 +38,55 @@ namespace Redemption.Particles
         private readonly float thickness = 1f;
 
         private float thicknessModifier = 1f;
-
-        public bool Active { get => active; set => active = value; }
-
-        public override void SetDefaults()
+        public float velRotation;
+        public float aiTimer;
+        public override void Spawn()
         {
-            width = 1;
-            height = 1;
-            timeLeft = 999999;
-            tileCollide = false;
-            oldPos = new Vector2[3];
-            SpawnAction = Spawn;
+            TimeLeft = 999999;
+            TileCollide = false;
+            if (velRotation == -1)
+            {
+                velRotation = Velocity.ToRotation();
+                Velocity = Vector2.Zero;
+            }
         }
 
-        public override void AI()
+        public override void Update()
         {
-            Vector2 powerCenter = new(ai[0], ai[1]);
+            Vector2 powerCenter = SeekEntityPos;
 
             if (seekEntity != null && seekEntity is NPC or Player or Projectile)
                 powerCenter = seekEntity.Center;
 
-            if (ai[2] == 0)
+            if (aiTimer == 0)
             {
                 const float DESIRED_FLY_SPEED_IN_PIXELS_PER_FRAME = 40;
-                float AMOUNT_OF_FRAMES_TO_LERP_BY = MathHelper.Lerp(15f, 1f, ai[3] / 120f);
+                float AMOUNT_OF_FRAMES_TO_LERP_BY = MathHelper.Lerp(15f, 1f, velRotation / 120f);
 
-                Vector2 desiredVelocity = Vector2.Normalize(powerCenter - Center) * DESIRED_FLY_SPEED_IN_PIXELS_PER_FRAME;
-                velocity = Vector2.Lerp(velocity, desiredVelocity, 1f / AMOUNT_OF_FRAMES_TO_LERP_BY);
-                velocity.Normalize();
-                velocity *= 15f;
+                Vector2 desiredVelocity = Vector2.Normalize(powerCenter - Position) * DESIRED_FLY_SPEED_IN_PIXELS_PER_FRAME;
+                Velocity = Vector2.Lerp(Velocity, desiredVelocity, 1f / AMOUNT_OF_FRAMES_TO_LERP_BY);
+                Velocity.Normalize();
+                Velocity *= 15f;
 
-                float dist = Vector2.Distance(Center, powerCenter);
+                float dist = Vector2.Distance(Position, powerCenter);
 
                 if (dist < killRange)
-                    ai[2] = 1;
-                if (ai[3] < 120f)
-                    ai[3]++;
+                    aiTimer = 1;
+                if (velRotation < 120f)
+                    velRotation++;
             }
-            if (ai[2] >= 1 && ai[2] <= 61)
+            if (aiTimer >= 1 && aiTimer <= 61)
             {
-                velocity = Vector2.Zero;
+                Velocity = Vector2.Zero;
 
-                float timer = ai[2] - 1;
+                float timer = aiTimer - 1;
 
                 thicknessModifier = MathHelper.Lerp(1f, 0f, timer / 60f);
 
-                ai[2]++;
+                aiTimer++;
             }
-            if (ai[2] >= 61)
-                active = false;
+            if (aiTimer >= 61)
+                Kill();
 
 
             if (Main.netMode != NetmodeID.Server)
@@ -92,7 +96,7 @@ namespace Redemption.Particles
             }
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color lightColor)
+        public override void Draw(SpriteBatch spriteBatch, Vector2 location)
         {
             Main.spriteBatch.End();
             Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
@@ -102,7 +106,7 @@ namespace Redemption.Particles
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 
@@ -110,20 +114,6 @@ namespace Redemption.Particles
             trail2?.Render(effect);
 
             Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
-            return false;
-        }
-
-        private void Spawn()
-        {
-            if (ai[3] == -1)
-            {
-                ai[3] = velocity.ToRotation();
-                velocity = Vector2.Zero;
-            }
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
         }
 
         private void ManageCaches()
@@ -134,11 +124,11 @@ namespace Redemption.Particles
 
                 for (int i = 0; i < NUMPOINTS; i++)
                 {
-                    cache.Add(Center);
+                    cache.Add(Position);
                 }
             }
 
-            cache.Add(Center);
+            cache.Add(Position);
 
             while (cache.Count > NUMPOINTS)
             {
@@ -149,7 +139,7 @@ namespace Redemption.Particles
             for (int i = 0; i < cache.Count; i++)
             {
                 Vector2 point = cache[i];
-                Vector2 nextPoint = i == cache.Count - 1 ? Center : cache[i + 1];
+                Vector2 nextPoint = i == cache.Count - 1 ? Position : cache[i + 1];
                 Vector2 dir = Vector2.Normalize(nextPoint - point);
                 if (i > cache.Count - 3 || dir == Vector2.Zero)
                     cache2.Add(point);
@@ -183,7 +173,7 @@ namespace Redemption.Particles
             });
 
             trail.Positions = cache.ToArray();
-            trail.NextPosition = Center;
+            trail.NextPosition = Position;
             trail2 ??= new DanTrail(Main.instance.GraphicsDevice, NUMPOINTS, new TriangularTip(4),
             factor =>
             {
@@ -205,17 +195,52 @@ namespace Redemption.Particles
             });
 
             trail2.Positions = cache2.ToArray();
-            trail2.NextPosition = Center;
+            trail2.NextPosition = Position;
         }
     }
     public class GathuramPortal_EnergyGather : AnglonPortal_EnergyGather
     {
-        public override string Texture => Redemption.EMPTY_TEXTURE;
-        public override void SetDefaults()
+        public GathuramPortal_EnergyGather() : this(Vector2.Zero) { }
+        public GathuramPortal_EnergyGather(Vector2 seekEntityPos)
         {
-            base.SetDefaults();
+            SeekEntityPos = seekEntityPos;
+        }
+        public override string Texture => Redemption.EMPTY_TEXTURE;
+        public override void Spawn()
+        {
+            base.Spawn();
             endColor = Color.CornflowerBlue;
             edgeColor = new(14, 13, 25);
+        }
+    }
+    public class Blackhole_EnergyGather : AnglonPortal_EnergyGather
+    {
+        public Blackhole_EnergyGather() : this(Vector2.Zero) { }
+        public Blackhole_EnergyGather(Vector2 seekEntityPos)
+        {
+            SeekEntityPos = seekEntityPos;
+        }
+        public override string Texture => Redemption.EMPTY_TEXTURE;
+        public override void Spawn()
+        {
+            base.Spawn();
+            endColor = RedeColor.NebColour;
+            edgeColor = new(14, 13, 25);
+        }
+    }
+    public class Fool_EnergyGather : AnglonPortal_EnergyGather
+    {
+        public Fool_EnergyGather() : this(Vector2.Zero) { }
+        public Fool_EnergyGather(Vector2 seekEntityPos)
+        {
+            SeekEntityPos = seekEntityPos;
+        }
+        public override string Texture => Redemption.EMPTY_TEXTURE;
+        public override void Spawn()
+        {
+            base.Spawn();
+            endColor = Color.White with { A = 0 };
+            edgeColor = Color.LightGreen with { A = 0 };
         }
     }
 }

@@ -167,6 +167,56 @@ namespace Redemption.Globals
             }
             return false;
         }
+        public static void HoldOutProjBasics(Projectile proj, Terraria.Player player, Vector2 vector, Vector2 target = default)
+        {
+            if (target == default)
+                target = Main.MouseWorld;
+            if (Main.myPlayer == proj.owner)
+            {
+                float scaleFactor6 = 1f;
+                if (player.inventory[player.selectedItem].shoot == proj.type)
+                    scaleFactor6 = player.inventory[player.selectedItem].shootSpeed * proj.scale;
+                Vector2 vector13 = target - vector;
+                vector13.Normalize();
+                if (vector13.HasNaNs())
+                    vector13 = Vector2.UnitX * player.direction;
+                vector13 *= scaleFactor6;
+                if (vector13.X != proj.velocity.X || vector13.Y != proj.velocity.Y)
+                    proj.netUpdate = true;
+
+                proj.velocity = vector13;
+                if (player.noItems || player.CCed || player.dead || !player.active)
+                    proj.Kill();
+                proj.netUpdate = true;
+            }
+        }
+        public static void HoldOutProj_SlowTurn(Projectile proj, Terraria.Player player, Vector2 vector, float responsiveness)
+        {
+            if (Main.myPlayer == proj.owner)
+            {
+                float scaleFactor6 = 1f;
+                if (player.inventory[player.selectedItem].shoot == proj.type)
+                    scaleFactor6 = player.inventory[player.selectedItem].shootSpeed * proj.scale;
+
+                Vector2 targetVector = Main.MouseWorld - vector;
+                targetVector.Normalize();
+
+                if (targetVector.HasNaNs())
+                    targetVector = Vector2.UnitX * player.direction;
+
+                if (targetVector.X != proj.velocity.X || targetVector.Y != proj.velocity.Y)
+                    proj.netUpdate = true;
+
+                proj.velocity = Vector2.Normalize(Vector2.Lerp(proj.velocity, targetVector, responsiveness));
+                proj.velocity *= scaleFactor6;
+
+                if (player.noItems || player.CCed || player.dead || !player.active)
+                    proj.Kill();
+
+                proj.netUpdate = true;
+            }
+        }
+
         public static Dictionary<int, (Entity entity, IEntitySource source)> projOwners = new();
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {

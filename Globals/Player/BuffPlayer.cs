@@ -729,7 +729,7 @@ namespace Redemption.Globals.Player
             if (holyFire)
             {
                 if (Main.rand.NextBool(4) && !Main.gamePaused && drawInfo.shadow == 0f)
-                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Player), new Vector2(0, -1), new GlowParticle2(), Color.LightGoldenrodYellow, 1, .45f, Main.rand.Next(50, 60));
+                    RedeParticleManager.CreateGlowParticle(RedeHelper.RandAreaInEntity(Player), new Vector2(0, -1), 1f, Color.LightGoldenrodYellow, Main.rand.Next(50, 60));
             }
             if (pureChill)
             {

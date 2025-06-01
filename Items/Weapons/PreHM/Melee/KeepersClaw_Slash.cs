@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary.Core;
+using ParticleLibrary.Utilities;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
@@ -141,14 +142,14 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             Vector2 dir = target.DirectionTo(player.Center);
             Vector2 drawPos = Vector2.Lerp(Projectile.Center, target.Center, 0.9f);
-            ParticleSystem.NewParticle(drawPos, dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f) + player.direction * MathHelper.PiOver4) * 30, new SlashParticleAlt(16, 1), Color.PaleVioletRed, .5f, layer: Layer.BeforePlayers);
+            RedeParticleManager.CreateSlashParticle(drawPos, dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f) + player.direction * MathHelper.PiOver4) * 30, .5f, Color.PaleVioletRed, 16);
             for (int i = 0; i < 4; i++)
             {
                 float randomRotation = Main.rand.NextFloat(-0.5f, 0.5f);
                 float randomVel = Main.rand.NextFloat(2f, 4f);
                 Vector2 direction = target.DirectionFrom(player.Center);
                 Vector2 position = target.Center - direction * 10;
-                ParticleSystem.NewParticle(position, direction.RotatedBy(randomRotation) * randomVel * 8, new SpeedParticle(), Color.DarkRed, 0.8f);
+                RedeParticleManager.CreateSpeedParticle(position, direction.RotatedBy(randomRotation) * randomVel * 8, 0.8f, Color.DarkRed.WithAlpha(0));
             }
 
             target.AddBuff(ModContent.BuffType<NecroticGougeDebuff>(), 600);

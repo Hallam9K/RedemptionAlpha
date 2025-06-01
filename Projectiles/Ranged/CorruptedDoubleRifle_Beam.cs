@@ -47,12 +47,7 @@ namespace Redemption.Projectiles.Ranged
 
                 Color emberColor = Color.Multiply(Color.Lerp(bright, dark, (float)(timeLeftMax - Projectile.timeLeft) / timeLeftMax), 1);
                 Color glowColor = Color.Multiply(Color.Lerp(mid, dark, (float)(timeLeftMax - Projectile.timeLeft) / timeLeftMax), 1f);
-                RedeParticleSystemManager.RedeQuadSystem.NewParticle(v, Vector2.Zero, new QuadParticle()
-                {
-                    StartColor = emberColor,
-                    EndColor = glowColor,
-                    Scale = new Vector2(.5f * ((float)Projectile.timeLeft / timeLeftMax))
-                }, 10);
+                RedeParticleManager.CreateQuadParticle(v, Vector2.Zero, new Vector2(.5f * ((float)Projectile.timeLeft / timeLeftMax)), emberColor, glowColor, 10);
             }
             if (Projectile.ai[0] == 1)
             {
