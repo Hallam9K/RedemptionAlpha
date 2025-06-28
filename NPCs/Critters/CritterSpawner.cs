@@ -72,7 +72,7 @@ namespace Redemption.NPCs.Critters
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float baseChance = SpawnCondition.OverworldDay.Chance;
-            float townChance = SpawnCondition.OverworldDayGrassCritter.Chance;
+            float townChance = SpawnCondition.TownGeneralCritter.Chance;
             float multiplier = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType is TileID.Grass or TileID.JungleGrass ? 0.12f : 0f;
 
             return Math.Max(baseChance, townChance) * multiplier;

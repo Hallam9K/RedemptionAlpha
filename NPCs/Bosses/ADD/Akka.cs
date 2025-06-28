@@ -130,7 +130,7 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            if (RedeBossDowned.downedGGBossFirst == 1 && RedeBossDowned.downedGGBossFirst == 2)
+            if (RedeBossDowned.downedGGBossFirst is 1 or 2)
                 modifiers.FinalDamage *= .75f;
 
             if (NPC.RedemptionGuard().GuardPoints >= 0 && !NPC.RedemptionGuard().GuardBroken)
@@ -169,7 +169,9 @@ namespace Redemption.NPCs.Bosses.ADD
         public override void BossLoot(ref string name, ref int potionType)
         {
             potionType = ItemID.SuperHealingPotion;
-            if (!RedeBossDowned.downedADD && !NPC.AnyNPCs(ModContent.NPCType<Ukko>()))
+            if (NPC.AnyNPCs(NPCType<Ukko>()))
+                return;
+            if (!RedeBossDowned.downedADD)
             {
                 RedeQuest.adviceSeen[(int)RedeQuest.Advice.UkkoEye] = true;
                 int fallen = NPC.FindFirstNPC(NPCType<Fallen>());
@@ -180,8 +182,9 @@ namespace Redemption.NPCs.Bosses.ADD
                 RedeWorld.Alignment += 0;
                 ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.ADDDefeat"), 300, 30, 0, Color.DarkGoldenrod);
             }
-            if (!NPC.AnyNPCs(ModContent.NPCType<Ukko>()) && !RedeBossDowned.downedADD && RedeBossDowned.downedGGBossFirst == 0)
+            if (RedeBossDowned.downedGGBossFirst == 0)
                 RedeBossDowned.downedGGBossFirst = 3;
+
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedADD, -1);
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)

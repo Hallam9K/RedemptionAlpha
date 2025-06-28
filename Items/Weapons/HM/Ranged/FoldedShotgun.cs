@@ -1,12 +1,8 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.Items.Materials.HM;
-using Redemption.Textures;
 using ReLogic.Content;
 using System;
-using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -45,10 +41,10 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.shootSpeed = 16f;
             Item.useAmmo = AmmoID.Bullet;
         }
-        public override bool CanConsumeAmmo(Item ammo, Player player) => false;
+        public override bool CanConsumeAmmo(Item ammo, Player player) => true;
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<FoldedShotgun_Proj>(), damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(source, position, velocity, ProjectileType<FoldedShotgun_Proj>(), damage, knockback, player.whoAmI);
             return false;
         }
     }
@@ -70,28 +66,12 @@ namespace Redemption.Items.Weapons.HM.Ranged
         private int bullet = 1;
         private bool flashEffect;
         Vector2 heldOffset;
+        bool firstShot;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
             Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
-            if (Main.myPlayer == Projectile.owner)
-            {
-                float scaleFactor6 = 1f;
-                if (player.inventory[player.selectedItem].shoot == Projectile.type)
-                    scaleFactor6 = player.inventory[player.selectedItem].shootSpeed * Projectile.scale;
-                Vector2 vector13 = Main.MouseWorld - vector;
-                vector13.Normalize();
-                if (vector13.HasNaNs())
-                    vector13 = Vector2.UnitX * player.direction;
-                vector13 *= scaleFactor6;
-                if (vector13.X != Projectile.velocity.X || vector13.Y != Projectile.velocity.Y)
-                    Projectile.netUpdate = true;
-
-                Projectile.velocity = vector13;
-                if (player.noItems || player.CCed || player.dead || !player.active)
-                    Projectile.Kill();
-                Projectile.netUpdate = true;
-            }
+            RedeProjectile.HoldOutProjBasics(Projectile, player, vector);
             Projectile.timeLeft = 2;
             player.ChangeDir(Projectile.direction);
             player.heldProj = Projectile.whoAmI;
@@ -115,11 +95,9 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 {
                     if (Projectile.localAI[1]++ % (int)(player.inventory[player.selectedItem].useTime * shootingSpeed) == 0)
                     {
-                        int weaponDamage = Projectile.damage;
-                        float weaponKnockback = Projectile.knockBack;
-                        float shootSpeed = player.inventory[player.selectedItem].shootSpeed;
-                        if (Projectile.UseAmmo(AmmoID.Bullet, ref bullet, ref shootSpeed, ref weaponDamage, ref weaponKnockback))
+                        if (player.PickAmmo(player.HeldItem, out bullet, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId, !firstShot))
                         {
+                            firstShot = true;
                             flashEffect = true;
                             offset = 15;
                             rotOffset = -0.5f;
@@ -156,7 +134,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                                 Vector2 perturbedSpeed = RedeHelper.PolarVector(shootSpeed, (Main.MouseWorld - gunPos).ToRotation()).RotatedByRandom(MathHelper.ToRadians(15));
                                 float scale = 1f - (Main.rand.NextFloat() * .5f);
                                 perturbedSpeed *= scale;
-                                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, perturbedSpeed, bullet, Projectile.damage, Projectile.knockBack, player.whoAmI);
+                                Projectile.NewProjectile(player.GetSource_FromThis(), Projectile.Center, perturbedSpeed, bullet, Projectile.damage, Projectile.knockBack, player.whoAmI);
                             }
                             RedeHelper.NPCRadiusDamage(Projectile.Center + RedeHelper.OffsetWithRotation(Projectile, 52, -5), 60, Projectile, Projectile.damage * 2, Projectile.knockBack);
                         }
@@ -194,7 +172,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         Asset<Texture2D> flash;
         public override bool PreDraw(ref Color lightColor)
         {
-            flash ??= ModContent.Request<Texture2D>(Texture + "_Flash");
+            flash ??= Request<Texture2D>(Texture + "_Flash");
             Rectangle flashRect = flash.Frame(1, 3, 0, Projectile.frame);
             Vector2 flashOrigin = new(flashRect.Width / 2 - (76 * Projectile.spriteDirection), flashRect.Height / 2 + 8);
 

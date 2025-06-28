@@ -285,6 +285,13 @@ namespace Redemption.Globals.NPC
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {
             globalLoot.Add(ItemDropRule.ByCondition(new YoyosTidalWake(), ItemType<TidalWake>(), 200));
+
+            IItemDropRule conditionalRule = new LeadingConditionRule(new Conditions.SoulOfLight());
+            IItemDropRule conditionalRule2 = new LeadingConditionRule(new Conditions.SoulOfNight());
+            conditionalRule.OnSuccess(ItemDropRule.ByCondition(new SoulCandleCondition(), ItemID.SoulofLight, 4));
+            conditionalRule2.OnSuccess(ItemDropRule.ByCondition(new SoulCandleCondition(), ItemID.SoulofNight, 4));
+            globalLoot.Add(conditionalRule);
+            globalLoot.Add(conditionalRule2);
         }
         public override void EditSpawnRate(Terraria.Player player, ref int spawnRate, ref int maxSpawns)
         {

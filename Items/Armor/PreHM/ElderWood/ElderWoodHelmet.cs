@@ -1,4 +1,5 @@
 using Redemption.BaseExtension;
+using Redemption.DamageClasses;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using System;
@@ -7,10 +8,10 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Armor.PreHM.LivingWood
+namespace Redemption.Items.Armor.PreHM.ElderWood
 {
     [AutoloadEquip(EquipType.Head)]
-    public class LivingWoodHelmet : ModItem
+    public class ElderWoodHelmet : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -19,21 +20,21 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
 
         public override void SetDefaults()
         {
-            Item.width = 24;
-            Item.height = 26;
+            Item.width = 22;
+            Item.height = 22;
             Item.value = Item.sellPrice(copper: 30);
             Item.rare = ItemRarityID.White;
-            Item.defense = 1;
+            Item.defense = 2;
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == ItemType<LivingWoodBody>() && legs.type == ItemType<LivingWoodLeggings>();
+            return body.type == ItemType<ElderWoodBreastplate>() && legs.type == ItemType<ElderWoodGreaves>();
         }
 
         public override void UpdateEquip(Player player)
         {
-            player.maxTurrets += 1;
+            player.GetCritChance(DamageClass.Magic) += 4;
         }
         public override void ArmorSetShadows(Player player)
         {
@@ -42,20 +43,24 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
                 if (Main.netMode == NetmodeID.Server)
                     return;
 
-                Gore.NewGore(player.GetSource_FromThis(), new Vector2(player.Center.X + Main.rand.Next(-12, 4), player.Center.Y + Main.rand.Next(6)), player.velocity, GoreID.TreeLeaf_Normal);
+                Gore.NewGore(player.GetSource_FromThis(), new Vector2(player.Center.X + Main.rand.Next(-12, 4), player.Center.Y + Main.rand.Next(6)), player.velocity, Find<ModGore>("Redemption/ElderTreeFX").Type);
             }
         }
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.LivingWood", ElementID.NatureS);
-            player.GetDamage(DamageClass.Summon).Flat += 1;
-            player.RedemptionPlayerBuff().ElementalDamage[ElementID.Nature] += 0.15f;
-            player.RedemptionPlayerBuff().ElementalResistance[ElementID.Nature] += 0.15f;
+            player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.ElderWood", ElementID.NatureS, ElementID.PoisonS);
+            player.RedemptionPlayerBuff().elderWoodBonus = true;
+            player.buffImmune[BuffID.Poisoned] = true;
+            player.manaCost *= .9f;
+            player.RedemptionPlayerBuff().ElementalDamage[ElementID.Nature] += 0.08f;
+            player.RedemptionPlayerBuff().ElementalDamage[ElementID.Poison] += 0.08f;
+            player.RedemptionPlayerBuff().ElementalResistance[ElementID.Nature] += 0.12f;
+            player.RedemptionPlayerBuff().ElementalResistance[ElementID.Poison] += 0.12f;
         }
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<LivingTwig>(24)
+                .AddIngredient<Placeable.Tiles.ElderWood>(20)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

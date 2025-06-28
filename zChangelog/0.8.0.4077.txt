@@ -1,0 +1,21 @@
+=== 0.8 Beta .4077 === (Slayer Patch)
+- Fixed DR for Ancient Deity Duo and Patient Zero not working when one side is defeated
+- Added custom Boss Log portrait for Thorn
+- Improved performance of Nebuleus sky shader
+- Added Mod Calls for increasing/decreasing a player's Elemental Resistance or Damage
+- Gave NPC buffs that have a player equivalent version (Broken Armor, Electrified, Frozen) their icons textures (Mostly for better visuals in the wiki)
+- Bindeklinge has Arcane on its slash now
+- Teleportation Potions will now properly avoid laboratory and slayer's ship walls
+1769. Added Soul Candle, when near or holding does the same effect of 1.3 MoR's Magnetic Soulbond (Killing any enemy has a chance to spawn a lost soul), soul candle can also make Souls of Night or Light drop more
+2201. Added Elder Wood armour set, an early-game mage set; resprited Elder Wood Sword
+2202. Enemies rallied by the Skeleton Flagbearer or Rooster Booster have a flag icon above their heads
+2203. Changed Living Wood armour set crafting station from Anvil -> Work Bench, and moved poison immunity to Elder Wood set
+2204. Added Poison element to the following projectiles: Bee, Bee Arrow, Giant Bee, Beenade, and Wasp
+2205. Dusky Ball is now a light pet
+2206. Removed contact damage from Vagrant Spirits, they instead inflict Chilled if close, and Pure Chill if contacting
+2207. Changed Blood Thorn's Earth element into Nature element
+2211. Chickens can now spawn in Town environments
+2214. Added Arcane element to Blade Staff
+2215. Chaos Elementals are now considered Inorganic, and Scarecrows are considered Inorganic and Plantlike
+2218. Held Projectile guns use tmod's method for consuming ammo, improving mod compatibility
+===============

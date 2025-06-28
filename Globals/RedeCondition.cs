@@ -159,4 +159,16 @@ namespace Redemption.Globals
         public bool CanShowItemDropInUI() => true;
         public string GetConditionDescription() => "Dropped while the Fowl Emperor is alive";
     }
+    public class SoulCandleCondition : IItemDropRuleCondition
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            if (!info.IsInSimulation && !info.npc.SpawnedFromStatue && info.player.HasBuff<SoulboundBuff>())
+                return true;
+
+            return false;
+        }
+        public bool CanShowItemDropInUI() => false;
+        public string GetConditionDescription() => "Dropped from enemies while Soulbound";
+    }
 }

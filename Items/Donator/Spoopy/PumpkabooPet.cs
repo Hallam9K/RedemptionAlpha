@@ -35,6 +35,8 @@ namespace Redemption.Items.Donator.Spoopy
             Player player = Main.player[Projectile.owner];
             player.dino = false;
 
+            Lighting.AddLight(Projectile.Center, .74f, .85f, .4f);
+
             if (Projectile.ai[0] == 1)
             {
                 rotation = Projectile.velocity.X * 0.1f;

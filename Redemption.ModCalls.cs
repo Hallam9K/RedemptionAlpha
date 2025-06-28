@@ -420,6 +420,24 @@ namespace Redemption
                         }
 
                         return spearProj.Redemption().IsSpear = true;
+                    case "increaseElementalResistance":
+                        if (args[1] is not Player player)
+                            throw new Exception($"Expected an argument of type Player when setting player, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not int elementID12)
+                            throw new Exception($"Expected an argument of type int when setting element ID, but got type {args[1].GetType().Name} instead.");
+                        if (args[3] is not float multiplier1)
+                            throw new Exception($"Expected an argument of type int when setting increase value, but got type {args[1].GetType().Name} instead.");
+
+                        return player.RedemptionPlayerBuff().ElementalResistance[elementID12] += multiplier1;
+                    case "increaseElementalDamage":
+                        if (args[1] is not Player player2)
+                            throw new Exception($"Expected an argument of type Player when setting player, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not int elementID13)
+                            throw new Exception($"Expected an argument of type int when setting element ID, but got type {args[1].GetType().Name} instead.");
+                        if (args[3] is not float multiplier2)
+                            throw new Exception($"Expected an argument of type int when setting increase value, but got type {args[1].GetType().Name} instead.");
+
+                        return player2.RedemptionPlayerBuff().ElementalDamage[elementID13] += multiplier2;
                     #endregion
                     case "RaveyardActive":
                         return RedeWorld.SkeletonInvasion;

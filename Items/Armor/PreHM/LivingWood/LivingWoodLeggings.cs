@@ -1,7 +1,7 @@
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Redemption.Items.Materials.PreHM;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Armor.PreHM.LivingWood
 {
@@ -19,7 +19,7 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
         {
             Item.width = 22;
             Item.height = 16;
-            Item.sellPrice(copper: 40);
+            Item.value = Item.sellPrice(copper: 40);
             Item.rare = ItemRarityID.White;
             Item.defense = 2;
         }
@@ -27,7 +27,7 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
         {
             CreateRecipe()
                 .AddIngredient<LivingTwig>(30)
-                .AddTile(TileID.Anvils)
+                .AddTile(TileID.WorkBenches)
                 .Register();
         }
     }

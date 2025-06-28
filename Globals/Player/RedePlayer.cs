@@ -17,6 +17,7 @@ using Redemption.Projectiles.Ranged;
 using Redemption.Tiles.Furniture.Lab;
 using Redemption.Tiles.Furniture.Misc;
 using Redemption.Tiles.Furniture.SlayerShip;
+using Redemption.Walls;
 using Redemption.WorldGeneration;
 using Redemption.WorldGeneration.Misc;
 using Redemption.WorldGeneration.Soulless;
@@ -25,6 +26,7 @@ using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -113,6 +115,29 @@ namespace Redemption.Globals.Player
             slayerStarRating = 0;
             parryStance = false;
             parried = false;
+        }
+
+        readonly int[] bannedTeleportWalls = new int[]
+        {
+            WallType<BlackHardenedSludgeWallTile>(),
+            WallType<DangerTapeWallTile>(),
+            WallType<HardenedSludgeWallTile>(),
+            WallType<JunkMetalWall>(),
+            WallType<LabPlatingWallTileUnsafe>(),
+            WallType<MossyLabPlatingWallTile>(),
+            WallType<MossyLabWallTile>(),
+            WallType<SlayerShipPanelWallTile>(),
+            WallType<VentWallTile>(),
+        };
+        public override bool CanBeTeleportedTo(Vector2 teleportPosition, string context)
+        {
+            Point16 point = teleportPosition.ToTileCoordinates16();
+            Tile tile = Framing.GetTileSafely(point.X, point.Y);
+
+            if (context == "CheckForGoodTeleportationSpot" && bannedTeleportWalls.Contains(tile.WallType))
+                return false;
+
+            return base.CanBeTeleportedTo(teleportPosition, context);
         }
         public override bool ImmuneTo(PlayerDeathReason damageSource, int cooldownCounter, bool dodgeable)
         {

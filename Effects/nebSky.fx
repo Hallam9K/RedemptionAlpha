@@ -65,14 +65,16 @@ float4 main(float2 coords : TEXCOORD0) : COLOR0
 		centerizedUV.x * sRot + centerizedUV.y * cRot
 	);
 	
-    float4 cMask = pow(tex2D(mask, 1.2 * uv + uTime * 0.01), 3) * 5;
+    float4 maskSample = tex2D(mask, 1.2 * uv + uTime * 0.01);
+    float4 cMask = maskSample * maskSample * maskSample * 5;
+	
     float4 cStars = max(tex2D(stars, uv - float2(uTime, 0) * -0.031 * starSpeedMult)
     * tex2D(stars, starScale * 3.5 * uv + uTime * 0.01 * starSpeedMult) * 4
     , tex2D(stars, starScale * 1.7 * centerizedUV + float2(uTime * 0.1, -uTime) * 0.0236 * starSpeedMult)
     * tex2D(stars, starScale * 1.3 * uv + uTime * 0.01 * starSpeedMult) * 2);
     cStars = clamp(cStars * 5, 0, 3);
     
-    float4 vignette = clamp(lerp(1, 0, clamp(length(actualUV - float2(0.5, 0.5)) * vignetteScale, 0, 1)) * 1.5, 0, 1);
+    float4 vignette = saturate(((1 - saturate(length(actualUV - float2(0.5, 0.5))) * vignetteScale)) * 1.5);
 	
     rot = uTime * 0.02 * nebulaSpeedMult;
     cRot = cos(rot);
@@ -82,16 +84,14 @@ float4 main(float2 coords : TEXCOORD0) : COLOR0
 		centerizedUV.x * sRot + centerizedUV.y * cRot
 	);
 	
-    float4 cNoise = tex2D(displace, 3 * uv) * 0.5
-    * pow(tex2D(displace, 1.5 * centerizedUV), 2) * 3
-    * clamp(cMask + 0.5, 0, 1)
-    * tex2D(displace, centerizedUV) * 3
-    * tex2D(maskano, 1.5 * uv - uTime * 0.01 * nebulaSpeedMult) * 2;
-    cNoise = min(cNoise, tex2D(displace, 1.4 * uv) * 2) * tex2D(maskano, actualUV - float2(uTime * 0.01, 0));
+    float4 d1 = tex2D(displace, 2.0 * uv);
+    float4 d2 = tex2D(displace, centerizedUV);
+    float4 m1 = tex2D(maskano, uv - uTime * 0.01 * nebulaSpeedMult);
+    float4 cNoise = d1 * d2 * m1 * clamp(cMask + 0.5, 0, 1) * 2.5;
     cNoise *= lerp(skyColor1, skyColor2, cNoise * 0.45 + vignette * 0.3) * vignette;
     
-    float4 starWeight = pow(tex2D(stars, 6 * centerizedUV + float2(uTime * starSpeedMult / 7, -uTime * 0.003))
-   	+ tex2D(stars, 5 * centerizedUV + float2(uTime * starSpeedMult / 13, -uTime * 0.005)), 2)
+    float4 starWeight = pow(tex2D(stars, 3 * centerizedUV + float2(uTime * starSpeedMult / 7, -uTime * 0.003))
+   	+ tex2D(stars, 2 * centerizedUV + float2(uTime * starSpeedMult / 13, -uTime * 0.005)), 2)
    	* cNoise * (sin(5 * centerizedUV.x + uTime * starSpeedMult / 13) + 2);
     
     float gradient = lerp(gradientMin, gradientMax, clamp(actualUV.y * gradientScale, 0, 1));

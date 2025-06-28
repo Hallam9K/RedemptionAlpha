@@ -7,7 +7,7 @@ namespace Redemption.Buffs.NPCBuffs
 {
     public class BrokenArmorDebuff : ModBuff
     {
-        public override string Texture => "Redemption/Buffs/Debuffs/_DebuffTemplate";
+        public override string Texture => "Terraria/Images/Buff_" + BuffID.BrokenArmor;
         public override void SetStaticDefaults()
         {
             Main.debuff[Type] = true;

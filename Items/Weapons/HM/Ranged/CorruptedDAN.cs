@@ -45,7 +45,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
-        public override bool CanConsumeAmmo(Item ammo, Player player) => false;
+        public override bool CanConsumeAmmo(Item ammo, Player player) => true;
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             type = ModContent.ProjectileType<CorruptedDAN_Proj>();

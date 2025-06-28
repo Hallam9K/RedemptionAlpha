@@ -14,6 +14,8 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Critters;
+using Redemption.NPCs.Friendly;
+using Redemption.NPCs.PostML;
 using Redemption.Particles;
 using Redemption.Projectiles.Magic;
 using Redemption.Projectiles.Melee;
@@ -107,6 +109,7 @@ namespace Redemption.Globals.Player
         public bool hikariteHead;
         public bool blastBattery;
         public bool xenomiteBonus;
+        public bool elderWoodBonus;
 
         public bool MetalSet;
         public bool WastelandWaterImmune;
@@ -159,6 +162,7 @@ namespace Redemption.Globals.Player
             ChickenForm = false;
             blastBattery = false;
             xenomiteBonus = false;
+            elderWoodBonus = false;
             shieldGenerator = false;
             holyFire = false;
             bowString = false;
@@ -284,6 +288,13 @@ namespace Redemption.Globals.Player
 
                     }
                 }
+            }
+        }
+        public override void ModifyManaCost(Item item, ref float reduce, ref float mult)
+        {
+            if (elderWoodBonus && (item.HasElementItem(ElementID.Nature) || item.HasElementItem(ElementID.Poison)))
+            {
+                reduce -= .5f;
             }
         }
         public override void UpdateEquips()
@@ -568,6 +579,13 @@ namespace Redemption.Globals.Player
             }
             if (seaEmblem && Main.rand.NextBool(3) && proj.HasElement(ElementID.Water))
                 target.AddBuff(BuffType<SoakedDebuff>(), 600);
+            if (target.life <= 0 && target.lifeMax > 5 && Main.rand.NextBool(6))
+            {
+                if (Main.player[proj.owner].HasBuff(BuffType<SoulboundBuff>()) && target.type != NPCID.DungeonSpirit && target.type != NPCType<LostSoulNPC>())
+                {
+                    RedeHelper.SpawnNPC(target.GetSource_Loot(), (int)target.Center.X, (int)target.Center.Y, NPCType<LostSoulNPC>());
+                }
+            }
         }
         public override void OnHitNPCWithItem(Item item, Terraria.NPC target, Terraria.NPC.HitInfo hit, int damageDone)
         {
@@ -595,6 +613,13 @@ namespace Redemption.Globals.Player
             }
             if (seaEmblem && Main.rand.NextBool(3) && item.HasElement(ElementID.Water))
                 target.AddBuff(BuffType<SoakedDebuff>(), 600);
+            if (target.life <= 0 && target.lifeMax > 5 && Main.rand.NextBool(6))
+            {
+                if (Player.HasBuff(BuffType<SoulboundBuff>()) && target.type != NPCID.DungeonSpirit && target.type != NPCType<LostSoulNPC>())
+                {
+                    RedeHelper.SpawnNPC(target.GetSource_Loot(), (int)target.Center.X, (int)target.Center.Y, NPCType<LostSoulNPC>());
+                }
+            }
         }
         public override void UpdateBadLifeRegen()
         {

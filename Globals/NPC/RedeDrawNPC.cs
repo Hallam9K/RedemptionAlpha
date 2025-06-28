@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Textures;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
@@ -25,6 +26,13 @@ namespace Redemption.Globals.NPC
         }
         public override void PostDraw(Terraria.NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (npc.RedemptionNPCBuff().rallied || npc.RedemptionNPCBuff().roosterBoost)
+            {
+                Asset<Texture2D> flagTex = CommonTextures.RalliedBuffIcon;
+                Vector2 drawOrigin = flagTex.Size() / 2;
+
+                spriteBatch.Draw(flagTex.Value, npc.position + new Vector2(npc.width / 2, -30) - screenPos, null, Color.White * npc.Opacity, 0, drawOrigin, 1, 0, 0);
+            }
             if (npc.RedemptionNPCBuff().stunned)
             {
                 Texture2D starTex = ModContent.Request<Texture2D>("Redemption/Textures/StunVisual").Value;

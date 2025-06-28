@@ -7,6 +7,8 @@ namespace Redemption.Buffs.NPCBuffs
 {
     public class IceFrozen : ModBuff
     {
+        public override string Texture => "Terraria/Images/Buff_" + BuffID.Frozen;
+
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Frozen");

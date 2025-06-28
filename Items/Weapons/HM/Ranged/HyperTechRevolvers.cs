@@ -48,7 +48,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool AltFunctionUse(Player player) => true;
-        public override bool CanConsumeAmmo(Item ammo, Player player) => false;
+        public override bool CanConsumeAmmo(Item ammo, Player player) => player.altFunctionUse != 2;
         public override bool CanUseItem(Player player)
         {
             if (player.altFunctionUse == 2 && (player.ownedProjectileCounts[ModContent.ProjectileType<HyperTechRevolvers_Proj2>()] > 0 || player.HasBuff<RevolverTossDebuff>()))

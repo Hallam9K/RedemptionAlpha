@@ -38,6 +38,7 @@ namespace Redemption.Textures
         public static Asset<Texture2D> TransitionTex;
 
         public static Asset<Texture2D> StunVisual;
+        public static Asset<Texture2D> RalliedBuffIcon;
         public override void Load()
         {
             if (Main.dedServ)
@@ -73,6 +74,7 @@ namespace Redemption.Textures
             TransitionTex = Request<Texture2D>("Redemption/Textures/TransitionTex");
 
             StunVisual = Request<Texture2D>("Redemption/Textures/StunVisual");
+            RalliedBuffIcon = Request<Texture2D>("Redemption/Buffs/NPCBuffs/FlagbearerBuff_Icon");
         }
     }
 }

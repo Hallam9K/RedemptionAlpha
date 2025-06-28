@@ -465,7 +465,7 @@ Mods: {
 
 				LivingWood:
 					'''
-					Immune to poison, increased summon damage by 1
+					Increased summon damage by 1
 					15% increased {0} elemental damage and resistance
 					'''
 				CommonGuardHelm1: 12% increased melee speed
@@ -525,6 +525,13 @@ Mods: {
 					Double tap Down to enter [c/BCF160:Cannon Mode]:
 					While in Cannon Mode, all weapons are disabled and attacking fires aimable grenades
 					The grenade gives all enemies caught in the blast damage vulnerability
+					'''
+				ElderWood:
+					'''
+					Immunity to Poison
+					10% reduced mana cost, 60% for {0} or {1} weapons
+					8% increased {0} and {1} elemental damage
+					12% increased {0} and {1} elemental resistance
 					'''
 			}
 		}
@@ -2639,6 +2646,11 @@ Mods: {
 				DisplayName: Weird Bloom
 				Description: I am the original     Living Bloom
 			}
+
+			SoulboundBuff: {
+				DisplayName: Soulbound
+				Description: Chance to cause lost souls to appear from slain enemies
+			}
 		}
 
 		Biomes: {
@@ -4263,7 +4275,7 @@ Mods: {
 			}
 
 			LivingWoodBody: {
-				DisplayName: Living Wood Body
+				DisplayName: Living Wood Breastplate
 				Tooltip: +1 increased summon damage
 			}
 
@@ -4273,7 +4285,7 @@ Mods: {
 			}
 
 			LivingWoodLeggings: {
-				DisplayName: Living Wood Leggings
+				DisplayName: Living Wood Greaves
 				Tooltip: ""
 			}
 
@@ -6184,6 +6196,15 @@ Mods: {
 					'''
 					Creates a small aura that instantly kills any soulless enemies that enter
 					Life regen is disabled in the aura
+					'''
+			}
+
+			SoulCandle: {
+				DisplayName: Soul Candle
+				Tooltip:
+					'''
+					Holding this may cause lost souls to appear from slain enemies
+					Can also cause more souls of Light and Night to appear
 					'''
 			}
 
@@ -8960,7 +8981,7 @@ Mods: {
 
 			Bindeklinge: {
 				DisplayName: Bindeklinge
-				Tooltip: Critical strikes release homing lightmass, dealing {0} and {1} damage
+				Tooltip: Critical strikes release homing lightmass
 				Lore:
 					'''
 					'A broadsword once wielded by the leader of Lighthelm's forgotten Oracles of Rebirth.
@@ -10811,6 +10832,21 @@ Mods: {
 				DisplayName: Vicious Chicken Banner
 				Tooltip: ""
 			}
+
+			ElderWoodBreastplate: {
+				DisplayName: Elder Wood Breastplate
+				Tooltip: +1 increased magic damage
+			}
+
+			ElderWoodGreaves: {
+				DisplayName: Elder Wood Greaves
+				Tooltip: +1 increased magic damage
+			}
+
+			ElderWoodHelmet: {
+				DisplayName: Elder Wood Helmet
+				Tooltip: 4% increased magic critical strike chance
+			}
 		}
 
 		Projectiles: {
@@ -12274,6 +12310,7 @@ Mods: {
 			TreeBugCageTile.MapEntry: Tree Bug Cage Tile
 			GloomShroomFoliage.MapEntry: Gloom Mushroom
 			GloomShroomFoliage2.MapEntry: Gloom Mushroom
+			SoulCandleTile.MapEntry: Soul Candle
 		}
 
 		Keybinds: {

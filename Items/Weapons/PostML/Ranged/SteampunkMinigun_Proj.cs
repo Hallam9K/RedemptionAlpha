@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
@@ -40,27 +39,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         {
             Player player = Main.player[Projectile.owner];
             Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
-            if (Main.myPlayer == Projectile.owner)
-            {
-                float scaleFactor6 = 1f;
-                if (player.inventory[player.selectedItem].shoot == Projectile.type)
-                    scaleFactor6 = player.inventory[player.selectedItem].shootSpeed * Projectile.scale;
-
-                Vector2 vector13 = Main.MouseWorld - vector;
-                vector13.Normalize();
-                if (vector13.HasNaNs())
-                    vector13 = Vector2.UnitX * player.direction;
-
-                vector13 *= scaleFactor6;
-                if (vector13.X != Projectile.velocity.X || vector13.Y != Projectile.velocity.Y)
-                    Projectile.netUpdate = true;
-
-                Projectile.velocity = vector13;
-                if (player.noItems || player.CCed || player.dead || !player.active)
-                    Projectile.Kill();
-
-                Projectile.netUpdate = true;
-            }
+            RedeProjectile.HoldOutProjBasics(Projectile, player, vector);
             Projectile.Center = vector;
             Projectile.spriteDirection = Projectile.direction;
             Projectile.timeLeft = 2;
@@ -76,94 +55,90 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Projectile.rotation = Projectile.velocity.ToRotation() + num;
 
             offset -= 1;
-            if (Main.myPlayer == Projectile.owner)
+            switch (Case)
             {
-                switch (Case)
-                {
-                    case 0:
-                        if (++Projectile.frameCounter >= 5)
+                case 0:
+                    if (++Projectile.frameCounter >= 5)
+                    {
+                        Projectile.frameCounter = 0;
+                        if (++Projectile.frame >= 2)
+                            Projectile.frame = 0;
+                    }
+
+                    Charge++;
+                    if (Charge >= (int)(30 / player.GetAttackSpeed(DamageClass.Ranged)))
+                        shake += 0.01f;
+                    if (Charge % (int)(30 / player.GetAttackSpeed(DamageClass.Ranged)) == 0 && !Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.WindUp, Projectile.position);
+                    if (Charge >= (int)(90 / player.GetAttackSpeed(DamageClass.Ranged)))
+                    {
+                        Case = 1;
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.ShootChange, Projectile.position);
+                    }
+                    Projectile.position += new Vector2(Main.rand.NextFloat(-shake, shake), Main.rand.NextFloat(-shake, shake));
+
+                    if (!player.channel)
+                        Case = 1;
+                    break;
+                case 1:
+                    if (Timer++ == 0)
+                    {
+                        if (++Projectile.frameCounter >= 2)
                         {
                             Projectile.frameCounter = 0;
-                            if (++Projectile.frame >= 2)
-                                Projectile.frame = 0;
+                            if (++Projectile.frame >= 4)
+                                Projectile.frame = 2;
                         }
-
-                        Charge++;
-                        if (Charge >= (int)(30 / player.GetAttackSpeed(DamageClass.Ranged)))
-                            shake += 0.01f;
-                        if (Charge % (int)(30 / player.GetAttackSpeed(DamageClass.Ranged)) == 0 && !Main.dedServ)
-                            SoundEngine.PlaySound(CustomSounds.WindUp, Projectile.position);
-                        if (Charge >= (int)(90 / player.GetAttackSpeed(DamageClass.Ranged)))
+                        if (player.PickAmmo(player.HeldItem, out bullet, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId, !Main.rand.NextBool(3)))
                         {
-                            Case = 1;
-                            if (!Main.dedServ)
-                                SoundEngine.PlaySound(CustomSounds.ShootChange, Projectile.position);
-                        }
-                        Projectile.position += new Vector2(Main.rand.NextFloat(-shake, shake), Main.rand.NextFloat(-shake, shake));
+                            if (bullet == ProjectileID.Bullet)
+                                bullet = ProjectileID.BulletHighVelocity;
 
-                        if (!player.channel)
-                            Case = 1;
-                        break;
-                    case 1:
-                        if (Timer++ == 0)
-                        {
-                            if (++Projectile.frameCounter >= 2)
+                            Vector2 gunPos = Projectile.Center + RedeHelper.PolarVector(25 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(2, Projectile.rotation + MathHelper.PiOver2);
+                            Vector2 gunSmokePos = Projectile.Center + RedeHelper.PolarVector(49 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-3, Projectile.rotation + MathHelper.PiOver2);
+                            for (int i = 0; i < 3; i++)
                             {
-                                Projectile.frameCounter = 0;
-                                if (++Projectile.frame >= 4)
-                                    Projectile.frame = 2;
+                                int num5 = Dust.NewDust(gunSmokePos, 4, 10, DustID.Smoke, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
+                                Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                Main.dust[num5].velocity *= 0.66f;
+                                Main.dust[num5].noGravity = true;
                             }
-                            int weaponDamage = Projectile.damage;
-                            float weaponKnockback = Projectile.knockBack;
-                            float shootSpeed = player.inventory[player.selectedItem].shootSpeed;
-                            if (Projectile.UseAmmo(AmmoID.Bullet, ref bullet, ref shootSpeed, ref weaponDamage, ref weaponKnockback, !Main.rand.NextBool(3)))
+                            for (int i = 0; i < 3; i++)
                             {
-                                if (bullet == ProjectileID.Bullet)
-                                    bullet = ProjectileID.BulletHighVelocity;
+                                int num5 = Dust.NewDust(gunSmokePos, 4, 10, DustID.Wraith, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
+                                Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                Main.dust[num5].velocity *= 3f;
+                                Main.dust[num5].noGravity = true;
+                            }
+                            offset = 4;
+                            player.RedemptionScreen().ScreenShakeIntensity += 1;
+                            SoundEngine.PlaySound(SoundID.Item40, Projectile.position);
 
-                                Vector2 gunPos = Projectile.Center + RedeHelper.PolarVector(25 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(2, Projectile.rotation + MathHelper.PiOver2);
-                                Vector2 gunSmokePos = Projectile.Center + RedeHelper.PolarVector(49 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-3, Projectile.rotation + MathHelper.PiOver2);
-                                for (int i = 0; i < 3; i++)
-                                {
-                                    int num5 = Dust.NewDust(gunSmokePos, 4, 10, DustID.Smoke, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
-                                    Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
-                                    Main.dust[num5].velocity *= 0.66f;
-                                    Main.dust[num5].noGravity = true;
-                                }
-                                for (int i = 0; i < 3; i++)
-                                {
-                                    int num5 = Dust.NewDust(gunSmokePos, 4, 10, DustID.Wraith, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
-                                    Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
-                                    Main.dust[num5].velocity *= 3f;
-                                    Main.dust[num5].noGravity = true;
-                                }
-                                offset = 4;
-                                player.RedemptionScreen().ScreenShakeIntensity += 1;
-                                SoundEngine.PlaySound(SoundID.Item40, Projectile.position);
+                            if (Projectile.owner == Main.myPlayer)
                                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(shootSpeed, (Main.MouseWorld - gunPos).ToRotation() + Main.rand.NextFloat(-0.1f, 0.1f)), bullet, Projectile.damage, Projectile.knockBack, player.whoAmI);
-                            }
                         }
-                        if (Timer >= 2 && Charge >= 1)
-                        {
-                            Charge -= 1;
-                            Timer = 0;
-                        }
-                        if (Timer >= 10)
-                            Projectile.Kill();
+                    }
+                    if (Timer >= 2 && Charge >= 1)
+                    {
+                        Charge -= 1;
+                        Timer = 0;
+                    }
+                    if (Timer >= 10)
+                        Projectile.Kill();
 
-                        if (player.controlUseItem)
-                        {
-                            if (Timer2++ % (int)(30 / player.GetAttackSpeed(DamageClass.Ranged)) == 0)
-                                SoundEngine.PlaySound(CustomSounds.WindUp, Projectile.position);
-                            player.velocity.X *= 0.1f;
-                            Charge++;
-                        }
-                        else
-                            Timer2 = 0;
+                    if (player.controlUseItem)
+                    {
+                        if (Timer2++ % (int)(30 / player.GetAttackSpeed(DamageClass.Ranged)) == 0)
+                            SoundEngine.PlaySound(CustomSounds.WindUp, Projectile.position);
+                        player.velocity.X *= 0.1f;
+                        Charge++;
+                    }
+                    else
+                        Timer2 = 0;
 
-                        Projectile.position += new Vector2(Main.rand.NextFloat(-shake, shake), Main.rand.NextFloat(-shake, shake));
-                        break;
-                }
+                    Projectile.position += new Vector2(Main.rand.NextFloat(-shake, shake), Main.rand.NextFloat(-shake, shake));
+                    break;
             }
             shake = MathHelper.Min(shake, 0.8f);
             Charge = MathHelper.Min(Charge, 90);
@@ -174,7 +149,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+            Texture2D glow = Request<Texture2D>(Texture + "_Glow").Value;
             int height = texture.Height / 4;
             int y = height * Projectile.frame;
             Rectangle rect = new(0, y, texture.Width, height);

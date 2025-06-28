@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Minions;
@@ -65,14 +64,9 @@ namespace Redemption.Projectiles.Minions
             {
                 pos *= 0.98f;
 
-                int bulletID = -1;
-                float shootSpeed = 10f;
-                int shootDamage = Projectile.damage;
-                float shootKnockback = Projectile.knockBack;
-
                 if (Projectile.ai[0] % 120 == 0)
                 {
-                    attackPosition = Main.rand.Next(target.width + 40, target.width + 120);
+                    attackPosition = Main.rand.Next(target.width + 140, target.width + 220);
                     attackPositionY = Main.rand.Next(target.width - 25, target.width);
                     AttackPos = new(attackPosition * Projectile.RightOfDir(target), -attackPositionY);
                 }
@@ -82,9 +76,11 @@ namespace Redemption.Projectiles.Minions
 
                 if (++Projectile.ai[0] % 18 == 0)
                 {
-                    if (Projectile.UseAmmo(AmmoID.Bullet, ref bulletID, ref shootSpeed, ref shootDamage, ref shootKnockback, !Main.rand.NextBool(5)))
+                    if (owner.PickAmmo(owner.HeldItem, out int bulletID, out _, out _, out _, out _, !Main.rand.NextBool(5)))
                     {
-                        int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(shootSpeed, (target.Center - Projectile.Center).ToRotation()), bulletID, shootDamage, Projectile.knockBack, owner.whoAmI);
+                        float shootSpeed = 10f;
+
+                        int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(shootSpeed, (target.Center - Projectile.Center).ToRotation()), bulletID, Projectile.damage, Projectile.knockBack, owner.whoAmI);
                         Main.projectile[p].DamageType = DamageClass.Summon;
                         Main.projectile[p].netUpdate = true;
                     }
@@ -125,12 +121,12 @@ namespace Redemption.Projectiles.Minions
         {
             if (owner.dead || !owner.active)
             {
-                owner.ClearBuff(ModContent.BuffType<XeniumTurretBuff>());
+                owner.ClearBuff(BuffType<XeniumTurretBuff>());
 
                 return false;
             }
 
-            if (owner.HasBuff(ModContent.BuffType<XeniumTurretBuff>()))
+            if (owner.HasBuff(BuffType<XeniumTurretBuff>()))
                 Projectile.timeLeft = 2;
 
             return true;
@@ -138,7 +134,7 @@ namespace Redemption.Projectiles.Minions
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
+            Texture2D glow = Request<Texture2D>(Texture + "_Glow").Value;
             int height = texture.Height / 3;
             int y = height * Projectile.frame;
             Rectangle rect = new(0, y, texture.Width, height);

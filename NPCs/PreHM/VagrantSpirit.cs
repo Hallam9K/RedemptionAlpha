@@ -1,7 +1,7 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
+using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Materials.PreHM;
@@ -33,17 +33,10 @@ namespace Redemption.NPCs.PreHM
         {
             if (Main.dedServ)
                 return;
-            back = ModContent.Request<Texture2D>(Texture + "_Back");
-            lantern = ModContent.Request<Texture2D>(Texture + "_Lantern");
-            mask = ModContent.Request<Texture2D>(Texture + "_Mask");
-            trail = ModContent.Request<Texture2D>(Texture + "_Trail");
-        }
-        public override void Unload()
-        {
-            back = null;
-            lantern = null;
-            mask = null;
-            trail = null;
+            back = Request<Texture2D>(Texture + "_Back");
+            lantern = Request<Texture2D>(Texture + "_Lantern");
+            mask = Request<Texture2D>(Texture + "_Mask");
+            trail = Request<Texture2D>(Texture + "_Trail");
         }
 
         public enum ActionState
@@ -71,7 +64,7 @@ namespace Redemption.NPCs.PreHM
 
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1f,
             };
@@ -84,7 +77,7 @@ namespace Redemption.NPCs.PreHM
             NPC.width = 76;
             NPC.height = 44;
             NPC.friendly = false;
-            NPC.damage = 22;
+            NPC.damage = 0;
             NPC.defense = 0;
             NPC.lifeMax = 60;
             NPC.HitSound = SoundID.NPCHit36;
@@ -96,7 +89,7 @@ namespace Redemption.NPCs.PreHM
             NPC.alpha = 100;
             NPC.chaseable = false;
             Banner = NPC.type;
-            BannerItem = ModContent.ItemType<VagrantSpiritBanner>();
+            BannerItem = ItemType<VagrantSpiritBanner>();
         }
         public override void HitEffect(NPC.HitInfo hit)
         {
@@ -143,6 +136,20 @@ namespace Redemption.NPCs.PreHM
             if (Main.rand.NextBool(1500) && !Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.Ghost3, NPC.position);
 
+            if (NPC.alpha < 150)
+            {
+                if (Main.LocalPlayer.DistanceSQ(NPC.Center) < 160 * 160)
+                    Main.LocalPlayer.AddBuff(BuffID.Chilled, 30);
+                if (Main.LocalPlayer.Hitbox.Intersects(NPC.Hitbox))
+                    Main.LocalPlayer.AddBuff(BuffType<PureChillDebuff>(), 30);
+
+                foreach (NPC npc in Main.ActiveNPCs)
+                {
+                    if (!npc.dontTakeDamage && npc.Hitbox.Intersects(NPC.Hitbox))
+                        npc.AddBuff(BuffType<PureChillDebuff>(), 30);
+                }
+            }
+
             switch (AIState)
             {
                 case ActionState.Wander:
@@ -183,9 +190,6 @@ namespace Redemption.NPCs.PreHM
                     break;
             }
         }
-
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.alpha < 150;
-        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) => target.noKnockback = true;
 
         Vector2 SetLantern2Offset(ref int frameHeight)
         {
@@ -238,12 +242,12 @@ namespace Redemption.NPCs.PreHM
 
         public override void OnKill()
         {
-            RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(1f, 2f));
+            RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<LostSoulNPC>(), Main.rand.NextFloat(1f, 2f));
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>()));
-            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Soulshake>(), 20));
+            npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ItemType<LostSoul>()));
+            npcLoot.Add(ItemDropRule.Food(ItemType<Soulshake>(), 20));
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -271,21 +275,21 @@ namespace Redemption.NPCs.PreHM
                 }
             }
 
-            spriteBatch.Draw(lantern.Value, LanternPos1() - screenPos, lantern.Frame(2, 1, 1), NPC.GetAlpha(drawColor), NPC.rotation + (.2f * NPC.spriteDirection) + (float)(Math.Sin(NPC.localAI[0] / 30) / 5), new Vector2(lantern.Width() / 4 - 1, 0), NPC.scale, effects, 0);
-            spriteBatch.Draw(lantern.Value, LanternPos2() - screenPos, lantern.Frame(2, 1), NPC.GetAlpha(drawColor), NPC.rotation + (.2f * NPC.spriteDirection) + (float)(Math.Sin((NPC.localAI[0] - 15) / 30) / 4), new Vector2(lantern.Width() / 4 - 1, 0), NPC.scale, effects, 0);
+            spriteBatch.Draw(lantern.Value, LanternPos1() - screenPos, lantern.Frame(2, 1, 1), NPC.ColorTintedAndOpacity(drawColor), NPC.rotation + (.2f * NPC.spriteDirection) + (float)(Math.Sin(NPC.localAI[0] / 30) / 5), new Vector2(lantern.Width() / 4 - 1, 0), NPC.scale, effects, 0);
+            spriteBatch.Draw(lantern.Value, LanternPos2() - screenPos, lantern.Frame(2, 1), NPC.ColorTintedAndOpacity(drawColor), NPC.rotation + (.2f * NPC.spriteDirection) + (float)(Math.Sin((NPC.localAI[0] - 15) / 30) / 4), new Vector2(lantern.Width() / 4 - 1, 0), NPC.scale, effects, 0);
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor with { A = 200 }), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(drawColor with { A = 200 }), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             if (HasCloth)
-                spriteBatch.Draw(back.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor with { A = 100 }), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(back.Value, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(drawColor with { A = 100 }), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             if (HasMask)
-                spriteBatch.Draw(mask.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor with { A = 100 }), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(mask.Value, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(drawColor with { A = 100 }), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (!NPC.IsABestiaryIconDummy)
             {
-                Texture2D LightGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+                Texture2D LightGlow = Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
                 float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, .9f, .7f, .9f);
                 Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(255, 246, 182), new Color(234, 133, 66), new Color(255, 246, 182));
 
@@ -304,6 +308,8 @@ namespace Redemption.NPCs.PreHM
             if (spawnInfo.Player.RedemptionAbility().SpiritwalkerActive && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
                 return 0.6f;
 
+            if (spawnInfo.PlayerSafe)
+                return 0;
             return SpawnCondition.Cavern.Chance * 0.006f;
         }
     }

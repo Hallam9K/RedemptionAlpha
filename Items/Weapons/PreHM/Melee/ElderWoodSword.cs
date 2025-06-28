@@ -12,11 +12,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
-		{
+        {
             Item.damage = 12;
             Item.DamageType = DamageClass.Melee;
-            Item.width = 34;
-            Item.height = 36;
+            Item.width = 40;
+            Item.height = 40;
             Item.useTime = 19;
             Item.useAnimation = 19;
             Item.useStyle = ItemUseStyleID.Swing;
@@ -30,7 +30,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<ElderWood>(), 7)
+                .AddIngredient(ItemType<ElderWood>(), 7)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

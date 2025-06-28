@@ -20,7 +20,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 {
     public class Bindeklinge : ModItem
     {
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.HolyS, ElementID.ArcaneS);
         public override void SetStaticDefaults()
         {
             // Tooltip.SetDefault("Critical strikes release homing lightmass");
@@ -49,8 +48,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.rare = ItemRarityID.Blue;
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
-
-            Item.Redemption().HideElementTooltip[ElementID.Arcane] = true;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -99,6 +96,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             // Tooltip.SetDefault("Critical strikes release homing lightmass");            
             ElementID.ProjHoly[Type] = true;
+            ElementID.ProjArcane[Type] = true;
             Main.projFrames[Type] = 4;
         }
         public float opacityAlt;

@@ -1,10 +1,8 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Projectiles.Ranged;
-using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -38,6 +36,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         private int hiveFrame;
         private float hiveScale = 0.01f;
         private bool hiveGrown;
+        bool firstShot;
         public override void AI()
         {
             if (++Projectile.frameCounter >= 5)
@@ -50,27 +49,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             }
             Player player = Main.player[Projectile.owner];
             Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
-            if (Main.myPlayer == Projectile.owner)
-            {
-                float scaleFactor6 = 1f;
-                if (player.inventory[player.selectedItem].shoot == Projectile.type)
-                    scaleFactor6 = player.inventory[player.selectedItem].shootSpeed * Projectile.scale;
-
-                Vector2 vector13 = Main.MouseWorld - vector;
-                vector13.Normalize();
-                if (vector13.HasNaNs())
-                    vector13 = Vector2.UnitX * player.direction;
-
-                vector13 *= scaleFactor6;
-                if (vector13.X != Projectile.velocity.X || vector13.Y != Projectile.velocity.Y)
-                    Projectile.netUpdate = true;
-
-                Projectile.velocity = vector13;
-                if (player.noItems || player.CCed || player.dead || !player.active)
-                    Projectile.Kill();
-
-                Projectile.netUpdate = true;
-            }
+            RedeProjectile.HoldOutProjBasics(Projectile, player, vector);
             Projectile.Center = vector;
             Projectile.spriteDirection = Projectile.direction;
             Projectile.timeLeft = 2;
@@ -86,65 +65,66 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Projectile.rotation = Projectile.velocity.ToRotation() + num;
 
             offset -= 2;
-            if (Main.myPlayer == Projectile.owner)
+            Vector2 gunPos = Projectile.Center + RedeHelper.PolarVector(29 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-1, Projectile.rotation + MathHelper.PiOver2);
+            Vector2 gunSmokePos = Projectile.Center + RedeHelper.PolarVector(25 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-10, Projectile.rotation + MathHelper.PiOver2);
+
+            if (!player.channel)
             {
-                Vector2 gunPos = Projectile.Center + RedeHelper.PolarVector(29 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-1, Projectile.rotation + MathHelper.PiOver2);
-                Vector2 gunSmokePos = Projectile.Center + RedeHelper.PolarVector(25 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-10, Projectile.rotation + MathHelper.PiOver2);
-
-                if (!player.channel)
+                if (hiveScale >= 1 && Projectile.localAI[1] == 1)
                 {
-                    if (hiveScale >= 1 && Projectile.localAI[1] == 1)
-                    {
-                        SoundEngine.PlaySound(SoundID.NPCDeath13, Projectile.position);
-                        DustHelper.DrawCircle(gunPos, DustID.GreenFairy, 2, dustSize: 2, nogravity: true);
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(30, (Main.MouseWorld - gunPos).ToRotation()), ModContent.ProjectileType<SwarmGrowth_Proj>(), Projectile.damage, Projectile.knockBack, player.whoAmI);
-                    }
-                    if (Projectile.localAI[1]++ >= 2)
-                        Projectile.Kill();
+                    SoundEngine.PlaySound(SoundID.NPCDeath13, Projectile.position);
+                    DustHelper.DrawCircle(gunPos, DustID.GreenFairy, 2, dustSize: 2, nogravity: true);
+
+                    if (Projectile.owner == Main.myPlayer)
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(30, (Main.MouseWorld - gunPos).ToRotation()), ProjectileType<SwarmGrowth_Proj>(), Projectile.damage, Projectile.knockBack, player.whoAmI);
                 }
-                else
+                if (Projectile.localAI[1]++ >= 2)
+                    Projectile.Kill();
+            }
+            else
+            {
+                if (Projectile.localAI[0]++ % (int)(18 / player.GetAttackSpeed(DamageClass.Ranged)) == 0)
                 {
-                    if (Projectile.localAI[0]++ % (int)(18 / player.GetAttackSpeed(DamageClass.Ranged)) == 0)
+                    if (player.PickAmmo(player.HeldItem, out bullet, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId, !firstShot))
                     {
-                        int weaponDamage = Projectile.damage;
-                        float weaponKnockback = Projectile.knockBack;
-                        float shootSpeed = player.inventory[player.selectedItem].shootSpeed;
-                        if (Projectile.UseAmmo(AmmoID.Bullet, ref bullet, ref shootSpeed, ref weaponDamage, ref weaponKnockback))
-                        {
-                            if (bullet == ProjectileID.Bullet)
-                                bullet = ModContent.ProjectileType<BileBullet_Proj>();
+                        firstShot = true;
 
-                            for (int i = 0; i < 4; i++)
-                            {
-                                int num5 = Dust.NewDust(gunSmokePos, 8, 20, DustID.GreenBlood, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
-                                Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.08f, 0.08f));
-                                Main.dust[num5].velocity *= 0.66f;
-                                Main.dust[num5].noGravity = true;
-                                num5 = Dust.NewDust(gunSmokePos, 8, 20, DustID.Clentaminator_Green, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
-                                Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.08f, 0.08f));
-                                Main.dust[num5].velocity *= 3f;
-                                Main.dust[num5].noGravity = true;
-                            }
-                            offset = 14;
-                            player.RedemptionScreen().ScreenShakeIntensity += 1;
-                            SoundEngine.PlaySound(SoundID.Item38, Projectile.position);
+                        if (bullet == ProjectileID.Bullet)
+                            bullet = ProjectileType<BileBullet_Proj>();
+
+                        for (int i = 0; i < 4; i++)
+                        {
+                            int num5 = Dust.NewDust(gunSmokePos, 8, 20, DustID.GreenBlood, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
+                            Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.08f, 0.08f));
+                            Main.dust[num5].velocity *= 0.66f;
+                            Main.dust[num5].noGravity = true;
+                            num5 = Dust.NewDust(gunSmokePos, 8, 20, DustID.Clentaminator_Green, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
+                            Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.08f, 0.08f));
+                            Main.dust[num5].velocity *= 3f;
+                            Main.dust[num5].noGravity = true;
+                        }
+                        offset = 14;
+                        player.RedemptionScreen().ScreenShakeIntensity += 1;
+                        SoundEngine.PlaySound(SoundID.Item38, Projectile.position);
+                        if (Projectile.owner == Main.myPlayer)
+                        {
                             for (int i = 0; i < Main.rand.Next(3, 6); i++)
                             {
                                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(shootSpeed, (Main.MouseWorld - gunPos).ToRotation() + Main.rand.NextFloat(-0.08f, 0.08f)), bullet, Projectile.damage, Projectile.knockBack, player.whoAmI);
                             }
                         }
                     }
-                    hiveScale += 0.01f * player.GetAttackSpeed(DamageClass.Ranged);
-                    if (hiveScale >= 0.5f)
-                        shake += 0.04f;
-                    if (hiveScale >= 1 && !hiveGrown)
-                    {
-                        DustHelper.DrawCircle(gunPos, DustID.GreenFairy, 2, dustSize: 2, nogravity: true);
-                        SoundEngine.PlaySound(SoundID.NPCHit20, Projectile.position);
-                        hiveGrown = true;
-                    }
-                    Projectile.position += new Vector2(Main.rand.NextFloat(-shake, shake), Main.rand.NextFloat(-shake, shake));
                 }
+                hiveScale += 0.01f * player.GetAttackSpeed(DamageClass.Ranged);
+                if (hiveScale >= 0.5f)
+                    shake += 0.04f;
+                if (hiveScale >= 1 && !hiveGrown)
+                {
+                    DustHelper.DrawCircle(gunPos, DustID.GreenFairy, 2, dustSize: 2, nogravity: true);
+                    SoundEngine.PlaySound(SoundID.NPCHit20, Projectile.position);
+                    hiveGrown = true;
+                }
+                Projectile.position += new Vector2(Main.rand.NextFloat(-shake, shake), Main.rand.NextFloat(-shake, shake));
             }
             shake = MathHelper.Min(shake, 0.8f);
             offset = MathHelper.Clamp(offset, 0, 20);
@@ -152,24 +132,23 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             if (Projectile.ai[1]++ > 1)
                 Projectile.alpha = 0;
         }
-        Asset<Texture2D> hive;
         public override bool PreDraw(ref Color lightColor)
         {
-            Asset<Texture2D> texture = TextureAssets.Projectile[Type];
-            hive ??= ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/SeedOfInfection/SeedGrowth");
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D hive = Request<Texture2D>("Redemption/NPCs/Bosses/SeedOfInfection/SeedGrowth").Value;
             Rectangle rect = texture.Frame(1, 4, 0, Projectile.frame);
-            int height = hive.Height() / 4;
+            int height = hive.Height / 4;
             int y = height * hiveFrame;
-            Rectangle hiveRect = new(0, y, hive.Width(), height);
+            Rectangle hiveRect = new(0, y, hive.Width, height);
             Vector2 drawOrigin = new(rect.Width / 2, rect.Height / 2);
-            Vector2 hiveOrigin = new(hive.Width() / 2, height / 2);
+            Vector2 hiveOrigin = new(hive.Width / 2, height / 2);
             Vector2 v = RedeHelper.PolarVector(-20 + offset, Projectile.velocity.ToRotation());
             Vector2 hivePos = Projectile.Center + RedeHelper.PolarVector((44 - offset) * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(2, Projectile.rotation + MathHelper.PiOver2);
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Main.EntitySpriteDraw(hive.Value, hivePos - Main.screenPosition, new Rectangle?(hiveRect), Projectile.GetAlpha(lightColor), Projectile.rotation, hiveOrigin, Projectile.scale * hiveScale, spriteEffects, 0);
+            Main.EntitySpriteDraw(hive, hivePos - Main.screenPosition, new Rectangle?(hiveRect), Projectile.GetAlpha(lightColor), Projectile.rotation, hiveOrigin, Projectile.scale * hiveScale, spriteEffects, 0);
 
-            Main.EntitySpriteDraw(texture.Value, Projectile.Center - v - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, spriteEffects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, spriteEffects, 0);
             return false;
         }
     }
