@@ -1,11 +1,8 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary.Core;
 using ParticleLibrary.Utilities;
 using Redemption.BaseExtension;
-using Redemption.Buffs;
 using Redemption.Buffs.Minions;
-using Redemption.Dusts;
 using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.NPCs.Friendly;
@@ -76,7 +73,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 Projectile.rotation = (Projectile.Center - armCenter).ToRotation() + MathHelper.PiOver4 - (Projectile.ai[0] == 0 ? 0 : MathHelper.PiOver2);
             else
                 Projectile.rotation = (Projectile.Center - armCenter).ToRotation() - MathHelper.Pi - MathHelper.PiOver4 + (Projectile.ai[0] == 0 ? 0 : MathHelper.PiOver2);
-            if (Main.myPlayer == Projectile.owner && --pauseTimer <= 0)
+            if (--pauseTimer <= 0)
             {
                 switch (Projectile.ai[0])
                 {
@@ -86,7 +83,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         {
                             Projectile.scale *= Projectile.ai[2];
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(CustomSounds.Swing1, Player.position);
+                                SoundEngine.PlaySound(CustomSounds.Swing1.WithVolumeScale(.7f), Player.position);
                             startRotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
                         }
                         if (progress < 1f)
@@ -99,12 +96,16 @@ namespace Redemption.Items.Weapons.HM.Melee
                         }
                         if (progress >= 1)
                         {
-                            if (Main.MouseWorld.X < Player.Center.X)
-                                Player.direction = -1;
-                            else
-                                Player.direction = 1;
+                            if (Projectile.owner == Main.myPlayer)
+                            {
+                                if (Main.MouseWorld.X < Player.Center.X)
+                                    Player.direction = -1;
+                                else
+                                    Player.direction = 1;
+
+                                Projectile.velocity = armCenter.DirectionTo(Main.MouseWorld);
+                            }
                             Projectile.ai[0]++;
-                            Projectile.velocity = armCenter.DirectionTo(Main.MouseWorld);
                             Timer = 0;
                             Projectile.netUpdate = true;
                         }
@@ -115,7 +116,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         {
                             strike = false;
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(CustomSounds.Swing1, Player.position);
+                                SoundEngine.PlaySound(SoundID.Item71, Player.position);
                             startRotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
                         }
                         if (progress < 1f)
@@ -191,13 +192,13 @@ namespace Redemption.Items.Weapons.HM.Melee
 
             RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
 
-            if (target.life <= 0 && target.lifeMax >= 50 && (Main.rand.NextBool(6) || NPCLists.Spirit.Contains(target.type)) && NPC.CountNPCS(ModContent.NPCType<WraithSlayer_Samurai>()) < 4)
+            if (target.life <= 0 && target.lifeMax >= 50 && (Main.rand.NextBool(6) || NPCLists.Spirit.Contains(target.type)) && NPC.CountNPCS(NPCType<WraithSlayer_Samurai>()) < 4)
             {
                 for (int i = 0; i < 20; i++)
                     Dust.NewDust(target.position, target.width, target.height, DustID.Wraith);
 
-                Player.AddBuff(ModContent.BuffType<CursedSamuraiBuff>(), 2);
-                RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<WraithSlayer_Samurai>(), ai3: Player.whoAmI);
+                Player.AddBuff(BuffType<CursedSamuraiBuff>(), 2);
+                RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)target.Center.X, (int)target.Center.Y, NPCType<WraithSlayer_Samurai>(), ai3: Player.whoAmI);
             }
         }
         #region draw trail
@@ -270,16 +271,16 @@ namespace Redemption.Items.Weapons.HM.Melee
             Main.spriteBatch.End();
             Main.spriteBatch.BeginDefault();
 
-            Effect effect = ModContent.Request<Effect>("Redemption/Effects/GlowTrailShader", AssetRequestMode.ImmediateLoad).Value;
+            Effect effect = Request<Effect>("Redemption/Effects/GlowTrailShader", AssetRequestMode.ImmediateLoad).Value;
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.X, -Main.screenPosition.Y, 0);
             Matrix view = Main.GameViewMatrix.ZoomMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             bool flip = Player.direction == -1;
-            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5").Value;
+            Texture2D texture = Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5").Value;
             if (flip)
-                texture = ModContent.Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5_flipped2").Value;
+                texture = Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5_flipped2").Value;
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(texture);

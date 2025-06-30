@@ -1,4 +1,4 @@
-=== 0.8 Beta .4077 === (Slayer Patch)
+=== 0.8 Beta .4077 === (June 2025 Patch)
 - Fixed DR for Ancient Deity Duo and Patient Zero not working when one side is defeated
 - Added custom Boss Log portrait for Thorn
 - Improved performance of Nebuleus sky shader
@@ -8,7 +8,7 @@
 - Teleportation Potions will now properly avoid laboratory and slayer's ship walls
 1769. Added Soul Candle, when near or holding does the same effect of 1.3 MoR's Magnetic Soulbond (Killing any enemy has a chance to spawn a lost soul), soul candle can also make Souls of Night or Light drop more
 2201. Added Elder Wood armour set, an early-game mage set; resprited Elder Wood Sword
-2202. Enemies rallied by the Skeleton Flagbearer or Rooster Booster have a flag icon above their heads
+2202. Enemies rallied by the Skeleton Flagbearer or Rooster Booster have a flag icon above their heads (and added icon texture for the buff)
 2203. Changed Living Wood armour set crafting station from Anvil -> Work Bench, and moved poison immunity to Elder Wood set
 2204. Added Poison element to the following projectiles: Bee, Bee Arrow, Giant Bee, Beenade, and Wasp
 2205. Dusky Ball is now a light pet
@@ -18,4 +18,5 @@
 2214. Added Arcane element to Blade Staff
 2215. Chaos Elementals are now considered Inorganic, and Scarecrows are considered Inorganic and Plantlike
 2218. Held Projectile guns use tmod's method for consuming ammo, improving mod compatibility
+2223. Resprited Wraith Slayer's Cursed Samurai and improved visuals, Cursed Samurai shares Wraith Slayer's ability to deal double damage to spirits
 ===============

@@ -1,13 +1,12 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
+using ParticleLibrary.Utilities;
 using Redemption.BaseExtension;
-using Redemption.Buffs;
 using Redemption.Buffs.Minions;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.NPCs.Friendly.SpiritSummons;
+using Redemption.Particles;
 using Redemption.Projectiles;
 using ReLogic.Content;
 using System;
@@ -22,6 +21,7 @@ namespace Redemption.NPCs.Friendly
     public class WraithSlayer_Samurai : ModNPC
     {
         public float[] oldrot = new float[4];
+        public Vector2[] oldpos = new Vector2[4];
         public enum ActionState
         {
             Begin,
@@ -41,9 +41,10 @@ namespace Redemption.NPCs.Friendly
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Cursed Samurai");
-            Main.npcFrameCount[NPC.type] = 15;
+            Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.TrailCacheLength[NPC.type] = 4;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
+
             NPCID.Sets.CantTakeLunchMoney[NPC.type] = true;
             NPCID.Sets.DontDoHardmodeScaling[NPC.type] = true;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
@@ -53,8 +54,8 @@ namespace Redemption.NPCs.Friendly
         }
         public override void SetDefaults()
         {
-            NPC.width = 42;
-            NPC.height = 70;
+            NPC.width = 66;
+            NPC.height = 74;
             NPC.damage = 300;
             NPC.friendly = true;
             NPC.defense = 24;
@@ -81,7 +82,7 @@ namespace Redemption.NPCs.Friendly
                 for (int i = 0; i < 20; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.PurpleTorch, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2);
                 for (int i = 0; i < 5; i++)
-                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/WraithSamuraiGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, Find<ModGore>("Redemption/WraithSamuraiGore" + (i + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Wraith, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
@@ -101,12 +102,11 @@ namespace Redemption.NPCs.Friendly
                 modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4, .25f, false, DustID.Wraith, default, 10, 1, 150);
             }
         }
+
         private Vector2 moveTo;
         private int runCooldown;
         public override void AI()
         {
-            CustomFrames(86);
-
             Player player = Main.player[(int)NPC.ai[3]];
             if (!player.active || player.dead || !player.HasBuff<CursedSamuraiBuff>())
                 NPC.life = 1;
@@ -149,10 +149,10 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ % 120 == 0)
                     {
                         double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                        moveTo.X = (float)(Math.Sin(angle) * 200);
-                        moveTo.Y = (float)(Math.Cos(angle) * 100);
+                        moveTo.X = (float)(Math.Sin(angle) * 140);
+                        moveTo.Y = (float)(Math.Cos(angle) * 80);
                     }
-                    NPC.Move(player.Center + new Vector2(moveTo.X, moveTo.Y - 100), 9, 50);
+                    NPC.Move(player.Center + new Vector2(moveTo.X, moveTo.Y - 80), 9, 50);
 
                     SightCheck();
                     break;
@@ -187,12 +187,17 @@ namespace Redemption.NPCs.Friendly
                     AITimer = 0;
                     break;
             }
+            CustomFrames();
         }
-        private void CustomFrames(int frameHeight)
+        private void CustomFrames()
         {
             for (int k = NPC.oldPos.Length - 1; k > 0; k--)
+            {
                 oldrot[k] = oldrot[k - 1];
+                oldpos[k] = oldpos[k - 1];
+            }
             oldrot[0] = NPC.rotation;
+            oldpos[0] = NPC.Center;
 
             if (Flare)
             {
@@ -210,42 +215,37 @@ namespace Redemption.NPCs.Friendly
             if (AIState is ActionState.Slash)
             {
                 NPC.rotation = 0;
-                if (NPC.frame.Y < 4 * frameHeight)
-                    NPC.frame.Y = 4 * frameHeight;
+                if (NPC.frame.Y < 4)
+                    NPC.frame.Y = 4;
 
                 NPC.frameCounter++;
                 if (NPC.frameCounter >= 5)
                 {
                     NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y == 5 * frameHeight)
+                    NPC.frame.Y++;
+                    if (NPC.frame.Y == 5)
                     {
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.Slice1, NPC.position);
                     }
-                    if (NPC.frame.Y == 8 * frameHeight)
+                    if (NPC.frame.Y == 8)
                     {
                         Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                         Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 5;
 
-                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y + 15), ModContent.ProjectileType<WraithSlayer_Slash>(), 0, new Vector2(20 * NPC.spriteDirection, 0), SoundID.Item71);
-                        Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 280 : NPC.Center.X - 18), (int)NPC.Center.Y, 280, 60);
-                        for (int i = 0; i < Main.maxNPCs; i++)
-                        {
-                            NPC target = Main.npc[i];
-                            if (!target.active || target.friendly || target.lifeMax <= 5 || target.type == Type || target.whoAmI == NPC.whoAmI)
-                                continue;
-
-                            if (!target.Hitbox.Intersects(SlashHitbox))
-                                continue;
-
-                            BaseAI.DamageNPC(target, NPC.damage, 8, NPC.spriteDirection, NPC);
-                        }
                         Flare = true;
                         FlareTimer = 0;
-                        NPC.velocity.X += 280 * NPC.spriteDirection;
+                        NPC.velocity.X += 100 * NPC.spriteDirection;
                     }
-                    if (NPC.frame.Y > 14 * frameHeight)
+                    if (NPC.frame.Y is 8 or 9)
+                    {
+                        int extend = 50;
+                        Rectangle SlashHitbox = new((int)NPC.Center.X - 154, (int)NPC.Center.Y - 106, 154 + extend, 154);
+                        if (NPC.spriteDirection == 1)
+                            SlashHitbox.X += SlashHitbox.Width - (extend * 2);
+                        NPC.RedemptionHitbox().DamageInHitbox(NPC, 0, SlashHitbox, NPC.damage, 8);
+                    }
+                    if (NPC.frame.Y > 15)
                     {
                         NPC.frame.Y = 0;
                         NPC.frameCounter = 0;
@@ -271,9 +271,9 @@ namespace Redemption.NPCs.Friendly
             if (NPC.frameCounter++ >= 5)
             {
                 NPC.frameCounter = 0;
-                NPC.frame.Y += frameHeight;
-                if (NPC.frame.Y > 3 * frameHeight)
-                    NPC.frame.Y = 0 * frameHeight;
+                NPC.frame.Y++;
+                if (NPC.frame.Y > 3)
+                    NPC.frame.Y = 0;
             }
         }
         public void SightCheck()
@@ -288,69 +288,86 @@ namespace Redemption.NPCs.Friendly
                 AIState = ActionState.Alert;
             }
         }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (NPCLists.Spirit.Contains(target.type))
+                modifiers.FinalDamage *= 2;
+        }
+        public bool strike;
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit)
+        {
+            if (!strike)
+            {
+                SoundEngine.PlaySound(CustomSounds.Slice4 with { Volume = .7f, Pitch = -.2f }, target.position);
+                strike = true;
+            }
+
+            Vector2 dir = NPC.Center.DirectionFrom(target.Center);
+            Vector2 drawPos = Vector2.Lerp(NPC.Center, target.Center, 0.9f);
+            RedeParticleManager.CreateSlashParticle(drawPos, dir.RotatedBy(0.4f * -1 * NPC.spriteDirection) * 80, 1, Color.MediumPurple, 8);
+            for (int i = 0; i < 5; i++)
+            {
+                float randomRotation = Main.rand.NextFloat(-0.4f, 0.4f);
+                float randomVel = Main.rand.NextFloat(2f, 3f);
+                Vector2 direction = target.Center.DirectionFrom(NPC.Center);
+                Vector2 position = target.Center - direction * 30;
+                RedeParticleManager.CreateSpeedParticle(position, direction.RotatedBy(randomRotation) * randomVel * 12, .8f, Color.MediumPurple.WithAlpha(0));
+            }
+
+            int damageDone = hit.Damage;
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
+        }
+
+        Asset<Texture2D> slashTex;
+        Asset<Texture2D> slashEffectTex;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Asset<Texture2D> texture = TextureAssets.Npc[Type];
+            slashTex ??= Request<Texture2D>(Texture + "_Slash");
+            slashEffectTex ??= Request<Texture2D>(Texture + "_SlashEffect");
+
+            Rectangle rect = texture.Frame(1, 4, 0, NPC.frame.Y);
+            Vector2 origin = rect.Size() / 2 + new Vector2(21 * NPC.spriteDirection, -6);
+
+            if (NPC.frame.Y >= 4)
+            {
+                texture = slashTex;
+                rect = texture.Frame(1, 12, 0, NPC.frame.Y - 4);
+                origin = rect.Size() / 2 + new Vector2(21 * NPC.spriteDirection, 16);
+            }
+
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             spriteBatch.End();
             spriteBatch.BeginAdditive();
 
+            Vector2 slashEffectOrigin = slashEffectTex.Size() / 2 + new Vector2(-51 * NPC.spriteDirection, 29);
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
             {
-                Vector2 oldPos = NPC.oldPos[i];
-                spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f + new Vector2(21 * NPC.spriteDirection, 0) + floatOffset - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.MediumPurple), oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(texture.Value, oldpos[i] + floatOffset - screenPos, rect, NPC.GetAlpha(Color.MediumPurple), oldrot[i], origin, NPC.scale, effects, 0);
             }
 
             spriteBatch.End();
             spriteBatch.BeginDefault();
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center + new Vector2(21 * NPC.spriteDirection, 0) + floatOffset - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(texture.Value, NPC.Center + floatOffset - screenPos, rect, NPC.ColorTintedAndOpacity(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+
+            if (NPC.frame.Y == 8)
+            {
+                spriteBatch.Draw(slashEffectTex.Value, NPC.Center + floatOffset - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, slashEffectOrigin, NPC.scale, effects, 0);
+            }
             return false;
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (Flare)
             {
-                Vector2 position = NPC.Center - screenPos + new Vector2(-2 * NPC.spriteDirection, -12 + NPC.gfxOffY);
-                Vector2 position2 = NPC.Center - screenPos + new Vector2(4 * NPC.spriteDirection, -12 + NPC.gfxOffY);
-                if (AIState is ActionState.Slash)
-                {
-                    position = NPC.Center - screenPos + new Vector2(6 * NPC.spriteDirection, -4 + NPC.gfxOffY);
-                    position2 = NPC.Center - screenPos + new Vector2(12 * NPC.spriteDirection, -4 + NPC.gfxOffY);
-                }
+                Vector2 position = NPC.Center - screenPos + new Vector2(10 * NPC.spriteDirection, -10);
                 RedeDraw.DrawEyeFlare(spriteBatch, ref FlareTimer, position, Color.DarkRed, NPC.rotation, .8f);
-                RedeDraw.DrawEyeFlare(spriteBatch, ref FlareTimer, position2, Color.DarkRed, NPC.rotation, .8f);
-
             }
         }
 
         public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-    }
-    public class WraithSlayer_Slash : ModProjectile, ITrailProjectile
-    {
-        public override string Texture => Redemption.EMPTY_TEXTURE;
-        public override void SetDefaults()
-        {
-            Projectile.width = 12;
-            Projectile.height = 12;
-            Projectile.hostile = false;
-            Projectile.friendly = false;
-            Projectile.hide = true;
-            Projectile.timeLeft = 360;
-            Projectile.tileCollide = false;
-            Projectile.scale = 0.75f;
-            Projectile.alpha = 0;
-            Projectile.extraUpdates = 3;
-        }
-        public void DoTrailCreation(TrailManager tM) => tM.CreateTrail(Projectile, new StandardColorTrail(new Color(159, 127, 170, 200)), new RoundCap(), new DefaultTrailPosition(), 100f, 800f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
-        public override void AI()
-        {
-            Projectile.alpha += 20;
-            if (Projectile.alpha > 255)
-                Projectile.Kill();
-
-            if (Projectile.velocity.Length() < 26)
-                Projectile.velocity *= 1.02f;
-        }
     }
 }
