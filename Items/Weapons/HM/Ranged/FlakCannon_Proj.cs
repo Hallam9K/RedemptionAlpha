@@ -32,6 +32,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         }
         private float offset;
         private float shake;
+        bool firstShot;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -78,8 +79,9 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 {
                     if (Projectile.localAI[0]++ == 0)
                     {
-                        if (player.PickAmmo(player.HeldItem, out int grenade, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId, true))
+                        if (player.PickAmmo(player.HeldItem, out int grenade, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId, firstShot))
                         {
+                            firstShot = true;
                             switch (grenade)
                             {
                                 case ProjectileID.Grenade:

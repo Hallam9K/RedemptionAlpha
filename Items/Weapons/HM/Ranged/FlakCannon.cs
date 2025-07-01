@@ -49,6 +49,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             type = ProjectileType<FlakCannon_Proj>();
         }
+        public override bool CanConsumeAmmo(Item ammo, Player player) => player.ItemUsesThisAnimation != 0;
         public override void AddRecipes()
         {
             CreateRecipe()

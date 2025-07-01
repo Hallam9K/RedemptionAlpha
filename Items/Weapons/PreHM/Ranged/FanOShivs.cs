@@ -46,10 +46,10 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             // Projectile Properties
             Item.shootSpeed = 10f;
             Item.shoot = ModContent.ProjectileType<FanOShivs_Proj>();
-            Item.useAmmo = ItemID.ThrowingKnife;
         }
 
         public override bool NeedsAmmo(Player player) => false;
+        public override bool? CanChooseAmmo(Item ammo, Player player) => ammo.ammo == ItemID.ThrowingKnife;
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -61,17 +61,22 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             }
             return false;
         }
-        public override void PickAmmo(Item weapon, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            if (type == ItemID.PoisonedKnife)
+            if (player.PickAmmo(Item, out int proj, out float _, out int _, out _, out int _))
             {
-                type = ProjectileType<FanOShivsPoison_Proj>();
-                damage.Flat += 3;
-            }
-            else if (type == ItemID.ThrowingKnife)
-            {
-                type = ProjectileType<FanOShivs_Proj>();
-                damage.Flat += 3;
+                if (proj == ProjectileID.PoisonedKnife)
+                {
+                    type = ProjectileType<FanOShivsPoison_Proj>();
+                    velocity *= 1.25f;
+                    damage += 3;
+                }
+                else if (proj == ProjectileID.ThrowingKnife)
+                {
+                    type = ProjectileType<FanOShivs_Proj>();
+                    velocity *= 1.25f;
+                    damage += 3;
+                }
             }
         }
     }
