@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Minions;
 using Redemption.Globals;
+using Redemption.Items.Weapons.PostML.Summon;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -76,7 +77,7 @@ namespace Redemption.Projectiles.Minions
 
                 if (++Projectile.ai[0] % 18 == 0)
                 {
-                    if (owner.PickAmmo(owner.HeldItem, out int bulletID, out _, out _, out _, out _, !Main.rand.NextBool(5)))
+                    if (owner.PickAmmo(new Item(ItemType<XeniumDrone>()), out int bulletID, out _, out _, out _, out _, !Main.rand.NextBool(5)))
                     {
                         float shootSpeed = 10f;
 

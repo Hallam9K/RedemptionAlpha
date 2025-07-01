@@ -3,6 +3,7 @@ using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static AssGen.Assets;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -34,7 +35,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.consumable = true;
             Item.shoot = ModContent.ProjectileType<ToxicGrenade_Proj>();
             Item.shootSpeed = 11f;
-            Item.ammo = Item.type;
+            Item.ammo = ItemID.Grenade;
         }
         public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
         {

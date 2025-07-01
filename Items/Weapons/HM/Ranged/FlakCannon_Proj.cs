@@ -8,6 +8,7 @@ using Redemption.Globals;
 using Terraria.GameContent;
 using Terraria.Audio;
 using Redemption.Projectiles.Ranged;
+using Microsoft.CodeAnalysis;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -77,31 +78,43 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 {
                     if (Projectile.localAI[0]++ == 0)
                     {
-                        Vector2 gunPos = Projectile.Center + RedeHelper.PolarVector(36 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-9, Projectile.rotation + MathHelper.PiOver2);
-                        Vector2 gunSmokePos = Projectile.Center + RedeHelper.PolarVector(66 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-19, Projectile.rotation + MathHelper.PiOver2);
-                        int grenadeType = ModContent.ProjectileType<FlakGrenade>();
-                        if (Projectile.ai[0] == 1)
-                            grenadeType = ModContent.ProjectileType<FlakGrenade_Bouncy>();
-                        if (Projectile.ai[0] == 2)
-                            grenadeType = ModContent.ProjectileType<FlakGrenade_Sticky>();
-                        for (int i = 0; i < 5; i++)
+                        if (player.PickAmmo(player.HeldItem, out int grenade, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId, true))
                         {
-                            int num5 = Dust.NewDust(gunSmokePos, 6, 22, DustID.Smoke, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
-                            Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
-                            Main.dust[num5].velocity *= 0.66f;
-                            Main.dust[num5].noGravity = true;
-                            Main.dust[num5].scale = 1.4f;
+                            switch (grenade)
+                            {
+                                case ProjectileID.Grenade:
+                                    grenade = ProjectileType<FlakGrenade>();
+                                    break;
+                                case ProjectileID.BouncyGrenade:
+                                    grenade = ProjectileType<FlakGrenade_Bouncy>();
+                                    break;
+                                case ProjectileID.StickyGrenade:
+                                    grenade = ProjectileType<FlakGrenade_Sticky>();
+                                    break;
+                            }
+
+                            Vector2 gunPos = Projectile.Center + RedeHelper.PolarVector(36 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-9, Projectile.rotation + MathHelper.PiOver2);
+                            Vector2 gunSmokePos = Projectile.Center + RedeHelper.PolarVector(66 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-19, Projectile.rotation + MathHelper.PiOver2);
+                            for (int i = 0; i < 5; i++)
+                            {
+                                int num5 = Dust.NewDust(gunSmokePos, 6, 22, DustID.Smoke, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
+                                Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                Main.dust[num5].velocity *= 0.66f;
+                                Main.dust[num5].noGravity = true;
+                                Main.dust[num5].scale = 1.4f;
+                            }
+                            for (int i = 0; i < 15; i++)
+                            {
+                                int num5 = Dust.NewDust(gunSmokePos, 6, 22, DustID.Wraith, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f, Scale: 2);
+                                Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                Main.dust[num5].velocity *= 3f;
+                                Main.dust[num5].noGravity = true;
+                            }
+                            offset = 30;
+                            SoundEngine.PlaySound(SoundID.Item61, Projectile.position);
+
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, Projectile.velocity * 20, grenade, Projectile.damage, Projectile.knockBack, player.whoAmI);
                         }
-                        for (int i = 0; i < 15; i++)
-                        {
-                            int num5 = Dust.NewDust(gunSmokePos, 6, 22, DustID.Wraith, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f, Scale: 2);
-                            Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
-                            Main.dust[num5].velocity *= 3f;
-                            Main.dust[num5].noGravity = true;
-                        }
-                        offset = 30;
-                        SoundEngine.PlaySound(SoundID.Item61, Projectile.position);
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, Projectile.velocity * 20, grenadeType, Projectile.damage, Projectile.knockBack, player.whoAmI);
                     }
 
                     if (Projectile.localAI[0] >= 4 && Projectile.localAI[1] >= 30)

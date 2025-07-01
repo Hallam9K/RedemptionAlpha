@@ -38,7 +38,6 @@ namespace Redemption.Items.Weapons.HM.Ranged
         private float spinSpeed = 0.01f;
         private int rocket = 1;
         private float shake;
-        bool firstShot;
 
         public override void AI()
         {
@@ -92,7 +91,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             int usedAmmoId;
             if (Projectile.localAI[0]++ == 2 || Projectile.localAI[0] == (int)(30 / player.GetAttackSpeed(DamageClass.Ranged)))
             {
-                if (player.PickAmmo(player.HeldItem, out rocket, out shootSpeed, out weaponDamage, out weaponKnockback, out usedAmmoId, !firstShot || !Main.rand.NextBool(3)))
+                if (player.PickAmmo(player.HeldItem, out rocket, out shootSpeed, out weaponDamage, out weaponKnockback, out usedAmmoId, !Main.rand.NextBool(3)))
                 {
                     int shotNum = 1;
                     for (int i = 0; i < Main.rand.Next(6, 8); i++)

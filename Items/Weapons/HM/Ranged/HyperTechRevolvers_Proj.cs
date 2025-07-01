@@ -40,7 +40,6 @@ namespace Redemption.Items.Weapons.HM.Ranged
         private int bullet = 1;
         private bool swap;
         private bool reset;
-        bool firstShot;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -115,10 +114,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 {
                     if (!swap)
                     {
-                        if (player.PickAmmo(player.HeldItem, out bullet, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId, !firstShot && Projectile.ai[0] != 1))
+                        if (player.PickAmmo(player.HeldItem, out bullet, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId, Projectile.ai[0] != 1))
                         {
-                            firstShot = true;
-
                             if (bullet == ProjectileID.Bullet)
                                 bullet = ProjectileID.NanoBullet;
 

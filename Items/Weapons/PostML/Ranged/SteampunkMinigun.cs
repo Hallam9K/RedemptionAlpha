@@ -41,7 +41,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.shootSpeed = 10;
             Item.useAmmo = AmmoID.Bullet;
         }
-        public override bool CanConsumeAmmo(Item ammo, Player player) => true;
+        public override bool CanConsumeAmmo(Item ammo, Player player) => player.ItemUsesThisAnimation != 0;
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             type = ModContent.ProjectileType<SteampunkMinigun_Proj>();

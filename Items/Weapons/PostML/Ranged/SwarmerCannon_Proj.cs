@@ -36,7 +36,6 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         private int hiveFrame;
         private float hiveScale = 0.01f;
         private bool hiveGrown;
-        bool firstShot;
         public override void AI()
         {
             if (++Projectile.frameCounter >= 5)
@@ -85,10 +84,8 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             {
                 if (Projectile.localAI[0]++ % (int)(18 / player.GetAttackSpeed(DamageClass.Ranged)) == 0)
                 {
-                    if (player.PickAmmo(player.HeldItem, out bullet, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId, !firstShot))
+                    if (player.PickAmmo(player.HeldItem, out bullet, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId))
                     {
-                        firstShot = true;
-
                         if (bullet == ProjectileID.Bullet)
                             bullet = ProjectileType<BileBullet_Proj>();
 

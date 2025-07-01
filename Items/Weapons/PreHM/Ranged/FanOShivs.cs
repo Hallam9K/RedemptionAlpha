@@ -46,25 +46,10 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             // Projectile Properties
             Item.shootSpeed = 10f;
             Item.shoot = ModContent.ProjectileType<FanOShivs_Proj>();
+            Item.useAmmo = ItemID.ThrowingKnife;
         }
-        public override bool? UseItem(Player player)
-        {
-            int throwingKnife = player.FindItem(ItemID.ThrowingKnife);
-            int poisonedKnife = player.FindItem(ItemID.PoisonedKnife);
-            if (poisonedKnife >= 0)
-            {
-                player.inventory[poisonedKnife].stack--;
-                if (player.inventory[poisonedKnife].stack <= 0)
-                    player.inventory[poisonedKnife] = new Item();
-            }
-            else if (throwingKnife >= 0)
-            {
-                player.inventory[throwingKnife].stack--;
-                if (player.inventory[throwingKnife].stack <= 0)
-                    player.inventory[throwingKnife] = new Item();
-            }
-            return null;
-        }
+
+        public override bool NeedsAmmo(Player player) => false;
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -76,16 +61,18 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             }
             return false;
         }
-
-        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        public override void PickAmmo(Item weapon, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback)
         {
-            if (player.FindItem(ItemID.PoisonedKnife) >= 0)
+            if (type == ItemID.PoisonedKnife)
             {
-                type = ModContent.ProjectileType<FanOShivsPoison_Proj>();
-                damage += 3;
+                type = ProjectileType<FanOShivsPoison_Proj>();
+                damage.Flat += 3;
             }
-            else if (player.FindItem(ItemID.ThrowingKnife) >= 0)
-                damage += 3;
+            else if (type == ItemID.ThrowingKnife)
+            {
+                type = ProjectileType<FanOShivs_Proj>();
+                damage.Flat += 3;
+            }
         }
     }
 }

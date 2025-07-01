@@ -34,7 +34,14 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<BileLauncher_Gloop>();
             Item.shootSpeed = 5;
-            Item.useAmmo = ModContent.ItemType<ToxicGrenade>();
+            Item.useAmmo = ItemID.Grenade;
+        }
+        public override bool? CanChooseAmmo(Item ammo, Player player)
+        {
+            if (ammo.type != ItemType<ToxicGrenade>())
+                return false;
+
+            return null;
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {

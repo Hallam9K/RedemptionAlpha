@@ -61,7 +61,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 Ready = true;
             }
         }
-        public override bool CanConsumeAmmo(Item ammo, Player player) => true;
+        public override bool CanConsumeAmmo(Item ammo, Player player) => player.ItemUsesThisAnimation != 0;
         public override void AddRecipes()
         {
             CreateRecipe()

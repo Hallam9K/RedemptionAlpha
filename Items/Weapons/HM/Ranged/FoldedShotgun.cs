@@ -41,7 +41,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.shootSpeed = 16f;
             Item.useAmmo = AmmoID.Bullet;
         }
-        public override bool CanConsumeAmmo(Item ammo, Player player) => true;
+        public override bool CanConsumeAmmo(Item ammo, Player player) => player.ItemUsesThisAnimation != 0;
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             Projectile.NewProjectile(source, position, velocity, ProjectileType<FoldedShotgun_Proj>(), damage, knockback, player.whoAmI);
@@ -66,7 +66,6 @@ namespace Redemption.Items.Weapons.HM.Ranged
         private int bullet = 1;
         private bool flashEffect;
         Vector2 heldOffset;
-        bool firstShot;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -95,9 +94,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 {
                     if (Projectile.localAI[1]++ % (int)(player.inventory[player.selectedItem].useTime * shootingSpeed) == 0)
                     {
-                        if (player.PickAmmo(player.HeldItem, out bullet, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId, !firstShot))
+                        if (player.PickAmmo(player.HeldItem, out bullet, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId))
                         {
-                            firstShot = true;
                             flashEffect = true;
                             offset = 15;
                             rotOffset = -0.5f;

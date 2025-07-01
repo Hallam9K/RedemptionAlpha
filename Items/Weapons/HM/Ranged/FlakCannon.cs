@@ -41,64 +41,13 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.rare = ItemRarityID.Pink;
             Item.UseSound = SoundID.Item61;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<FlakGrenade>();
+            Item.shoot = ProjectileType<FlakGrenade>();
             Item.shootSpeed = 10;
-        }
-        public override bool CanUseItem(Player player)
-        {
-            return player.FindItem(ItemID.Grenade) >= 0 || player.FindItem(ItemID.StickyGrenade) >= 0 || player.FindItem(ItemID.BouncyGrenade) >= 0;
-        }
-        public override bool? UseItem(Player player)
-        {
-            int grenade = player.FindItem(ItemID.Grenade);
-            int grenadeStick = player.FindItem(ItemID.StickyGrenade);
-            int grenadeBounce = player.FindItem(ItemID.BouncyGrenade);
-            if (grenadeBounce >= 0)
-            {
-                player.inventory[grenadeBounce].stack--;
-                if (player.inventory[grenadeBounce].stack <= 0)
-                    player.inventory[grenadeBounce] = new Item();
-            }
-            else if (grenadeStick >= 0)
-            {
-                player.inventory[grenadeStick].stack--;
-                if (player.inventory[grenadeStick].stack <= 0)
-                    player.inventory[grenadeStick] = new Item();
-            }
-            else if (grenade >= 0)
-            {
-                player.inventory[grenade].stack--;
-                if (player.inventory[grenade].stack <= 0)
-                    player.inventory[grenade] = new Item();
-            }
-            return null;
-        }
-        public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-        {
-            if (!Main.playerInventory)
-            {
-                int ammo = BasePlayer.GetItemstackSum(Main.LocalPlayer, ItemID.Grenade) + BasePlayer.GetItemstackSum(Main.LocalPlayer, ItemID.StickyGrenade) + BasePlayer.GetItemstackSum(Main.LocalPlayer, ItemID.BouncyGrenade);
-                ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, ammo.ToString(), position + new Vector2(-2, 8), Color.White, 0, Vector2.Zero, new Vector2(scale + 0.34f, scale + 0.34f));
-            }
+            Item.useAmmo = ItemID.Grenade;
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            type = ModContent.ProjectileType<FlakCannon_Proj>();
-        }
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            if (player.FindItem(ItemID.BouncyGrenade) >= 0)
-            {
-                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 1);
-                return false;
-            }
-            else if (player.FindItem(ItemID.StickyGrenade) >= 0)
-            {
-                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 2);
-                return false;
-            }
-
-            return true;
+            type = ProjectileType<FlakCannon_Proj>();
         }
         public override void AddRecipes()
         {

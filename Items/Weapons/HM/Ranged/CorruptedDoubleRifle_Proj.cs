@@ -29,7 +29,6 @@ namespace Redemption.Items.Weapons.HM.Ranged
         private float rotOffset;
         private float heatOpacity;
         private int bullet = 1;
-        bool firstShot;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -58,9 +57,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
                     float shootingSpeed = 1 / player.GetAttackSpeed(DamageClass.Ranged);
                     if (++Projectile.localAI[1] % (int)(player.inventory[player.selectedItem].useTime * shootingSpeed) == 0)
                     {
-                        if (player.PickAmmo(player.HeldItem, out bullet, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId, !firstShot || Main.rand.NextBool(3)))
+                        if (player.PickAmmo(player.HeldItem, out bullet, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId, Main.rand.NextBool(3)))
                         {
-                            firstShot = true;
                             shootSpeed *= Projectile.ai[0] == 1 ? 1 : 0.1f;
 
                             if (bullet == ProjectileID.Bullet)
