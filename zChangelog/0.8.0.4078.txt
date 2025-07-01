@@ -1,8 +1,8 @@
 === 0.8 Beta .4078 === (Ammo Patch)
 - Fixed Xenium Autoturret shooting incorrect projectiles
-- Throwing Knives and all types of Grenades are counted as pseudo-ammo (like Sand, Gel, etc) for Fan o' Shivs and Flak Cannon, this means the ammo count in their tooltips is no longer manually drawn, and any other mods that make a type of Throwing Knife or Grenade ammo can be shot by these weapons
+- Throwing Knives and all types of Grenades are counted as pseudo-ammo (like Sand, Gel, etc) for Fan o' Shivs and Flak Cannon, this means the ammo count in Flak Cannon's tooltip is no longer manually drawn, and any other mods that make a type of Throwing Knife or Grenade ammo can be shot by these weapons
 - Flak Grenade can shoot any grenade type, but only has unique projectiles for normal, sticky, and bouncy
-- Toxic Grenades are now within the grenado ammo type instead of its own
+- Toxic Grenades are now within the grenado ammo type instead of its own, Bile Launcher still only uses Toxic Grenades
 - Fixed certain "held projectile" guns from consuming ammo upon use, even if they don't shoot anything on use
 - Using Throwing Knives ammo for Fan o' Shivs now also increases projectile velocity by 25%
 ===============
