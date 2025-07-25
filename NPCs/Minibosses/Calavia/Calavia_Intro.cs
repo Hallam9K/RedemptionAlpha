@@ -47,9 +47,10 @@ namespace Redemption.NPCs.Minibosses.Calavia
         private static readonly SoundStyle voice = CustomSounds.Voice1 with { Pitch = 0.6f };
         public override void AI()
         {
-            Player player = Main.player[NPC.target];
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target >= 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
+
+            Player player = Main.player[NPC.target];
 
             switch (TimerRand)
             {
@@ -57,6 +58,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     if (!player.active || player.dead || !NPC.Sight(player, 400, false, true))
                         return;
                     TimerRand = 1;
+                    NPC.netUpdate = true;
                     break;
                 case 1:
                     if (RedeQuest.calaviaVar is 2)
@@ -65,16 +67,14 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         {
                             NPC.LookAtEntity(player);
                             EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 60);
-                            if (!Main.dedServ)
-                            {
-                                string s1 = "Mur sium'roro?[0.2] Bidu'oque, khru!"; // Fight again? Get lost, undead! (oque = get/obtain, Bidu = lost)
 
-                                DialogueChain chain = new();
-                                chain.Add(new(NPC, s1, Color.White, Color.Gray, voice, .05f, 2f, .5f, true, bubble: Bubble, endID: 1));
-                                chain.OnEndTrigger += Chain_OnEndTrigger;
-                                ChatUI.Visible = true;
-                                ChatUI.Add(chain);
-                            }
+                            string s1 = "Mur sium'roro?[0.2] Bidu'oque, khru!"; // Fight again? Get lost, undead! (oque = get/obtain, Bidu = lost)
+
+                            DialogueChain chain = new();
+                            chain.Add(new(NPC, s1, Color.White, Color.Gray, voice, .05f, 2f, .5f, true, bubble: Bubble, endID: 1));
+                            chain.OnEndTrigger += Chain_OnEndTrigger;
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer >= 600)
                         {
@@ -96,13 +96,11 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             NPC.velocity.X = 3 * -NPC.spriteDirection;
                             NPC.velocity.Y = -3;
                             EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 60);
-                            if (!Main.dedServ)
-                            {
-                                Dialogue d1 = new(NPC, "Gor'on!", Color.White, Color.Gray, voice, 0.01f, 1f, .5f, true, bubble: Bubble);
 
-                                ChatUI.Visible = true;
-                                ChatUI.Add(d1);
-                            }
+                            Dialogue d1 = new(NPC, "Gor'on!", Color.White, Color.Gray, voice, 0.01f, 1f, .5f, true, bubble: Bubble);
+
+                            ChatUI.Visible = true;
+                            ChatUI.Add(d1);
                         }
                         NPC.velocity.X *= 0.99f;
                         if (BaseAI.HitTileOnSide(NPC, 3))
@@ -118,7 +116,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     break;
                 case 2:
                     NPC.LookAtEntity(player);
-                    if (AITimer++ == 80 && !Main.dedServ)
+                    if (AITimer++ == 80)
                     {
 
                         string s1 = "[@d]Mubirok abo,[0.2][@c] lo tasium ye!";
@@ -138,6 +136,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         CustomBodyAni = true;
                         AITimer = 0;
                         TimerRand = 3;
+                        NPC.netUpdate = true;
                     }
                     break;
                 case 3:

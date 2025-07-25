@@ -75,6 +75,7 @@ namespace Redemption.NPCs.Friendly
 
             if (AITimer++ == 0)
             {
+                NPC.velocity.Y -= 3;
                 for (int i = 0; i < 25; i++)
                 {
                     int dustIndex = Dust.NewDust(NPC.Center, 2, 2, DustID.DungeonSpirit, 0f, 0f, 100, default, 2);

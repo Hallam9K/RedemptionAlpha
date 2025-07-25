@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.Dusts;
 using Redemption.NPCs.Lab.Blisterface;
 using System;
@@ -37,7 +36,7 @@ namespace Redemption.Tiles.Furniture.Lab
         public override bool CanExplode(int i, int j) => false;
         public override void NearbyEffects(int i, int j, bool closer)
         {
-            if (Main.gamePaused || Main.tile[i, j].TileFrameX != 0 || Main.tile[i, j].TileFrameY != 0)
+            if (Main.gamePaused || closer || Main.tile[i, j].TileFrameX != 0 || Main.tile[i, j].TileFrameY != 0)
                 return;
             Player player = Main.LocalPlayer;
             float dist = Vector2.Distance(player.Center / 16f, new Vector2(i + 1f, j + 1f));
@@ -45,23 +44,18 @@ namespace Redemption.Tiles.Furniture.Lab
             {
                 int spawnOdds = 250 * ((Main.netMode == NetmodeID.SinglePlayer) ? 1 : Main.player.Where(x => x.active && !x.dead && x.DistanceSQ(new Vector2(i, j).ToWorldCoordinates()) < 1500 * 1500).Count());
 
-                if (Main.rand.NextBool(Math.Max(1, spawnOdds)) && NPC.CountNPCS(ModContent.NPCType<BlisteredFish>()) < 7)
+                if (Main.rand.NextBool(Math.Max(1, spawnOdds)) && NPC.CountNPCS(NPCType<BlisteredFish>()) < 7)
                 {
                     Vector2 pos = new Vector2(i + 1, j + 1).ToWorldCoordinates();
-                    static int GetNPCIndex() => ModContent.NPCType<BlisteredFish>();
+                    static int GetNPCIndex() => NPCType<BlisteredFish>();
 
                     if (Main.netMode == NetmodeID.SinglePlayer)
                         NPC.NewNPC(new EntitySource_TileUpdate(i, j), (int)pos.X, (int)pos.Y, GetNPCIndex());
                     else
-                    {
-                        ModPacket packet = Redemption.Instance.GetPacket(ModMessageType.SpawnNPCFromClient, 3);
-                        packet.Write(GetNPCIndex());
-                        packet.Write((int)pos.X);
-                        packet.Write((int)pos.Y);
-                        packet.Send();
-                    }
+                        SpawnNPCFromClient(GetNPCIndex(), pos);
+
                     for (int k = 0; k < 8; k++)
-                        Dust.NewDust(pos - new Vector2(24, 16), 16, 16, ModContent.DustType<XenoWaterDust>(), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-4f, -2f));
+                        Dust.NewDust(pos - new Vector2(24, 16), 16, 16, DustType<XenoWaterDust>(), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-4f, -2f));
                 }
             }
         }

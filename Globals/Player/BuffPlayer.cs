@@ -99,6 +99,7 @@ namespace Redemption.Globals.Player
         public bool erleasFlower;
         public bool spiderFriendly;
         public bool cruxSpiritExtractor;
+        public bool beelzebub;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -184,6 +185,7 @@ namespace Redemption.Globals.Player
             erleasFlower = false;
             spiderFriendly = false;
             cruxSpiritExtractor = false;
+            beelzebub = false;
 
             Player.RedemptionRad().protectionLevel = 0;
 
@@ -330,6 +332,13 @@ namespace Redemption.Globals.Player
                     infectionHeartTimer = 0;
                 }
             }
+            if (beelzebub)
+            {
+                if (Player.ownedProjectileCounts[ProjectileType<BlueFly_Proj>()] < 20 && Main.rand.NextBool(100))
+                {
+                    Projectile.NewProjectile(Player.GetSource_Accessory(new Item(ItemType<BeelzebubConcoction>())), Player.Center, Vector2.Zero, ProjectileType<BlueFly_Proj>(), 10, 0, Player.whoAmI);
+                }
+            }
         }
         public override void PostUpdateBuffs()
         {
@@ -377,9 +386,12 @@ namespace Redemption.Globals.Player
 
             if (shockDebuff)
             {
-                Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.3f).UseIntensity(1f)
+                if (!Main.dedServ)
+                {
+                    Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.3f).UseIntensity(1f)
                     .UseColor(Color.DarkOliveGreen).UseImage(Request<Texture2D>("Redemption/Effects/Perlin", AssetRequestMode.ImmediateLoad).Value);
-                Player.ManageSpecialBiomeVisuals("MoR:FogOverlay", shockDebuff);
+                    Player.ManageSpecialBiomeVisuals("MoR:FogOverlay", shockDebuff);
+                }
             }
             #endregion
 
@@ -781,7 +793,7 @@ namespace Redemption.Globals.Player
 
             if (shieldGenerator && shieldGeneratorCD <= 0)
             {
-                modifiers.ScalingArmorPenetration += .5f;
+                modifiers.ScalingArmorPenetration += .25f;
                 modifiers.ModifyHurtInfo += ModifyDamage;
             }
         }

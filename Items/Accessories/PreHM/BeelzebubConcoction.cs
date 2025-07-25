@@ -25,6 +25,7 @@ namespace Redemption.Items.Accessories.PreHM
             player.buffImmune[BuffID.Webbed] = true;
             player.buffImmune[ModContent.BuffType<SpiderSwarmedDebuff>()] = true;
             modPlayer.spiderFriendly = true;
+            modPlayer.beelzebub = true;
 
         }
         public override void AddRecipes()

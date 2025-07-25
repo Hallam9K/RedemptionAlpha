@@ -1,7 +1,10 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.NPCs.Critters;
+using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -9,6 +12,9 @@ namespace Redemption.Tiles.Tiles
 {
     public class InfestedStoneTile : ModTile
     {
+        public override string Texture => "Terraria/Images/Tiles_" + TileID.Stone;
+        private Asset<Texture2D> OverlayTexture;
+
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
@@ -23,6 +29,8 @@ namespace Redemption.Tiles.Tiles
             MinPick = 0;
             MineResist = 1.5f;
             AddMapEntry(new Color(128, 128, 128));
+            if (!Main.dedServ)
+                OverlayTexture = Request<Texture2D>("Redemption/Tiles/Tiles/InfestedStoneTile_Overlay");
         }
         public override bool IsTileDangerous(int i, int j, Player player) => true;
 
@@ -51,6 +59,19 @@ namespace Redemption.Tiles.Tiles
                 }
                 breakCheck = false;
             }
+        }
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+            if (!TileDrawing.IsVisible(tile))
+                return;
+            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
+                zero = Vector2.Zero;
+
+            int height = tile.TileFrameY == 36 ? 18 : 16;
+            Color color = Lighting.GetColor(i, j);
+            Main.spriteBatch.Draw(OverlayTexture.Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), color, 0f, Vector2.Zero, 1f, 0, 0f);
         }
     }
 }

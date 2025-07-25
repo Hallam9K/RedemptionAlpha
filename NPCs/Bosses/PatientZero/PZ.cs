@@ -781,8 +781,11 @@ namespace Redemption.NPCs.Bosses.PatientZero
                             ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.None, 2000, 6000, 0);
                             player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(player.RedemptionScreen().ScreenShakeIntensity, 5);
                             player.RedemptionScreen().TimedZoom(new Vector2(1.4f, 1.4f), 100, 100);
-                            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-                            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+                            if (!Main.dedServ)
+                            {
+                                Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+                                player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+                            }
 
                             TimerRand *= 0.98f;
 

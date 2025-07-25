@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.Audio;
 using Redemption.CrossMod;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -113,6 +114,13 @@ namespace Redemption.NPCs.PreHM
                 14 => -2,
                 _ => 0,
             };
+        }
+        public override void ModifyTypeName(ref string typeName)
+        {
+            if (Personality is PersonalityState.Soulful)
+                typeName = Language.GetTextValue("Mods.Redemption.NPCs.EpidotrianSkeleton.SoulfulPrefix") + Lang.GetNPCNameValue(Type);
+            else if (Personality is PersonalityState.Greedy)
+                typeName = Language.GetTextValue("Mods.Redemption.NPCs.EpidotrianSkeleton.GreedyPrefix") + Lang.GetNPCNameValue(Type);
         }
         public override bool PreAI()
         {

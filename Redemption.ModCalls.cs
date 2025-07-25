@@ -428,7 +428,8 @@ namespace Redemption
                         if (args[3] is not float multiplier1)
                             throw new Exception($"Expected an argument of type int when setting increase value, but got type {args[1].GetType().Name} instead.");
 
-                        return player.RedemptionPlayerBuff().ElementalResistance[elementID12] += multiplier1;
+                        player.RedemptionPlayerBuff().ElementalResistance[elementID12] += multiplier1;
+                        break;
                     case "increaseElementalDamage":
                         if (args[1] is not Player player2)
                             throw new Exception($"Expected an argument of type Player when setting player, but got type {args[1].GetType().Name} instead.");
@@ -437,7 +438,8 @@ namespace Redemption
                         if (args[3] is not float multiplier2)
                             throw new Exception($"Expected an argument of type int when setting increase value, but got type {args[1].GetType().Name} instead.");
 
-                        return player2.RedemptionPlayerBuff().ElementalDamage[elementID13] += multiplier2;
+                        player2.RedemptionPlayerBuff().ElementalDamage[elementID13] += multiplier2;
+                        break;
                     #endregion
                     case "RaveyardActive":
                         return RedeWorld.SkeletonInvasion;
@@ -459,6 +461,18 @@ namespace Redemption
                         return RedeGen.newbCaveVector;
                     case "slayerShipPos":
                         return RedeGen.slayerShipVector;
+                    case "spiritAssassinPoint":
+                        return RedeGen.SpiritAssassinPoint;
+                    case "spiritCommonGuardPoint":
+                        return RedeGen.SpiritCommonGuardPoint;
+                    case "spiritOldManPoint":
+                        return RedeGen.SpiritOldManPoint;
+                    case "hangingTiedPoint":
+                        return RedeGen.HangingTiedPoint;
+                    case "spiritOldLadyPoint":
+                        return RedeGen.SpiritOldLadyPoint;
+                    case "spiritDruidPoint":
+                        return RedeGen.SpiritDruidPoint;
                 }
             }
             /*

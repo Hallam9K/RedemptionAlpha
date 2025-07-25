@@ -334,6 +334,7 @@ Mods: {
 			CoopCrate: A loot box for people who specifically want an explosive egg. The chickens have not realised they need the randomness aspect for it to actually be exciting.
 			ShadesoulNPC: Willpower exists in Epidotra - the happier or more you desire life, the stronger and bigger your soul can become, and vice versa. If someone loses their will to live, their soul can become so small it inverts and they become soulless. The soulless only emerged after the Age of the False Gods.
 			ScannerDrone: A drone used to collect data and store it within the SoS.
+			SpaceKeeper: The 3rd Slayer Unit created by King Slayer III during his million year voyage. Construction began after an alien war which left most of Slayer's androids damaged or broken. This unit specialises in using nanobots to heal other robots.
 			CorruptChicken: How could a being so pure become so tainted? Such is the way of life.
 			ViciousChicken: "{$Mods.Redemption.FlavorTextBestiary.CorruptChicken}"
 			HeadlessChicken: *Ghastly bwark*
@@ -421,6 +422,13 @@ Mods: {
 				Decapitated: Decapitated!
 				NoTargets: No targets found!
 				BloodLoss: BLOOD LOSS!
+				MPWarning:
+					'''
+					IMPORTANT: Mod of Redemption is not fully functional in multiplayer, singleplayer is recommended for the best experience.
+							   If you still want to play in multiplayer, expect a lot of bugs and things to not function correctly!
+
+					To disable this message, go to Mod Configuration > Mod of Redemption > Personal Config > Disable Multiplayer Warning
+					'''
 			}
 		}
 
@@ -10488,8 +10496,9 @@ Mods: {
 				DisplayName: Beelzebub Concoction
 				Tooltip:
 					'''
-					Critters are attracted to you
-					Shy critters won't fear you
+					Friendly blue flies will occasionally appear to protect you
+					Any flies that target you will transform into blue flies
+					Critters are attracted to you and shy critters won't fear you
 					{$Mods.Redemption.Items.ErleasFlower.Tooltip}
 					{$Mods.Redemption.Items.SpiderSerum.Tooltip}
 					'''
@@ -10846,6 +10855,16 @@ Mods: {
 			ElderWoodHelmet: {
 				DisplayName: Elder Wood Helmet
 				Tooltip: 4% increased magic critical strike chance
+			}
+
+			ElderWoodStaff: {
+				DisplayName: Elder Wood Staff
+				Tooltip:
+					'''
+					Summons a protective pixie ring
+					The pixies are randomly infused with the element of {0} or {1}
+					Right-click to launch the pixie ring towards your cursor
+					'''
 			}
 		}
 
@@ -11557,6 +11576,9 @@ Mods: {
 			Twinklestar_Holdout.DisplayName: "{$Mods.Redemption.Items.Twinklestar.DisplayName}"
 			Twinklestar_ShootingStar.DisplayName: Shooting Star
 			Twinklestar_TinyStar.DisplayName: Tiny Twinklestar
+			ElderWoodStaff_Proj.DisplayName: "{$Mods.Redemption.Items.ElderWoodStaff.DisplayName}"
+			AncientPixie_Proj.DisplayName: Ancient Pixie
+			BlueFly_Proj.DisplayName: Blue Fly
 		}
 
 		NPCs: {
@@ -11945,7 +11967,12 @@ Mods: {
 
 			Zephos_Intro.DisplayName: Zephos
 			ZephosUnconscious.DisplayName: "{$Mods.Redemption.NPCs.Zephos_Intro.DisplayName}"
-			Android.DisplayName: Android Mk.I
+
+			Android: {
+				DisplayName: Android Mk.I
+				ApidroidName: Apidroid Mk.I
+			}
+
 			PrototypeSilver.DisplayName: Prototype Silver Mk.I
 			SlayerSpawner.DisplayName: Slayer Spawner
 			SpacePaladin.DisplayName: Space Paladin Mk.I
@@ -11998,7 +12025,13 @@ Mods: {
 			CorpseWalkerPriest.DisplayName: Corpse-Walker Priest
 			DancingSkeleton.DisplayName: Dancing Skeleton
 			DevilsTongue.DisplayName: Devil's Tongue
-			EpidotrianSkeleton.DisplayName: Epidotrian Skeleton
+
+			EpidotrianSkeleton: {
+				DisplayName: Epidotrian Skeleton
+				SoulfulPrefix: "Soulful "
+				GreedyPrefix: "Greedy "
+			}
+
 			ForestNymph.DisplayName: Forest Nymph
 			GathicTomb_Spawner.DisplayName: Gathic Tomb Spawner
 			JollyMadman.DisplayName: Jolly Madman
@@ -12314,9 +12347,9 @@ Mods: {
 		}
 
 		Keybinds: {
-			"Special Ability Key.DisplayName": Special Ability Key
-			"Spirit Walker Key.DisplayName": Spirit Walker Key
-			"Skip Dialogue Key.DisplayName": Skip Dialogue Key
+			SpecialAbilityKey.DisplayName: Special Ability Key
+			SpiritWalkerKey.DisplayName: Spirit Walker Key
+			SkipDialogueKey.DisplayName: Skip Dialogue Key
 		}
 
 		Conditions: {
@@ -12405,6 +12438,11 @@ Mods: {
 				LegacyNebSky: {
 					Label: Legacy Nebuleus Sky
 					Tooltip: Reverts Nebuleus' Final Form sky to the old rotating image
+				}
+
+				DisableMPWarning: {
+					Label: Disable Multiplayer Warning
+					Tooltip: Disables warning text that shows in multiplayer
 				}
 			}
 

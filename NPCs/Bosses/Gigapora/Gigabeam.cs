@@ -41,8 +41,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void AI()
         {
-            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.3f).UseIntensity(0.5f).UseColor(Color.Red).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-            Main.LocalPlayer.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+            if (!Main.dedServ)
+            {
+                Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.3f).UseIntensity(0.5f).UseColor(Color.Red).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+                Main.LocalPlayer.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+            }
 
 
             Projectile.rotation = Projectile.velocity.ToRotation();

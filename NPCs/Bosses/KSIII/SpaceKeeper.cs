@@ -52,7 +52,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
 
-                new FlavorTextBestiaryInfoElement("The 3rd Slayer Unit created by King Slayer III during his million year voyage. Construction began after an alien war which left most of Slayer's androids damaged or broken. This unit specialises in using nanobots to heal other robots.")
+                new FlavorTextBestiaryInfoElement(Mod.GetLocalization("FlavorTextBestiary.SpaceKeeper").Value)
             });
         }
 

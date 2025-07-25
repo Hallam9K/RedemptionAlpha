@@ -22,7 +22,9 @@ namespace Redemption.Biomes
         public override void SpecialVisuals(Player player, bool isActive)
         {
             if (isActive)
+            {
                 Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+            }
             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", isActive);
             player.ManageSpecialBiomeVisuals("MoR:SoullessSky", isActive, player.Center);
         }

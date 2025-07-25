@@ -334,7 +334,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     }
                     break;
                 case ActionState.SoulMove:
-                    SoulMoveState(NPC, ref AITimer, player, ref NPC.localAI[0], ref runCooldown, 1, 1.5f, 0, false, true);
+                    SoulMoveState(NPC, ref AITimer, player, ref NPC.localAI[0], ref runCooldown, 1, 1.5f, 0, false, true, true);
                     break;
             }
             if (!fading && AIState is not ActionState.Begin && AIState is not ActionState.SoulMove)

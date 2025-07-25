@@ -259,6 +259,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             Texture2D glow = Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Vector2 pos = NPC.Center + new Vector2(0, 1);
 
             bool noSpiritEffect = SSBase.NoSpiritEffect(NPC);
             Color color = noSpiritEffect ? drawColor : Color.White;
@@ -270,17 +271,17 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
             }
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, pos - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             int Height = head.Value.Height / 14;
             int Width = head.Value.Width / 2;
             int y = Height * HeadType;
             int x = Width * HeadX;
             Rectangle rect = new(x, y, Width, Height);
-            spriteBatch.Draw(head.Value, NPC.Center - screenPos, new Rectangle?(rect), NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -4 : 2, 2 + HeadOffset), NPC.scale, effects, 0);
+            spriteBatch.Draw(head.Value, pos - screenPos, new Rectangle?(rect), NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -4 : 2, 2 + HeadOffset), NPC.scale, effects, 0);
 
             if (HasEyes)
-                spriteBatch.Draw(glow, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(glow, pos - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             if (!noSpiritEffect)
             {

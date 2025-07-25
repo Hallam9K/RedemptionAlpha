@@ -62,10 +62,13 @@ namespace Redemption.Items.Armor.HM.Xenomite
         public override void UpdateArmorSet(Player player)
         {
             player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Xenomite.Keybind");
-            foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
+            if (!Main.dedServ)
             {
-                player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Xenomite.Bonus1") +
-                    Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Xenomite.Press") + key + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Xenomite.Bonus2");
+                foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
+                {
+                    player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Xenomite.Bonus1") +
+                        Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Xenomite.Press") + key + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Xenomite.Bonus2");
+                }
             }
             player.GetDamage<GenericDamageClass>() += .06f;
             player.GetModPlayer<EnergyPlayer>().energyRegen += 10;

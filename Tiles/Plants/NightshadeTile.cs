@@ -1,8 +1,10 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.CrossMod;
 using Redemption.Items.Placeable.Plants;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,6 +32,7 @@ namespace Redemption.Tiles.Plants
             TileID.Sets.ReplaceTileBreakUp[Type] = true;
             TileID.Sets.IgnoredInHouseScore[Type] = true;
             TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
+            TileID.Sets.BreakableWhenPlacing[Type] = true;
             AddMapEntry(Color.Purple);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
@@ -66,17 +69,23 @@ namespace Redemption.Tiles.Plants
                         bool foliageGrass = tileType == TileID.Plants || tileType == TileID.Plants2;
                         bool moddedFoliage = tileType >= TileID.Count && (Main.tileCut[tileType] || TileID.Sets.BreakableWhenPlacing[tileType]);
                         bool harvestableVanillaHerb = Main.tileAlch[tileType] && WorldGen.IsHarvestableHerbWithSeed(tileType, tile.TileFrameX / 18);
+
                         if (foliageGrass || moddedFoliage || harvestableVanillaHerb)
                         {
                             WorldGen.KillTile(i, j);
                             if (!tile.HasTile && Main.netMode == NetmodeID.MultiplayerClient)
+                            {
                                 NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j);
+                            }
+
                             return true;
                         }
                     }
+
                     return false;
                 }
             }
+
             return true;
         }
         public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)
@@ -102,10 +111,10 @@ namespace Redemption.Tiles.Plants
             Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
             Player nearestPlayer = Main.player[Player.FindClosest(worldPosition, 16, 16)];
 
-            int herbItemType = ModContent.ItemType<Nightshade>();
+            int herbItemType = ItemType<Nightshade>();
             int herbItemStack = 1;
 
-            int seedItemType = ModContent.ItemType<NightshadeSeeds>();
+            int seedItemType = ItemType<NightshadeSeeds>();
             int seedItemStack = 1;
 
             if (nearestPlayer.active && nearestPlayer.HeldItem.type == ItemID.StaffofRegrowth)
@@ -189,6 +198,34 @@ namespace Redemption.Tiles.Plants
         {
             Tile tile = Framing.GetTileSafely(i, j);
             return (PlantStage)(tile.TileFrameX / FrameWidth);
+        }
+
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            PlantStage stage = GetStage(i, j);
+            if (stage != PlantStage.Planted && SpiritHelper.PlayerBotanist(Main.LocalPlayer))
+            {
+                Tile tile = Main.tile[i, j];
+                float darkness = (1.2f - Lighting.Brightness(i, j)) / 1.2f;
+                Texture2D tex = TextureAssets.Tile[Type].Value;
+                Vector2 tileOffset = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
+
+                Rectangle src = new(tile.TileFrameX, tile.TileFrameY, 16, 20);
+                Vector2 position = new Vector2(i, j) * 16 - Main.screenPosition + tileOffset - new Vector2(0, 2) + src.Bottom();
+                SpriteEffects effects = i % 2 == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                float rotation = Main.instance.TilesRenderer.GetWindCycle(i, j, Main.instance.TilesRenderer._grassWindCounter) * 0.2f;
+                spriteBatch.Draw(tex, position, src, Color.Lerp(Lighting.GetColor(i, j), Color.Green, darkness), rotation, src.Bottom(), 1f, effects, 0f);
+
+                return false;
+            }
+            return true;
+        }
+        public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
+        {
+            if (!SpiritHelper.PlayerBotanist(Main.LocalPlayer))
+                return;
+            float darkness = (1.2f - Lighting.Brightness(i, j)) / 1.2f;
+            drawData.finalColor = Color.Lerp(Lighting.GetColor(i, j), Color.Green, darkness);
         }
     }
 }

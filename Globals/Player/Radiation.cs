@@ -135,9 +135,12 @@ namespace Redemption.Globals.Player
         {
             if (Player.HasBuff(ModContent.BuffType<RadiationDebuff>()))
             {
-                Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.5f).UseIntensity(1f)
+                if (!Main.dedServ)
+                {
+                    Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.5f).UseIntensity(1f)
                     .UseColor(Color.GreenYellow).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Perlin", AssetRequestMode.ImmediateLoad).Value);
-                Player.ManageSpecialBiomeVisuals("MoR:FogOverlay", Player.HasBuff(ModContent.BuffType<RadiationDebuff>()));
+                    Player.ManageSpecialBiomeVisuals("MoR:FogOverlay", Player.HasBuff(ModContent.BuffType<RadiationDebuff>()));
+                }
             }
         }
     }

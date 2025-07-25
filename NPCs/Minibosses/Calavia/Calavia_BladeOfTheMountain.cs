@@ -57,8 +57,10 @@ namespace Redemption.NPCs.Minibosses.Calavia
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             if (!npc.active || npc.ai[0] is 4 or 9 or 10 || npc.type != ModContent.NPCType<Calavia>())
+            {
                 Projectile.Kill();
-
+                return;
+            }
             Projectile.Redemption().swordHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
 
             if (npc.ModNPC is Calavia calavia)
@@ -241,8 +243,10 @@ namespace Redemption.NPCs.Minibosses.Calavia
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             if (!npc.active || npc.ai[0] is 4 or 9 or 10 || npc.type != ModContent.NPCType<Calavia>())
+            {
                 Projectile.Kill();
-
+                return;
+            }
             if (npc.ModNPC is Calavia calavia)
             {
                 switch (Projectile.ai[1])
@@ -297,6 +301,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, vector / 2, ModContent.ProjectileType<Calavia_BladeStab>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
                             }
                             npc.ai[2] = 2;
+                            npc.netUpdate = true;
                             Projectile.Kill();
                         }
                         break;

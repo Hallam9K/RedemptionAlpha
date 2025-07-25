@@ -55,7 +55,7 @@ namespace Redemption.NPCs.PreHM
         public override void SetDefaults()
         {
             NPC.width = 24;
-            NPC.height = 50;
+            NPC.height = 48;
             NPC.damage = 23;
             NPC.friendly = false;
             NPC.defense = 8;
@@ -232,12 +232,14 @@ namespace Redemption.NPCs.PreHM
                         runCooldown = 0;
                         AITimer = 0;
                         AIState = ActionState.Hiding;
+                        break;
                     }
                     if (globalNPC.attacker is Player attackerPlayer && (NPC.PlayerDead() || attackerPlayer.RedemptionPlayerBuff().skeletonFriendly))
                     {
                         runCooldown = 0;
                         AITimer = 0;
                         AIState = ActionState.Hiding;
+                        break;
                     }
 
                     if (HasEyes && globalNPC.attacker.direction == NPC.direction * -1 && NPC.Sight(globalNPC.attacker, 200, true, true))
@@ -273,12 +275,14 @@ namespace Redemption.NPCs.PreHM
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
+                        break;
                     }
                     if (globalNPC.attacker is Player attackerPlayer2 && (NPC.PlayerDead() || attackerPlayer2.RedemptionPlayerBuff().skeletonFriendly))
                     {
                         runCooldown = 0;
                         AITimer = 0;
                         AIState = ActionState.Hiding;
+                        break;
                     }
 
                     if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
@@ -314,6 +318,7 @@ namespace Redemption.NPCs.PreHM
                         runCooldown = 0;
                         AITimer = 0;
                         AIState = NPC.alpha < 10 ? ActionState.Wander : ActionState.Hiding;
+                        break;
                     }
 
                     if (NPC.velocity.Y < 0)

@@ -336,9 +336,15 @@ namespace Redemption.Globals.NPC
                 pool.Clear();
                 return;
             }
-            for (int i = 0; i < Main.maxNPCs; i++)
+
+            if (spawnInfo.Player.talkNPC >= 0 && NPCLists.DisablesSpawnsWhenChatting.Contains(Main.npc[spawnInfo.Player.talkNPC].type))
             {
-                Terraria.NPC safe = Main.npc[i];
+                pool.Clear();
+                return;
+            }
+
+            foreach (Terraria.NPC safe in Main.ActiveNPCs)
+            {
                 if (!safe.active || !NPCLists.DisablesSpawnsWhenNear.Contains(safe.type))
                     continue;
                 Vector2 spawnPos = BaseUtility.TileToPos(new Vector2(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY));
@@ -348,6 +354,7 @@ namespace Redemption.Globals.NPC
                     return;
                 }
             }
+
             if (RedeWorld.blobbleSwarm)
             {
                 pool.Clear();

@@ -184,8 +184,11 @@ namespace Redemption.NPCs.Friendly
             if (RedeConfigClient.Instance.CameraLockDisable || skipIntro)
                 return;
             ScreenPlayer.CutsceneLock(Main.LocalPlayer, NPC, ScreenPlayer.CutscenePriority.Max, 0, 0, 0);
-            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(2f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-            Main.LocalPlayer.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+            if (!Main.dedServ)
+            {
+                Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(2f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+                Main.LocalPlayer.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+            }
         }
 
         private void Despawn()

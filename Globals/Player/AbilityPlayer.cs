@@ -58,6 +58,8 @@ namespace Redemption.Globals.Player
         }
         public override void PreUpdate()
         {
+            if (Main.dedServ)
+                return;
             Player.ManageSpecialBiomeVisuals("MoR:SpiritSky", false, Player.Center);
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
@@ -84,13 +86,15 @@ namespace Redemption.Globals.Player
         }
         public override void PostUpdateBuffs()
         {
+            if (Main.dedServ)
+                return;
             if (SpiritwalkerActive)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(20))
+                if (Main.rand.NextBool(20))
                     RedeParticleManager.CreateSpiritParticle(Player.position + RedeHelper.Spread(1100), RedeHelper.SpreadUp(2), 3, Main.rand.Next(90, 121), 0, Main.rand.NextFloat(.5f, 1.5f));
 
                 Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.5f).UseIntensity(1f)
-                    .UseColor(new Color(180, 255, 255)).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/SwirlyPerly", AssetRequestMode.ImmediateLoad).Value);
+                .UseColor(new Color(180, 255, 255)).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/SwirlyPerly", AssetRequestMode.ImmediateLoad).Value);
                 Player.ManageSpecialBiomeVisuals("MoR:FogOverlay", SpiritwalkerActive);
                 Player.ManageSpecialBiomeVisuals("MoR:SpiritSky", SpiritwalkerActive, Player.Center);
             }

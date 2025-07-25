@@ -47,7 +47,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public override void SetDefaults()
         {
             NPC.width = 24;
-            NPC.height = 50;
+            NPC.height = 48;
             NPC.damage = 23;
             NPC.friendly = true;
             NPC.defense = 8;

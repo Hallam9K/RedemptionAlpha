@@ -49,7 +49,8 @@ namespace Redemption.Tiles.Trees
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override void RandomUpdate(int i, int j)
         {
-            if (!WorldGen.genRand.NextBool(20))
+            bool onSurface = j < Main.worldSurface;
+            if (onSurface && !WorldGen.genRand.NextBool(20))
                 return;
 
             bool growSucess;

@@ -1,11 +1,10 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
+using Redemption.NPCs.HM;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -50,9 +49,9 @@ namespace Redemption.Tiles.Furniture.Lab
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
             if (RedeTileHelper.CanDeadRing(player))
-                player.cursorItemIconID = ModContent.ItemType<DeadRinger>();
+                player.cursorItemIconID = ItemType<DeadRinger>();
             else
-                player.cursorItemIconID = ModContent.ItemType<HintIcon>();
+                player.cursorItemIconID = ItemType<HintIcon>();
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
         {
@@ -67,34 +66,29 @@ namespace Redemption.Tiles.Furniture.Lab
             int top = j - Main.tile[i, j].TileFrameY / 18 % 2;
             if (RedeTileHelper.CanDeadRing(player))
             {
-                if (!NPC.AnyNPCs(ModContent.NPCType<HazmatCorpse_Ghost>()))
-                {
-                    if (!Main.dedServ)
-                        SoundEngine.PlaySound(CustomSounds.Bell, new Vector2(i, j) * 16);
+                static int GetNPCIndex() => NPCType<HazmatCorpse_Ghost>();
 
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 1) * 16, ModContent.NPCType<HazmatCorpse_Ghost>());
-                        SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
-                        Main.npc[index1].velocity.Y -= 4;
-                        Main.npc[index1].netUpdate = true;
-                    }
-                    else
-                    {
-                        if (Main.netMode == NetmodeID.SinglePlayer)
-                            return false;
+                if (NPC.AnyNPCs(GetNPCIndex()))
+                    return false;
 
-                        Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, ModContent.NPCType<HazmatCorpse_Ghost>(), new Vector2(i * 16, (j + 1) * 16)).Send(-1);
-                        SoundEngine.PlaySound(SoundID.Item74, player.position);
-                    }
-                }
+                Vector2 pos = new Vector2(i, j + 1).ToWorldCoordinates();
+
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.Bell, pos);
+
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    NPC.NewNPC(new EntitySource_TileUpdate(i, j), (int)pos.X, (int)pos.Y, GetNPCIndex());
+                else
+                    SpawnNPCFromClient(GetNPCIndex(), pos);
+
+                SoundEngine.PlaySound(SoundID.Item74, pos);
                 return true;
             }
             else
             {
                 if (Main.tile[left, top].TileFrameX == 0)
                 {
-                    player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ModContent.ItemType<HazmatSuit2>());
+                    player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ItemType<HazmatSuit2>());
                     for (int x = left; x < left + 3; x++)
                     {
                         for (int y = top; y < top + 2; y++)
@@ -115,7 +109,7 @@ namespace Redemption.Tiles.Furniture.Lab
             if (Main.tile[left, top].TileFrameX == 0)
             {
                 Player player = Main.LocalPlayer;
-                player.QuickSpawnItem(new EntitySource_TileBreak(i, j), ModContent.ItemType<HazmatSuit2>());
+                player.QuickSpawnItem(new EntitySource_TileBreak(i, j), ItemType<HazmatSuit2>());
             }
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
@@ -131,7 +125,7 @@ namespace Redemption.Tiles.Furniture.Lab
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.createTile = ModContent.TileType<HazmatCorpseTile>();
+            Item.createTile = TileType<HazmatCorpseTile>();
         }
     }
 }

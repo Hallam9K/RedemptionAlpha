@@ -40,6 +40,8 @@ namespace Redemption
         public bool DialogueInChat;
 
         public bool LegacyNebSky;
+
+        public bool DisableMPWarning;
     }
     public class RedeConfigServer : ModConfig
     {

@@ -7,15 +7,12 @@ using System.Collections.Generic;
 using Terraria.ID;
 using System.Linq;
 using Terraria.Enums;
-using Redemption.Buffs;
-using Microsoft.Xna.Framework.Graphics;
 using Redemption.NPCs.Minibosses.Calavia;
 using Terraria.Audio;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly.SpiritSummons;
 using Redemption.NPCs.Critters;
 using Redemption.Helpers;
-using System.Net;
 using Terraria.Localization;
 
 namespace Redemption.Globals
@@ -45,35 +42,9 @@ namespace Redemption.Globals
                 return;
             modifiers.FinalDamage *= ReflectDamageIncrease;
         }
-        private readonly int[] bannedArenaProjs = new int[]
-        {
-            ProjectileID.SandBallGun,
-            ProjectileID.EbonsandBallGun,
-            ProjectileID.PearlSandBallGun,
-            ProjectileID.CrimsandBallGun,
-            ProjectileID.SandBallFalling,
-            ProjectileID.EbonsandBallFalling,
-            ProjectileID.PearlSandBallFalling,
-            ProjectileID.CrimsandBallFalling,
-            ProjectileID.Bomb,
-            ProjectileID.StickyBomb,
-            ProjectileID.BouncyBomb,
-            ProjectileID.Dynamite,
-            ProjectileID.StickyDynamite,
-            ProjectileID.BouncyDynamite,
-            ProjectileID.SnowBallHostile,
-            ProjectileID.IceBlock,
-            ProjectileID.AntiGravityHook,
-            ProjectileID.StaticHook,
-            ProjectileID.PortalGunBolt,
-            ProjectileID.PortalGunGate
-        };
         public override void AI(Projectile projectile)
         {
-            if (ArenaWorld.arenaActive && bannedArenaProjs.Any(x => x == projectile.type) && projectile.Hitbox.Intersects(new Rectangle((int)ArenaWorld.arenaTopLeft.X, (int)ArenaWorld.arenaTopLeft.Y, (int)ArenaWorld.arenaSize.X, (int)ArenaWorld.arenaSize.Y)))
-                projectile.Kill();
-
-            if (ArenaWorld.arenaActive && projectile.aiStyle == 7 && !projectile.Hitbox.Intersects(new Rectangle((int)ArenaWorld.arenaTopLeft.X, (int)ArenaWorld.arenaTopLeft.Y, (int)ArenaWorld.arenaSize.X, (int)ArenaWorld.arenaSize.Y)))
+            if (ArenaSystem.ArenaActive && projectile.aiStyle == 7 && !projectile.Hitbox.Intersects(ArenaSystem.ArenaBoundsWorld))
                 projectile.Kill();
         }
         public static bool Decapitation(Terraria.NPC target, ref int damage, ref bool crit, int chance = 200)

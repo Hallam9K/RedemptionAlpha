@@ -179,6 +179,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 240);
                         AIState = ActionState.Wander;
                         NPC.netUpdate = true;
+                        break;
                     }
                     if (globalNPC.attacker is Player attackerPlayer && (NPC.PlayerDead() || attackerPlayer.RedemptionPlayerBuff().skeletonFriendly))
                     {
@@ -186,6 +187,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 240);
                         AIState = ActionState.Wander;
                         NPC.netUpdate = true;
+                        break;
                     }
 
                     if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
@@ -204,9 +206,13 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 240);
                         AIState = ActionState.Wander;
                         NPC.netUpdate = true;
+                        break;
                     }
                     if (globalNPC.attacker is NPC nonUndead && !NPCLists.Undead.Contains(nonUndead.type) && !NPCLists.Skeleton.Contains(nonUndead.type))
+                    {
                         AIState = ActionState.Retreat;
+                        break;
+                    }
 
                     if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
                         runCooldown++;
@@ -241,11 +247,13 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         AIState = ActionState.Wander;
                         NPC.netUpdate = true;
+                        break;
                     }
                     if (globalNPC.attacker is NPC nonUndead2 && !NPCLists.Undead.Contains(nonUndead2.type) && !NPCLists.Skeleton.Contains(nonUndead2.type))
                     {
                         NPC.frameCounter = 0;
                         AIState = ActionState.Retreat;
+                        break;
                     }
 
                     NPC.LookAtEntity(globalNPC.attacker);

@@ -9,6 +9,13 @@ public static class SpiritHelper
 {
     private static readonly Mod spirit = CrossMod.Reforged.Instance;
 
+    public static bool PlayerBotanist(Player player)
+    {
+        if (!CrossMod.Reforged.Enabled)
+            return false;
+        return (bool)spirit.Call("PlayerBotanist", player);
+    }
+
     public static void AddUndead(int type, bool excludeDeathAnim = false)
     {
         if (!CrossMod.Reforged.Enabled)

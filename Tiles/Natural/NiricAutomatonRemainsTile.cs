@@ -73,32 +73,25 @@ namespace Redemption.Tiles.Natural
             Player player = Main.LocalPlayer;
             if (RedeTileHelper.CanDeadRing(player))
             {
-                int spirit = ModContent.NPCType<SpiritNiricLady>();
+                static int GetNPCIndex() => NPCType<SpiritNiricLady>();
 
-                if (!NPC.AnyNPCs(spirit))
-                {
-                    if (!Main.dedServ)
-                        SoundEngine.PlaySound(CustomSounds.Bell, new Vector2(i, j) * 16);
+                if (NPC.AnyNPCs(GetNPCIndex()))
+                    return false;
 
-                    int offset = Main.tile[i, j].TileFrameX / 18;
+                int offset = Main.tile[i, j].TileFrameX / 18;
+                Vector2 pos = new Vector2(i - offset + 3, j + 1).ToWorldCoordinates();
 
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), (i - offset + 3) * 16, (j + 1) * 16, spirit);
-                        SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
-                        Main.npc[index1].velocity.Y -= 4;
-                        Main.npc[index1].netUpdate = true;
-                    }
-                    else
-                    {
-                        if (Main.netMode == NetmodeID.SinglePlayer)
-                            return false;
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.Bell, pos);
 
-                        Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, spirit, new Vector2((i + offset) * 16, (j + 1) * 16)).Send(-1);
-                        SoundEngine.PlaySound(SoundID.Item74, player.position);
-                    }
-                }
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    NPC.NewNPC(new EntitySource_TileUpdate(i, j), (int)pos.X, (int)pos.Y, GetNPCIndex());
+                else
+                    SpawnNPCFromClient(GetNPCIndex(), pos);
+
+                SoundEngine.PlaySound(SoundID.Item74, pos);
             }
+
             return true;
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)

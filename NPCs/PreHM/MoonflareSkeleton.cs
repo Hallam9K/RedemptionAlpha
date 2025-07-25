@@ -58,7 +58,7 @@ namespace Redemption.NPCs.PreHM
         public override void SetDefaults()
         {
             NPC.width = 28;
-            NPC.height = 52;
+            NPC.height = 48;
             NPC.damage = 22;
             NPC.friendly = false;
             NPC.defense = 9;
@@ -474,7 +474,7 @@ namespace Redemption.NPCs.PreHM
             crown ??= ModContent.Request<Texture2D>(Texture + "_Crown");
             hood ??= ModContent.Request<Texture2D>(Texture + "_Hood");
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Vector2 pos = NPC.Center - new Vector2(0, 3);
+            Vector2 pos = NPC.Center - new Vector2(0, 5);
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, pos - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 

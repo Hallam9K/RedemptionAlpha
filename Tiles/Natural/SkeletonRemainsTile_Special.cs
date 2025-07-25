@@ -69,50 +69,42 @@ namespace Redemption.Tiles.Natural
             Player player = Main.LocalPlayer;
             if (RedeTileHelper.CanDeadRing(player))
             {
+                static int GetNPCIndex() => NPCType<SpiritwalkerSoul>();
+
                 if (!player.RedemptionAbility().Spiritwalker)
                 {
-                    if (!NPC.AnyNPCs(ModContent.NPCType<SpiritwalkerSoul>()))
+                    if (!NPC.AnyNPCs(GetNPCIndex()))
                     {
+                        Vector2 pos = new Vector2(i, j + 1).ToWorldCoordinates();
+
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(CustomSounds.Bell, new Vector2(i, j) * 16);
+                            SoundEngine.PlaySound(CustomSounds.Bell, pos);
 
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 1) * 16, ModContent.NPCType<SpiritwalkerSoul>());
-                            SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
-                        }
+                        if (Main.netMode == NetmodeID.SinglePlayer)
+                            NPC.NewNPC(new EntitySource_TileUpdate(i, j), (int)pos.X, (int)pos.Y, GetNPCIndex());
                         else
-                        {
-                            if (Main.netMode == NetmodeID.SinglePlayer)
-                                return false;
+                            SpawnNPCFromClient(GetNPCIndex(), pos);
 
-                            Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, ModContent.NPCType<SpiritwalkerSoul>(), new Vector2(i * 16, (j + 1) * 16)).Send(-1);
-                            SoundEngine.PlaySound(SoundID.Item74, player.position);
-                        }
+                        SoundEngine.PlaySound(SoundID.Item74, pos);
                     }
                 }
                 else
                 {
-                    if (!NPC.AnyNPCs(ModContent.NPCType<SpiritwalkerSoul>()) && !NPC.AnyNPCs(ModContent.NPCType<SpiritWalkerMan>()))
+                    static int GetNPCIndex2() => NPCType<SpiritWalkerMan>();
+
+                    if (!NPC.AnyNPCs(GetNPCIndex()) && !NPC.AnyNPCs(GetNPCIndex2()))
                     {
+                        Vector2 pos = new Vector2(i, j + 1).ToWorldCoordinates();
+
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(CustomSounds.Bell, new Vector2(i, j) * 16);
+                            SoundEngine.PlaySound(CustomSounds.Bell, pos);
 
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 1) * 16, ModContent.NPCType<SpiritWalkerMan>());
-                            SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
-                            Main.npc[index1].velocity.Y -= 4;
-                            Main.npc[index1].netUpdate = true;
-                        }
+                        if (Main.netMode == NetmodeID.SinglePlayer)
+                            NPC.NewNPC(new EntitySource_TileUpdate(i, j), (int)pos.X, (int)pos.Y, GetNPCIndex2());
                         else
-                        {
-                            if (Main.netMode == NetmodeID.SinglePlayer)
-                                return false;
+                            SpawnNPCFromClient(GetNPCIndex2(), pos);
 
-                            Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, ModContent.NPCType<SpiritWalkerMan>(), new Vector2(i * 16, (j + 1) * 16)).Send(-1);
-                            SoundEngine.PlaySound(SoundID.Item74, player.position);
-                        }
+                        SoundEngine.PlaySound(SoundID.Item74, pos);
                     }
                 }
             }
@@ -198,33 +190,27 @@ namespace Redemption.Tiles.Natural
             Player player = Main.LocalPlayer;
             if (RedeTileHelper.CanDeadRing(player))
             {
-                if (!NPC.AnyNPCs(ModContent.NPCType<SpiritAssassin>()))
-                {
-                    if (!Main.dedServ)
-                        SoundEngine.PlaySound(CustomSounds.Bell, new Vector2(i, j) * 16);
+                static int GetNPCIndex() => NPCType<SpiritAssassin>();
 
-                    int offset = 0;
-                    if (Main.tile[i, j].TileFrameX == 0)
-                        offset = 2;
-                    if (Main.tile[i, j].TileFrameX == 18)
-                        offset = 1;
+                if (NPC.AnyNPCs(GetNPCIndex()))
+                    return false;
 
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), (i + offset) * 16, (j + 1) * 16, ModContent.NPCType<SpiritAssassin>());
-                        SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
-                        Main.npc[index1].velocity.Y -= 3;
-                        Main.npc[index1].netUpdate = true;
-                    }
-                    else
-                    {
-                        if (Main.netMode == NetmodeID.SinglePlayer)
-                            return false;
+                int offset = 0;
+                if (Main.tile[i, j].TileFrameX == 0)
+                    offset = 2;
+                if (Main.tile[i, j].TileFrameX == 18)
+                    offset = 1;
+                Vector2 pos = new Vector2(i + offset, j + 1).ToWorldCoordinates();
 
-                        Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, ModContent.NPCType<SpiritAssassin>(), new Vector2((i + offset) * 16, (j + 1) * 16)).Send(-1);
-                        SoundEngine.PlaySound(SoundID.Item74, player.position);
-                    }
-                }
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.Bell, pos);
+
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    NPC.NewNPC(new EntitySource_TileUpdate(i, j), (int)pos.X, (int)pos.Y, GetNPCIndex());
+                else
+                    SpawnNPCFromClient(GetNPCIndex(), pos);
+
+                SoundEngine.PlaySound(SoundID.Item74, pos);
             }
             return true;
         }
@@ -302,33 +288,27 @@ namespace Redemption.Tiles.Natural
             Player player = Main.LocalPlayer;
             if (RedeTileHelper.CanDeadRing(player))
             {
-                if (!NPC.AnyNPCs(ModContent.NPCType<SpiritCommonGuard>()))
-                {
-                    if (!Main.dedServ)
-                        SoundEngine.PlaySound(CustomSounds.Bell, new Vector2(i, j) * 16);
+                static int GetNPCIndex() => NPCType<SpiritCommonGuard>();
 
-                    int offset = 0;
-                    if (Main.tile[i, j].TileFrameX == 54)
-                        offset = 2;
-                    if (Main.tile[i, j].TileFrameX == 54 + 18)
-                        offset = 1;
+                if (NPC.AnyNPCs(GetNPCIndex()))
+                    return false;
 
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), (i + offset) * 16, (j + 1) * 16, ModContent.NPCType<SpiritCommonGuard>());
-                        SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
-                        Main.npc[index1].velocity.Y -= 4;
-                        Main.npc[index1].netUpdate = true;
-                    }
-                    else
-                    {
-                        if (Main.netMode == NetmodeID.SinglePlayer)
-                            return false;
+                int offset = 0;
+                if (Main.tile[i, j].TileFrameX == 54)
+                    offset = 2;
+                if (Main.tile[i, j].TileFrameX == 54 + 18)
+                    offset = 1;
+                Vector2 pos = new Vector2(i + offset, j + 1).ToWorldCoordinates();
 
-                        Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, ModContent.NPCType<SpiritCommonGuard>(), new Vector2((i + offset) * 16, (j + 1) * 16)).Send(-1);
-                        SoundEngine.PlaySound(SoundID.Item74, player.position);
-                    }
-                }
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.Bell, pos);
+
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    NPC.NewNPC(new EntitySource_TileUpdate(i, j), (int)pos.X, (int)pos.Y, GetNPCIndex());
+                else
+                    SpawnNPCFromClient(GetNPCIndex(), pos);
+
+                SoundEngine.PlaySound(SoundID.Item74, pos);
             }
             return true;
         }
@@ -406,33 +386,27 @@ namespace Redemption.Tiles.Natural
             Player player = Main.LocalPlayer;
             if (RedeTileHelper.CanDeadRing(player))
             {
-                if (!NPC.AnyNPCs(ModContent.NPCType<SpiritGathicMan>()))
-                {
-                    if (!Main.dedServ)
-                        SoundEngine.PlaySound(CustomSounds.Bell, new Vector2(i, j) * 16);
+                static int GetNPCIndex() => NPCType<SpiritGathicMan>();
 
-                    int offset = -1;
-                    if (Main.tile[i, j].TileFrameX == 54)
-                        offset = 1;
-                    if (Main.tile[i, j].TileFrameX == 54 + 18)
-                        offset = 0;
+                if (NPC.AnyNPCs(GetNPCIndex()))
+                    return false;
 
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), (i + offset) * 16, (j + 1) * 16, ModContent.NPCType<SpiritGathicMan>());
-                        SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
-                        Main.npc[index1].velocity.Y -= 4;
-                        Main.npc[index1].netUpdate = true;
-                    }
-                    else
-                    {
-                        if (Main.netMode == NetmodeID.SinglePlayer)
-                            return false;
+                int offset = -1;
+                if (Main.tile[i, j].TileFrameX == 54)
+                    offset = 1;
+                if (Main.tile[i, j].TileFrameX == 54 + 18)
+                    offset = 0;
+                Vector2 pos = new Vector2(i + offset, j + 1).ToWorldCoordinates();
 
-                        Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, ModContent.NPCType<SpiritGathicMan>(), new Vector2((i + offset) * 16, (j + 1) * 16)).Send(-1);
-                        SoundEngine.PlaySound(SoundID.Item74, player.position);
-                    }
-                }
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.Bell, pos);
+
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    NPC.NewNPC(new EntitySource_TileUpdate(i, j), (int)pos.X, (int)pos.Y, GetNPCIndex());
+                else
+                    SpawnNPCFromClient(GetNPCIndex(), pos);
+
+                SoundEngine.PlaySound(SoundID.Item74, pos);
             }
             return true;
         }
@@ -509,33 +483,27 @@ namespace Redemption.Tiles.Natural
             Player player = Main.LocalPlayer;
             if (RedeTileHelper.CanDeadRing(player))
             {
-                if (!NPC.AnyNPCs(ModContent.NPCType<SpiritDruid>()))
-                {
-                    if (!Main.dedServ)
-                        SoundEngine.PlaySound(CustomSounds.Bell, new Vector2(i, j) * 16);
+                static int GetNPCIndex() => NPCType<SpiritDruid>();
 
-                    int offset = -1;
-                    if (Main.tile[i, j].TileFrameX == 54)
-                        offset = 1;
-                    if (Main.tile[i, j].TileFrameX == 54 + 18)
-                        offset = 0;
+                if (NPC.AnyNPCs(GetNPCIndex()))
+                    return false;
 
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), (i + offset) * 16, (j + 1) * 16, ModContent.NPCType<SpiritDruid>());
-                        SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
-                        Main.npc[index1].velocity.Y -= 4;
-                        Main.npc[index1].netUpdate = true;
-                    }
-                    else
-                    {
-                        if (Main.netMode == NetmodeID.SinglePlayer)
-                            return false;
+                int offset = -1;
+                if (Main.tile[i, j].TileFrameX == 54)
+                    offset = 1;
+                if (Main.tile[i, j].TileFrameX == 54 + 18)
+                    offset = 0;
+                Vector2 pos = new Vector2(i + offset, j + 1).ToWorldCoordinates();
 
-                        Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, ModContent.NPCType<SpiritDruid>(), new Vector2((i + offset) * 16, (j + 1) * 16)).Send(-1);
-                        SoundEngine.PlaySound(SoundID.Item74, player.position);
-                    }
-                }
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.Bell, pos);
+
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    NPC.NewNPC(new EntitySource_TileUpdate(i, j), (int)pos.X, (int)pos.Y, GetNPCIndex());
+                else
+                    SpawnNPCFromClient(GetNPCIndex(), pos);
+
+                SoundEngine.PlaySound(SoundID.Item74, pos);
             }
             return true;
         }

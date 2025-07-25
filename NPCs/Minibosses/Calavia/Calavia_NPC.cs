@@ -18,6 +18,7 @@ using Redemption.UI.ChatUI;
 using Redemption.UI.Dialect;
 using Redemption.WorldGeneration;
 using ReLogic.Graphics;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -88,6 +89,17 @@ namespace Redemption.NPCs.Minibosses.Calavia
             tag["HasShield"] = HasShield;
             tag["HasHelmet"] = HasHelmet;
         }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(HasShield);
+            writer.Write((byte)HasHelmet);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            HasShield = reader.ReadBoolean();
+            HasHelmet = reader.ReadByte();
+        }
+
         public override bool UsesPartyHat() => false;
         public override bool CanChat() => RedeQuest.calaviaVar < 21 && RedeQuest.calaviaVar != 15;
         public override bool CheckActive() => false;
@@ -97,7 +109,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             if (++NPC.breath <= 0)
                 NPC.breath = 9000;
 
-            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+            if (NPC.target < 0 || NPC.target >= 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
             Player player = Main.player[NPC.target];
 
@@ -163,10 +175,11 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             RedeQuest.calaviaVar = 16;
                             RedeQuest.SyncData();
                         }
+                        NPC.netUpdate = true;
                     }
                     if (AITimer >= 60)
                     {
-                        ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Low, 800, 1200, 800);
+                        ScreenPlayer.CutsceneLock(Main.LocalPlayer, NPC, ScreenPlayer.CutscenePriority.Low, 800, 1200, 800);
                     }
                 }
                 else
@@ -175,6 +188,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     chain.Dialogue.Clear();
                     ChatUI.Visible = false;
                     AITimer = 0;
+                    NPC.netUpdate = true;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         RedeQuest.calaviaVar = 13;
@@ -187,6 +201,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     chain.Dialogue.Clear();
                     ChatUI.Visible = false;
                     AITimer = 0;
+                    NPC.netUpdate = true;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         RedeQuest.calaviaVar = 13;
@@ -643,7 +658,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override double Priority => 4.0;
         public override string Text(NPC npc, Player player)
         {
-            if (RedeQuest.calaviaVar < 12)
+            if (RedeQuest.calaviaVar < 12 && RedeQuest.calaviaVar != 20)
                 return "???";
             if (RedeQuest.calaviaVar is 13 or 14)
                 return Language.GetTextValue("Mods.Redemption.DialogueBox.Calavia.11");
@@ -653,7 +668,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override Color? OverrideColor(NPC npc, Player player) => RedeQuest.calaviaVar < 12 ? Color.Gray : null;
         public override void OnClick(NPC npc, Player player)
         {
-            if (RedeQuest.calaviaVar < 12)
+            if (RedeQuest.calaviaVar < 12 && RedeQuest.calaviaVar != 20)
                 return;
             SoundEngine.PlaySound(SoundID.Chat);
             if (RedeQuest.calaviaVar is 13 or 14)

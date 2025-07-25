@@ -4,14 +4,20 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Microsoft.Xna.Framework.Graphics;
+using ParticleLibrary.Utilities;
+using Terraria.GameContent;
 
 namespace Redemption.NPCs.Lab.Janitor
 {
     public class JanitorMop_Proj : ModProjectile
     {
+        public Vector2[] oldPos = new Vector2[8];
+        public float[] oldRot = new float[8];
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Mop");
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
         public override void SetDefaults()
         {
@@ -42,6 +48,30 @@ namespace Redemption.NPCs.Lab.Janitor
             }
             if (Projectile.localAI[0]++ >= 30)
                 Projectile.friendly = true;
+
+            for (int k = oldPos.Length - 1; k > 0; k--)
+            {
+                oldPos[k] = oldPos[k - 1];
+                oldRot[k] = oldRot[k - 1];
+            }
+            oldPos[0] = Projectile.Center;
+            oldRot[0] = Projectile.rotation;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Type].Value;
+            Vector2 drawOrigin = texture.Size() / 2;
+            SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            for (int k = 0; k < oldPos.Length; k++)
+            {
+                Vector2 drawPos = oldPos[k] - Main.screenPosition;
+                Color color = Color.White * ((oldPos.Length - k) / (float)oldPos.Length);
+                Main.EntitySpriteDraw(texture, drawPos, null, color.WithAlpha(0) * .5f, oldRot[k], drawOrigin, Projectile.scale, spriteEffects, 0);
+            }
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, spriteEffects, 0);
+            return false;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
@@ -79,6 +109,12 @@ namespace Redemption.NPCs.Lab.Janitor
             for (int i = 0; i < 8; i++)
                 Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.WoodFurniture, -Projectile.velocity.X * 0.2f,
                     -Projectile.velocity.Y * 0.2f);
+
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
+            Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.position, Projectile.velocity, Find<ModGore>("Redemption/JanitorMopGore1").Type, 1);
+            Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.position + new Vector2(6, 22), Projectile.velocity, Find<ModGore>("Redemption/JanitorMopGore2").Type, 1);
         }
     }
 }

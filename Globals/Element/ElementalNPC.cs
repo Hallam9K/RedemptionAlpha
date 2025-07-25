@@ -400,6 +400,7 @@ namespace Redemption.Globals
                 #region Elemental Damage Bonus
                 float multiplier = 1;
                 ElementalEffects(npc, player, item, ref multiplier, ref modifiers);
+                SetElementalMultipliers(npc, ref npc.GetGlobalNPC<ElementalNPC>().elementDmg);
                 for (int j = 0; j < npc.GetGlobalNPC<ElementalNPC>().elementDmg.Length; j++)
                 {
                     if (npc.GetGlobalNPC<ElementalNPC>().elementDmg[j] is 1 || !item.HasElement(j))
@@ -417,8 +418,6 @@ namespace Redemption.Globals
                     CombatText.NewText(npc.getRect(), Color.IndianRed, multiplier + "x", true, true);
 
                 modifiers.FinalDamage *= multiplier;
-
-                SetElementalMultipliers(npc, ref npc.GetGlobalNPC<ElementalNPC>().elementDmg);
                 #endregion
             }
         }
@@ -436,6 +435,7 @@ namespace Redemption.Globals
                 #region Elemental Damage Bonus
                 float multiplier = 1;
                 ElementalEffects(npc, projectile, ref multiplier, ref modifiers);
+                SetElementalMultipliers(npc, ref npc.GetGlobalNPC<ElementalNPC>().elementDmg);
                 for (int j = 0; j < npc.GetGlobalNPC<ElementalNPC>().elementDmg.Length; j++)
                 {
                     if (npc.GetGlobalNPC<ElementalNPC>().elementDmg[j] is 1 || !projectile.HasElement(j))
@@ -453,8 +453,6 @@ namespace Redemption.Globals
                     CombatText.NewText(npc.getRect(), Color.IndianRed, multiplier + "x", true, true);
 
                 modifiers.FinalDamage *= multiplier;
-
-                SetElementalMultipliers(npc, ref npc.GetGlobalNPC<ElementalNPC>().elementDmg);
                 #endregion
             }
         }
@@ -465,6 +463,7 @@ namespace Redemption.Globals
                 #region Elemental Damage Bonus
                 float multiplier = 1;
                 ElementalEffects(target, npc, ref multiplier, ref modifiers);
+                SetElementalMultipliers(target, ref target.GetGlobalNPC<ElementalNPC>().elementDmg);
                 for (int j = 0; j < target.GetGlobalNPC<ElementalNPC>().elementDmg.Length; j++)
                 {
                     if (target.GetGlobalNPC<ElementalNPC>().elementDmg[j] is 1 || !npc.HasElement(j))
@@ -482,8 +481,6 @@ namespace Redemption.Globals
                     CombatText.NewText(target.getRect(), Color.IndianRed, multiplier + "x", true, true);
 
                 modifiers.FinalDamage *= multiplier;
-
-                SetElementalMultipliers(target, ref target.GetGlobalNPC<ElementalNPC>().elementDmg);
                 #endregion
             }
         }

@@ -4,6 +4,7 @@ using ReLogic.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Enums;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.UI.ChatUI
@@ -74,7 +75,8 @@ namespace Redemption.UI.ChatUI
             if (Main.gamePaused)
                 return;
 
-            if (Redemption.RedeSkipDialogue.Current)
+            bool skipKeyPressing = Main.netMode != NetmodeID.Server && Redemption.RedeSkipDialogue != null && Redemption.RedeSkipDialogue.Current;
+            if (skipKeyPressing)
                 skipping = true;
             if (skipping)
             {
@@ -101,7 +103,7 @@ namespace Redemption.UI.ChatUI
             if (displayingText.Length == text.Length)
                 textFinished = true;
 
-            if ((textFinished && ((preFadeTime <= 0 && fadeTime <= 0) || Redemption.RedeSkipDialogue.Current)) || !entity.active)
+            if ((textFinished && ((preFadeTime <= 0 && fadeTime <= 0) || skipKeyPressing)) || !entity.active)
             {
                 if (RedeConfigClient.Instance.DialogueInChat)
                 {

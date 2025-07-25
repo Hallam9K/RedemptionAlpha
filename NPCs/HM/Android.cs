@@ -101,7 +101,7 @@ namespace Redemption.NPCs.HM
                 NPC.defense *= 10;
                 NPC.lifeMax /= 4;
                 NPC.life = NPC.lifeMax;
-                NPC.GivenName = "Apidroid Mk.I";
+                NPC.GivenName = Language.GetTextValue("Mods.Redemption.NPCs.Android.ApidroidName");
             }
 
             TimerRand = Main.rand.Next(80, 120);

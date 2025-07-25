@@ -242,6 +242,7 @@ namespace Redemption.NPCs.PreHM
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
+                        break;
                     }
 
                     if (!NPC.Sight(globalNPC.attacker, 700, false, true))
@@ -299,6 +300,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
                         NPC.netUpdate = true;
+                        break;
                     }
 
                     if (NPC.velocity.Y < 0)

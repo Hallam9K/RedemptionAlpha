@@ -51,10 +51,13 @@ namespace Redemption.Items.Armor.HM.Hardlight
         public override void UpdateArmorSet(Player player)
         {
             player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Hardlight.Keybind");
-            foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
+            if (!Main.dedServ)
             {
-                player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Hardlight.Press") + key + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Hardlight.Support") +
-                    Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Hardlight.Helm");
+                foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
+                {
+                    player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Hardlight.Press") + key + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Hardlight.Support") +
+                        Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Hardlight.Helm");
+                }
             }
             player.RedemptionPlayerBuff().hardlightBonus = 3;
             player.RedemptionPlayerBuff().MetalSet = true;

@@ -112,7 +112,7 @@ namespace Redemption.WorldGeneration
                 }
             }*/
             bool seaEmblemPlaced = false;
-            for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
+            for (int chestIndex = 0; chestIndex < Main.maxChests; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
                 if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 17 * 36)
@@ -125,7 +125,7 @@ namespace Redemption.WorldGeneration
                 }
             }
             bool cloudCallerPlaced = false;
-            for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
+            for (int chestIndex = 0; chestIndex < Main.maxChests; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
                 if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 13 * 36)

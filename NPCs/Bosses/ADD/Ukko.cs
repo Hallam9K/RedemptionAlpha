@@ -301,18 +301,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
                         FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.Ukko.Name", "Mods.Redemption.TitleCard.Ukko.Modifier", 90, false, Color.LightGoldenrodYellow, Color.LightGoldenrodYellow, Color.LightGoldenrodYellow, Color.LightGoldenrodYellow, "Nature's Wrath", "Yuri O");
 
-                        NPC.Shoot(new Vector2(NPC.Center.X - (118 * 16) - 10, NPC.Center.Y + 8), ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, 0, 1);
-                        NPC.Shoot(new Vector2(NPC.Center.X + (118 * 16) + 26, NPC.Center.Y + 8), ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, 0, -1);
-                        NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y - (118 * 16) - 10), ProjectileType<UkkoBarrierH>(), 0, Vector2.Zero, 0, 1);
-                        NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y + (118 * 16) + 26), ProjectileType<UkkoBarrierH>(), 0, Vector2.Zero, 0, -1);
-
-                        ArenaWorld.arenaBoss = "ADD";
-                        ArenaWorld.arenaTopLeft = new Vector2(NPC.Center.X - (120 * 16) + 8, NPC.Center.Y - (120 * 16) + 8);
-                        ArenaWorld.arenaSize = new Vector2(240 * 16, 240 * 16);
-                        ArenaWorld.arenaMiddle = NPC.Center;
-                        ArenaWorld.arenaActive = true;
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+                        ArenaSystem.ActivateArena(ArenaBoss.ADD, NPC.Center.ToTileCoordinates() + new Point(0, 120));
                     }
                     if (AITimer >= 70)
                     {
@@ -1051,7 +1040,7 @@ namespace Redemption.NPCs.Bosses.ADD
                         if (!Main.dedServ)
                             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossUkkoAkka");
 
-                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 80, (int)ArenaWorld.arenaTopLeft.Y - 100, ModContent.NPCType<Akka>(), 0, 0, 0, NPC.whoAmI);
+                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 80, (int)ArenaSystem.ArenaBoundsWorld.Y - 100, ModContent.NPCType<Akka>(), 0, 0, 0, NPC.whoAmI);
                         akkaArrive = true;
                         AITimer = 0;
                         AttackID = 0;
@@ -1064,13 +1053,13 @@ namespace Redemption.NPCs.Bosses.ADD
                         case 0:
                             if (AITimer == 0)
                             {
-                                if (NPC.DistanceSQ(ArenaWorld.arenaMiddle - new Vector2(0, 60)) < 20 * 20)
+                                if (NPC.DistanceSQ(ArenaSystem.ArenaBoundsWorld.Center.ToVector2() - new Vector2(0, 60)) < 20 * 20)
                                 {
                                     AITimer = 1;
                                     NPC.netUpdate = true;
                                 }
                                 else
-                                    NPC.MoveToVector2(ArenaWorld.arenaMiddle - new Vector2(0, 60), 40);
+                                    NPC.MoveToVector2(ArenaSystem.ArenaBoundsWorld.Center.ToVector2() - new Vector2(0, 60), 40);
                                 break;
                             }
                             NPC.velocity *= 0.8f;
@@ -1111,7 +1100,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     SoundEngine.PlaySound(CustomSounds.ElectricSlash2, NPC.position);
                             }
 
-                            if (NPC.Center.Y <= ArenaWorld.arenaTopLeft.Y - 100)
+                            if (NPC.Center.Y <= ArenaSystem.ArenaBoundsWorld.Y - 100)
                             {
                                 if (!Main.dedServ)
                                     Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossUkkoAkka");
@@ -1134,7 +1123,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 NPC.alpha = 0;
                                 if (NPC.DistanceSQ(MoveVector3) < 20 * 20)
                                 {
-                                    RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 80, (int)ArenaWorld.arenaTopLeft.Y - 100, ModContent.NPCType<Akka>(), 0, 0, 0, NPC.whoAmI);
+                                    RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 80, (int)ArenaSystem.ArenaBoundsWorld.Y - 100, ModContent.NPCType<Akka>(), 0, 0, 0, NPC.whoAmI);
                                     NPC.spriteDirection = 1;
                                     AITimer = 0;
                                     AttackID = 3;

@@ -10,7 +10,6 @@ using Terraria.ObjectData;
 using static Redemption.Globals.RedeNet;
 using Redemption.NPCs.Lab;
 using Terraria.Utilities;
-using Microsoft.Xna.Framework;
 
 namespace Redemption.Tiles.Furniture.Lab
 {
@@ -33,7 +32,7 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.Origin = new Point16(1, 3);
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
-            DustType = ModContent.DustType<LabPlatingDust>();
+            DustType = DustType<LabPlatingDust>();
             MinPick = 5000;
             MineResist = 13f;
             LocalizedText name = CreateMapEntryName();
@@ -42,7 +41,7 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override void NearbyEffects(int i, int j, bool closer)
         {
-            if (Main.gamePaused || (Main.tile[i, j].TileFrameX != 216 && Main.tile[i, j].TileFrameX != 144) || Main.tile[i, j].TileFrameY != 0)
+            if (Main.gamePaused || closer || (Main.tile[i, j].TileFrameX != 216 && Main.tile[i, j].TileFrameX != 144) || Main.tile[i, j].TileFrameY != 0)
                 return;
             Player player = Main.LocalPlayer;
             float dist = Vector2.Distance(player.Center / 16f, new Vector2(i + 2f, j + 2f));
@@ -53,9 +52,9 @@ namespace Redemption.Tiles.Furniture.Lab
                 if (Main.rand.NextBool(Math.Max(1, spawnOdds)))
                 {
                     WeightedRandom<int> NPCType = new(Main.rand);
-                    NPCType.Add(ModContent.NPCType<BlisteredScientist>());
-                    NPCType.Add(ModContent.NPCType<OozingScientist>());
-                    NPCType.Add(ModContent.NPCType<BloatedScientist>(), .3);
+                    NPCType.Add(NPCType<BlisteredScientist>());
+                    NPCType.Add(NPCType<OozingScientist>());
+                    NPCType.Add(NPCType<BloatedScientist>(), .3);
 
                     int choice = NPCType;
                     static int GetNPCIndex(int choice) => choice;
@@ -66,13 +65,7 @@ namespace Redemption.Tiles.Furniture.Lab
                     if (Main.netMode == NetmodeID.SinglePlayer)
                         NPC.NewNPC(new EntitySource_TileUpdate(i, j), (int)pos.X, (int)pos.Y, GetNPCIndex(choice));
                     else
-                    {
-                        ModPacket packet = Redemption.Instance.GetPacket(ModMessageType.SpawnNPCFromClient, 3);
-                        packet.Write(GetNPCIndex(choice));
-                        packet.Write((int)pos.X);
-                        packet.Write((int)pos.Y);
-                        packet.Send();
-                    }
+                        SpawnNPCFromClient(GetNPCIndex(choice), pos);
                 }
             }
         }
@@ -95,7 +88,7 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.Origin = new Point16(1, 3);
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
-            DustType = ModContent.DustType<LabPlatingDust>();
+            DustType = DustType<LabPlatingDust>();
             MinPick = 200;
             MineResist = 13f;
             LocalizedText name = CreateMapEntryName();
@@ -110,7 +103,7 @@ namespace Redemption.Tiles.Furniture.Lab
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.createTile = ModContent.TileType<BrokenLabBackDoorTile>();
+            Item.createTile = TileType<BrokenLabBackDoorTile>();
         }
     }
 }

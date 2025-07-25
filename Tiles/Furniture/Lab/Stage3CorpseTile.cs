@@ -1,7 +1,7 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Redemption.Items.Usable;
+using Redemption.NPCs.Friendly;
 using Redemption.NPCs.Lab;
 using Terraria;
 using Terraria.Audio;
@@ -49,7 +49,7 @@ namespace Redemption.Tiles.Furniture.Lab
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
             if (RedeTileHelper.CanDeadRing(player))
-                player.cursorItemIconID = ModContent.ItemType<DeadRinger>();
+                player.cursorItemIconID = ItemType<DeadRinger>();
             else
             {
                 player.cursorItemIconEnabled = false;
@@ -64,25 +64,23 @@ namespace Redemption.Tiles.Furniture.Lab
             int top = j - Main.tile[i, j].TileFrameY / 18 % 3;
             if (RedeTileHelper.CanDeadRing(player))
             {
-                if (!NPC.AnyNPCs(ModContent.NPCType<Stage3Scientist>()))
-                {
-                    if (!Main.dedServ)
-                        SoundEngine.PlaySound(CustomSounds.Bell, new Vector2(i, j) * 16);
+                static int GetNPCIndex() => NPCType<Stage3Scientist>();
 
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), left * 16 + 24, top * 16 + 82, ModContent.NPCType<Stage3Scientist>());
-                    }
-                    else
-                    {
-                        if (Main.netMode == NetmodeID.SinglePlayer)
-                            return false;
+                if (NPC.AnyNPCs(GetNPCIndex()))
+                    return false;
 
-                        Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, ModContent.NPCType<Stage3Scientist>(), new Vector2(left * 16 + 24, top * 16 + 82)).Send(-1);
-                    }
-                    _ringer = true;
-                    WorldGen.KillTile(i, j, noItem: true);
-                }
+                Vector2 pos = new(left * 16 + 24, top * 16 + 82);
+
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.Bell, pos);
+
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    NPC.NewNPC(new EntitySource_TileUpdate(i, j), (int)pos.X, (int)pos.Y, GetNPCIndex());
+                else
+                    SpawnNPCFromClient(GetNPCIndex(), pos);
+
+                _ringer = true;
+                WorldGen.KillTile(i, j, noItem: true);
                 return true;
             }
             return false;

@@ -207,9 +207,6 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                 spawned = true;
             }
 
-            Vector2 text = new Vector2(NPC.Center.X, NPC.position.Y - 140) - Main.screenPosition;
-            if (MoRDialogueUI.Visible)
-                RedeSystem.Instance.DialogueUIElement.TextPos = text;
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
 
@@ -230,6 +227,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
             if (Main.rand.NextBool(1500) && !Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.Ghost3.WithPitchOffset(-0.5f), NPC.position);
+
+            bool onSurface = NPC.Center.Y / 16 < Main.worldSurface;
 
             switch (AIState)
             {
@@ -346,7 +345,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             if (NPC.alpha <= 0)
                             {
                                 NPC.alpha = 0;
-                                if (AITimer++ >= (Main.masterMode ? 60 : 120))
+                                if (AITimer++ >= (Main.masterMode ? 60 : 120) / (onSurface ? 2 : 1))
                                 {
                                     AttackChoice();
                                     AITimer = 0;
@@ -408,7 +407,9 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
                                 if (AITimer % 2 == 0)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(7, 10), (origin - NPC.Center).ToRotation()), SoundID.NPCDeath52 with { Volume = .5f }, 2);
+                                    float speed = onSurface ? Main.rand.NextFloat(14, 16) : Main.rand.NextFloat(7, 10);
+
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(speed, (origin - NPC.Center).ToRotation()), SoundID.NPCDeath52 with { Volume = .5f }, 2);
                                 }
                             }
                             if (AITimer >= 120)

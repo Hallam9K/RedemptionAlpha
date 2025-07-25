@@ -345,8 +345,11 @@ namespace Redemption.NPCs.Bosses.ADD
                     switch (TimerRand)
                     {
                         case 0:
-                            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1).UseIntensity(TimerRand2).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-                            Main.LocalPlayer.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+                            if (!Main.dedServ)
+                            {
+                                Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1).UseIntensity(TimerRand2).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+                                Main.LocalPlayer.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+                            }
                             Main.LocalPlayer.RedemptionScreen().customZoom = TimerRand2 + 1;
                             Main.LocalPlayer.RedemptionScreen().Rumble(10, (int)TimerRand2 * 3);
 
@@ -439,8 +442,11 @@ namespace Redemption.NPCs.Bosses.ADD
                             flashOpacity = MathHelper.Max(0, flashOpacity);
                             break;
                         case 1:
-                            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1).UseIntensity(TimerRand2).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-                            Main.LocalPlayer.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+                            if (!Main.dedServ)
+                            {
+                                Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1).UseIntensity(TimerRand2).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+                                Main.LocalPlayer.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+                            }
                             Main.LocalPlayer.RedemptionScreen().customZoom = TimerRand2 + 1;
                             Main.LocalPlayer.RedemptionScreen().Rumble(10, (int)AITimer / 50);
 

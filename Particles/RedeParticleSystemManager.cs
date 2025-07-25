@@ -160,6 +160,9 @@ namespace Redemption.Particles
         // These just have the same behaviour and settings as the 2.0 QuadParticles, these aren't actual QuadParticles
         public static void CreateQuadParticle(Vector2 position, Vector2 velocity, Vector2 scale, Color color, Color endColor, int duration, float velChange = 1, float scaleChange = 1, float depth = 1, ParticleFlags style = ParticleFlags.Quad)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
             var Scale = (new Vector2(128) * scale).ToNumerics();
@@ -168,6 +171,9 @@ namespace Redemption.Particles
         }
         public static void CreateQuadParticle2(Vector2 position, Vector2 velocity, Vector2 scale, Color color, Color endColor, int duration, float velChange = 1, float scaleChange = 1, float depth = 1, ParticleFlags style = ParticleFlags.Quad)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
             var Scale = (new Vector2(64) * scale).ToNumerics();
@@ -178,6 +184,9 @@ namespace Redemption.Particles
 
         public static void CreateShadowParticle(Vector2 position, Vector2 velocity, Vector2 scale, int duration, float velChange = 1, float scaleChange = 1)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
             var Scale = (new Vector2(682) * scale).ToNumerics();
@@ -189,10 +198,15 @@ namespace Redemption.Particles
         #region Glow Particles
         public static void CreateAdditiveGlowParticle(Vector2 position, Vector2 velocity, float scale, Color color, int duration, float velChange = .94f, ParticleFlags style = ParticleFlags.Basic)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
             CreateAdditiveGlowParticle(position.ToNumerics(), velocity.ToNumerics(), scale, color, duration, velChange, style);
         }
         public static void CreateAdditiveGlowParticle(SystemVector2 position, SystemVector2 velocity, float scale, Color color, int duration, float velChange = .94f, ParticleFlags style = ParticleFlags.Basic)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Scale = new SystemVector2(64 * scale);
 
             for (int i = 0; i < 5; i++)
@@ -200,6 +214,9 @@ namespace Redemption.Particles
         }
         public static void CreateGlowParticle(Vector2 position, Vector2 velocity, float scale, Color color, int duration, ParticleFlags style = ParticleFlags.Fading, float fadeAdd = .45f, Layer layer = Layer.BeforeDust)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
             var Scale = new SystemVector2(64 * scale);
@@ -214,6 +231,9 @@ namespace Redemption.Particles
         }
         public static void CreateGlowParticle(Vector2 position, Vector2 velocity, float scale, Color[] colors, int duration, float velChange = 0.9f, float opacityChange = 1, float scaleChange = 0.9f, Layer layer = Layer.BeforeDust)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             float size = Main.rand.NextFloat(5f, 11f) / 10f;
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
@@ -238,6 +258,9 @@ namespace Redemption.Particles
 
         public static void CreateBlackholeParticle(Vector2 position, Vector2 velocity, float scale, Color color, int projID, int duration = 120)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
             var Scale = new SystemVector2(128 * scale);
@@ -249,6 +272,9 @@ namespace Redemption.Particles
         #region Ember Particles
         public static void CreateEmberParticle(Vector2 position, Vector2 velocity, float scale, Color brightColor, Color midColor, Color darkColor, int duration = 120, int timeBeforeMoving = 0, Layer layer = Layer.BeforeDust)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             float size = Main.rand.NextFloat(5f, 11f) / 10f;
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
@@ -265,14 +291,21 @@ namespace Redemption.Particles
         }
         public static void CreateEmberParticle(Vector2 position, Vector2 velocity, float scale, Color[] colors, int duration = 120, int timeBeforeMoving = 0, Layer layer = Layer.BeforeDust)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
             CreateEmberParticle(position, velocity, scale, colors[0], colors[1], colors[2], duration, timeBeforeMoving, layer);
         }
         public static void CreateEmberParticle(Vector2 position, Vector2 velocity, float scale, int duration = 120, int timeBeforeMoving = 0, Layer layer = Layer.BeforeDust)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
             CreateEmberParticle(position, velocity, scale, emberColors, duration, timeBeforeMoving, layer);
         }
         public static void CreateEmberBurstParticle(Vector2 position, Vector2 velocity, float scale, Color brightColor, Color midColor, Color darkColor, int duration = 120, float velChange = 1, Layer layer = Layer.BeforeDust)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
             float size = Main.rand.NextFloat(5f, 11f) / 10f;
@@ -289,10 +322,14 @@ namespace Redemption.Particles
         }
         public static void CreateEmberBurstParticle(Vector2 position, Vector2 velocity, float scale, Color[] colors, int duration = 120, float velChange = 1, Layer layer = Layer.BeforeDust)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
             CreateEmberBurstParticle(position, velocity, scale, colors[0], colors[1], colors[2], duration, velChange, layer);
         }
         public static void CreateEmberBurstParticle(Vector2 position, Vector2 velocity, float scale, int duration = 120, float velChange = 1, Layer layer = Layer.BeforeDust)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
             CreateEmberBurstParticle(position, velocity, scale, emberColors, duration, velChange, layer);
         }
         /*public static void CreateOldEmberParticle(Vector2 position, Vector2 velocity, float scale, Color brightColor, Color midColor, Color darkColor, int duration = 120, int timeBeforeMoving = 0)
@@ -316,6 +353,9 @@ namespace Redemption.Particles
         #region Spirit Particles
         public static void CreateSpiritParticle(Vector2 position, Vector2 velocity, float scale, Color[] colors, int duration = 120, int timeBeforeMoving = 0, float depth = 1, float opacityScale = 1, Layer layer = Layer.BeforeDust)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             float size = Main.rand.NextFloat(5f, 11f) / 10f;
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
@@ -340,12 +380,17 @@ namespace Redemption.Particles
         }
         public static void CreateSpiritParticle(Vector2 position, Vector2 velocity, float scale, int duration = 120, int timeBeforeMoving = 0, float depth = 1, float opacityScale = 1, Layer layer = Layer.BeforeDust)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
             CreateSpiritParticle(position, velocity, scale, spiritColors, duration, timeBeforeMoving, depth, opacityScale, layer);
         }
         #endregion
 
         public static void CreateSoullessParticle(Vector2 position, Vector2 velocity, float scale, Color color, int duration = 20, int timeBeforeMoving = 0, Layer layer = Layer.BeforeDust, float depth = 1)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             float size = Main.rand.NextFloat(5f, 11f) / 10f;
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
@@ -358,11 +403,16 @@ namespace Redemption.Particles
         }
         public static void CreateSoullessParticle(Vector2 position, Vector2 velocity, float scale, int timeBeforeMoving = 0, Layer layer = Layer.BeforeDust, float depth = 1)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
             CreateSoullessParticle(position, velocity, scale, new Color(24, 28, 38), Main.rand.Next(10, 40), timeBeforeMoving, layer, depth);
         }
 
         public static void CreateLightningParticle(Vector2 position, Vector2 velocity, float scale, Color[] colors, bool clean = false, Layer layer = Layer.BeforeDust)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
             float size = Main.rand.NextFloat(2f, 4f) / 10f;
@@ -390,6 +440,9 @@ namespace Redemption.Particles
 
         public static void CreateLaserParticle(Vector2 position, Vector2 velocity, float scale, Color color, float squish = 5, int duration = 18)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
             var Scale = new SystemVector2(scale);
@@ -399,6 +452,9 @@ namespace Redemption.Particles
         }
         public static void CreateChargeParticle(float scale, Color color, int playerID, int projID, Vector2 startVector, float endDistance, float extension = 30, int duration = 11)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             float startDistance = startVector.Length();
             Color a = Color.Multiply(color.WithAlpha(0), 1);
 
@@ -410,6 +466,9 @@ namespace Redemption.Particles
         }
         public static void CreatePulseParticle(Vector2 position, Vector2 velocity, float rotation, Vector2 scale, Color color, int intensity = 1, float scaleSpeed = 1, int duration = 6)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
             var Scale = new SystemVector2(200) * scale.ToNumerics();
@@ -420,6 +479,9 @@ namespace Redemption.Particles
 
         public static void CreateRainbowParticle(Vector2 position, Vector2 velocity, float scale, Color color, float opacityScale = 1, int duration = 50)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
             var Scale = new SystemVector2(142, 42) * scale;
@@ -437,10 +499,15 @@ namespace Redemption.Particles
         }
         public static void CreateRainbowParticle(Vector2 position, Vector2 velocity, float scale, float opacityScale = 1, int duration = 50)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
             CreateRainbowParticle(position, velocity, scale, Color.White, opacityScale, duration);
         }
         public static void CreateSimpleStarParticle(Vector2 position, Vector2 velocity, float scale, Color color, float opacityScale = 1, float deceleration = 0.98f, int duration = 50)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
             var Scale = new SystemVector2(142, 42) * scale;
@@ -453,6 +520,9 @@ namespace Redemption.Particles
         }
         public static void CreateSpeedParticle(Vector2 position, Vector2 velocity, float scale, Color color, float deAcc = 0.91f, int duration = 21, int earlyKillTimer = 0, float extension = 0)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
 
@@ -467,6 +537,9 @@ namespace Redemption.Particles
 
         public static void CreateDaggerSlashParticle(Vector2 position, Vector2 velocity, float scale, Color color, int dustType, int duration = 6)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
             var Scale = new SystemVector2(142, 42) * scale;
@@ -476,6 +549,9 @@ namespace Redemption.Particles
         }
         public static void CreateEmeraldCutterParticle(Vector2 position, Vector2 velocity, float scale, Color color, int dustType, int duration = 6)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
             var Scale = new SystemVector2(142, 42) * scale;
@@ -488,6 +564,9 @@ namespace Redemption.Particles
         }
         public static void CreateDevilsPactParticle(Vector2 position, Vector2 velocity, float scale, Color color, int dustType = -1, int duration = 10)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
             var Scale = new SystemVector2(72) * scale;
@@ -500,6 +579,9 @@ namespace Redemption.Particles
         }
         public static void CreateSlashParticle(Vector2 position, Vector2 velocity, float scale, Color color, int duration = 8, byte alpha = 0)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             var Position = position.ToNumerics();
             var Velocity = velocity.ToNumerics();
             var Scale = scale;

@@ -205,6 +205,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
                         NPC.netUpdate = true;
+                        break;
                     }
                     if (globalNPC.attacker is Player attackerPlayer && (NPC.PlayerDead() || attackerPlayer.RedemptionPlayerBuff().skeletonFriendly))
                     {
@@ -213,6 +214,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
                         NPC.netUpdate = true;
+                        break;
                     }
 
                     if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
@@ -250,6 +252,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
                         NPC.netUpdate = true;
+                        break;
                     }
 
                     NPC.LookAtEntity(globalNPC.attacker);
@@ -288,6 +291,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
                         NPC.netUpdate = true;
+                        break;
                     }
 
                     if (NPC.velocity.Y < 0)

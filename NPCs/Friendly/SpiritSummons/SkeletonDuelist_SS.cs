@@ -413,6 +413,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             Texture2D Glow = Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Vector2 pos = NPC.Center - new Vector2(0, 1);
 
             bool noSpiritEffect = SSBase.NoSpiritEffect(NPC);
             Color color = noSpiritEffect ? drawColor : Color.White;
@@ -437,12 +438,12 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 int y = Height * AniFrameY;
                 Rectangle rect = new(0, y, Width, Height);
                 Vector2 origin = new(Width / 2f, Height / 2f);
-                spriteBatch.Draw(SlashAni.Value, NPC.Center - screenPos - new Vector2(0, 11), new Rectangle?(rect), NPC.ColorTintedAndOpacity(color), NPC.rotation, origin, NPC.scale, effects, 0);
+                spriteBatch.Draw(SlashAni.Value, pos - screenPos - new Vector2(0, 11), new Rectangle?(rect), NPC.ColorTintedAndOpacity(color), NPC.rotation, origin, NPC.scale, effects, 0);
 
-                spriteBatch.Draw(head2.Value, NPC.Center - screenPos, new Rectangle?(rectH), NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -1 + HeadOffset), NPC.scale, effects, 0);
+                spriteBatch.Draw(head2.Value, pos - screenPos, new Rectangle?(rectH), NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -1 + HeadOffset), NPC.scale, effects, 0);
 
                 if (HasEyes)
-                    spriteBatch.Draw(SlashGlow.Value, NPC.Center - screenPos - new Vector2(0, 11), new Rectangle?(rect), NPC.ColorTintedAndOpacity(Color.White), NPC.rotation, origin, NPC.scale, effects, 0);
+                    spriteBatch.Draw(SlashGlow.Value, pos - screenPos - new Vector2(0, 11), new Rectangle?(rect), NPC.ColorTintedAndOpacity(Color.White), NPC.rotation, origin, NPC.scale, effects, 0);
             }
             else
             {
@@ -452,15 +453,15 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
-                        spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(color) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                        spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY - 1), NPC.frame, NPC.GetAlpha(color) * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                     }
                 }
-                spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, pos - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-                spriteBatch.Draw(head2.Value, NPC.Center - screenPos, new Rectangle?(rectH), NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -2 + HeadOffset), NPC.scale, effects, 0);
+                spriteBatch.Draw(head2.Value, pos - screenPos, new Rectangle?(rectH), NPC.ColorTintedAndOpacity(color), NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -2 + HeadOffset), NPC.scale, effects, 0);
 
                 if (HasEyes)
-                    spriteBatch.Draw(Glow, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                    spriteBatch.Draw(Glow, pos - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             }
 
             if (!noSpiritEffect)

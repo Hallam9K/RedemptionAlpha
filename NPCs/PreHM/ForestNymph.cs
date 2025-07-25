@@ -103,6 +103,8 @@ namespace Redemption.NPCs.PreHM
         public int VisionRange;
         public int VisionIncrease;
 
+        private Point SpawnOrigin;
+
         public ref float AITimer => ref NPC.ai[1];
         public ref float TimerRand => ref NPC.ai[2];
         public override void SetStaticDefaults()
@@ -184,6 +186,7 @@ namespace Redemption.NPCs.PreHM
             ChoosePersonality();
             SetStats();
 
+            SpawnOrigin = NPC.position.ToTileCoordinates();
             TimerRand = Main.rand.Next(80, 280);
             NPC.alpha = 0;
             NPC.netUpdate = true;
@@ -275,7 +278,10 @@ namespace Redemption.NPCs.PreHM
                             moveTo /= 16;
                         }
                         else
-                            moveTo = NPC.FindGround(20);
+                        {
+                            moveTo = NPCHelper.FindGroundVector(new Vector2(SpawnOrigin.X, SpawnOrigin.Y) * 16, 20);
+                            moveTo /= 16;
+                        }
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;

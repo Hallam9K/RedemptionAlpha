@@ -65,9 +65,11 @@ namespace Redemption
         public Vector2 cameraOffset;
         public Rectangle currentScreen;
         public static int grooveTimer;
-        public static ModKeybind RedeSpecialAbility;
-        public static ModKeybind RedeSpiritwalkerAbility;
-        public static ModKeybind RedeSkipDialogue;
+
+        public static ModKeybind RedeSpecialAbility { get; private set; }
+        public static ModKeybind RedeSpiritwalkerAbility { get; private set; }
+        public static ModKeybind RedeSkipDialogue { get; private set; }
+
         public static bool AprilFools => DateTime.Now is DateTime { Month: 4, Day: 1 };
         public static bool FinlandDay => DateTime.Now is DateTime { Month: 12, Day: 6 };
 
@@ -231,6 +233,8 @@ namespace Redemption
                     PremultiplyTexture(ref UkkoSkyBoltTex);
                     Texture2D UkkoSkyFlashTex = Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyFlash", immLoad).Value;
                     PremultiplyTexture(ref UkkoSkyFlashTex);
+                    Texture2D UkkoBarrierFogTex = Request<Texture2D>("Redemption/Textures/UkkoBarrier_Fog", immLoad).Value;
+                    PremultiplyTexture(ref UkkoBarrierFogTex);
                     Texture2D SkyTex = Request<Texture2D>("Redemption/Backgrounds/Skies/SkyTex", immLoad).Value;
                     PremultiplyTexture(ref SkyTex);
                     Texture2D SkyTex2 = Request<Texture2D>("Redemption/Backgrounds/Skies/SkyTex2", immLoad).Value;
@@ -273,9 +277,9 @@ namespace Redemption
 
             Filters.Scene["MoR:Shake"] = new Filter(new MoonLordScreenShaderData("FilterMoonLordShake", aimAtPlayer: false), EffectPriority.VeryHigh);
 
-            RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "Special Ability Key", Keys.F);
-            RedeSpiritwalkerAbility = KeybindLoader.RegisterKeybind(this, "Spirit Walker Key", Keys.K);
-            RedeSkipDialogue = KeybindLoader.RegisterKeybind(this, "Skip Dialogue Key", Keys.Back);
+            RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "SpecialAbilityKey", Keys.F);
+            RedeSpiritwalkerAbility = KeybindLoader.RegisterKeybind(this, "SpiritWalkerKey", Keys.K);
+            RedeSkipDialogue = KeybindLoader.RegisterKeybind(this, "SkipDialogueKey", Keys.Back);
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
         }
         public override void Unload()
@@ -379,22 +383,7 @@ namespace Redemption
 
                         int npcID = NPC.NewNPC(Entity.GetSource_NaturalSpawn(), npcCenterX, npcCenterY, bossType);
                         Main.npc[npcID].netUpdate = true;
-                        Main.npc[npcID].netUpdate2 = true;
                         ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Main.npc[npcID].GetTypeNetName()), new Color(175, 75, 255));
-                    }
-                    break;
-                case ModMessageType.NPCSpawnFromClient:
-                    if (Main.netMode == NetmodeID.Server)
-                    {
-                        int NPCType = reader.ReadInt32();
-                        int npcCenterX = reader.ReadInt32();
-                        int npcCenterY = reader.ReadInt32();
-
-                        if (NPC.AnyNPCs(NPCType))
-                            return;
-
-                        int npcID = NPC.NewNPC(Entity.GetSource_NaturalSpawn(), npcCenterX, npcCenterY, NPCType);
-                        Main.npc[npcID].netUpdate2 = true;
                     }
                     break;
                 case ModMessageType.SpawnNPCFromClient:
@@ -408,7 +397,7 @@ namespace Redemption
                         float ai2 = reader.ReadSingle();
 
                         int npcID = NPC.NewNPC(Entity.GetSource_NaturalSpawn(), npcCenterX, npcCenterY, npcIndex, 0, ai0, ai1, ai2);
-                        Main.npc[npcID].netUpdate2 = true;
+                        Main.npc[npcID].netUpdate = true;
                     }
                     break;
                 case ModMessageType.SpawnTrail:
@@ -448,6 +437,15 @@ namespace Redemption
                     break;
                 case ModMessageType.SyncRedePlayer:
                     RedePlayer.ReceiveSyncPlayer(reader, whoAmI);
+                    break;
+                case ModMessageType.RequestArena:
+                    ArenaSystem.HandleRequestArena(reader);
+                    break;
+                case ModMessageType.SyncArena:
+                    ArenaSystem.HandleSyncArena(reader);
+                    break;
+                case ModMessageType.RequestSyncArena:
+                    ArenaSystem.HandleRequestSyncArena(whoAmI);
                     break;
             }
         }
@@ -616,6 +614,19 @@ namespace Redemption
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
+            // MP Warning
+            if (Main.netMode != NetmodeID.SinglePlayer && !RedeConfigClient.Instance.DisableMPWarning)
+            {
+                int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
+                LegacyGameInterfaceLayer StunUI = new("Redemption: MP Warning",
+                    delegate
+                    {
+                        DrawMPWarning(Main.spriteBatch);
+                        return true;
+                    },
+                    InterfaceScaleType.UI);
+                layers.Insert(index, StunUI);
+            }
             BuffPlayer bP = Main.LocalPlayer.GetModPlayer<BuffPlayer>();
             if (Main.LocalPlayer.active && !Main.LocalPlayer.dead && Main.LocalPlayer.HasBuff<StunnedDebuff>())
             {
@@ -791,6 +802,20 @@ namespace Redemption
                 }, InterfaceScaleType.UI));
         }
 
+        public static void DrawMPWarning(SpriteBatch spriteBatch)
+        {
+            Player player = Main.LocalPlayer;
+
+            string text = (string)Redemption.Instance.GetLocalization("StatusMessage.Other.MPWarning");
+            Vector2 CenterPosition = new Vector2(Main.screenWidth / 2f, Main.screenHeight / 2f);
+            int centerX = (int)CenterPosition.X;
+            int centerY = (int)CenterPosition.Y;
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(text).X;
+            int textHeight = (int)FontAssets.MouseText.Value.MeasureString(text).Y;
+            Vector2 textpos = new(centerX - (textLength / 2f), centerY - (textHeight / 2f));
+
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, text, textpos, Colors.RarityRed, 0, Vector2.Zero, Vector2.One);
+        }
         public static void DrawSpiritGauge(SpriteBatch spriteBatch)
         {
             Player player = Main.LocalPlayer;

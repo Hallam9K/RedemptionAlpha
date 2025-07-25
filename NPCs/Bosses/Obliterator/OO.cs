@@ -1,11 +1,9 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.CrossMod;
 using Redemption.Dusts;
-using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Accessories.PostML;
@@ -19,7 +17,6 @@ using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.NPCs.Bosses.Cleaver;
 using Redemption.Textures;
-using Redemption.UI;
 using Redemption.UI.ChatUI;
 using ReLogic.Content;
 using System;
@@ -34,7 +31,6 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -58,6 +54,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
 
         public enum ActionState
         {
+            PlayerKilledIntro = -2,
+            PlayerKilled = -1,
             Intro,
             Begin,
             Idle,
@@ -254,7 +252,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            if (player.active && !player.dead && (!Main.dayTime || AIState is ActionState.Overheat))
+            if (player.active && !player.dead && (!Main.dayTime || AIState is ActionState.Overheat) && AIState >= 0)
                 NPC.DiscourageDespawn(120);
             DespawnHandler();
             Lighting.AddLight(NPC.Center, 0.7f, 0.4f, 0.4f);
@@ -273,6 +271,53 @@ namespace Redemption.NPCs.Bosses.Obliterator
 
             switch (AIState)
             {
+                case ActionState.PlayerKilledIntro:
+                    NPC.velocity *= 0.96f;
+                    ArmFrameY[0] = 2;
+                    ArmFrameY[1] = 1;
+                    ArmRot[0].SlowRotation(MathHelper.PiOver2 + RotFlip, MathHelper.Pi / 40);
+                    ArmRot[1].SlowRotation(0, MathHelper.Pi / 40);
+
+                    if (AITimer++ == 100 && !Main.dedServ)
+                    {
+                        DialogueChain chain = new();
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Success.1"), Colors.RarityRed, Color.DarkRed, Voice, .03f, 2f, 0, false, null, Bubble, modifier: modifier))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Success.2"), Colors.RarityRed, Color.DarkRed, Voice, .03f, 2f, .5f, true, null, Bubble, modifier: modifier));
+
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
+                    }
+                    if (!RedeHelper.AnyProjectiles(ProjectileType<OmegaMegaBeam>()))
+                        BeamAnimation = false;
+                    if (AITimer > 300)
+                    {
+                        NPC.velocity.Y -= 1;
+                        if (NPC.timeLeft > 10)
+                            NPC.timeLeft = 10;
+                    }
+                    break;
+                case ActionState.PlayerKilled:
+                    NPC.velocity *= 0.96f;
+                    ArmFrameY[0] = 2;
+                    ArmFrameY[1] = 1;
+                    ArmRot[0].SlowRotation(MathHelper.PiOver2 + RotFlip, MathHelper.Pi / 40);
+                    ArmRot[1].SlowRotation(0, MathHelper.Pi / 40);
+
+                    if (AITimer++ == 0)
+                    {
+                        if (!Main.dedServ)
+                        {
+                            Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Success.D1"), Colors.RarityRed, Color.DarkRed, Voice, .03f, 2f, .5f, true, null, Bubble, modifier: modifier);
+
+                            ChatUI.Visible = true;
+                            ChatUI.Add(d1);
+                        }
+                    }
+                    if (AITimer > 120)
+                        NPC.velocity.Y -= 1f;
+                    if (NPC.timeLeft > 10)
+                        NPC.timeLeft = 10;
+                    break;
                 case ActionState.Intro:
                     switch (TimerRand)
                     {
@@ -419,18 +464,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                         NPC.velocity *= 0.96f;
                     if (AITimer == 60)
                     {
-                        NPC.Shoot(new Vector2(NPC.Center.X - (120 * 16) - 10, NPC.Center.Y + 8), ProjectileType<OOBarrier>(), 0, Vector2.Zero, 0, 1);
-                        NPC.Shoot(new Vector2(NPC.Center.X + (120 * 16) + 26, NPC.Center.Y + 8), ProjectileType<OOBarrier>(), 0, Vector2.Zero, 0, -1);
-                        NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y - (120 * 16) - 10), ProjectileType<OOBarrierH>(), 0, Vector2.Zero, 0, 1);
-                        NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y + (120 * 16) + 26), ProjectileType<OOBarrierH>(), 0, Vector2.Zero, 0, -1);
-
-                        ArenaWorld.arenaBoss = "OO";
-                        ArenaWorld.arenaTopLeft = new Vector2(NPC.Center.X - (120 * 16) + 8, NPC.Center.Y - (120 * 16) + 8);
-                        ArenaWorld.arenaSize = new Vector2(240 * 16, 240 * 16);
-                        ArenaWorld.arenaMiddle = NPC.Center;
-                        ArenaWorld.arenaActive = true;
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+                        ArenaSystem.ActivateArena(ArenaBoss.OO, NPC.Center.ToTileCoordinates() + new Point(0, 120));
 
                         ArmFrameY[0] = 1;
                         HandsFrameY[0] = 1;
@@ -943,8 +977,11 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     {
                         player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(3, player.RedemptionScreen().ScreenShakeIntensity);
 
-                        Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.5f).UseIntensity(0.6f).UseColor(Color.DarkRed).UseImage(Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-                        player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+                        if (!Main.dedServ)
+                        {
+                            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.5f).UseIntensity(0.6f).UseColor(Color.DarkRed).UseImage(Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+                            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+                        }
                     }
                     if (TimerRand > 1 || (TimerRand == 7 && AITimer < 3000))
                     {
@@ -1524,67 +1561,36 @@ namespace Redemption.NPCs.Bosses.Obliterator
         }
         private void DespawnHandler()
         {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
+            if (AIState >= 0)
             {
-                NPC.velocity *= 0.96f;
-                float RotFlip = NPC.spriteDirection == -1 ? 0 : MathHelper.Pi;
-                ArmFrameY[0] = 2;
-                ArmFrameY[1] = 1;
-                ArmRot[0].SlowRotation(MathHelper.PiOver2 + RotFlip, MathHelper.Pi / 40);
-                ArmRot[1].SlowRotation(0, MathHelper.Pi / 40);
-                if (AIState is ActionState.Intro && AITimer > 190 && RedeBossDowned.oblitDeath == 0)
+                Player player = Main.player[NPC.target];
+                if (!player.active || player.dead)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    NPC.TargetClosest();
+                    player = Main.player[NPC.target];
+                    if (!player.active || player.dead)
                     {
-                        RedeBossDowned.oblitDeath = 1;
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
-                    }
-                    AITimer = 0;
-                    TimerRand = 0;
-                    NPC.ai[0] = -1;
-                }
-                else if (NPC.ai[0] == -1)
-                {
-                    if (AITimer++ == 100 && !Main.dedServ)
-                    {
-                        DialogueChain chain = new();
-                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Success.1"), Colors.RarityRed, Color.DarkRed, Voice, .03f, 2f, 0, false, null, Bubble, modifier: modifier)) // 154
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Success.2"), Colors.RarityRed, Color.DarkRed, Voice, .03f, 2f, .5f, true, null, Bubble, modifier: modifier)); // 170
-
-                        ChatUI.Visible = true;
-                        ChatUI.Add(chain);
-                    }
-                    if (!RedeHelper.AnyProjectiles(ProjectileType<OmegaMegaBeam>()))
-                        BeamAnimation = false;
-                    if (AITimer > 284)
-                    {
-                        NPC.velocity.Y -= 1;
-                        if (NPC.timeLeft > 10)
-                            NPC.timeLeft = 10;
-                    }
-                }
-                else
-                {
-                    if (NPC.ai[0] != -2)
-                    {
-                        if (!Main.dedServ)
+                        if (AIState is ActionState.Intro && AITimer > 190 && RedeBossDowned.oblitDeath == 0)
                         {
-                            Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Success.D1"), Colors.RarityRed, Color.DarkRed, Voice, .03f, 2f, .5f, true, null, Bubble, modifier: modifier); // 150
-
-                            ChatUI.Visible = true;
-                            ChatUI.Add(d1);
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                RedeBossDowned.oblitDeath = 1;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
+                            }
+                            AITimer = 0;
+                            TimerRand = 0;
+                            AIState = ActionState.PlayerKilledIntro;
                         }
-                        AITimer = 0;
-                        NPC.ai[0] = -2;
+                        else
+                        {
+                            AITimer = 0;
+                            TimerRand = 0;
+                            AIState = ActionState.PlayerKilled;
+                        }
+                        return;
                     }
-                    if (NPC.ai[0] == -2 && ++AITimer > 120)
-                        NPC.velocity.Y -= 1;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
                 }
-                return;
             }
             sinTimer++;
             if (Music == MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega2"))

@@ -208,7 +208,7 @@ namespace Redemption
                 player.RedemptionScreen().lockScreen = true;
                 if (priority >= CutscenePriority.Low)
                     player.RedemptionScreen().cutscene = true;
-                if (vignetteRange is 0 || player.RedemptionAbility().SpiritwalkerActive)
+                if (vignetteRange is 0 || player.RedemptionAbility().SpiritwalkerActive || player.DistanceSQ(focus) > vignetteRange * vignetteRange)
                     return;
 
                 if (!Main.dedServ)

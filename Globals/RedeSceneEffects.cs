@@ -76,6 +76,8 @@ namespace Redemption.Globals
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override void SpecialVisuals(Terraria.Player player, bool isActive)
         {
+            if (Main.dedServ)
+                return;
             if (isActive)
             {
                 Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1.2f).UseIntensity(1f)
@@ -103,6 +105,8 @@ namespace Redemption.Globals
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override void SpecialVisuals(Terraria.Player player, bool isActive)
         {
+            if (Main.dedServ)
+                return;
             player.ManageSpecialBiomeVisuals("MoR:NebP1", isActive);
             if (isActive)
                 SkyManager.Instance.Activate("MoR:NebP1");
@@ -119,6 +123,8 @@ namespace Redemption.Globals
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override void SpecialVisuals(Terraria.Player player, bool isActive)
         {
+            if (Main.dedServ)
+                return;
             player.ManageSpecialBiomeVisuals("MoR:OOSky", isActive);
             if (isActive)
                 SkyManager.Instance.Activate("MoR:OOSky");
@@ -135,6 +141,8 @@ namespace Redemption.Globals
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override void SpecialVisuals(Terraria.Player player, bool isActive)
         {
+            if (Main.dedServ)
+                return;
             player.ManageSpecialBiomeVisuals("MoR:NebP2", isActive);
             if (isActive)
                 SkyManager.Instance.Activate("MoR:NebP2");
@@ -151,6 +159,8 @@ namespace Redemption.Globals
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override void SpecialVisuals(Terraria.Player player, bool isActive)
         {
+            if (Main.dedServ)
+                return;
             player.ManageSpecialBiomeVisuals("MoR:Ukko", isActive);
             if (isActive)
                 SkyManager.Instance.Activate("MoR:Ukko");
@@ -167,6 +177,8 @@ namespace Redemption.Globals
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override void SpecialVisuals(Terraria.Player player, bool isActive)
         {
+            if (Main.dedServ)
+                return;
             player.ManageSpecialBiomeVisuals("MoR:ThornSky", isActive);
             if (isActive)
                 Main.GraveyardVisualIntensity = .5f;

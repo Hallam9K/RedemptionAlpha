@@ -281,19 +281,6 @@ namespace Redemption.Globals
             }
         }
 
-        readonly int[] bannedArenaItems = new int[]
-        {
-            ItemID.IceRod,
-            ItemID.PortalGun,
-            ItemID.MagicMirror,
-            ItemID.IceMirror,
-            ItemID.CellPhone,
-            ItemID.StaticHook,
-            ItemID.AntiGravityHook,
-            ItemID.Sandgun,
-            ItemID.ActuationRod,
-            ItemID.GravitationPotion
-        };
         public override bool? UseItem(Item item, Terraria.Player player)
         {
             if (item.type is ItemID.RodOfHarmony && RedeHelper.BossActive(true))
@@ -310,8 +297,6 @@ namespace Redemption.Globals
         }
         public override bool CanUseItem(Item item, Terraria.Player player)
         {
-            if (ArenaWorld.arenaActive && bannedArenaItems.Any(x => x == item.type))
-                return false;
             if (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ && (item.type is ItemID.RodofDiscord or ItemID.RodOfHarmony))
                 return false;
             if (player.RedemptionScreen().cutscene && ItemID.Sets.SortingPriorityBossSpawns[item.type] != -1)

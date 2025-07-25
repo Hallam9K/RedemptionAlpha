@@ -115,14 +115,14 @@ namespace Redemption.NPCs.Friendly
                         RedeQuest.adviceSeen[(int)RedeQuest.Advice.UGPortal] = true;
                         RedeQuest.SyncData();
 
-                        string s = Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Keybind");
-                        foreach (string key in Redemption.RedeSpiritwalkerAbility.GetAssignedKeys())
-                        {
-                            s = Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Hold") + key + Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Context");
-                        }
-
                         if (!Main.dedServ)
                         {
+                            string s = Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Keybind");
+                            foreach (string key in Redemption.RedeSpiritwalkerAbility.GetAssignedKeys())
+                            {
+                                s = Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Hold") + key + Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Context");
+                            }
+
                             TitleCard.DisplayTitle(Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Name"), 300, 90, 1f, Color.White, s);
                             SoundEngine.PlaySound(CustomSounds.NewLocation, player.position);
                         }

@@ -183,6 +183,7 @@ namespace Redemption.NPCs.PreHM
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
+                        break;
                     }
 
                     if (!NPC.Sight(globalNPC.attacker, -1, false, true))
@@ -202,7 +203,10 @@ namespace Redemption.NPCs.PreHM
                     break;
                 case ActionState.RootAttack:
                     if (NPC.ThreatenedCheck(ref runCooldown, 180, 1))
+                    {
                         AIState = ActionState.Wander;
+                        break;
+                    }
 
                     for (int i = 0; i < 2; i++)
                     {

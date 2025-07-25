@@ -1,0 +1,29 @@
+=== 0.8 Beta .408 === (July Multiplayer Patch)
+- Space Keeper's bestiary entry is now in localisation
+- Apidroid's name is now in localisation
+- Sparing Calavia no longer counts as a kill for bestiary, instead the entry can also be unlocked by talking to her
+- Improved arena barrier system (used by Omega Cleaver, Obliterator, etc), now is functional in multiplayer
+- Fixed Cutscene Dialogue UI from silently crashing the server in multiplayer
+- Fixed issues caused by screen shaders, keybinds, and particles in multiplayer
+- Calavia is now bare minimum functional in multiplayer
+- Fixed NPCs not spawning from right-clicking tiles in multiplayer
+- Added a warning message in multiplayer about multiplayer, only disabled through the config
+- Reduced hitbox height of certain skeletons so they can walk in 3 block tall gaps
+- Fixed Skull Digger's crux spirit gaining gravity after being tugged back
+- Rallied buff icon above NPC's heads are more transparent
+- Fixed applying an NPC's elemental resistances in wrong order, leading to it not applying on first hit
+- Added Polish translation
+2230. Added Elder Wood Staff, magic weapon that summons a protective pixie ring around user, pixies are randomly infused with either Nature or Poison element
+2231. Tweaked Beelzebub Concoction by adding an extra effect to it: Friendly blue flies will occasionally appear to protect you and any fly that targets the player will turn into a blue fly
+2232. The Blood projectile that comes from Necrotic Gouge debuff actually has Blood element now
+2233. Certain NPCs will disable enemy spawns while their chat window is active (All Spirits)
+2234. Increased armor scaling of Pocket-Shield Generator by 25%
+2235. Added Mod Calls for getting the locations of all Spirit Tombs
+2236. Greedy and Soulful skeletons will have a prefix in their name (Greedy Skeleton Wander, Soulful Skeleton Noble, etc.)
+2238. Forest Nymphs will only walk within 20 tiles of where they spawned (if homeless)
+2239. Skull Digger's attack cooldown is reduced to 1 second while on surface, and his Soul Charge will be same speed as Keeper's
+2240. Infested Stone will share vanilla stone's texture, with the purple dots as an overlay, making it compatible with resource packs that change stone
+2241. Irradiated Trees can no longer grow underground, and Elder Trees can grow faster underground
+2243. This mod's herb(s) can be highlighted by Spirit Reforged's Botanist set bonus
+2244. Gave the Janitor's mop and bucket projectiles bright afterimages, and the mops snap when broken
+===============

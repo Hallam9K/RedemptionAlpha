@@ -31,7 +31,7 @@ namespace Redemption.Globals.NPC
                 Asset<Texture2D> flagTex = CommonTextures.RalliedBuffIcon;
                 Vector2 drawOrigin = flagTex.Size() / 2;
 
-                spriteBatch.Draw(flagTex.Value, npc.position + new Vector2(npc.width / 2, -30) - screenPos, null, Color.White * npc.Opacity, 0, drawOrigin, 1, 0, 0);
+                spriteBatch.Draw(flagTex.Value, npc.position + new Vector2(npc.width / 2, -30) - screenPos, null, Color.White * .5f * npc.Opacity, 0, drawOrigin, 1, 0, 0);
             }
             if (npc.RedemptionNPCBuff().stunned)
             {

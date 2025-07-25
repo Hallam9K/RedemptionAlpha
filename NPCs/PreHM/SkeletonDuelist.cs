@@ -206,6 +206,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 240);
                         AIState = ActionState.IdleAlert;
                         NPC.netUpdate = true;
+                        break;
                     }
                     if (globalNPC.attacker is Player attackerPlayer && (NPC.PlayerDead() || attackerPlayer.RedemptionPlayerBuff().skeletonFriendly))
                     {
@@ -213,6 +214,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 240);
                         AIState = ActionState.IdleAlert;
                         NPC.netUpdate = true;
+                        break;
                     }
 
                     if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
@@ -269,6 +271,7 @@ namespace Redemption.NPCs.PreHM
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
+                        break;
                     }
 
                     NPC.LookAtEntity(globalNPC.attacker);
@@ -541,6 +544,7 @@ namespace Redemption.NPCs.PreHM
         {
             Texture2D Glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Vector2 offset = new(0, 1);
 
             int HeightH = head2.Value.Height / 12;
             int WidthH = head2.Value.Width / 2;
@@ -556,12 +560,12 @@ namespace Redemption.NPCs.PreHM
                 int x = Width * AniFrameX;
                 Rectangle rect = new(x, y, Width, Height);
                 Vector2 origin = new(Width / 2f, Height / 2f);
-                spriteBatch.Draw(SlashAni.Value, NPC.Center - screenPos - new Vector2(0, 11), new Rectangle?(rect), drawColor, NPC.rotation, origin, NPC.scale, effects, 0);
+                spriteBatch.Draw(SlashAni.Value, NPC.Center - offset - screenPos - new Vector2(0, 11), new Rectangle?(rect), drawColor, NPC.rotation, origin, NPC.scale, effects, 0);
 
-                spriteBatch.Draw(head2.Value, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -1 + HeadOffset), NPC.scale, effects, 0);
+                spriteBatch.Draw(head2.Value, NPC.Center - offset - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -1 + HeadOffset), NPC.scale, effects, 0);
 
                 if (HasEyes)
-                    spriteBatch.Draw(SlashGlow.Value, NPC.Center - screenPos - new Vector2(0, 11), new Rectangle?(rect), Color.White, NPC.rotation, origin, NPC.scale, effects, 0);
+                    spriteBatch.Draw(SlashGlow.Value, NPC.Center - offset - screenPos - new Vector2(0, 11), new Rectangle?(rect), Color.White, NPC.rotation, origin, NPC.scale, effects, 0);
             }
             else
             {
@@ -571,15 +575,15 @@ namespace Redemption.NPCs.PreHM
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
-                        Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, drawColor * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                        Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY - 1), NPC.frame, drawColor * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                     }
                 }
-                spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - offset - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-                spriteBatch.Draw(head2.Value, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -2 + HeadOffset), NPC.scale, effects, 0);
+                spriteBatch.Draw(head2.Value, NPC.Center - offset - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -2 + HeadOffset), NPC.scale, effects, 0);
 
                 if (HasEyes)
-                    spriteBatch.Draw(Glow, NPC.Center - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                    spriteBatch.Draw(Glow, NPC.Center - offset - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             }
             return false;
         }

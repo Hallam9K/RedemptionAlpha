@@ -55,7 +55,7 @@ namespace Redemption.NPCs.PreHM
         public override void SetDefaults()
         {
             NPC.width = 26;
-            NPC.height = 54;
+            NPC.height = 48;
             NPC.damage = 22;
             NPC.friendly = false;
             NPC.defense = 8;
@@ -158,12 +158,14 @@ namespace Redemption.NPCs.PreHM
                         runCooldown = 0;
                         AIState = ActionState.Wander;
                         Healing = false;
+                        break;
                     }
                     if (globalNPC.attacker is Player && (NPC.PlayerDead() || (globalNPC.attacker as Player).RedemptionPlayerBuff().skeletonFriendly))
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
                         Healing = false;
+                        break;
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, interactDoorStyle: HasEyes ? 2 : 0);
 
@@ -195,12 +197,14 @@ namespace Redemption.NPCs.PreHM
                         runCooldown = 0;
                         AIState = ActionState.Wander;
                         Healing = false;
+                        break;
                     }
                     if (Healing && globalNPC.attacker is NPC attackerNPC && attackerNPC.life >= attackerNPC.lifeMax)
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
                         Healing = false;
+                        break;
                     }
 
                     NPC.LookAtEntity(globalNPC.attacker);
@@ -414,11 +418,12 @@ namespace Redemption.NPCs.PreHM
         {
             Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Vector2 pos = NPC.Center - new Vector2(0, 4);
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, pos - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             if (HasEyes)
-                spriteBatch.Draw(glow, NPC.Center - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(glow, pos - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             return false;
         }

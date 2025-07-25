@@ -14,6 +14,7 @@ using Redemption.BaseExtension;
 using ReLogic.Utilities;
 using Terraria.Audio;
 using Terraria.Localization;
+using Redemption.Projectiles.Misc;
 
 namespace Redemption.NPCs.Critters
 {
@@ -83,8 +84,20 @@ namespace Redemption.NPCs.Critters
         }
         public override void AI()
         {
-            Player player = Main.player[NPC.GetNearestAlivePlayer()];
-            NPC.TargetClosest();
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+                NPC.TargetClosest();
+
+            Player player = Main.player[NPC.target];
+
+            if (player.RedemptionPlayerBuff().beelzebub)
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ProjectileType<BlueFly_Proj>(), 10, 0,
+                         player.whoAmI);
+                }
+                NPC.active = false;
+            }
 
             if (hitCooldown > 0)
                 hitCooldown--;

@@ -25,6 +25,7 @@ using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.UI;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.CrossMod;
+using System.IO;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -125,6 +126,10 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override bool CanHitNPC(NPC target) => false;
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            CommonEnemyUICollectionInfoProvider provider1 = new(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type], true);
+            TownNPCUICollectionInfoProvider provider2 = new(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPCType<Calavia_NPC>()]);
+            bestiaryEntry.UIInfoProvider = new HighestOfMultipleUICollectionInfoProvider(provider1, provider2);
+
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
                 new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Calavia"))
@@ -135,7 +140,10 @@ namespace Redemption.NPCs.Minibosses.Calavia
             if (hit.Damage > 1)
             {
                 if (AIState is ActionState.Defeat && TimerRand > 0)
+                {
                     AITimer = 0;
+                    NPC.netUpdate = true;
+                }
                 SoundEngine.PlaySound(SoundID.NPCHit4);
             }
             if (NPC.life <= 0 && AIState is ActionState.Defeat)
@@ -160,7 +168,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.CalaviaKilled"), 180, 30, 0, Color.DarkGoldenrod);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedCalavia, -1);
-            if (RedeQuest.calaviaVar < 30)
+            if (RedeQuest.calaviaVar < 30 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 RedeQuest.calaviaVar = 30;
                 RedeQuest.SyncData();
@@ -242,6 +250,24 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 }
             }
         }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            writer.Write(Defeat);
+            writer.Write(HoldIcefall);
+            writer.Write(HoldPotionType);
+            writer.WriteVector2(origin);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            Defeat = reader.ReadBoolean();
+            HoldIcefall = reader.ReadBoolean();
+            HoldPotionType = reader.ReadInt32();
+            origin = reader.ReadVector2();
+        }
+
         private static Texture2D Bubble => CommonTextures.TextBubble_Epidotra.Value;
         private static readonly SoundStyle voice = CustomSounds.Voice1 with { Pitch = 0.6f };
         private Vector2 origin;
@@ -326,6 +352,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             TimerRand = Main.rand.Next(240, 300);
                             AITimer = 0;
                             AIState = ActionState.Walk;
+                            NPC.netUpdate = true;
                             break;
                         }
                         TimerRand = MathHelper.Distance(NPC.Center.X, landPos.X) / 16;
@@ -342,6 +369,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         TimerRand = Main.rand.Next(240, 300);
                         AITimer = 0;
                         AIState = Main.rand.NextBool(4) ? ActionState.DrinkRandom : ActionState.Walk;
+                        NPC.netUpdate = true;
                     }
                     break;
                 case ActionState.Walk:
@@ -396,6 +424,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             {
                                 AITimer = -60;
                                 TimerRand = 1;
+                                NPC.netUpdate = true;
                             }
                         }
                         break;
@@ -405,17 +434,18 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     if (TimerRand2 >= 200)
                     {
                         HoldPotionType = ItemID.RecallPotion;
-                        potion = ModContent.Request<Texture2D>("Terraria/Images/Item_" + HoldPotionType, AssetRequestMode.ImmediateLoad).Value;
                         AITimer = 0;
                         TimerRand = 1;
                         TimerRand2 = 0;
                         AIState = ActionState.DrinkRecall;
+                        NPC.netUpdate = true;
                         break;
                     }
                     if (AITimer++ >= TimerRand && BaseAI.HitTileOnSide(NPC, 3))
                     {
                         AITimer = 0;
                         AIState = ActionState.JumpToOrigin;
+                        NPC.netUpdate = true;
                     }
                     break;
                 case ActionState.Slash:
@@ -430,6 +460,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 TimerRand2 = Main.rand.Next(20, 31);
                                 int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * .75f) : NPC.damage;
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain>(), damage, Vector2.Zero, NPC.whoAmI, TimerRand2);
+
+                                NPC.netUpdate = true;
                             }
                             if (AITimer < TimerRand2)
                             {
@@ -452,6 +484,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 TimerRand = 0;
                                 TimerRand2 = 0;
                                 AIState = ActionState.JumpToOrigin;
+                                NPC.netUpdate = true;
                             }
                             break;
                         case 1:
@@ -467,6 +500,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 TimerRand2 = Main.rand.Next(10, 21);
                                 int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * .75f) : NPC.damage;
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain>(), damage, Vector2.Zero, NPC.whoAmI, TimerRand2);
+
+                                NPC.netUpdate = true;
                             }
                             if (AITimer >= 0 && AITimer < TimerRand2 + 10)
                             {
@@ -491,6 +526,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 TimerRand = 0;
                                 TimerRand2 = 0;
                                 AIState = ActionState.JumpToOrigin;
+                                NPC.netUpdate = true;
                             }
                             break;
                     }
@@ -508,6 +544,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 customArm = true;
                                 int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * .75f) : NPC.damage;
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain2>(), damage, Vector2.Zero, NPC.whoAmI, TimerRand2);
+
+                                NPC.netUpdate = true;
                             }
                             break;
                         case 1:
@@ -529,6 +567,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             TimerRand = 0;
                             TimerRand2 = 0;
                             AIState = ActionState.JumpToOrigin;
+                            NPC.netUpdate = true;
                             break;
                     }
                     break;
@@ -541,6 +580,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         customArm = true;
                         int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * .75f) : NPC.damage;
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain2>(), damage, Vector2.Zero, NPC.whoAmI, 3);
+
+                        NPC.netUpdate = true;
                     }
                     if (AITimer == 100)
                         NPC.velocity.Y = -12;
@@ -565,6 +606,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         TimerRand = 0;
                         TimerRand2 = 0;
                         AIState = ActionState.JumpToOrigin;
+                        NPC.netUpdate = true;
                     }
                     break;
                 case ActionState.Icefall:
@@ -592,6 +634,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         AITimer = 0;
                         TimerRand = 0;
                         TimerRand2 = 0;
+                        NPC.netUpdate = true;
                     }
                     break;
                 case ActionState.Bored:
@@ -625,11 +668,11 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             if (TimerRand2 >= 180)
                             {
                                 HoldPotionType = ItemID.RecallPotion;
-                                potion = ModContent.Request<Texture2D>("Terraria/Images/Item_" + HoldPotionType, AssetRequestMode.ImmediateLoad).Value;
                                 AITimer = 0;
                                 TimerRand = 0;
                                 TimerRand2 = 0;
                                 AIState = ActionState.DrinkRecall;
+                                NPC.netUpdate = true;
                             }
                         }
                     }
@@ -671,18 +714,17 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             NPC.SetDefaults(ModContent.NPCType<Calavia_Intro>());
                         else if (TimerRand is 2 && Defeat)
                         {
+                            if (RedeQuest.calaviaVar < 3 && Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                RedeQuest.calaviaVar = 3;
+                                RedeQuest.SyncData();
+                            }
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                if (RedeQuest.calaviaVar < 3)
-                                {
-                                    RedeQuest.calaviaVar = 3;
-                                    RedeQuest.SyncData();
-                                }
                                 RedeBossDowned.downedCalavia = true;
                                 if (Main.netMode != NetmodeID.SinglePlayer)
                                     NetMessage.SendData(MessageID.WorldData);
                             }
-                            Main.BestiaryTracker.Kills.RegisterKill(NPC);
                             if (Main.masterMode)
                                 Item.NewItem(NPC.GetSource_Loot(), NPC.Hitbox, ItemType<CalaviaRelic>());
                             NPC.SetDefaults(ModContent.NPCType<Calavia_NPC>());
@@ -691,6 +733,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         {
                             TimerRand = 0;
                             AIState = ActionState.Walk;
+                            NPC.netUpdate = true;
                         }
                         NPC.netUpdate = true;
                         for (int i = 0; i < 30; i++)
@@ -724,11 +767,12 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         }
                         HoldPotionPos = 10;
                         HoldPotionType = Utils.Next(Main.rand, potionType);
-                        potion = ModContent.Request<Texture2D>("Terraria/Images/Item_" + HoldPotionType, AssetRequestMode.ImmediateLoad).Value;
 
                         CustomBodyCounter = 0;
                         CustomBodyAni = 1;
                         SoundEngine.PlaySound(SoundID.Item3, NPC.position);
+
+                        NPC.netUpdate = true;
 
                         switch (HoldPotionType)
                         {
@@ -805,6 +849,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
 
                                 AITimer = 0;
                                 TimerRand = 1;
+                                NPC.netUpdate = true;
                             }
                             break;
                         case 1:
@@ -826,6 +871,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 ChatUI.Add(chain);
                                 AITimer = 0;
                                 TimerRand = 2;
+                                NPC.netUpdate = true;
                             }
                             break;
                         case 2:
@@ -834,6 +880,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             {
                                 AITimer = 0;
                                 TimerRand = 3;
+                                NPC.netUpdate = true;
                             }
                             break;
                         case 3:
@@ -855,22 +902,22 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 if (TimerRand2 >= 180)
                                 {
                                     HoldPotionType = ItemID.RecallPotion;
-                                    potion = ModContent.Request<Texture2D>("Terraria/Images/Item_" + HoldPotionType, AssetRequestMode.ImmediateLoad).Value;
                                     AITimer = 0;
                                     TimerRand = 2;
                                     TimerRand2 = 0;
                                     AIState = ActionState.DrinkRecall;
+                                    NPC.netUpdate = true;
                                 }
                             }
                             if (NPC.DistanceSQ(gathicPortalPos) < 6 * 6)
                             {
+                                if (RedeQuest.calaviaVar < 3 && Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    RedeQuest.calaviaVar = 3;
+                                    RedeQuest.SyncData();
+                                }
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    if (RedeQuest.calaviaVar < 3)
-                                    {
-                                        RedeQuest.calaviaVar = 3;
-                                        RedeQuest.SyncData();
-                                    }
                                     RedeBossDowned.downedCalavia = true;
                                     if (Main.netMode != NetmodeID.SinglePlayer)
                                         NetMessage.SendData(MessageID.WorldData);
@@ -878,7 +925,6 @@ namespace Redemption.NPCs.Minibosses.Calavia
 
                                 NPC.Center = gathicPortalPos;
                                 NPC.velocity *= 0;
-                                Main.BestiaryTracker.Kills.RegisterKill(NPC);
                                 if (Main.masterMode)
                                     Item.NewItem(NPC.GetSource_Loot(), NPC.Hitbox, ItemType<CalaviaRelic>());
                                 NPC.SetDefaults(ModContent.NPCType<Calavia_NPC>());
@@ -900,6 +946,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     AITimer = 0;
                     TimerRand = 0;
                     AIState = ActionState.Bored;
+                    NPC.netUpdate = true;
                 }
             }
             else
@@ -914,6 +961,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 if (ID is 3)
                     AITimer = 0;
                 TimerRand = ID;
+                NPC.netUpdate = true;
             }
         }
         int regenTimer;
@@ -953,7 +1001,6 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 return false;
             }
         }
-        private Texture2D potion = null;
         public int BodyFrame;
         public int CustomBodyAni;
         private int CustomBodyCounter;
@@ -1034,8 +1081,13 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 spriteBatch.Draw(ShieldTex.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             if (HoldIcefall)
                 spriteBatch.Draw(TextureAssets.Item[ModContent.ItemType<Icefall>()].Value, NPC.Center + new Vector2(14 * NPC.spriteDirection, 0) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            if (HoldPotionType != 0 && potion != null)
-                spriteBatch.Draw(potion, NPC.Center + new Vector2(14 * NPC.spriteDirection, HoldPotionPos) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation + TimerRand2, (NPC.frame.Size() / 2) - new Vector2(HoldPotionOriginX, 10), NPC.scale, effects, 0);
+
+            if (HoldPotionType != 0)
+            {
+                Main.instance.LoadItem(HoldPotionType);
+                spriteBatch.Draw(TextureAssets.Item[HoldPotionType].Value, NPC.Center + new Vector2(14 * NPC.spriteDirection, HoldPotionPos) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation + TimerRand2, (NPC.frame.Size() / 2) - new Vector2(HoldPotionOriginX, 10), NPC.scale, effects, 0);
+            }
+
             if (customArm)
                 spriteBatch.Draw(ArmTex2.Value, NPC.Center + new Vector2(-8 * NPC.spriteDirection, 0) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation + customArmRot, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             else

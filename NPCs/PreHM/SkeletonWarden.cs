@@ -54,7 +54,7 @@ namespace Redemption.NPCs.PreHM
         public override void SetDefaults()
         {
             NPC.width = 20;
-            NPC.height = 54;
+            NPC.height = 48;
             NPC.damage = 18;
             NPC.friendly = false;
             NPC.defense = 11;
@@ -316,6 +316,7 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         AIState = ActionState.Wander;
                         NPC.netUpdate = true;
+                        break;
                     }
 
                     if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false, !HasEyes) && !NPC.Sight(defending, VisionRange, HasEyes, HasEyes, false))
@@ -377,6 +378,7 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         AIState = ActionState.Wander;
                         NPC.netUpdate = true;
+                        break;
                     }
 
                     SightCheck();
@@ -445,6 +447,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 240);
                         AIState = ActionState.Wander;
                         NPC.netUpdate = true;
+                        break;
                     }
                     if (globalNPC.attacker is Player attackerPlayer && (NPC.PlayerDead() || attackerPlayer.RedemptionPlayerBuff().skeletonFriendly))
                     {
@@ -452,6 +455,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 240);
                         AIState = ActionState.Wander;
                         NPC.netUpdate = true;
+                        break;
                     }
 
                     if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
@@ -616,14 +620,15 @@ namespace Redemption.NPCs.PreHM
             Texture2D Glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             Texture2D ShieldTex = ModContent.Request<Texture2D>(Texture + "_Shield").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Vector2 offset = new(0, 4);
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - offset - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             if (HasEyes)
-                spriteBatch.Draw(Glow, NPC.Center - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(Glow, NPC.Center - offset - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             if (!NPC.RedemptionGuard().GuardBroken && NPC.frame.Y < 13 * 64)
-                spriteBatch.Draw(ShieldTex, NPC.Center - screenPos, null, drawColor, NPC.rotation, NPC.frame.Size() / 2 - new Vector2(0, ShieldOffset.Y), NPC.scale, effects, 0);
+                spriteBatch.Draw(ShieldTex, NPC.Center - offset - screenPos, null, drawColor, NPC.rotation, NPC.frame.Size() / 2 - new Vector2(0, ShieldOffset.Y), NPC.scale, effects, 0);
             return false;
         }
         public override bool CanHitNPC(NPC target) => false;
