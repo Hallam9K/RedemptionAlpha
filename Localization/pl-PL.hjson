@@ -428,7 +428,7 @@ Mods: {
 							   Jeśli mimo to chcesz grać w trybie wieloosobowym, spodziewaj się wielu błędów i nieprawidłowego działania niektórych elementów!
 
 					To disable this message, go to Konfiguracja Moda > Mod of Redemption > Konfiguracja Osobista > Wyłącz Ostrzeżenie o Trybie Wieloosobowym
-					''' 
+					'''
 			}
 		}
 
@@ -10867,7 +10867,7 @@ Mods: {
 					Przyzywa ochronny krąg wróżek
 					Wróżki losowo nasycane są żywiołem {0} lub {1}
 					Kliknij prawym przyciskiem myszy, aby wystrzelić krąg świetlików w stronę kursora
-					''' 
+					'''
 			}
 		}
 
@@ -11582,6 +11582,7 @@ Mods: {
 			ElderWoodStaff_Proj.DisplayName: "{$Mods.Redemption.Items.ElderWoodStaff.DisplayName}"
 			AncientPixie_Proj.DisplayName: Starożytna Wróżka
 			BlueFly_Proj.DisplayName: Niebieska Mucha
+			// XenoSplat.DisplayName: Xeno Splat
 		}
 
 		NPCs: {

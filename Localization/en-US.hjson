@@ -11579,6 +11579,7 @@ Mods: {
 			ElderWoodStaff_Proj.DisplayName: "{$Mods.Redemption.Items.ElderWoodStaff.DisplayName}"
 			AncientPixie_Proj.DisplayName: Ancient Pixie
 			BlueFly_Proj.DisplayName: Blue Fly
+			XenoSplat.DisplayName: Xeno Splat
 		}
 
 		NPCs: {
