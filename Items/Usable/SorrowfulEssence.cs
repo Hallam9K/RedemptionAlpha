@@ -28,6 +28,10 @@ namespace Redemption.Items.Usable
             Item.maxStack = 1;
             Item.rare = ItemRarityID.Blue;
         }
+        public override void GrabRange(Player player, ref int grabRange)
+        {
+            grabRange += 25 + (Item.timeSinceItemSpawned / 10);
+        }
         public override void PostUpdate()
         {
             Lighting.AddLight(Item.Center, Color.Purple.ToVector3() * 0.6f * Main.essScale);

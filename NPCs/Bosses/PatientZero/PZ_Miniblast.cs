@@ -31,6 +31,11 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.timeLeft = 160;
             Projectile.alpha = 255;
         }
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            width = height = 16;
+            return true;
+        }
         public override void OnHitPlayer(Player target, Player.HurtInfo info) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 120);
         public override void AI()
         {

@@ -178,6 +178,11 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreAI()
         {
+            if (NPC.target < 0 || NPC.target >= 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+                NPC.TargetClosest();
+
+            Player player = Main.player[NPC.target];
+
             WeightedRandom<SpawnType> choice = new(Main.rand);
             choice.Add(SpawnType.Normal, 10); // 21%
             choice.Add(SpawnType.Wanderer, 10);
@@ -186,8 +191,8 @@ namespace Redemption.NPCs.PreHM
             choice.Add(SpawnType.SmallGroup, 6); // 12.7%
             choice.Add(SpawnType.Group, 3); // 6.38%
             choice.Add(SpawnType.LargeGroup, 1); // 2%
-            if (Main.player[RedeHelper.GetNearestAlivePlayer(NPC)].ZoneRockLayerHeight)
-                choice.Add(SpawnType.Dance, 0.002); // 0.0043%
+            if (player.ZoneRockLayerHeight)
+                choice.Add(SpawnType.Dance, 0.003); // 0.0063%
 
             WeightedRandom<int> NPCType = new(Main.rand);
             NPCType.Add(ModContent.NPCType<SkeletonWanderer>());

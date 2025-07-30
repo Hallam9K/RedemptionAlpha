@@ -144,7 +144,9 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         {
             if (!RedeBossDowned.downedSeed && !RedeHelper.TBotActive())
             {
-                NPC.Shoot(NPC.Center, ModContent.ProjectileType<AdamPortal>(), 0, Vector2.Zero, NPC.target);
+                int closestPlayer = NPC.FindClosestPlayer();
+                if (closestPlayer >= 0)
+                    NPC.Shoot(NPC.Center, ProjectileType<AdamPortal>(), 0, Vector2.Zero, closestPlayer);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedSeed, -1);
         }
@@ -237,7 +239,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                             if (AITimer >= 180)
                             {
                                 FablesHelper.DisplayBossIntroCard("Mods.Redemption.TitleCard.SoI.Name", "Mods.Redemption.TitleCard.SoI.Modifier", 90, false, Color.DarkGreen, Color.ForestGreen, Color.DarkGreen, Color.ForestGreen, "Virogenesis", "musicman");
-                                
+
                                 NPC.dontTakeDamage = false;
                                 NPC.alpha = 0;
                                 TimerRand = 0;
@@ -667,8 +669,13 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                     TimerRand += 0.1f;
                     NPC.rotation += TimerRand / 40;
 
-                    if (++AITimer >= 240)
+                    if (AITimer % 5 == 0 && Main.rand.NextBool(2))
+                        RedeDraw.SpawnXenoSplat(RedeHelper.RandAreaInEntity(NPC), Main.rand.NextFloat(.5f, 1f));
+
+                    if (AITimer >= 240)
                     {
+                        RedeDraw.SpawnXenoSplat(NPC.Center, 1);
+
                         SoundEngine.PlaySound(SoundID.NPCDeath10, NPC.position);
                         for (int i = -32; i <= 32; i++)
                         {

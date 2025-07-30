@@ -26,4 +26,8 @@
 2241. Irradiated Trees can no longer grow underground, and Elder Trees can grow faster underground
 2243. This mod's herb(s) can be highlighted by Spirit Reforged's Botanist set bonus
 2244. Gave the Janitor's mop and bucket projectiles bright afterimages, and the mops snap when broken
+2249. Ooze Blobs no longer split into more if consumed by another Ooze Blob
+2252. Added Mod Calls for setting, getting, checking, and breaking Guard Points
+2253. Added xenomite Splat visual for Seed of Infection defeat, Patient Zero big blasts, and Patient Zero defeat
+2254. Sorrowful Essence's grab range gradually increases for as long as it isn't picked up
 ===============

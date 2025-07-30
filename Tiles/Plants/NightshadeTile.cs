@@ -220,12 +220,5 @@ namespace Redemption.Tiles.Plants
             }
             return true;
         }
-        public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
-        {
-            if (!SpiritHelper.PlayerBotanist(Main.LocalPlayer))
-                return;
-            float darkness = (1.2f - Lighting.Brightness(i, j)) / 1.2f;
-            drawData.finalColor = Color.Lerp(Lighting.GetColor(i, j), Color.Green, darkness);
-        }
     }
 }

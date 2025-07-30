@@ -1,10 +1,12 @@
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
 using Redemption.Globals.World;
 using Redemption.Textures.Elements;
 using Redemption.WorldGeneration;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 
 namespace Redemption
@@ -440,6 +442,108 @@ namespace Redemption
 
                         player2.RedemptionPlayerBuff().ElementalDamage[elementID13] += multiplier2;
                         break;
+                    #endregion
+                    #region Guard Points
+                    case "setGuardPoints":
+                        if (args[1] is not NPC guardNpc)
+                            throw new Exception($"Expected an argument of type NPC, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not int amt)
+                            throw new Exception($"Expected an argument of type int when setting amount, but got type {args[2].GetType().Name} instead.");
+
+                        if (guardNpc.TryGetGlobalNPC(out GuardNPC GuardNPC))
+                        {
+                            GuardNPC.GuardBroken = false;
+                            GuardNPC.GuardPoints = amt;
+                        }
+                        break;
+                    case "checkGuardPoints":
+                        if (args[1] is not NPC guardNpc2)
+                            throw new Exception($"Expected an argument of type NPC, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not NPC.HitModifiers modifiers)
+                            throw new Exception($"Expected an argument of type NPC.HitModifiers, but got type {args[2].GetType().Name} instead.");
+                        if (args[3] is not float dmgReduce)
+                            throw new Exception($"Expected an argument of type float for damage reduction value, but got type {args[3].GetType().Name} instead.");
+                        if (args[4] is not bool noSound)
+                            throw new Exception($"Expected an argument of type bool for no guard hit sound, but got type {args[4].GetType().Name} instead.");
+                        if (args[5] is not int dustType)
+                            throw new Exception($"Expected an argument of type int for dust type on break, but got type {args[5].GetType().Name} instead.");
+                        if (args[6] is not int dustAmt)
+                            throw new Exception($"Expected an argument of type int for dust amount on break, but got type {args[6].GetType().Name} instead.");
+                        if (args[7] is not float dustScale)
+                            throw new Exception($"Expected an argument of type float for dust scale on break, but got type {args[7].GetType().Name} instead.");
+                        if (args[8] is not int breakDamage)
+                            throw new Exception($"Expected an argument of type int for damage on break, but got type {args[8].GetType().Name} instead.");
+
+                        SoundStyle sound = SoundID.DD2_WitherBeastCrystalImpact;
+                        if (args.Length > 9)
+                        {
+                            if (args[9] is SoundStyle newSound)
+                                sound = newSound;
+                            else
+                                throw new Exception($"Expected an argument of type SoundStyle, but got type {args[9].GetType().Name} instead.");
+                        }
+                        SoundStyle breakSound = default;
+                        if (args.Length > 10)
+                        {
+                            if (args[10] is SoundStyle newSound)
+                                breakSound = newSound;
+                            else
+                                throw new Exception($"Expected an argument of type SoundStyle, but got type {args[10].GetType().Name} instead.");
+                        }
+
+                        if (guardNpc2.TryGetGlobalNPC(out GuardNPC GuardNPC2))
+                        {
+                            if (GuardNPC2.GuardPoints >= 0)
+                            {
+                                modifiers.DisableCrit();
+                                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => GuardNPC2.GuardHit(ref n, guardNpc2, sound, dmgReduce, noSound, dustType, breakSound, dustAmt, dustScale, breakDamage);
+                                return true;
+                            }
+                            else
+                                return false;
+                        }
+                        return false;
+                    case "breakGuardPoints":
+                        if (args[1] is not NPC guardNpc3)
+                            throw new Exception($"Expected an argument of type NPC, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not int dustType2)
+                            throw new Exception($"Expected an argument of type int for dust type, but got type {args[2].GetType().Name} instead.");
+                        if (args[3] is not int dustAmt2)
+                            throw new Exception($"Expected an argument of type int for dust amount, but got type {args[3].GetType().Name} instead.");
+                        if (args[4] is not float dustScale2)
+                            throw new Exception($"Expected an argument of type float for dust scale, but got type {args[4].GetType().Name} instead.");
+                        if (args[5] is not int breakDamage2)
+                            throw new Exception($"Expected an argument of type int for damage, but got type {args[5].GetType().Name} instead.");
+
+                        SoundStyle breakSound2 = CustomSounds.GuardBreak;
+                        if (args.Length > 6)
+                        {
+                            if (args[6] is SoundStyle newSound)
+                                breakSound2 = newSound;
+                            else
+                                throw new Exception($"Expected an argument of type SoundStyle, but got type {args[6].GetType().Name} instead.");
+                        }
+
+                        if (guardNpc3.TryGetGlobalNPC(out GuardNPC GuardNPC3))
+                        {
+                            GuardNPC3.GuardPoints = 0;
+                            GuardNPC3.GuardBreakCheck(guardNpc3, dustType2, breakSound2, dustAmt2, dustScale2, breakDamage2);
+                        }
+                        return false;
+                    case "getGuardPoints":
+                        if (args[1] is not NPC guardNpc4)
+                            throw new Exception($"Expected an argument of type NPC, but got type {args[1].GetType().Name} instead.");
+
+                        if (guardNpc4.TryGetGlobalNPC(out GuardNPC GuardNPC4))
+                            return GuardNPC4.GuardPoints;
+                        return 0;
+                    case "isGuardBroken":
+                        if (args[1] is not NPC guardNpc5)
+                            throw new Exception($"Expected an argument of type NPC, but got type {args[1].GetType().Name} instead.");
+
+                        if (guardNpc5.TryGetGlobalNPC(out GuardNPC GuardNPC5))
+                            return GuardNPC5.GuardBroken;
+                        return true;
                     #endregion
                     case "RaveyardActive":
                         return RedeWorld.SkeletonInvasion;

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts;
+using Redemption.Projectiles.Misc;
 using Redemption.Textures;
 using System;
 using Terraria;
@@ -127,6 +128,14 @@ namespace Redemption.Globals
 
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.SyncProjectile, number: p);
+            }
+        }
+        public static void SpawnXenoSplat(Vector2 center, float scale = 1, bool fullBright = false, bool noSound = false)
+        {
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                int p = Projectile.NewProjectile(null, center, Vector2.Zero, ProjectileType<XenoSplat>(), 0, 0, Main.myPlayer, 0, fullBright ? 1 : 0, noSound ? 1 : 0);
+                Main.projectile[p].scale = scale;
             }
         }
         public static void DrawEyeFlare(SpriteBatch spriteBatch, ref float opacity, Vector2 position, Color color, float rot, float scale = 1f, SpriteEffects effects = 0, Texture2D tex = null, Vector2 origin = default)

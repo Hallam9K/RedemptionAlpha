@@ -134,6 +134,8 @@ namespace Redemption.NPCs.Lab
                         if (!ooze.active || NPC.whoAmI == ooze.whoAmI || NPC.scale < ooze.scale || ooze.type != Type || !NPC.Hitbox.Intersects(ooze.Hitbox))
                             continue;
 
+                        ooze.ai[3] = 1;
+                        ooze.netUpdate = true;
                         SoundEngine.PlaySound(SoundID.Item2, NPC.position);
                         BaseAI.DamageNPC(ooze, ooze.lifeMax + 10, 0, NPC, false, true);
                         Consumption();
@@ -203,7 +205,7 @@ namespace Redemption.NPCs.Lab
         }
         public override void OnKill()
         {
-            if (consumed > 2)
+            if (consumed > 2 && NPC.ai[3] == 0)
             {
                 for (int i = 0; i < consumed / 2; i++)
                     RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.position.X + Main.rand.Next(0, NPC.width), (int)NPC.position.Y + Main.rand.Next(0, NPC.height), ModContent.NPCType<OozeBlob>());

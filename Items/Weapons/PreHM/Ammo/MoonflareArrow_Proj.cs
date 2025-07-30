@@ -12,7 +12,6 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
 {
     public class MoonflareArrow_Proj : ModProjectile
     {
-        public override string Texture => "Redemption/Items/Weapons/PreHM/Ammo/MoonflareArrow";
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Moonflare Arrow");
@@ -39,7 +38,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
         }
         public override void AI()
         {
-            Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.PiOver2;
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             Projectile.velocity.Y += 0.03f;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -58,7 +57,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D textureGlow = Request<Texture2D>("Redemption/Items/Weapons/PreHM/Ammo/MoonflareArrow_Glow").Value;
+            Texture2D textureGlow = Request<Texture2D>(Texture + "_Glow").Value;
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
 
             Main.spriteBatch.End();

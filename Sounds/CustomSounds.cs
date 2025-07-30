@@ -158,6 +158,7 @@ namespace Redemption
         public static readonly SoundStyle Kantele1 = new("Redemption/Sounds/Custom/Kantele1");
         public static readonly SoundStyle Kantele2 = new("Redemption/Sounds/Custom/Kantele2");
         public static readonly SoundStyle LegoBreak = new("Redemption/Sounds/Custom/LegoBreak") { Volume = .6f };
+        public static readonly SoundStyle MeatImpact = new("Redemption/Sounds/Custom/MeatImpact") { PitchVariance = .1f };
 
         public static readonly SoundStyle Magic1 = new("Redemption/Sounds/Custom/Magic1") { PitchVariance = .1f };
         public static readonly SoundStyle Magic2 = new("Redemption/Sounds/Custom/Magic2") { PitchVariance = .1f };

@@ -31,6 +31,11 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.tileCollide = true;
             Projectile.timeLeft = 300;
         }
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            width = height = 32;
+            return true;
+        }
         public override void AI()
         {
             if (++Projectile.frameCounter >= 3)
@@ -81,11 +86,15 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-            for (int i = 0; i < 40; i++)
+            SoundEngine.PlaySound(SoundID.Item167, Projectile.position);
+            for (int i = 0; i < 10; i++)
             {
                 int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GreenTorch, Scale: 2);
                 Main.dust[dustIndex].velocity *= 3f;
             }
+
+            RedeDraw.SpawnXenoSplat(Projectile.Center, 1, true, true);
+
             for (int i = 0; i < 4; i++)
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(10, MathHelper.ToRadians(90) * i), ModContent.ProjectileType<PZ_Miniblast>(), (int)(Projectile.damage * 0.85f), 3, Main.myPlayer);
         }

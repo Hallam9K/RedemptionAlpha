@@ -770,6 +770,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
                     switch (ID)
                     {
                         case 0:
+                            SoundEngine.PlaySound(SoundID.Item170.WithPitchOffset(-0.5f).WithVolumeScale(2f), NPC.position);
+
                             ID = 1;
                             TimerRand = 3;
                             NPC.dontTakeDamage = true;
@@ -796,6 +798,20 @@ namespace Redemption.NPCs.Bosses.PatientZero
                             NPC.rotation.SlowRotation(NPC.DirectionTo(player.Center).ToRotation(), (float)Math.PI / 90);
                             NPC.rotation += Main.rand.NextFloat(-TimerRand, TimerRand);
 
+                            if (AITimer % 5 == 0 && Main.rand.NextBool(3))
+                            {
+                                Vector2 splatPos = new(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180));
+                                RedeDraw.SpawnXenoSplat(splatPos, Main.rand.NextFloat(.8f, 1.2f), true);
+                            }
+                            if (AITimer >= 120 && AITimer % 5 == 0 && Main.rand.NextBool(2))
+                            {
+                                Vector2 splatPos = new(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180));
+                                RedeDraw.SpawnXenoSplat(splatPos, Main.rand.NextFloat(1f, 1.2f), true);
+                            }
+
+                            if (AITimer == 180)
+                                SoundEngine.PlaySound(SoundID.Item170.WithVolumeScale(2f), NPC.position);
+
                             if (AITimer++ >= 180)
                             {
                                 MoonlordDeathDrama.RequestLight(1f, NPC.Center);
@@ -803,6 +819,11 @@ namespace Redemption.NPCs.Bosses.PatientZero
                             }
                             if (AITimer >= 240)
                             {
+                                RedeDraw.SpawnXenoSplat(RedeHelper.RandAreaInEntity(NPC), Main.rand.NextFloat(1.5f), true);
+
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(CustomSounds.MeatImpact.WithPitchOffset(0f).WithVolumeScale(2), NPC.position);
+
                                 SoundEngine.PlaySound(SoundID.NPCDeath10 with { Pitch = -.5f, Volume = 1.5f }, NPC.position);
                                 SoundEngine.PlaySound(SoundID.NPCDeath10 with { Pitch = -.1f }, NPC.position);
                                 SoundEngine.PlaySound(SoundID.NPCDeath10 with { Pitch = -1, Volume = 3f }, NPC.position);
