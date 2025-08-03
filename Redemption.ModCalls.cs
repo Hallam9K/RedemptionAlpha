@@ -529,7 +529,7 @@ namespace Redemption
                             GuardNPC3.GuardPoints = 0;
                             GuardNPC3.GuardBreakCheck(guardNpc3, dustType2, breakSound2, dustAmt2, dustScale2, breakDamage2);
                         }
-                        return false;
+                        break;
                     case "getGuardPoints":
                         if (args[1] is not NPC guardNpc4)
                             throw new Exception($"Expected an argument of type NPC, but got type {args[1].GetType().Name} instead.");

@@ -279,6 +279,9 @@ namespace Redemption.NPCs.PreHM
                         }
                         else
                         {
+                            if (SpawnOrigin == Point.Zero)
+                                SpawnOrigin = NPC.position.ToTileCoordinates();
+
                             moveTo = NPCHelper.FindGroundVector(new Vector2(SpawnOrigin.X, SpawnOrigin.Y) * 16, 20);
                             moveTo /= 16;
                         }
