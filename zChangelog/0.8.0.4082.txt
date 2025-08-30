@@ -1,4 +1,4 @@
-=== 0.8 Beta .4081 === (August Patch)
+=== 0.8 Beta .4082 === (August Patch)
 - Improved code for this mod's vines
 2251. Added portal map icon for "A portal rumbles..." messages
 2246. Wayfarer's Advice button changes colour when a new advice is available
