@@ -16,6 +16,8 @@ namespace Redemption.Globals.NPC
             return entity.type == NPCType<Daerel>() || entity.type == NPCType<Zephos>() || entity.type == NPCType<Fallen>();
         }
         public bool[] exclaimationMark = new bool[6];
+        public bool adviceMarkerActive;
+
         public override void LoadData(Terraria.NPC npc, TagCompound tag)
         {
             for (int k = 0; k < exclaimationMark.Length; k++)
@@ -39,6 +41,7 @@ namespace Redemption.Globals.NPC
         }
         public override void PostDraw(Terraria.NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            adviceMarkerActive = false;
             bool mark = false;
             for (int k = 0; k < exclaimationMark.Length; k++)
             {
@@ -59,6 +62,7 @@ namespace Redemption.Globals.NPC
                     {
                         if (k == (int)RedeQuest.Advice.UkkoEye && (Terraria.NPC.FindFirstNPC(NPCType<Fallen>()) == -1 || !Main.LocalPlayer.HasItemInAnyInventory(ItemType<GolemEye>())))
                             continue;
+                        adviceMarkerActive = true;
                         mark = true;
                         break;
                     }

@@ -148,6 +148,14 @@ namespace Redemption.Globals
             Recipe.Create(ItemID.ChainKnife)
                 .AddIngredient<GraveSteelAlloy>(9)
                 .AddIngredient(ItemID.Chain, 3)
+                .AddCondition(Condition.NotRemixWorld)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            Recipe.Create(ItemID.KOCannon)
+                .AddIngredient<GraveSteelAlloy>(9)
+                .AddIngredient(ItemID.Chain, 3)
+                .AddCondition(Condition.RemixWorld)
                 .AddTile(TileID.Anvils)
                 .Register();
 

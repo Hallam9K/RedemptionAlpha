@@ -39,6 +39,9 @@ namespace Redemption.Textures
 
         public static Asset<Texture2D> StunVisual;
         public static Asset<Texture2D> RalliedBuffIcon;
+        public static Asset<Texture2D> PortalIcon;
+        public static Asset<Texture2D> PortalIcon2;
+        public static Asset<Texture2D> HintIcon;
         public override void Load()
         {
             if (Main.dedServ)
@@ -75,6 +78,9 @@ namespace Redemption.Textures
 
             StunVisual = Request<Texture2D>("Redemption/Textures/StunVisual");
             RalliedBuffIcon = Request<Texture2D>("Redemption/Buffs/NPCBuffs/FlagbearerBuff_Icon");
+            PortalIcon = Request<Texture2D>("Redemption/UI/Map/PortalIcon");
+            PortalIcon2 = Request<Texture2D>("Redemption/UI/Map/PortalIcon2");
+            HintIcon = Request<Texture2D>("Redemption/Items/HintIcon");
         }
     }
 }

@@ -68,6 +68,8 @@ namespace Redemption.WorldGeneration
         public static Point16 SpiritOldLadyPoint;
         public static Point16 SpiritDruidPoint;
 
+        public static bool lidenAtHomeWorld;
+
         public override void ClearWorld()
         {
             cryoCrystalSpawn = false;
@@ -87,6 +89,8 @@ namespace Redemption.WorldGeneration
             SpiritOldLadyPoint = Point16.Zero;
             SpiritDruidPoint = Point16.Zero;
             corpseCheck = false;
+
+            lidenAtHomeWorld = false;
         }
         public override void PostWorldGen()
         {
@@ -266,6 +270,7 @@ namespace Redemption.WorldGeneration
                 Main.npc[num].homeless = true;
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
+                    lidenAtHomeWorld = true;
                     RedeBossDowned.nukeDropped = true;
                     if (Main.netMode == NetmodeID.Server)
                         NetMessage.SendData(MessageID.WorldData);
@@ -2872,6 +2877,8 @@ namespace Redemption.WorldGeneration
                 lists.Add("DLeadSpawn");
             if (cryoCrystalSpawn)
                 lists.Add("CCrystalSpawn");
+            if (lidenAtHomeWorld)
+                lists.Add("lidenAtHomeWorld");
 
             tag["lists"] = lists;
             tag["newbCaveVectorX"] = newbCaveVector.X;
@@ -2897,6 +2904,7 @@ namespace Redemption.WorldGeneration
             var lists = tag.GetList<string>("lists");
             dragonLeadSpawn = lists.Contains("DLeadSpawn");
             cryoCrystalSpawn = lists.Contains("CCrystalSpawn");
+            lidenAtHomeWorld = lists.Contains("lidenAtHomeWorld");
 
             newbCaveVector.X = tag.GetFloat("newbCaveVectorX");
             newbCaveVector.Y = tag.GetFloat("newbCaveVectorY");
@@ -2922,6 +2930,7 @@ namespace Redemption.WorldGeneration
             var flags = new BitsByte();
             flags[0] = dragonLeadSpawn;
             flags[1] = cryoCrystalSpawn;
+            flags[5] = lidenAtHomeWorld;
             writer.Write(flags);
 
             writer.WritePackedVector2(newbCaveVector);
@@ -2939,6 +2948,7 @@ namespace Redemption.WorldGeneration
             BitsByte flags = reader.ReadByte();
             dragonLeadSpawn = flags[0];
             cryoCrystalSpawn = flags[1];
+            lidenAtHomeWorld = flags[5];
 
             newbCaveVector = reader.ReadPackedVector2();
             gathicPortalVector = reader.ReadPackedVector2();

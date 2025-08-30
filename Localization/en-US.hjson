@@ -3772,7 +3772,11 @@ Mods: {
 
 			NebWings: {
 				DisplayName: Nebuleus Wings
-				Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
+				Tooltip:
+					'''
+					{$CommonItemTooltip.FlightAndSlowfall}
+					15% increased {0} elemental resistance
+					'''
 			}
 
 			ObliterationDrive: {

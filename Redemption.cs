@@ -78,7 +78,7 @@ namespace Redemption
         public static Effect GlowTrailShader;
         public static TrailManager TrailManager;
 
-        public static Effect nebSkyEffect;
+        public static Asset<Effect> nebSkyEffect;
 
         private List<ILoadable> _loadCache;
 
@@ -250,7 +250,7 @@ namespace Redemption
 
                 if (Main.netMode != NetmodeID.Server)
                 {
-                    nebSkyEffect = Request<Effect>("Redemption/Effects/nebSky", AssetRequestMode.ImmediateLoad).Value;
+                    nebSkyEffect = Request<Effect>("Redemption/Effects/nebSky", AssetRequestMode.AsyncLoad);
                 }
 
                 Filters.Scene["MoR:OOSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0f).UseOpacity(0.2f), EffectPriority.VeryHigh);

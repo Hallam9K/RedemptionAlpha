@@ -3775,7 +3775,11 @@ Mods: {
 
 			NebWings: {
 				DisplayName: Skrzydła Nebuleus
-				Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
+				Tooltip:
+					'''
+					{$CommonItemTooltip.FlightAndSlowfall}
+					Zwiększa o 15% odporność na żywioł {0}
+					'''
 			}
 
 			ObliterationDrive: {

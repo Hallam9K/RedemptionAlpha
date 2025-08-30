@@ -1,0 +1,14 @@
+=== 0.8 Beta .4081 === (August Patch)
+- Improved code for this mod's vines
+2251. Added portal map icon for "A portal rumbles..." messages
+2246. Wayfarer's Advice button changes colour when a new advice is available
+2255. Added a tiny bar indicating when a cutscene dialogue box is about to disappear
+2258. Chain Knife is no longer craftable in Remix seed, instead replaced with KO Cannon
+2259. Bloated Diggers only spawn in cavern layer in Liden At Home worlds
+2260. Target Dummies are now tagged as Inorganic
+2269. Most wings grant elemental resistances
+2270. Dungeon Spirits can naturally spawn in the Dungeon post-Plantera while Spiritwalking
+2271. Soul Candle can now additionally increase chance of Dungeon Spirits to come out of Dungeon enemies
+2272. Reduced price of Mythril's Bane and Dark-Steel Bow from 5 platinum -> 1 platinum
+2273. Eaglecrest Golem's eye ray is shot at a further angle from the target, from 20 degrees -> 30 degrees
+===============

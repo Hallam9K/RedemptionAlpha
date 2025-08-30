@@ -597,6 +597,10 @@ namespace Redemption.Globals.Player
                 {
                     RedeHelper.SpawnNPC(target.GetSource_Loot(), (int)target.Center.X, (int)target.Center.Y, NPCType<LostSoulNPC>());
                 }
+                if (Main.player[proj.owner].ZoneDungeon && Terraria.NPC.downedPlantBoss && Main.player[proj.owner].HasBuff(BuffType<SoulboundBuff>()) && target.type != NPCID.DungeonSpirit && target.type != NPCType<LostSoulNPC>())
+                {
+                    RedeHelper.SpawnNPC(target.GetSource_Loot(), (int)target.Center.X, (int)target.Center.Y, NPCID.DungeonSpirit);
+                }
             }
         }
         public override void OnHitNPCWithItem(Item item, Terraria.NPC target, Terraria.NPC.HitInfo hit, int damageDone)
@@ -630,6 +634,10 @@ namespace Redemption.Globals.Player
                 if (Player.HasBuff(BuffType<SoulboundBuff>()) && target.type != NPCID.DungeonSpirit && target.type != NPCType<LostSoulNPC>())
                 {
                     RedeHelper.SpawnNPC(target.GetSource_Loot(), (int)target.Center.X, (int)target.Center.Y, NPCType<LostSoulNPC>());
+                }
+                if (Player.ZoneDungeon && Terraria.NPC.downedPlantBoss && Player.HasBuff(BuffType<SoulboundBuff>()) && target.type != NPCID.DungeonSpirit && target.type != NPCType<LostSoulNPC>() && target.type != NPCType<ShadesoulNPC>())
+                {
+                    RedeHelper.SpawnNPC(target.GetSource_Loot(), (int)target.Center.X, (int)target.Center.Y, NPCID.DungeonSpirit);
                 }
             }
         }

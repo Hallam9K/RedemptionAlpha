@@ -57,20 +57,8 @@ namespace Redemption.Tiles.Tiles
 
         public override void RandomUpdate(int i, int j)
         {
-            Tile tileBelow = Framing.GetTileSafely(i, j + 1);
             Tile tileAbove = Framing.GetTileSafely(i, j - 1);
             Tile tile = Framing.GetTileSafely(i, j);
-            if (WorldGen.genRand.NextBool(15) && !tileBelow.HasTile && tileBelow.LiquidType != LiquidID.Lava)
-            {
-                if (tile.Slope != SlopeType.SlopeUpLeft && tile.Slope != SlopeType.SlopeUpRight)
-                {
-                    tileBelow.TileType = (ushort)ModContent.TileType<CrimsonWastelandVine>();
-                    tileBelow.HasTile = true;
-                    WorldGen.SquareTileFrame(i, j + 1, true);
-                    if (Main.netMode == NetmodeID.Server)
-                        NetMessage.SendTileSquare(-1, i, j + 1, 3, TileChangeType.None);
-                }
-            }
 
             if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(15) && Main.tile[i, j - 1].LiquidAmount == 0)
             {

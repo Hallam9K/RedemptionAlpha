@@ -1,7 +1,9 @@
 using Redemption.BaseExtension;
+using Redemption.Globals;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.PostML
@@ -9,6 +11,7 @@ namespace Redemption.Items.Accessories.PostML
     [AutoloadEquip(EquipType.Wings)]
     public class NebWings : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.CelestialS);
         public override void SetStaticDefaults()
         {
             ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<NebWings2>();
@@ -22,6 +25,10 @@ namespace Redemption.Items.Accessories.PostML
             Item.accessory = true;
             Item.expert = true;
             Item.rare = ItemRarityID.Expert;
+        }
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            player.RedemptionPlayerBuff().ElementalResistance[ElementID.Celestial] += 0.15f;
         }
         public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising,
             ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)

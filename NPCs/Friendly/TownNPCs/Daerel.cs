@@ -1,6 +1,7 @@
 using BetterDialogue.UI;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.HM;
@@ -421,6 +422,12 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Daerel.Advice");
         public override string Description(NPC npc, Player player) => string.Empty;
         public override bool IsActive(NPC npc, Player player) => RedeQuest.wayfarerVars[0] >= 4 && (npc.type == NPCType<Daerel>() || npc.type == NPCType<Zephos>()) && !RedeGlobalButton.talkActive;
+
+        public override Color? OverrideColor(NPC npc, Player player)
+        {
+            return npc.GetGlobalNPC<ExclaimMarkNPC>().adviceMarkerActive ? RedeColor.QuestMarkerColour : null;
+        }
+
         public override void OnClick(NPC npc, Player player)
         {
             Main.npcChatCornerItem = 0;

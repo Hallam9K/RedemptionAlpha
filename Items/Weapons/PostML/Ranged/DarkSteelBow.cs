@@ -28,7 +28,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.width = 30;
             Item.height = 50;
             Item.rare = ItemRarityID.Purple;
-            Item.value = Item.buyPrice(platinum: 5);
+            Item.value = Item.buyPrice(platinum: 1);
 
             // Use Properties
             Item.useStyle = ItemUseStyleID.Shoot;

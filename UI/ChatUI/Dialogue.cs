@@ -1,11 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Enums;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Redemption.UI.ChatUI
 {
@@ -38,6 +36,7 @@ namespace Redemption.UI.ChatUI
         public float charTime;
         public float pauseTime;
         public float preFadeTime;
+        public float preFadeTimeMax;
         public float fadeTime;
         public float fadeTimeMax;
         public int endID;
@@ -52,6 +51,7 @@ namespace Redemption.UI.ChatUI
             this.shadowColor = shadowColor ?? Color.Black;
             this.charTime = charTime - RedeConfigServer.Instance.DialogueSpeed;
             this.preFadeTime = preFadeTime + RedeConfigServer.Instance.DialogueWaitTime;
+            preFadeTimeMax = preFadeTime + RedeConfigServer.Instance.DialogueWaitTime;
             this.fadeTime = fadeTime;
             fadeTimeMax = fadeTime;
             this.boxFade = boxFade;
@@ -64,7 +64,7 @@ namespace Redemption.UI.ChatUI
             if (!Main.dedServ)
             {
                 this.icon = icon;
-                this.bubble = bubble ?? ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Liden").Value;
+                this.bubble = bubble ?? Request<Texture2D>("Redemption/UI/TextBubble_Liden").Value;
                 this.font = font ?? Terraria.GameContent.FontAssets.MouseText.Value;
                 this.sound = sound ?? CustomSounds.Voice1;
             }

@@ -99,22 +99,22 @@ namespace Redemption.Backgrounds.Skies
                         Maskano ??= Request<Texture2D>("Redemption/Textures/Noise/smearNoise");
 
                         spriteBatch.End();
-                        spriteBatch.Begin(s.SpriteSortMode, s.BlendState, Redemption.nebSkyEffect, s);
+                        spriteBatch.Begin(s.SpriteSortMode, s.BlendState, Redemption.nebSkyEffect.Value, s);
 
                         float alpha = 1 + MoonbeamIntensity;
-                        Redemption.nebSkyEffect.Parameters["skyColor1"].SetValue(new Vector4(1, 0.15f, 1.5f, Intensity) * alpha);
-                        Redemption.nebSkyEffect.Parameters["skyColor2"].SetValue(new Vector4(1, 0.5f, 1.5f, Intensity) * alpha);
-                        Redemption.nebSkyEffect.Parameters["bgColor1"].SetValue(new Vector4(.1f, 0, 1.7f, Intensity) * 0.8f * alpha);
-                        Redemption.nebSkyEffect.Parameters["bgColor2"].SetValue(new Vector4(2, 0.15f, 1.5f, Intensity) * 0.5f * alpha);
-                        Redemption.nebSkyEffect.Parameters["gamma"].SetValue(1.5f);
-                        Redemption.nebSkyEffect.Parameters["gradientScale"].SetValue(2.5f);
-                        Redemption.nebSkyEffect.Parameters["gradientMax"].SetValue(2f);
-                        Redemption.nebSkyEffect.Parameters["gradientMin"].SetValue(0f);
-                        Redemption.nebSkyEffect.Parameters["uTime"].SetValue(uTime);
-                        Redemption.nebSkyEffect.Parameters["_stars"].SetValue(StarMap.Value);
-                        Redemption.nebSkyEffect.Parameters["_displace"].SetValue(SeamlessNoise.Value);
-                        Redemption.nebSkyEffect.Parameters["_mask"].SetValue(Mask.Value);
-                        Redemption.nebSkyEffect.Parameters["_maskano"].SetValue(Maskano.Value);
+                        Redemption.nebSkyEffect.Value.Parameters["skyColor1"].SetValue(new Vector4(1, 0.15f, 1.5f, Intensity) * alpha);
+                        Redemption.nebSkyEffect.Value.Parameters["skyColor2"].SetValue(new Vector4(1, 0.5f, 1.5f, Intensity) * alpha);
+                        Redemption.nebSkyEffect.Value.Parameters["bgColor1"].SetValue(new Vector4(.1f, 0, 1.7f, Intensity) * 0.8f * alpha);
+                        Redemption.nebSkyEffect.Value.Parameters["bgColor2"].SetValue(new Vector4(2, 0.15f, 1.5f, Intensity) * 0.5f * alpha);
+                        Redemption.nebSkyEffect.Value.Parameters["gamma"].SetValue(1.5f);
+                        Redemption.nebSkyEffect.Value.Parameters["gradientScale"].SetValue(2.5f);
+                        Redemption.nebSkyEffect.Value.Parameters["gradientMax"].SetValue(2f);
+                        Redemption.nebSkyEffect.Value.Parameters["gradientMin"].SetValue(0f);
+                        Redemption.nebSkyEffect.Value.Parameters["uTime"].SetValue(uTime);
+                        Redemption.nebSkyEffect.Value.Parameters["_stars"].SetValue(StarMap.Value);
+                        Redemption.nebSkyEffect.Value.Parameters["_displace"].SetValue(SeamlessNoise.Value);
+                        Redemption.nebSkyEffect.Value.Parameters["_mask"].SetValue(Mask.Value);
+                        Redemption.nebSkyEffect.Value.Parameters["_maskano"].SetValue(Maskano.Value);
 
                         int size = Main.screenHeight > Main.screenWidth ? Main.screenHeight : Main.screenWidth;
                         spriteBatch.Draw(SkyTex.Value, new Rectangle(0, 0, size, size), Color.White);

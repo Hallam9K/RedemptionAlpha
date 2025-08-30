@@ -33,6 +33,7 @@ using Redemption.NPCs.PreHM;
 using Redemption.NPCs.Wasteland;
 using Redemption.Tiles.Tiles;
 using Redemption.UI.Dialect;
+using Redemption.WorldGeneration;
 using Redemption.WorldGeneration.Misc;
 using Redemption.WorldGeneration.Soulless;
 using SubworldLibrary;
@@ -423,7 +424,7 @@ namespace Redemption.Globals.NPC
                 pool.Add(NPCType<SickenedBunny>(), Main.dayTime ? 0.6f : 0);
                 pool.Add(NPCType<SickenedDemonEye>(), !Main.dayTime ? 0.6f : 0);
                 pool.Add(NPCType<NuclearShadow>(), 0.2f);
-                if (!spawnInfo.PlayerSafe)
+                if (!spawnInfo.PlayerSafe && (!RedeGen.lidenAtHomeWorld || spawnInfo.Player.ZoneRockLayerHeight))
                     pool.Add(NPCType<BloatedDiggerHead>(), 0.14f);
 
                 pool.Add(NPCType<MutatedLivingBloom>(), tileCheck ? (Main.raining ? 0.4f : 0.2f) : 0f);
@@ -463,6 +464,10 @@ namespace Redemption.Globals.NPC
                     pool.Add(NPCID.HellArmoredBonesSpikeShield, 0.2f);
                     pool.Add(NPCID.HellArmoredBonesSword, 0.2f);
                 }
+            }
+            if (spawnInfo.Player.ZoneDungeon && Terraria.NPC.downedPlantBoss && spawnInfo.Player.RedemptionAbility().SpiritwalkerActive)
+            {
+                pool.Add(NPCID.DungeonSpirit, 1f);
             }
         }
     }

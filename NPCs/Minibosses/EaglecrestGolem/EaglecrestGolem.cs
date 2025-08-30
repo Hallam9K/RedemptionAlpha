@@ -366,7 +366,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     }
                     if (TimerRand2 == 60)
                     {
-                        NPC.Shoot(origin, ProjectileType<GolemEyeRay>(), NPC.damage, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + MathHelper.ToRadians(20 * NPC.spriteDirection)), SoundID.Item109, NPC.whoAmI);
+                        NPC.Shoot(origin, ProjectileType<GolemEyeRay>(), NPC.damage, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + MathHelper.ToRadians(30 * NPC.spriteDirection)), SoundID.Item109, NPC.whoAmI);
                     }
                     if (TimerRand2 >= 60)
                     {

@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.width = 84;
             Item.height = 84;
             Item.rare = ItemRarityID.Purple;
-            Item.value = Item.buyPrice(platinum: 5);
+            Item.value = Item.buyPrice(platinum: 1);
 
             // Use Properties
             Item.useStyle = ItemUseStyleID.Shoot;

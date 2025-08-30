@@ -1,12 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
 using System.Globalization;
+using Terraria.GameContent;
+using Redemption.Helpers;
+using ReLogic.Content;
 
 namespace Redemption.UI.ChatUI
 {
@@ -14,10 +15,7 @@ namespace Redemption.UI.ChatUI
     {
         public static List<IDialogue> Dialogue;
 
-        public Texture2D LidenTex;
-        public Texture2D EpidotraTex;
-        public Texture2D KingdomTex;
-        public Texture2D BoxTex;
+        public Asset<Texture2D> EmptyBoxTex;
 
         public static bool Visible = true;
 
@@ -25,9 +23,7 @@ namespace Redemption.UI.ChatUI
         {
             Dialogue = new();
 
-            LidenTex = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Liden", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            EpidotraTex = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            KingdomTex = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Kingdom", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            EmptyBoxTex = Request<Texture2D>(Redemption.EMPTY_TEXTURE);
         }
 
         public override void Update(GameTime gameTime)
@@ -69,7 +65,18 @@ namespace Redemption.UI.ChatUI
                     alpha = MathHelper.Lerp(1f, 0f, quotient);
                 }
 
+                pos = pos.Round();
                 DrawPanel(spriteBatch, dialogue.bubble, pos, Color.Multiply(Color.White, alpha), width, height);
+
+                if (dialogue.preFadeTime >= 0 && dialogue.bubble != EmptyBoxTex.Value)
+                {
+                    int timerProgress = (int)((width + 68) * (dialogue.preFadeTime / dialogue.preFadeTimeMax));
+
+                    Rectangle barPos = new((int)pos.X, (int)pos.Y, timerProgress, 2);
+
+                    float opacity = .5f;
+                    spriteBatch.Draw(TextureAssets.BlackTile.Value, barPos, null, Color.White * opacity, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+                }
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
