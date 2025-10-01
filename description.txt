@@ -7,16 +7,7 @@ https://modofredemption.wiki.gg/wiki/Mod_of_Redemption_Wiki
 
 This mod focuses on the discovery and exploration aspect of Terraria more than combat and bosses, it is best played at a chill pace and not intended for a speedy playthrough. So take your time, have fun.
 
-THIS IS A BETA, THE FOLLOWING CONTENT IS **NOT** IN THIS VERSION, BUT IS PLANNED FOR FULL 0.8:
-- Multiplayer Compatibility (Multiplayer is broken)
-- Ritualist Class
-- Soulless Caverns along with it's boss
-- Deep Space
-- 4th Omega Prototype
-- Ruined Kingdom
-- Post-ML Biome Expansions
-
-This beta does however have (In comparison to 1.3's version of the mod):
+This beta includes (In comparison to 1.3's version of the mod):
 - Erhan, a new pre-hardmode boss
 - Reworking of basically every weapon from 1.3's version
 - Overhaul to the Abandoned Lab from 1.3's version
@@ -28,6 +19,15 @@ This beta does however have (In comparison to 1.3's version of the mod):
 - Removal of bloat content from 1.3's version
 - Reworks of various enemy AIs from 1.3's version
 - Fowl Morning Event (Chicken Invasion Rework)
+
+THE FOLLOWING CONTENT IS **NOT** IN THIS VERSION, BUT IS PLANNED FOR FULL 0.8:
+- Multiplayer Compatibility (Multiplayer is broken)
+- Ritualist Class
+- Soulless Caverns along with it's boss
+- Deep Space
+- 4th Omega Prototype
+- Ruined Kingdom
+- Post-ML Biome Expansions
 
 Mod of Redemption is a lore-based mod (very scary) that adds a wide range of content.
 Currently, there are:

@@ -12576,5 +12576,16 @@ Mods: {
 				Description: Starts with 120 max health, no mana, no tools, full facility guard vanity, 3 hastily-assembled pistols, a GPS, an outbreak locator, 3 silver bullets, and 99 chains.
 			}
 		}
+
+		Achievements: {
+			FowlEmperorKilled: {
+				FriendlyName: My Eggcelency!
+				Description:
+					'''
+					Decrown the Fowl Emperor, the pompous poultry patriarch.
+					Yes, this is the only achievement MoR adds...
+					'''
+			}
+		}
 	}
 }

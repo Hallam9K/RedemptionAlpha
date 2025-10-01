@@ -12579,5 +12579,16 @@ Mods: {
 				Description: Zaczyna z 120 maksymalnym zdrowiem, bez many, bez narzędzi, w pełnym stroju Ochroniarza Placówki, 3 pospiesznie złożonymi pistoletami, GPS-em, Lokalizatorem Epidemii, 3 srebrnymi kulami i 99 łańcuchami.
 			}
 		}
+
+		Achievements: {
+			FowlEmperorKilled: {
+				FriendlyName: Moja Jajoskromność!
+				Description:
+					'''
+					Zdetronizuj Kurzego Imperatora, napuszonego, pierzastego władcę.
+					Tak to jedyne osiągnięcie jakie dodaje MoR...
+					'''
+			}
+		}
 	}
 }
