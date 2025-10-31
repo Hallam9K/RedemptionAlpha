@@ -1747,10 +1747,7 @@ Mods: {
 				Eye: Początki Oka?
 			}
 
-			TBot: {
-				FloppyDisc.Description: Adam zdekoduje każdą dyskietkę, którą masz w ręce.
-			}
-
+			TBot.FloppyDisc.Description: Adam zdekoduje każdą dyskietkę, którą masz w ręce.
 			SkullDigger.Give: Daj Pierścionek Zaręczynowy
 
 			ForestNymph: {
@@ -10871,7 +10868,7 @@ Mods: {
 					Kliknij prawym przyciskiem myszy, aby wystrzelić krąg świetlików w stronę kursora
 					'''
 			}
-			
+
 			JungleStatuette: {
 				DisplayName: Dżunglowa Statuetka
 				Tooltip: ""
@@ -12355,6 +12352,7 @@ Mods: {
 			GloomShroomFoliage.MapEntry: Ponury Grzyb
 			GloomShroomFoliage2.MapEntry: Ponury Grzyb
 			SoulCandleTile.MapEntry: Duchowa Świeca
+			JungleStatuetteTile.MapEntry: Dżunglowa Statuetka
 		}
 
 		Keybinds: {

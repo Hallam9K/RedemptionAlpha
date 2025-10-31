@@ -1743,10 +1743,7 @@ Mods: {
 				Eye: Eye's Origins?
 			}
 
-			TBot: {
-				FloppyDisc.Description: Adam will decode any Floppy Disk you have in hand.
-			}
-
+			TBot.FloppyDisc.Description: Adam will decode any Floppy Disk you have in hand.
 			SkullDigger.Give: Give Wedding Ring
 
 			ForestNymph: {
@@ -12352,6 +12349,7 @@ Mods: {
 			GloomShroomFoliage.MapEntry: Gloom Mushroom
 			GloomShroomFoliage2.MapEntry: Gloom Mushroom
 			SoulCandleTile.MapEntry: Soul Candle
+			JungleStatuetteTile.MapEntry: Jungle Statuette
 		}
 
 		Keybinds: {

@@ -45,7 +45,7 @@ namespace Redemption.Globals
 
         public override void PostSetupContent()
         {
-            AntiqueDorulCurrency = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ItemType<AncientGoldCoin>(), 999, "Mods.Redemption.Currencies.AntiqueDorulCurrency", new Color(208, 200, 48)));
+            AntiqueDorulCurrency = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ItemType<AncientGoldCoin>(), 9999, "Mods.Redemption.Currencies.AntiqueDorulCurrency", new Color(208, 200, 48)));
         }
     }
 }
