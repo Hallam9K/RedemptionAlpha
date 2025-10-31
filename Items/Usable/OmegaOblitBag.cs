@@ -9,6 +9,7 @@ using Redemption.Items.Materials.PostML;
 using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.NPCs.Bosses.Obliterator;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
@@ -36,26 +37,27 @@ namespace Redemption.Items.Usable
             Item.rare = ItemRarityID.Expert;
             Item.expert = true;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool CanRightClick() => true;
         public override void RightClick(Player player)
         {
             if (Main.rand.NextBool(20))
             {
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsMask>());
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsSuit>());
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsLeggings>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TiedsMask>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TiedsSuit>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TiedsLeggings>());
             }
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<OOMask>(), 7));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<BlastBattery>(), ModContent.ItemType<OOFingergun>(), ModContent.ItemType<SunInThePalm>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 16, 28));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaPowerCell>(), 1, 4, 8));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<RoboBrain>(), 1, 1, 2));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ObliterationDrive>()));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemType<OOMask>(), 7));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ItemType<BlastBattery>(), ItemType<OOFingergun>(), ItemType<SunInThePalm>()));
+            itemLoot.Add(ItemDropRule.Common(ItemType<CorruptedXenomite>(), 1, 16, 28));
+            itemLoot.Add(ItemDropRule.Common(ItemType<OmegaPowerCell>(), 1, 4, 8));
+            itemLoot.Add(ItemDropRule.Common(ItemType<RoboBrain>(), 1, 1, 2));
+            itemLoot.Add(ItemDropRule.Common(ItemType<ObliterationDrive>()));
+            itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(NPCType<OO>()));
         }
         public override void PostUpdate()
         {

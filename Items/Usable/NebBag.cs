@@ -1,14 +1,15 @@
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Armor.Vanity;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent.ItemDropRules;
-using Redemption.Globals;
 using Redemption.Items.Materials.PostML;
+using Redemption.NPCs.Bosses.Neb;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {
@@ -37,20 +38,21 @@ namespace Redemption.Items.Usable
         {
             if (Main.rand.NextBool(7))
             {
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<NebuleusMask>());
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<NebuleusVanity>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<NebuleusMask>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<NebuleusVanity>());
             }
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusMask>(), 7));
-            itemLoot.Add(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusVanity>(), 7));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<LifeFragment>(), 1, 20, 40));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<StrangeSkull>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<HamSandwich>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GalaxyHeart>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<NebWings>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThankYouLetter>()));
+            itemLoot.Add(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ItemType<NebuleusMask>(), 7));
+            itemLoot.Add(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ItemType<NebuleusVanity>(), 7));
+            itemLoot.Add(ItemDropRule.Common(ItemType<LifeFragment>(), 1, 20, 40));
+            itemLoot.Add(ItemDropRule.Common(ItemType<StrangeSkull>()));
+            itemLoot.Add(ItemDropRule.Common(ItemType<HamSandwich>()));
+            itemLoot.Add(ItemDropRule.Common(ItemType<GalaxyHeart>()));
+            itemLoot.Add(ItemDropRule.Common(ItemType<NebWings>()));
+            itemLoot.Add(ItemDropRule.Common(ItemType<ThankYouLetter>()));
+            itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(NPCType<Nebuleus>()));
         }
 
         public override Color? GetAlpha(Color lightColor)

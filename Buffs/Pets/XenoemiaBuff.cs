@@ -13,11 +13,13 @@ namespace Redemption.Buffs.Pets
 		public override void SetStaticDefaults()
 		{
 			Main.buffNoTimeDisplay[Type] = true;
-			Main.vanityPet[Type] = true;
-		}
+            Main.lightPet[Type] = true;
+        }
 
 		public override void Update(Player player, ref int buffIndex)
         {
+            Lighting.AddLight(player.Center, 0.2f, 1f, 0.2f);
+
             if (player.velocity.Y == 0)
             {
                 if (Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)

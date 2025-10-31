@@ -1,17 +1,18 @@
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Redemption.Items.Armor.Vanity;
-using Redemption.Items.Weapons.HM.Ranged;
-using Redemption.Items.Materials.HM;
 using Redemption.BaseExtension;
-using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Materials.HM;
 using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Weapons.HM.Melee;
-using Redemption.Items.Accessories.HM;
+using Redemption.Items.Weapons.HM.Ranged;
+using Redemption.NPCs.Bosses.KSIII;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {
@@ -36,18 +37,19 @@ namespace Redemption.Items.Usable
             Item.rare = ItemRarityID.Expert;
             Item.expert = true;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = Request<Texture2D>(Texture + "_Glow").Value;
         }
 
         public override bool CanRightClick() => true;
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<KingSlayerMask>(), 7));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SlayerGun>(), ModContent.ItemType<Nanoswarmer>(), ModContent.ItemType<SlayerFist>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SlayerController>(), 10));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Holokey>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CyberPlating>(), 1, 30, 38));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PocketShieldGenerator>()));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemType<KingSlayerMask>(), 7));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ItemType<SlayerGun>(), ItemType<Nanoswarmer>(), ItemType<SlayerFist>()));
+            itemLoot.Add(ItemDropRule.Common(ItemType<SlayerController>(), 10));
+            itemLoot.Add(ItemDropRule.Common(ItemType<Holokey>()));
+            itemLoot.Add(ItemDropRule.Common(ItemType<CyberPlating>(), 1, 30, 38));
+            itemLoot.Add(ItemDropRule.Common(ItemType<PocketShieldGenerator>()));
+            itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(NPCType<KS3>()));
         }
         public override Color? GetAlpha(Color lightColor)
         {

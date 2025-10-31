@@ -7,6 +7,7 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.NPCs.Bosses.Thorn;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
@@ -41,9 +42,10 @@ namespace Redemption.Items.Usable
         public override bool CanRightClick() => true;
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<ThornMask>(), 7));
-            itemLoot.Add(ItemDropRule.FewFromOptions(2, 1, ModContent.ItemType<AldersStaff>(), ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CircletOfBrambles>()));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemType<ThornMask>(), 7));
+            itemLoot.Add(ItemDropRule.FewFromOptions(2, 1, ItemType<AldersStaff>(), ItemType<CursedGrassBlade>(), ItemType<RootTendril>(), ItemType<CursedThornBow>()));
+            itemLoot.Add(ItemDropRule.Common(ItemType<CircletOfBrambles>()));
+            itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(NPCType<Thorn>()));
         }
     }
 }

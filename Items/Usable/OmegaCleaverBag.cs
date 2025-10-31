@@ -6,6 +6,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Armor.Vanity.Dev;
 using Redemption.Items.Donator.Gonk;
 using Redemption.Items.Materials.HM;
+using Redemption.NPCs.Bosses.Cleaver;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
@@ -32,24 +33,25 @@ namespace Redemption.Items.Usable
             Item.rare = ItemRarityID.Expert;
             Item.expert = true;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool CanRightClick() => true;
         public override void RightClick(Player player)
         {
             if (Main.rand.NextBool(20))
             {
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsMask>());
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsSuit>());
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsLeggings>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TiedsMask>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TiedsSuit>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TiedsLeggings>());
             }
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<SwordHeadband>(), 7));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GonkPet>(), 10));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 4, 8));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MechanicalSheath>()));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemType<SwordHeadband>(), 7));
+            itemLoot.Add(ItemDropRule.Common(ItemType<GonkPet>(), 10));
+            itemLoot.Add(ItemDropRule.Common(ItemType<CorruptedXenomite>(), 1, 4, 8));
+            itemLoot.Add(ItemDropRule.Common(ItemType<MechanicalSheath>()));
+            itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(NPCType<OmegaCleaver>()));
         }
         public override void PostUpdate()
         {

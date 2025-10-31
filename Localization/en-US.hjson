@@ -1413,10 +1413,10 @@ Mods: {
 					10Alt: I hope you find it in thine heart to stop thy rampage.
 					11: I will be leaving forthwith,[0.1] but we can always spar again.[1] Farewell.
 					11Alt: If you don't wish to fight me now,[0.1] I'll leave you be.
-					12: You still want to fight?
-					13: Of course it wouldn't be that easy...
-					14: You've had thy chance at redemption,[0.1] so don't blame me...
-					15: ... When you die a thousand times!
+					12: So you wish to continue..?
+					13: Of course it would not be so easy.
+					14: Then,[0.5] if thy blade truly cannot be stopped...
+					15: ...Let it fall upon me alone.
 					Spare1: Thank you...[1] Please,[0.1] continue slaying evil,[0.1] this world could do with a hero.
 					Spare2: Thank you...[1] At first I thought the concept of mercy was foreign to you.
 				}
@@ -1604,6 +1604,7 @@ Mods: {
 			RevivialPotion: Use Revival Potion
 			RequestCruxDescription: Revealed by Spirit Walking.
 			Offer: Offer {0}
+			Read: Read {0}
 			Fight: Fight
 
 			Advice: {
@@ -1743,10 +1744,7 @@ Mods: {
 			}
 
 			TBot: {
-				FloppyDisc: {
-					Name: Read Floppy Disk
-					Description: Adam will decode any Floppy Disk you have in hand.
-				}
+				FloppyDisc.Description: Adam will decode any Floppy Disk you have in hand.
 			}
 
 			SkullDigger.Give: Give Wedding Ring
@@ -10869,6 +10867,11 @@ Mods: {
 					The pixies are randomly infused with the element of {0} or {1}
 					Right-click to launch the pixie ring towards your cursor
 					'''
+			}
+
+			JungleStatuette: {
+				DisplayName: Jungle Statuette
+				Tooltip: ""
 			}
 		}
 

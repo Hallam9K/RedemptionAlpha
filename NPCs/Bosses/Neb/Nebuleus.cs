@@ -1507,7 +1507,7 @@ namespace Redemption.NPCs.Bosses.Neb
                         DialogueChain chain = new();
                         chain.Add(new(NPC, s1, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
                              .Add(new(NPC, s2, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
-                             .Add(new(NPC, s3, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                             .Add(new(NPC, s3, nebColor, nebColor2, voice, .03f, 2.14f, 0, false, bubble: Bubble, modifier: modifier))
                              .Add(new(NPC, s4, nebColor, nebColor2, voice, .03f, 2f, .5f, true, bubble: Bubble, modifier: modifier, endID: 1));
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;

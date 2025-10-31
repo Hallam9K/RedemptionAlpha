@@ -1,16 +1,17 @@
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
+using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
-using Redemption.Items.Accessories.PreHM;
-using Redemption.Items.Weapons.PreHM.Magic;
-using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.NPCs.Bosses.Erhan;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {
@@ -40,11 +41,12 @@ namespace Redemption.Items.Usable
         public override bool CanRightClick() => true;
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<ErhanHelmet>(), 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemType<ErhanHelmet>(), 7));
             itemLoot.Add(ItemDropRule.OneFromOptions(1,
-                ModContent.ItemType<Bindeklinge>(), ModContent.ItemType<HolyBible>(), ModContent.ItemType<HallowedHandGrenade>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanMagnifyingGlass>(), 2));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanCross>()));
+                ItemType<Bindeklinge>(), ItemType<HolyBible>(), ItemType<HallowedHandGrenade>()));
+            itemLoot.Add(ItemDropRule.Common(ItemType<ErhanMagnifyingGlass>(), 2));
+            itemLoot.Add(ItemDropRule.Common(ItemType<ErhanCross>()));
+            itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(NPCType<Erhan>()));
         }
 
         public override Color? GetAlpha(Color lightColor)

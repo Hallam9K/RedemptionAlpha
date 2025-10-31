@@ -304,7 +304,7 @@ namespace Redemption.NPCs.Friendly
         public override double Priority => 8.0;
         public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.2");
         public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<KS3Sitting>() && !RedeGlobalButton.talkActive && RedeQuest.slayerRep == 0;
-        public override Color? OverrideColor(NPC npc, Player player) => player.HasItem(ItemType<Uranium>()) ? null : Color.Gray;
+        public override Color? OverrideColor(NPC npc, Player player) => player.HasItem(ItemType<Uranium>()) ? RedeColor.QuestMarkerColour : Color.Gray;
         public override void OnClick(NPC npc, Player player)
         {
             SoundEngine.PlaySound(SoundID.MenuTick);
@@ -490,7 +490,7 @@ namespace Redemption.NPCs.Friendly
             if (RedeQuest.slayerRep == 3 && player.HasItem(ItemType<SlayerShipEngine>()))
                 return RedeColor.TextPositive;
 
-            return null;
+            return RedeQuest.slayerRep >= 4 ? null : RedeColor.QuestMarkerColour;
         }
         public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<KS3Sitting>() && !RedeGlobalButton.talkActive && RedeQuest.slayerRep != 0;
         public override void OnClick(NPC npc, Player player)

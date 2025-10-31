@@ -203,7 +203,6 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         public override ITownNPCProfile TownNPCProfile() => new TBotProfile();
         public override string GetChat()
         {
-            FloppyDiskButton.NextPage = false;
             if (Unconscious > 0)
             {
                 if (Unconscious >= 43200 - 3600)
@@ -420,12 +419,15 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         public override double Priority => 8.0;
         public override string Text(NPC npc, Player player)
         {
-            string s = Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.FloppyDisc.Name");
-            if (NextPage)
-                s = Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.NextPage");
-            if (FDisk >= 20)
-                s += Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.Next");
-            return s;
+            int itemID = ItemType<FloppyDisk1>();
+
+            if (player.HeldItem.type == ItemType<AIChip>())
+                itemID = ItemType<AIChip>();
+
+            if (player.HeldItem.type == ItemType<MemoryChip>())
+                itemID = ItemType<MemoryChip>();
+
+            return Mod.GetLocalization("DialogueBox.Read").WithFormatArgs(Lang.GetItemNameValue(itemID)).Value;
         }
         public override string Description(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.FloppyDisc.Description");
         public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<TBot>();
@@ -455,7 +457,6 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             }
             return Color.Gray;
         }
-        public static bool NextPage;
         public static int FDisk;
         public override void OnClick(NPC npc, Player player)
         {
@@ -492,8 +493,6 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 FDisk = 14;
             else if (heldItem == disk[14])
                 FDisk = 16;
-            if (FDisk != 1 && FDisk != 5 && FDisk != 10 && FDisk != 13)
-                NextPage = false;
 
             Main.npcChatText = DiskChat();
         }

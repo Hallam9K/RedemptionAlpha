@@ -1,16 +1,17 @@
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Microsoft.Xna.Framework;
-using Terraria.GameContent;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.NPCs.Bosses.Keeper;
+using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {
@@ -40,11 +41,12 @@ namespace Redemption.Items.Usable
         public override bool CanRightClick() => true;
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<KeepersVeil>(), 7));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SoulScepter>(), ModContent.ItemType<KeepersClaw>(), ModContent.ItemType<FanOShivs>()));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemType<KeepersVeil>(), 7));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ItemType<SoulScepter>(), ItemType<KeepersClaw>(), ModContent.ItemType<FanOShivs>()));
             //itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SoulScepter>(), ModContent.ItemType<KeepersClaw>(), ModContent.ItemType<FanOShivs>(), ModContent.ItemType<KeepersKnife>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GrimShard>(), 1, 3, 5));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<HeartInsignia>()));
+            itemLoot.Add(ItemDropRule.Common(ItemType<GrimShard>(), 1, 3, 5));
+            itemLoot.Add(ItemDropRule.Common(ItemType<HeartInsignia>()));
+            itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(NPCType<Keeper>()));
         }
         public override Color? GetAlpha(Color lightColor)
         {

@@ -5,6 +5,7 @@ using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Armor.Vanity.Dev;
 using Redemption.Items.Materials.HM;
+using Redemption.NPCs.Bosses.Gigapora;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
@@ -32,24 +33,25 @@ namespace Redemption.Items.Usable
             Item.rare = ItemRarityID.Expert;
             Item.expert = true;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool CanRightClick() => true;
         public override void RightClick(Player player)
         {
             if (Main.rand.NextBool(20))
             {
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsMask>());
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsSuit>());
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsLeggings>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TiedsMask>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TiedsSuit>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TiedsLeggings>());
             }
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<DrillHeadHead>(), 7));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 8, 16));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaPowerCell>(), 1, 2, 4));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MicroshieldCore>()));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemType<DrillHeadHead>(), 7));
+            itemLoot.Add(ItemDropRule.Common(ItemType<CorruptedXenomite>(), 1, 8, 16));
+            itemLoot.Add(ItemDropRule.Common(ItemType<OmegaPowerCell>(), 1, 2, 4));
+            itemLoot.Add(ItemDropRule.Common(ItemType<MicroshieldCore>()));
+            itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(NPCType<Gigapora>()));
         }
         public override void PostUpdate()
         {

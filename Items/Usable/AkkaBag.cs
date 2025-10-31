@@ -1,14 +1,15 @@
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using Redemption.Items.Armor.Vanity;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Terraria.GameContent;
-using Terraria.GameContent.ItemDropRules;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Summon;
-using Redemption.Items.Accessories.PostML;
+using Redemption.NPCs.Bosses.ADD;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {
@@ -35,10 +36,11 @@ namespace Redemption.Items.Usable
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<AkkaMask>(), 7));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PoemOfIlmatar>(), ModContent.ItemType<Pihlajasauva>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ViisaanKantele>(), 10));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<WaterfowlEgg>()));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemType<AkkaMask>(), 7));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ItemType<PoemOfIlmatar>(), ItemType<Pihlajasauva>()));
+            itemLoot.Add(ItemDropRule.Common(ItemType<ViisaanKantele>(), 10));
+            itemLoot.Add(ItemDropRule.Common(ItemType<WaterfowlEgg>()));
+            itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(NPCType<Akka>()));
         }
         public override void PostUpdate()
         {

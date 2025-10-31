@@ -1,0 +1,11 @@
+=== 0.8 Beta .4084 === (October 2025 Patch)
+- Resprited Depressed But Still Handsome painting
+- Changed a few lines of dialogue of Nebuleus transitioning into Final Form
+2279. Fixed bosses not dropping their money for Treasure Bags
+2282. Added Jungle Statuette deco
+2283. Adam says his dialogue about Nuclear Warhead when you buy it instead of when you open shop
+2285. More quest-related chat buttons have a different colour to signify they're questiness
+2298. Changed Xenoemia to be a light pet, and makes the player emit green light
+2301. Fixed visual bug of Antique Doruls in the shop's Savings display
+2302. Adam's "Read Floppy Disk" button text will change if holding Circuit or Memory Chip
+===============

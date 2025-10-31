@@ -5,6 +5,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Weapons.PostML.Summon;
+using Redemption.NPCs.Bosses.ADD;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
@@ -36,9 +37,10 @@ namespace Redemption.Items.Usable
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<UkkoMask>(), 7));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Salamanisku>(), ModContent.ItemType<Ukonvasara>(), ModContent.ItemType<UkonRuno>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<VasaraPendant>()));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemType<UkkoMask>(), 7));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ItemType<Salamanisku>(), ItemType<Ukonvasara>(), ItemType<UkonRuno>()));
+            itemLoot.Add(ItemDropRule.Common(ItemType<VasaraPendant>()));
+            itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(NPCType<Ukko>()));
         }
         public override void PostUpdate()
         {

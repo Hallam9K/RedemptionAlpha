@@ -7,6 +7,7 @@ using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Weapons.PostML.Summon;
+using Redemption.NPCs.Bosses.PatientZero;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
@@ -38,17 +39,18 @@ namespace Redemption.Items.Usable
         {
             if (Main.rand.NextBool(20))
             {
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsMask>());
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsSuit>());
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsLeggings>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TiedsMask>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TiedsSuit>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TiedsLeggings>());
             }
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PZMask>(), 7));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PZGauntlet>(), ModContent.ItemType<SwarmerCannon>(), ModContent.ItemType<Petridish>(), ModContent.ItemType<PortableHoloProjector>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MedicKit>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<HeartOfInfection>()));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemType<PZMask>(), 7));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ItemType<PZGauntlet>(), ItemType<SwarmerCannon>(), ItemType<Petridish>(), ItemType<PortableHoloProjector>()));
+            itemLoot.Add(ItemDropRule.Common(ItemType<MedicKit>()));
+            itemLoot.Add(ItemDropRule.Common(ItemType<HeartOfInfection>()));
+            itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(NPCType<PZ>()));
         }
         public override void PostUpdate()
         {

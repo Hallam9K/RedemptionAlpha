@@ -67,25 +67,7 @@ namespace Redemption.UI.Dialect
             if (npc is null)
                 return;
 
-            if (npc.type == NPCType<TBot>() && chatButton == ChatButton.Shop)
-            {
-                if (Main.hardMode && !TBot.warheadKnown)
-                {
-                    TBot.warheadKnown = true;
-                    DialogueChain chain = new();
-                    chain.Add(new(npc, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Warhead1"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false))
-                         .Add(new(npc, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Warhead2"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false))
-                         .Add(new(npc, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Warhead3"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false))
-                         .Add(new(npc, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Warhead4"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false))
-                         .Add(new(npc, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Warhead5"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false))
-                         .Add(new(npc, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Warhead6"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true));
-                    ChatUI.ChatUI.Visible = true;
-                    ChatUI.ChatUI.Add(chain);
-
-                    npc.netUpdate = true;
-                }
-            }
-            else if (npc.type == NPCID.Nurse && chatButton == ChatButton.NurseHeal && player.RedemptionRad().radiationLevel >= 1)
+            if (npc.type == NPCID.Nurse && chatButton == ChatButton.NurseHeal && player.RedemptionRad().radiationLevel >= 1)
             {
                 Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Nurse.Radiation");
                 int AdamID = NPC.FindFirstNPC(NPCType<TBot>());

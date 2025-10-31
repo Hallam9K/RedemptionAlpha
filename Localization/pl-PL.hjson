@@ -1417,10 +1417,10 @@ Mods: {
 					10Alt: Mam nadzieję, że znajdziesz w swoim sercu siłę, która zakończy twój szał.
 					11: Odejdę niezwłocznie,[0.1] ale zawsze możemy ponownie zmierzyć się w walce.[1] Żegnaj.
 					11Alt: Jeśli nie chcesz już ze mną walczyć,[0.1] zostawię cię w spokoju.
-					12: Nadal chcesz walczyć?
-					13: Oczywiście, że to nie mogło być takie proste...
-					14: Miałeś swoją szansę na odkupienie,[0.1] więc nie wiń mnie...
-					15: ... Kiedy będziesz umierać po tysiąc razy!
+					12: Tak więc planujesz kontynuować..?
+					13: Oczywiście to nie byłoby takie proste.
+					14: A więc,[0.5], jeśli twa moc naprawdę nie zna granic...
+					15: ...Niech jej ciężar spocznie tylko na mnie.
 					Spare1: Dziękuję...[1] Proszę,[0.1] kontynuuj zabijanie zła,[0.1] ten świat potrzebuje bohatera.
 					Spare2: Dziękuję...[1]  Na początku myślałam, że pojęcie miłosierdzia jest ci obce.
 				}
@@ -1608,6 +1608,7 @@ Mods: {
 			RevivialPotion: Użyj Mikstury Odrodzenia
 			RequestCruxDescription: Odkryte przez Duchową Pielgrzymkę
 			Offer: Zaoferuj {0}
+			Read: Przeczytaj {0}
 			Fight: Walcz
 
 			Advice: {
@@ -1747,10 +1748,7 @@ Mods: {
 			}
 
 			TBot: {
-				FloppyDisc: {
-					Name: Przeczytaj Dyskietkę
-					Description: Adam zdekoduje każdą dyskietkę, którą masz w ręce.
-				}
+				FloppyDisc.Description: Adam zdekoduje każdą dyskietkę, którą masz w ręce.
 			}
 
 			SkullDigger.Give: Daj Pierścionek Zaręczynowy
@@ -7848,7 +7846,7 @@ Mods: {
 			}
 
 			EaglecrestSpelltome: {
-				DisplayName: Księga Orlego Szczytu
+				DisplayName: Zwój Orlego Szczytu
 				Tooltip:
 					'''
 					Wysyła prowadzące światło do najbliższych śpiących kamieni
@@ -10872,6 +10870,11 @@ Mods: {
 					Wróżki losowo nasycane są żywiołem {0} lub {1}
 					Kliknij prawym przyciskiem myszy, aby wystrzelić krąg świetlików w stronę kursora
 					'''
+			}
+			
+			JungleStatuette: {
+				DisplayName: Dżunglowa Statuetka
+				Tooltip: ""
 			}
 		}
 

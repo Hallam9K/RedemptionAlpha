@@ -82,7 +82,6 @@ namespace Redemption
 
         private List<ILoadable> _loadCache;
 
-        public static int AntiqueDorulCurrencyId;
         public static int dragonLeadCapeID;
         public static int shinkiteCapeID;
         public static int mercenaryCapeID;
@@ -280,7 +279,6 @@ namespace Redemption
             RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "SpecialAbilityKey", Keys.F);
             RedeSpiritwalkerAbility = KeybindLoader.RegisterKeybind(this, "SpiritWalkerKey", Keys.K);
             RedeSkipDialogue = KeybindLoader.RegisterKeybind(this, "SkipDialogueKey", Keys.Back);
-            AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
         }
         public override void Unload()
         {

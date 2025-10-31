@@ -1,18 +1,19 @@
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Redemption.Items.Armor.Vanity;
-using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Weapons.PreHM.Summon;
-using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Armor.Vanity.Dev;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.NPCs.Bosses.SeedOfInfection;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {
@@ -44,18 +45,19 @@ namespace Redemption.Items.Usable
         {
             if (Main.rand.NextBool(20))
             {
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsMask>());
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsSuit>());
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsLeggings>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TiedsMask>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TiedsSuit>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemType<TiedsLeggings>());
             }
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<InfectedMask>(), 7));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenoXyston>(), ModContent.ItemType<CystlingSummon>(), ModContent.ItemType<ContagionSpreader>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ToxicGrenade>(), 1, 30, 40));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 12, 22));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<NecklaceOfSight>()));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemType<InfectedMask>(), 7));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ItemType<XenoXyston>(), ItemType<CystlingSummon>(), ItemType<ContagionSpreader>()));
+            itemLoot.Add(ItemDropRule.Common(ItemType<ToxicGrenade>(), 1, 30, 40));
+            itemLoot.Add(ItemDropRule.Common(ItemType<XenomiteShard>(), 1, 12, 22));
+            itemLoot.Add(ItemDropRule.Common(ItemType<NecklaceOfSight>()));
+            itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(NPCType<SoI>()));
         }
         public override Color? GetAlpha(Color lightColor)
         {

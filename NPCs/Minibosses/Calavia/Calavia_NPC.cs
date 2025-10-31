@@ -530,6 +530,15 @@ namespace Redemption.NPCs.Minibosses.Calavia
             return Language.GetTextValue("Mods.Redemption.DialogueBox.Calavia.Require");
         }
         public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<Calavia_NPC>() && RedeGen.cryoCrystalSpawn && RedeQuest.calaviaVar >= 11 && RedeQuest.calaviaVar != 20;
+
+        public override Color? OverrideColor(NPC npc, Player player)
+        {
+            if (npc.ModNPC is not Calavia_NPC cal)
+                return null;
+
+            return cal.HasHelmet > 0 && cal.HasShield ? null : RedeColor.QuestMarkerColour;
+        }
+
         public override void OnClick(NPC npc, Player player)
         {
             SoundEngine.PlaySound(SoundID.Chat);
@@ -665,7 +674,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             return Language.GetTextValue("Mods.Redemption.DialogueBox.Calavia.10");
         }
         public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<Calavia_NPC>() && RedeQuest.calaviaVar >= 11 && RedeQuest.calaviaVar != 20 && RedeQuest.calaviaVar != 16;
-        public override Color? OverrideColor(NPC npc, Player player) => RedeQuest.calaviaVar < 12 ? Color.Gray : null;
+        public override Color? OverrideColor(NPC npc, Player player) => RedeQuest.calaviaVar < 12 ? Color.Gray : RedeColor.QuestMarkerColour;
         public override void OnClick(NPC npc, Player player)
         {
             if (RedeQuest.calaviaVar < 12 && RedeQuest.calaviaVar != 20)
