@@ -372,7 +372,7 @@ namespace Redemption.Globals
             TooltipLine elementsLine = new(Mod, "ElementBonus", "");
             if (item.CountsAsClass(DamageClass.Melee) && item.damage > 0 && item.useStyle == ItemUseStyleID.Swing && !item.noUseGraphic)
             {
-                if (item.axe > 0)
+                if (item.axe > 0 || TechnicallyAxe)
                     elementsLine.Text += "[i:Redemption/Axe]";
                 else if (!ItemLists.BluntSwing.Contains(item.type) && item.hammer == 0 && item.pick == 0)
                     elementsLine.Text += "[i:Redemption/Slash]";

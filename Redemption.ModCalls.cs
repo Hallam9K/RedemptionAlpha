@@ -577,6 +577,9 @@ namespace Redemption
                         return RedeGen.SpiritOldLadyPoint;
                     case "spiritDruidPoint":
                         return RedeGen.SpiritDruidPoint;
+
+                    case "elementsDisabled":
+                        return RedeConfigServer.Instance.ElementDisable;
                 }
             }
             /*

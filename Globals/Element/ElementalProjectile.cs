@@ -56,14 +56,28 @@ namespace Redemption.Globals
                     }
                 }
             }
-            else if (source is EntitySource_Parent parent && parent.Entity is Projectile proj)
+            else if (source is EntitySource_Parent parent)
             {
-                for (int i = ElementID.Arcane; i <= ElementID.Explosive; i++)
+                if (parent.Entity is Projectile parentProj)
                 {
-                    if ((proj.HasElement(i) && ElementID.ProjectilesInheritElementsFromThis[proj.type]) || proj.GetGlobalProjectile<ElementalProjectile>().InheritElement[i])
+                    for (int i = ElementID.Arcane; i <= ElementID.Explosive; i++)
                     {
-                        InheritElement[i] = true;
-                        OverrideElement[i] = ElementID.AddElement;
+                        if ((parentProj.HasElement(i) && ElementID.ProjectilesInheritElementsFromThis[parentProj.type]) || parentProj.GetGlobalProjectile<ElementalProjectile>().InheritElement[i])
+                        {
+                            InheritElement[i] = true;
+                            OverrideElement[i] = ElementID.AddElement;
+                        }
+                    }
+                }
+                else if (parent.Entity is Item parentItem)
+                {
+                    for (int i = ElementID.Arcane; i <= ElementID.Explosive; i++)
+                    {
+                        if (parentItem.HasElement(i))
+                        {
+                            InheritElement[i] = true;
+                            OverrideElement[i] = ElementID.AddElement;
+                        }
                     }
                 }
             }
