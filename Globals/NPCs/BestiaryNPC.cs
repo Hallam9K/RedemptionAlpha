@@ -7,7 +7,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace Redemption.Globals.NPC
+namespace Redemption.Globals.NPCs
 {
     internal class CustomCollectionInfoProvider : IBestiaryUICollectionInfoProvider
     {

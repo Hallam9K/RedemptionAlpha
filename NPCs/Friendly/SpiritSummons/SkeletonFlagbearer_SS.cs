@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.NPCs.PreHM;
 using Terraria;
 using Terraria.Audio;

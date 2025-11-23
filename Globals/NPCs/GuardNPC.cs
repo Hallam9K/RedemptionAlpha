@@ -12,7 +12,7 @@ using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Globals.NPC
+namespace Redemption.Globals.NPCs
 {
     public class GuardNPC : GlobalNPC
     {
@@ -201,7 +201,7 @@ namespace Redemption.Globals.NPC
 
             if (npc.type is NPCID.GreekSkeleton)
             {
-                if (GuardPoints >= 0)
+                if (!GuardBroken)
                 {
                     modifiers.DisableCrit();
                     modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .25f, false, DustID.Gold, damage: npc.lifeMax / 4);
@@ -209,7 +209,7 @@ namespace Redemption.Globals.NPC
             }
             if (npc.type is NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.ArmoredSkeleton or NPCID.ArmoredViking or NPCID.BlueArmoredBones or NPCID.BlueArmoredBonesMace or NPCID.BlueArmoredBonesNoPants or NPCID.BlueArmoredBonesSword or NPCID.RustyArmoredBonesAxe or NPCID.RustyArmoredBonesFlail or NPCID.RustyArmoredBonesSword)
             {
-                if (GuardPoints >= 0)
+                if (!GuardBroken)
                 {
                     modifiers.DisableCrit();
                     modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .35f, false, DustID.Bone, damage: npc.lifeMax / 4);
@@ -217,7 +217,7 @@ namespace Redemption.Globals.NPC
             }
             if (npc.type is NPCID.HellArmoredBones or NPCID.HellArmoredBonesMace or NPCID.HellArmoredBonesSpikeShield or NPCID.HellArmoredBonesSword)
             {
-                if (GuardPoints >= 0)
+                if (!GuardBroken)
                 {
                     modifiers.DisableCrit();
                     modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .35f, false, DustID.Torch, damage: npc.lifeMax / 4);
@@ -225,7 +225,7 @@ namespace Redemption.Globals.NPC
             }
             if (npc.type is NPCID.PossessedArmor)
             {
-                if (GuardPoints >= 0)
+                if (!GuardBroken)
                 {
                     modifiers.DisableCrit();
                     modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .25f, false, DustID.Demonite, damage: npc.lifeMax / 2);
@@ -233,7 +233,7 @@ namespace Redemption.Globals.NPC
             }
             if (npc.type is NPCID.GoblinWarrior)
             {
-                if (GuardPoints >= 0)
+                if (!GuardBroken)
                 {
                     modifiers.DisableCrit();
                     modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .4f, false, DustID.Iron, damage: npc.lifeMax / 4);
@@ -241,7 +241,7 @@ namespace Redemption.Globals.NPC
             }
             if (npc.type is NPCID.Paladin)
             {
-                if (GuardPoints >= 0)
+                if (!GuardBroken)
                 {
                     modifiers.DisableCrit();
                     modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .2f, false, DustID.GoldCoin, damage: npc.lifeMax / 3);

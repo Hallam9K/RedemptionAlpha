@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Critters;
 using Terraria;
 using Terraria.GameContent.Bestiary;

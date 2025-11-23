@@ -14,6 +14,8 @@ using Redemption.NPCs.Friendly.SpiritSummons;
 using Redemption.NPCs.Critters;
 using Redemption.Helpers;
 using Terraria.Localization;
+using Redemption.Projectiles.Ranged;
+using Redemption.Items.Weapons.PreHM.Ritualist;
 
 namespace Redemption.Globals
 {
@@ -36,18 +38,58 @@ namespace Redemption.Globals
             if (ProjectileLists.IsTechnicallyMelee.Contains(projectile.type))
                 TechnicallyMelee = true;
         }
-        public override void ModifyHitNPC(Projectile projectile, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
+        public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers)
         {
             if (ReflectDamageIncrease is 0)
                 return;
             modifiers.FinalDamage *= ReflectDamageIncrease;
+        }
+        public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (projectile.owner == Main.myPlayer && Main.player[projectile.owner].RedemptionPlayerBuff().thornCirclet && projectile.CountsAsClass(DamageClass.Summon) && Main.rand.NextBool(3) && Main.projPet[projectile.type] && projectile.type != ProjectileType<BlightedClaw_Slash>())
+            {
+                float rotation = (projectile.Center - target.Center).ToRotation() + MathHelper.PiOver2;
+
+                int upDown = Main.rand.NextBool() ? 1 : -1;
+                if (!Main.dedServ)
+                {
+                    if (upDown is -1)
+                        SoundEngine.PlaySound(CustomSounds.Slice5 with { Volume = .3f, Pitch = -.2f, PitchVariance = .2f, MaxInstances = 10 }, projectile.position);
+                    else
+                        SoundEngine.PlaySound(CustomSounds.Slice5 with { Volume = .3f, PitchVariance = .2f, MaxInstances = 10 }, projectile.position);
+                }
+
+                Vector2 spawnPosition = new(projectile.direction * -120, upDown * 20);
+                Vector2 position = projectile.Center + spawnPosition.RotatedBy(rotation);
+
+                Vector2 spawnVelocity = new(projectile.direction * 3, upDown * -1);
+                Vector2 velocity = spawnVelocity.SafeNormalize(default).RotatedBy(rotation);
+
+                int p = Projectile.NewProjectile(projectile.GetSource_OnHit(target), position, velocity * 5, ProjectileType<BlightedClaw_Slash>(), projectile.damage, projectile.knockBack, projectile.owner, upDown);
+                Main.projectile[p].DamageType = DamageClass.Summon;
+            }
         }
         public override void AI(Projectile projectile)
         {
             if (ArenaSystem.ArenaActive && projectile.aiStyle == 7 && !projectile.Hitbox.Intersects(ArenaSystem.ArenaBoundsWorld))
                 projectile.Kill();
         }
-        public static bool Decapitation(Terraria.NPC target, ref int damage, ref bool crit, int chance = 200)
+
+        public override void OnKill(Projectile projectile, int timeLeft)
+        {
+            if (projectile.owner == Main.myPlayer && Main.player[projectile.owner].RedemptionPlayerBuff().thornCirclet && projectile.CountsAsClass(DamageClass.Ranged) && Main.rand.NextBool(3) && projectile.damage > 0 && projectile.type != ProjectileType<ThornCircletSplinter>() && projectile.velocity.Length() > 1)
+            {
+                int damage = projectile.damage / 2;
+                if (damage <= 0)
+                    damage = 1;
+                for (int i = 0; i < Main.rand.Next(2, 4); i++)
+                {
+                    Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, RedeHelper.PolarVector(Main.rand.Next(8, 10), RedeHelper.RandomRotation()), ProjectileType<ThornCircletSplinter>(), damage, 1, Main.myPlayer);
+                }
+            }
+        }
+
+        public static bool Decapitation(NPC target, ref int damage, ref bool crit, int chance = 200)
         {
             bool humanoid = NPCLists.SkeletonHumanoid.Contains(target.type) || NPCLists.Humanoid.Contains(target.type);
             if (target.life < target.lifeMax && target.life < damage * 100 && humanoid)
@@ -60,7 +102,7 @@ namespace Redemption.Globals
             }
             return false;
         }
-        public static void DecapitationEffect(Terraria.NPC target, ref bool crit)
+        public static void DecapitationEffect(NPC target, ref bool crit)
         {
             RedeDraw.SpawnExplosion(new Vector2(target.Center.X, target.position.Y + target.height / 4), Color.Orange, shakeAmount: 0, scale: .5f, noDust: true, rot: Main.rand.NextFloat(-0.1f, 0.1f), tex: "Redemption/Textures/SwordClash");
 

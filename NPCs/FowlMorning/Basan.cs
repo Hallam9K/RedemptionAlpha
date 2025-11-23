@@ -6,7 +6,7 @@ using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Dusts;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Globals.World;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Placeable.Trophies;

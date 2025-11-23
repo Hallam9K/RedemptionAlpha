@@ -22,7 +22,7 @@ using Redemption.Biomes;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Terraria.Localization;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.UI;
 using Redemption.CrossMod;
 

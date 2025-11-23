@@ -1,5 +1,5 @@
 using Redemption.Biomes;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Critters;
 using Terraria;
 using Terraria.GameContent.Bestiary;

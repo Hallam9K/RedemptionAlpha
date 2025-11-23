@@ -22,7 +22,7 @@ using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Armor.Vanity;
 using ReLogic.Content;
 using Redemption.UI.ChatUI;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Textures;
 using Terraria.Localization;

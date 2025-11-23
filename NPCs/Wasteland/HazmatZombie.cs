@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Placeable.Banners;
 using Terraria;

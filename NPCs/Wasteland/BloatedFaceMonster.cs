@@ -4,7 +4,7 @@ using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity.Intruder;
 using Redemption.Items.Materials.HM;

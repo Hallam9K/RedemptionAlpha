@@ -8,7 +8,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.KSIII

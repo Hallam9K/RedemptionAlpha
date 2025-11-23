@@ -1,7 +1,7 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Globals;
 using Redemption.BaseExtension;
 using Terraria.GameContent.UI;

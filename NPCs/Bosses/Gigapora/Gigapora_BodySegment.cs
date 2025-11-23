@@ -11,7 +11,7 @@ using Terraria.Audio;
 using Redemption.Dusts;
 using System.IO;
 using ReLogic.Content;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {

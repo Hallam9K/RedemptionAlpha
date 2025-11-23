@@ -5,7 +5,7 @@ using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Particles;
 using Redemption.Projectiles.Melee;
 using ReLogic.Content;

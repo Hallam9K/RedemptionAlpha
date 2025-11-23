@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
-namespace Redemption.Globals.NPC
+namespace Redemption.Globals.NPCs
 {
     public class ExclaimMarkNPC : GlobalNPC
     {

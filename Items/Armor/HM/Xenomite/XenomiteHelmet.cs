@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Localization;
 using Redemption.BaseExtension;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 
 namespace Redemption.Items.Armor.HM.Xenomite
 {

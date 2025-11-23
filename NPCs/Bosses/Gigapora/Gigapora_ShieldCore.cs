@@ -12,7 +12,7 @@ using Redemption.Base;
 using System;
 using Terraria.Audio;
 using Redemption.Dusts;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.Gigapora

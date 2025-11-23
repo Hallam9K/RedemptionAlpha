@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Items.Weapons.HM.Melee;
 using System.Collections.Generic;
 using Terraria;

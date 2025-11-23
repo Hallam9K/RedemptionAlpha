@@ -8,7 +8,7 @@ using Terraria.Audio;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
 
-namespace Redemption.Globals.Player
+namespace Redemption.Globals.Players
 {
     public class Radiation : ModPlayer
     {

@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Microsoft.Xna.Framework;
 
-namespace Redemption.Globals.NPC
+namespace Redemption.Globals.NPCs
 {
     public class HitboxNPC : GlobalNPC
     {

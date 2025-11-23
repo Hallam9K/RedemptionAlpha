@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.DamageClasses;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;

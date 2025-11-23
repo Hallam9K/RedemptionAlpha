@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Projectiles.Ranged;
 using System;
 using Terraria;

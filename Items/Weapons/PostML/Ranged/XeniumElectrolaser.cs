@@ -1,5 +1,5 @@
 using Redemption.Buffs.Cooldowns;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Projectiles.Ranged;

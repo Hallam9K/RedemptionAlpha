@@ -5,7 +5,7 @@ using ParticleLibrary;
 using Redemption.Dusts;
 using Redemption.Effects;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Particles;
 using System;
 using System.Collections.Generic;

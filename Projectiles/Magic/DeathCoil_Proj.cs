@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts;
 using Redemption.Effects;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using System;
 using System.Collections.Generic;
 using Terraria;

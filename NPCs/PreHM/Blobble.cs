@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Utilities;
 using Redemption.Items.Placeable.Banners;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using System.IO;
 using Terraria.Localization;
 using Terraria.Chat;

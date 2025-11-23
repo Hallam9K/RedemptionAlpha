@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Projectiles.Magic;
 using System;
 using System.IO;

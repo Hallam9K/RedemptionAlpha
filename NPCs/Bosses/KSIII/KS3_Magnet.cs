@@ -10,7 +10,7 @@ using Redemption.Base;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {

@@ -14,7 +14,7 @@ using Terraria.GameContent;
 using Redemption.Base;
 using Terraria.Audio;
 using Redemption.Projectiles.Hostile;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection

@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
 using Redemption.Globals;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Particles;
 using System;
 using Terraria;

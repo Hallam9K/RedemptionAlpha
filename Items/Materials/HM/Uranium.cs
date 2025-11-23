@@ -1,4 +1,4 @@
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Tiles.Ores;
 using Terraria;
 using Terraria.Audio;

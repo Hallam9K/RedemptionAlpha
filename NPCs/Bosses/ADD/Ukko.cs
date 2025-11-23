@@ -25,7 +25,7 @@ using Redemption.Items.Accessories.PostML;
 using System.IO;
 using ReLogic.Content;
 using Terraria.Localization;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.Items.Weapons.PostML.Summon;
 using Redemption.UI;

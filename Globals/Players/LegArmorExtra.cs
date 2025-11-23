@@ -7,7 +7,7 @@ using Terraria.DataStructures;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace Redemption.Globals.Player
+namespace Redemption.Globals.Players
 {
     class LegArmorExtra : PlayerDrawLayer
     {

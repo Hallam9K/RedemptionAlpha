@@ -1,4 +1,4 @@
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

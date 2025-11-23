@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Terraria;
 using Terraria.ID;

@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

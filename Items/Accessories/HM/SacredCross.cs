@@ -1,6 +1,6 @@
 ﻿using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.ID;

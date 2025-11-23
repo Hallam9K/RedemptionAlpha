@@ -12,7 +12,7 @@ using Redemption.Dusts;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Localization;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.UI;
 

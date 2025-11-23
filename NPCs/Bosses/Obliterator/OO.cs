@@ -5,7 +5,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.CrossMod;
 using Redemption.Dusts;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.HM;

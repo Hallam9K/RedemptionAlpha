@@ -28,7 +28,7 @@ using ReLogic.Content;
 using Redemption.UI.ChatUI;
 using Redemption.UI;
 using Terraria.Localization;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Textures;
 using Redemption.DamageClasses;

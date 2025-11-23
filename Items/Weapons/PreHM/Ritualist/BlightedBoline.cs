@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.DamageClasses;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Projectiles.Ritualist;
 using System.Collections.Generic;
 using Terraria;

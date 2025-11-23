@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
-namespace Redemption.Globals.Player
+namespace Redemption.Globals.Players
 {
     public class PhysChainPlayerLayer : PlayerDrawLayer
     {

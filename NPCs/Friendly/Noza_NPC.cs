@@ -2,7 +2,7 @@ using BetterDialogue.UI;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Weapons.HM.Melee;
 using System;
 using Terraria;

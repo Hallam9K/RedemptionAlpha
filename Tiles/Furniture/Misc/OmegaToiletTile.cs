@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Items.Placeable.Furniture.Lab;
 using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.NPCs.Bosses.Obliterator;

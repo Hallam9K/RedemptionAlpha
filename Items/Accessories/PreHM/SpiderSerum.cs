@@ -1,6 +1,6 @@
 ﻿using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Items.Critters;
 using Terraria;
 using Terraria.ID;

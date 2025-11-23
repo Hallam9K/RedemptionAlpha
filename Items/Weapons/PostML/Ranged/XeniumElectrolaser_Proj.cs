@@ -3,7 +3,7 @@ using ParticleLibrary.Core;
 using ParticleLibrary.Utilities;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Particles;
 using Redemption.Projectiles.Ranged;
 using System;

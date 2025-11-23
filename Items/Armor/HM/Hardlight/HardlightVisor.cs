@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Materials.HM;
 using Redemption.BaseExtension;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Terraria.Localization;
 
 namespace Redemption.Items.Armor.HM.Hardlight

@@ -15,7 +15,7 @@ using Terraria.ModLoader;
 using Redemption.Items.Placeable.Banners;
 using System.IO;
 using Terraria.Localization;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 
 namespace Redemption.NPCs.Lab
 {

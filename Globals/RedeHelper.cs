@@ -5,7 +5,7 @@ using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Globals.World;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity;

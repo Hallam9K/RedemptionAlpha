@@ -15,7 +15,7 @@ using Redemption.WorldGeneration;
 using Terraria.Audio;
 using Redemption.UI.ChatUI;
 using Terraria.Localization;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.UI;
 using Redemption.CrossMod;
 

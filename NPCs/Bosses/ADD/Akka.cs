@@ -23,7 +23,7 @@ using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Summon;
 using ReLogic.Content;
 using Terraria.Localization;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Helpers;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.UI;

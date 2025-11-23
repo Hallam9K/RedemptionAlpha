@@ -6,7 +6,7 @@ using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.Projectiles.Ritualist;
 
-namespace Redemption.Globals.Player
+namespace Redemption.Globals.Players
 {
     public class RitualistPlayer : ModPlayer
     {

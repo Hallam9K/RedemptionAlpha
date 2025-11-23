@@ -1,7 +1,7 @@
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using System;
 using Terraria;
 using Terraria.ID;

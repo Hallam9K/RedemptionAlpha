@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Items.Materials.HM;
 using Redemption.Projectiles.Ranged;
 using Terraria;

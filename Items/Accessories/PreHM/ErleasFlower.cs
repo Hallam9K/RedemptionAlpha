@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;

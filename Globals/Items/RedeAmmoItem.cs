@@ -1,5 +1,5 @@
 using Redemption.BaseExtension;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Items.Weapons.HM.Ranged;
 using System.Collections.Generic;
 using Terraria;

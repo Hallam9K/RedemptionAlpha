@@ -1,7 +1,7 @@
 using Terraria.ModLoader;
 using Terraria;
 using Redemption.Globals;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Projectiles.Ritualist;
 
 namespace Redemption.Items.Weapons.PreHM.Ritualist

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Critters;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Usable.Potions;

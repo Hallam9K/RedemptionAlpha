@@ -40,7 +40,7 @@ using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 using static Redemption.Globals.RedeNet;
 
-namespace Redemption.Globals.Player
+namespace Redemption.Globals.Players
 {
     public class RedePlayer : ModPlayer
     {

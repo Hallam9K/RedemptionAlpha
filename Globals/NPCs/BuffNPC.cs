@@ -5,7 +5,7 @@ using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Critters;
 using Redemption.Particles;
@@ -18,7 +18,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Globals.NPC
+namespace Redemption.Globals.NPCs
 {
     public class BuffNPC : GlobalNPC
     {

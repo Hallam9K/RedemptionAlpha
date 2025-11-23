@@ -1,6 +1,6 @@
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Terraria;
 using Terraria.ModLoader;
 

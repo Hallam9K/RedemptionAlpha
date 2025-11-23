@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Minibosses.SkullDigger;
 using System;

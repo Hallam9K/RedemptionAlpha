@@ -8,7 +8,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Globals.NPC
+namespace Redemption.Globals.NPCs
 {
     public class RedeDrawNPC : GlobalNPC
     {

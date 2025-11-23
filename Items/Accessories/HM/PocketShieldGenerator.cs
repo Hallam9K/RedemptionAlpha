@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Microsoft.Xna.Framework;
 
 namespace Redemption.Items.Accessories.HM

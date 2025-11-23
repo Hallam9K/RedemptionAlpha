@@ -14,7 +14,7 @@ using Redemption.Items.Usable.Summons;
 using Redemption.NPCs.HM;
 using Redemption.UI;
 using SubworldLibrary;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 
 namespace Redemption.NPCs.Friendly
 {

@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Items.Accessories.HM;
 using Redemption.Tiles.Natural;
 using Terraria;

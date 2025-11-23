@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
-using Redemption.Globals.Player;
+using Redemption.Globals.NPCs;
+using Redemption.Globals.Players;
 using Redemption.NPCs;
 using Terraria;
 

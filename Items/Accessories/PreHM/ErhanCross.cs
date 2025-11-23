@@ -3,7 +3,7 @@ using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Cooldowns;
 using Redemption.Globals;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;

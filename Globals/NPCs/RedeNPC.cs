@@ -47,7 +47,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace Redemption.Globals.NPC
+namespace Redemption.Globals.NPCs
 {
     public class RedeNPC : GlobalNPC
     {
@@ -97,6 +97,9 @@ namespace Redemption.Globals.NPC
                     break;
                 case NPCID.Merchant:
                     shop.Add<DAVEPainting>(Condition.PlayerCarriesItem(ItemType<JohnSnailItem>()));
+                    break;
+                case NPCID.Dryad:
+                    shop.InsertAfter(ItemID.FlowerPacketTallGrass, ItemType<PoppySeeds>(), RedeConditions.NukeDropped);
                     break;
             }
         }

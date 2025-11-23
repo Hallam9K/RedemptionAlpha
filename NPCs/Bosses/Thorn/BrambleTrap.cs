@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Helpers;
 using System;
 using Terraria;

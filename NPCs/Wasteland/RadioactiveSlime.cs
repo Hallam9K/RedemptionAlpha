@@ -2,7 +2,7 @@ using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Armor.Vanity.Intruder;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;

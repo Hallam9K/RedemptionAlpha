@@ -2,7 +2,7 @@ using BetterDialogue.UI;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Accessories.PreHM;

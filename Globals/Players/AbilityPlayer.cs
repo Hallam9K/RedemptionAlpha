@@ -13,7 +13,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using System;
 
-namespace Redemption.Globals.Player
+namespace Redemption.Globals.Players
 {
     public class AbilityPlayer : ModPlayer
     {

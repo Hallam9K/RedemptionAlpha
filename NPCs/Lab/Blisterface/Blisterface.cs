@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.WorldGeneration;
 using Redemption.Base;
 using Terraria.Localization;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 
 namespace Redemption.NPCs.Lab.Blisterface
 {

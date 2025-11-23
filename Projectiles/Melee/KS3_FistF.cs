@@ -6,7 +6,7 @@ using System;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Globals;
 
 namespace Redemption.Projectiles.Melee

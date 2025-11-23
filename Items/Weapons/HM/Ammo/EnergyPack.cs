@@ -5,7 +5,7 @@ using Redemption.Items.Materials.HM;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Terraria.DataStructures;
 
 namespace Redemption.Items.Weapons.HM.Ammo

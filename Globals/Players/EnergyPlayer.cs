@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.Audio;
 using Redemption.Buffs;
 
-namespace Redemption.Globals.Player
+namespace Redemption.Globals.Players
 {
     public class EnergyPlayer : ModPlayer
     {

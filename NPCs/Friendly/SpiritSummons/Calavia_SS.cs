@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.NPCs.Minibosses.Calavia;
 using Terraria;

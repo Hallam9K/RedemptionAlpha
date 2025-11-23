@@ -4,7 +4,7 @@ using Redemption.BaseExtension;
 using Redemption.Buffs;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Usable;
 using Redemption.Projectiles.Misc;

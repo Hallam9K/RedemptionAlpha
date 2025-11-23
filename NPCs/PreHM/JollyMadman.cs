@@ -4,7 +4,7 @@ using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Armor.Single;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
@@ -114,7 +114,7 @@ namespace Redemption.NPCs.PreHM
         private int PsychicDamage;
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            if (NPC.RedemptionGuard().GuardPoints >= 0)
+            if (!NPC.RedemptionGuard().GuardBroken)
             {
                 modifiers.DisableCrit();
                 modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4, .25f, false, ModContent.DustType<VoidFlame>(), default, 10, 2);

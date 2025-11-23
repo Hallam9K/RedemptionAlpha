@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 
 namespace Redemption.Items.Weapons.PreHM.Ritualist
 {

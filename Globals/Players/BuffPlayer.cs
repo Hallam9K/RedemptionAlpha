@@ -11,6 +11,7 @@ using Redemption.Dusts;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Critters;
@@ -32,7 +33,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace Redemption.Globals.Player
+namespace Redemption.Globals.Players
 {
     public class BuffPlayer : ModPlayer
     {
@@ -602,6 +603,18 @@ namespace Redemption.Globals.Player
                     RedeHelper.SpawnNPC(target.GetSource_Loot(), (int)target.Center.X, (int)target.Center.Y, NPCID.DungeonSpirit);
                 }
             }
+            if (thornCirclet && proj.CountsAsClass(DamageClass.Melee) && Main.rand.NextBool(2))
+            {
+                if (target.life <= 0 && target.lifeMax > 5)
+                {
+                    for (int i = 0; i < Main.rand.Next(2, 4); i++)
+                    {
+                        int p = Projectile.NewProjectile(proj.GetSource_FromAI(), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ProjectileType<ThornArrowSeed>(), proj.damage / 2, 3, proj.owner, 1);
+                        Main.projectile[p].DamageType = DamageClass.Melee;
+                        Main.projectile[p].netUpdate = true;
+                    }
+                }
+            }
         }
         public override void OnHitNPCWithItem(Item item, Terraria.NPC target, Terraria.NPC.HitInfo hit, int damageDone)
         {
@@ -638,6 +651,14 @@ namespace Redemption.Globals.Player
                 if (Player.ZoneDungeon && Terraria.NPC.downedPlantBoss && Player.HasBuff(BuffType<SoulboundBuff>()) && target.type != NPCID.DungeonSpirit && target.type != NPCType<LostSoulNPC>() && target.type != NPCType<ShadesoulNPC>())
                 {
                     RedeHelper.SpawnNPC(target.GetSource_Loot(), (int)target.Center.X, (int)target.Center.Y, NPCID.DungeonSpirit);
+                }
+            }
+            if (thornCirclet && item.CountsAsClass(DamageClass.Melee) && Main.rand.NextBool(3) && item.type != ItemType<CursedGrassBlade>())
+            {
+                if (target.life <= 0 && target.lifeMax > 5)
+                {
+                    for (int i = 0; i < Main.rand.Next(2, 4); i++)
+                        Projectile.NewProjectile(Player.GetSource_ItemUse(item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ProjectileType<ThornArrowSeed>(), hit.Damage, 3, Player.whoAmI, 1);
                 }
             }
         }

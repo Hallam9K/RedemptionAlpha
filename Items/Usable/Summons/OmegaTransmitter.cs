@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.NPCs.Bosses.Cleaver;
 using Redemption.NPCs.Bosses.Gigapora;
 using Redemption.NPCs.Bosses.Obliterator;

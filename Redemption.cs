@@ -10,7 +10,7 @@ using Redemption.CrossMod;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Effects.RenderTargets;
 using Redemption.Globals;
-using Redemption.Globals.Player;
+using Redemption.Globals.Players;
 using Redemption.Globals.World;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.PostML.Shinkite;
