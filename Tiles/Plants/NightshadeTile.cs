@@ -42,7 +42,8 @@ namespace Redemption.Tiles.Plants
             };
             TileObjectData.newTile.AnchorAlternateTiles = new int[] {
                 TileID.ClayPot,
-                TileID.PlanterBox
+                TileID.PlanterBox,
+                TileID.RockGolemHead
             };
             TileObjectData.addTile(Type);
 

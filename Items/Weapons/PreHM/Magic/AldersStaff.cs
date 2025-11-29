@@ -109,7 +109,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
                         if (BasePlayer.ReduceMana(player, player.inventory[player.selectedItem].mana))
                         {
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(CustomSounds.Saint9 with { Volume = .2f, Pitch = -.1f }, Projectile.position);
+                                SoundEngine.PlaySound(CustomSounds.Saint9 with { Volume = .1f, Pitch = -.1f }, Projectile.position);
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + RedeHelper.OffsetWithRotation(Projectile, 17, -14), RedeHelper.PolarVector(Main.rand.Next(6, 11), -MathHelper.PiOver2 + Main.rand.NextFloat(-0.3f, .3f)), ModContent.ProjectileType<ArcaneBolt>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                         }
                     }

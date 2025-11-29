@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
@@ -126,7 +126,7 @@ namespace Redemption.NPCs.PreHM
         private bool blocked;
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            if (blocked && NPC.RedemptionGuard().GuardPoints >= 0)
+            if (blocked && !NPC.RedemptionGuard().GuardBroken)
             {
                 NPC.HitSound = SoundID.DD2_SkeletonHurt with { Volume = 0 };
                 modifiers.DisableCrit();
@@ -156,7 +156,7 @@ namespace Redemption.NPCs.PreHM
 
             if (player.Redemption().meleeHitbox.Intersects(ShieldHitbox))
             {
-                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                if (!NPC.RedemptionGuard().GuardBroken)
                 {
                     NPC.HitSound = SoundID.DD2_SkeletonHurt with { Volume = 0 };
                     modifiers.DisableCrit();
@@ -193,7 +193,7 @@ namespace Redemption.NPCs.PreHM
                 projBlocked.Remove(projectile.whoAmI);
                 if (!projectile.ProjBlockBlacklist() && projectile.penetrate > 1)
                     projectile.timeLeft = Math.Min(projectile.timeLeft, 2);
-                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                if (!NPC.RedemptionGuard().GuardBroken)
                 {
                     NPC.HitSound = SoundID.DD2_SkeletonHurt with { Volume = 0 };
                     modifiers.DisableCrit();

@@ -6,7 +6,7 @@ using Redemption.Biomes;
 using Redemption.CrossMod;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Usable;
 using Redemption.UI;
 using Redemption.UI.ChatUI;
@@ -107,7 +107,7 @@ namespace Redemption.NPCs.Lab.Janitor
         }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            if (AIState is not ActionState.Slip && NPC.RedemptionGuard().GuardPoints >= 0)
+            if (AIState is not ActionState.Slip && !NPC.RedemptionGuard().GuardBroken)
             {
                 modifiers.DisableCrit();
                 modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4, .25f, false, DustID.Electric, default, 10, 1, 1000);

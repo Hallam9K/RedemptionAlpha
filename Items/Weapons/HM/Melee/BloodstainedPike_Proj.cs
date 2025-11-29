@@ -1,16 +1,15 @@
-using Terraria.ModLoader;
-using Terraria.ID;
-using Terraria;
-using Microsoft.Xna.Framework;
-using Redemption.Globals;
-using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using Redemption.Base;
-using System;
-using Terraria.Graphics.Shaders;
-using Terraria.Audio;
 using Redemption.BaseExtension;
+using Redemption.Globals;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -62,7 +61,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                     player.itemAnimation = player.itemAnimationMax / 2;
                     Projectile.timeLeft = (int)halfDuration;
                     for (int i = 0; i < Main.maxNPCs; i++)
-                    { 
+                    {
                         if (skewered.Contains(i))
                         {
                             NPC npc = Main.npc[i];
@@ -73,7 +72,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                             int dust = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Blood, Scale: 2f);
                             Main.dust[dust].noGravity = true;
                             if (skewered.Count >= 5 || (skewered.Count >= 1 && Projectile.localAI[0] >= 600))
-                                killSkewered = true;        
+                                killSkewered = true;
                             if (killSkewered)
                             {
                                 for (int k = 0; k < 20; k++)
@@ -93,7 +92,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                                     SoundEngine.PlaySound(SoundID.NPCDeath6, Projectile.position);
                                     if (Main.myPlayer == Projectile.owner)
                                     {
-                                        int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<BloodstainedPike_Proj2>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
+                                        int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileType<BloodstainedPike_Proj2>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
                                         Main.projectile[p].rotation = Projectile.rotation;
                                         Main.projectile[p].spriteDirection = Projectile.spriteDirection;
                                         Main.projectile[p].netUpdate = true;
@@ -112,13 +111,14 @@ namespace Redemption.Items.Weapons.HM.Melee
             else
                 progress = (duration - Projectile.timeLeft) / halfDuration;
 
-            Projectile.Center = player.MountedCenter + Vector2.SmoothStep(Projectile.velocity * HoldoutRangeMin, Projectile.velocity * HoldoutRangeMax, progress);
+            Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter, true);
+            Projectile.Center = playerCenter + Vector2.SmoothStep(Projectile.velocity * HoldoutRangeMin, Projectile.velocity * HoldoutRangeMax, progress);
 
             Projectile.spriteDirection = player.direction;
             if (Projectile.spriteDirection == 1)
-                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver4;
+                Projectile.rotation = (Projectile.Center - playerCenter).ToRotation() + MathHelper.PiOver4;
             else
-                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
+                Projectile.rotation = (Projectile.Center - playerCenter).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
             return false;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -145,22 +145,24 @@ namespace Redemption.Items.Weapons.HM.Melee
             Rectangle rect = new(0, 0, texture.Width, texture.Height);
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Vector2 v = Projectile.Center - RedeHelper.PolarVector(64, (Projectile.Center - player.Center).ToRotation());
-            Main.EntitySpriteDraw(texture, v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter, true);
+            Vector2 v = Projectile.Center - RedeHelper.PolarVector(64, (Projectile.Center - playerCenter).ToRotation());
+            Main.EntitySpriteDraw(texture, v - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
         }
     }
     public class BloodstainedPike_Proj2 : ModProjectile
     {
         public override string Texture => "Redemption/Items/Weapons/HM/Melee/BloodstainedPike_Proj";
-        public float[] oldrot = new float[4];
+        public Vector2[] oldPos = new Vector2[4];
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Bloodstained Pike");
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
-            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
             ElementID.ProjBlood[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetDefaults()
@@ -191,6 +193,11 @@ namespace Redemption.Items.Weapons.HM.Melee
                 Projectile.localAI[1] *= 1.01f;
                 if (Projectile.DistanceSQ(player.Center) < 20 * 20)
                     Projectile.Kill();
+
+                for (int k = oldPos.Length - 1; k > 0; k--)
+                    oldPos[k] = oldPos[k - 1];
+
+                oldPos[0] = Projectile.Center;
                 return;
             }
             Projectile.localAI[1] = 10;
@@ -201,7 +208,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 if (Projectile.DistanceSQ(target.Center) < 300 * 300 && Projectile.localAI[0] <= 0)
                 {
                     Projectile.velocity = RedeHelper.PolarVector(-60, (Projectile.Center - target.Center).ToRotation());
-                    Projectile.localAI[0] = 30;
+                    Projectile.localAI[0] = 30 / player.GetAttackSpeed(DamageClass.Melee);
                 }
             }
             else
@@ -211,6 +218,11 @@ namespace Redemption.Items.Weapons.HM.Melee
                 Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver4;
             else
                 Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
+
+            for (int k = oldPos.Length - 1; k > 0; k--)
+                oldPos[k] = oldPos[k - 1];
+
+            oldPos[0] = Projectile.Center;
         }
         public override void OnKill(int timeLeft)
         {
@@ -226,18 +238,18 @@ namespace Redemption.Items.Weapons.HM.Melee
             float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.4f, 1.2f, 1.4f);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            Main.spriteBatch.BeginAdditive(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + Vector2.UnitY * Projectile.gfxOffY - new Vector2(22, 33);
-                Color color = Color.Red * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, scale, effects, 0);
+                Vector2 drawPos = oldPos[k] - Main.screenPosition;
+                Color color = Color.Red * ((oldPos.Length - k) / (float)oldPos.Length);
+                Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.oldRot[k], drawOrigin, scale, effects, 0);
             }
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;

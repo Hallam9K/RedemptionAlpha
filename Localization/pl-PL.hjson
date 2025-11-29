@@ -23,9 +23,9 @@ Mods: {
 				LikeBiome: Uważam, że {BiomeName} jest bardzo fajnym miejscem, Ledwo widziałem jakikolwiek śnieg z miejsca z którego pochodziłem.
 				DislikeBiome: Nie za bardzo przepadam za {BiomeName}, Nie chciałbym natknąć się na szkielety!
 				HateBiome: Dlaczego wsadziłeś mnie na {BiomeName}? Zdajesz sobie sprawę jak dżungla jest niebezpieczna!?
-				LoveNPC: Ja i {NPCName} jesteśmy dobrymi przyjaciółmi, dziękuję ci za to że możemy żyć w tym samym miejscu
-				LikeNPC: "{NPCName} to dobre towarzystwo, jest również bardzo dobra w stylizowaniu moich włosów... To nie jest dziwne, prawda?"
-				DislikeNPC: "{NPCName} keeps trying to get me to buy his dirt."
+				LoveNPC: Ja i {NPCName} jesteśmy dobrymi przyjaciółmi, dziękuję ci że możemy żyć w tym samym miejscu
+				LikeNPC: "{NPCName} to dobre towarzystwo, jest również bardzo dobra w stylizowaniu moich włosów... Nie jest to dziwne, prawda?"
+				DislikeNPC: "{NPCName} ciągle próbuje mi sprzedać swoją ziemię."
 				HateNPC: Psst, możesz zabrać {NPCName} jak najdalej ode mnie? I tak już jestem totalnie spłukany.
 				LikeNPC_Princess: Lubię {NPCName}.
 				Princess_LovesNPC: Lubię {NPCName}.
@@ -53,8 +53,8 @@ Mods: {
 			Newb: {
 				Content: Podoba mi się tutaj!
 				NoHome: Gdzie Dom?
-				FarFromHome: Jestem taki zagubiony...zaprowadzisz mnie z powrotem?
-				LoveSpace: Tak mało ludzi, jej!
+				FarFromHome: Jestem zagubiony...zaprowadzisz mnie z powrotem?
+				LoveSpace: Mało ludzi, jej!
 				DislikeCrowded: Za dużo twarzy!
 				HateCrowded: Za dużo twarzy!
 				LoveBiome: Kocham {BiomeName}! Przywołuje mi miłe wspomnienia z… eeee…
@@ -70,16 +70,16 @@ Mods: {
 			}
 
 			TBot: {
-				Content: Jestem całkiem zadowolony, dziękuję, że zapytałeś.
-				NoHome: Nie lubię być narażony na warunki atmosferyczne. Masz może jakieś mieszkanie lub schronienie, w którym mógłbym się teraz zatrzymać?
-				FarFromHome: ... Wydaje się, że jesteśmy bardzo zagubieni. Nie rozpoznaję otoczenia.
-				LoveSpace: Jest tu dość cicho.
+				Content: Jestem całkiem zadowolony, dziękuję, że pytasz.
+				NoHome: Nie lubię być narażony na warunki atmosferyczne. Masz może jakieś mieszkanie lub schronienie, w którym mógłbym się zatrzymać?
+				FarFromHome: ... Wydaje mi się, że zgubiliśmy się. Nie rozpoznaję tego otoczenia.
+				LoveSpace: Jest tu dosyć cicho.
 				DislikeCrowded: Inni mieszkańcy wydają się niezadowoleni z tłoku, i szczerze mówiąc, ja też.
 				HateCrowded: Inni mieszkańcy wydają się niezadowoleni z tłoku, i szczerze mówiąc, ja też.
-				LoveBiome: Podoba mi się to otoczenie. Jest bardzo przyjemne.
+				LoveBiome: Podoba mi się to otoczenie. Jest ono bardzo przyjemne.
 				LikeBiome: To otoczenie jest dość przyjemne.
-				DislikeBiome: Moje obecne otoczenie jest raczej... niepożądane.
-				HateBiome: ... Tak jak w domu. Naprawdę nie lubię tego otoczenia.
+				DislikeBiome: Moje obecne otoczenie jest raczej... niepożądane przeze mnie.
+				HateBiome: ... Jak w domu. Naprawdę nie lubię tego otoczenia.
 				LoveNPC: "{NPCName}? Jej wiedza medyczna dorównuje mojej! To naprawdę imponujące."
 				LikeNPC: "{NPCName} i ja mamy sporo wspólnego. Dogadujemy się dobrze."
 				DislikeNPC: Uważam, że {NPCName} jest dość niepokojący.
@@ -96,8 +96,8 @@ Mods: {
 				DislikeCrowded: Ale tu tłoczno, co za masakra!
 				HateCrowded: Ale tu tłoczno, co za masakra!
 				LoveBiome: Pobyt w {BiomeName} przypomina mi, kiedy uciekłem od mojej załogi i spotkałem Daerela! Najlepszy moment w moim życiu!
-				LikeBiome: Myślę, że {BiomeName} jest całkiem fajny, słyszę ptaki, które śpiewają oraz spoglądam na kwitnące kwiaty.
-				DislikeBiome: Tak tu zimno, aż trzęsę się w butach!
+				LikeBiome: Myślę, że {BiomeName} jest całkiem fajny, słyszę ćwierkające ptaki, spoglądam se na kwitnące kwiaty.
+				DislikeBiome: Tak tu zimno, że aż trzęsę się w butach!
 				HateBiome: To miejsce jest tragiczne!
 				LoveNPC: "{NPCName} i ja jesteśmy świetnymi przyjaciółmi, więc mieszkanie blisko siebie to czysta przyjemność!"
 				LikeNPC: "{NPCName} jest super! Lubię patrzeć, jak WYSADZA RZECZY W POWIETRZE!"
@@ -413,9 +413,10 @@ Mods: {
 				Keeper3: Duch Strażniczki zanika... ?
 				SkullDigger: Duch Łowcy Czaszek zanika...
 				GolemSpawn: Pojawia się śpiący kamień...
-				NebGone: Nebuleus zniknął bez śladu...
+				NebGone: Nebuleus zniknęła bez śladu...
 				NPCWokeUp: "{0} obudził się!"
 				Unconscious: "{0} został uderzony i stracił przytomność..."
+				Slain: "{0} zostaje zabity..."
 				WarheadConditions1: Bomba jest zbyt blisko niezniszczalnych bloków!
 				WarheadConditions2: Bombę należy aktywować na powierzchni oraz na krańcach świata
 				NothingHappens: Nic się nie dzieje...
@@ -647,7 +648,7 @@ Mods: {
 				Datalog1:
 					'''
 					'Udało mi się dotrzeć do zewnętrznej termosfery i uciec przed Resetem mojego świata.
-					Rozumiem wyzwanie, które stoi przede mną — ludzkie życie wydaje się być mikroskopijne w
+					Rozumiem wyzwanie, które stoi przede mną - ludzkie życie wydaje się być mikroskopijne w
 					porównaniu do czasu, jaki muszę spędzić podróżując przez kosmos, ale moim celem jest wytrwanie tej nieskończonej podróży.
 					Mam tylko nadzieję, że wszystko będzie tego warte, kiedy wrócę do nowego świata. Zdecydowałem
 					się pisać te dzienniki codziennie, aż wrócę, aby zachować wspomnienia z mojej podróży.
@@ -926,7 +927,7 @@ Mods: {
 			}
 
 			TreebarkDryad: {
-				1: No,[0.1] no.[0.5] Uważaj, gdzie machasz tym toporem...[1] Nie chcę, żebyś ściął żadnego z moich przyjaciół.
+				1: No,[0.1] no.[0.5] Uważaj, gdzie machasz tym toporem...[1] Nie chcę, żebyś ściął któregokolwiek z moich przyjaciół.
 				2: "Nic dobrego z tego nie wyniknie,[0.1] młody "
 				3: człowieku
 				4: człowieku
@@ -940,10 +941,10 @@ Mods: {
 				4: "[@a]Ee..[0.5] Zephos?"
 				5: "[@b]O, Cześć![0.1] Nie zauważyłem cię."
 				5Chicken: "[@b]O, to kura![0.1] Z koroną?[0.5] Ale to dziwne."
-				6: Nie widziałeś mojego przyjaciela w pobliżu,[0.1] prawda?
+				6: Nie widziałeś przypadkiem w pobliżu mojego przyjaciela,[0.1] prawda?
 				6Chicken: Wiesz gdzie poszedł Zephos?
 				7: Chyba nie wskoczył.[0.5] Cóż,[0.1] wrócę po niego.
-				8: Będziesz miał dla mnie miejsce, żebym mógł zostać na jakiś czas, jeśli wrócę,[0.1] prawda?
+				8: Będziesz miał dla mnie miejsce, żebym mógł zostać na jakiś czas, jeżeli wrócę,[0.1] prawda?
 				8Chicken: Dziwne,[0.1] mam wrażenie jakbyś mnie rozumiał...[0.5] Cóż,[0.1] wracam z powrotem!
 			}
 
@@ -1006,7 +1007,7 @@ Mods: {
 				Choice: {
 					1: Wydaje[0.1] się,[0.3] że przegrałem.
 					2: Jeśli,[0.3] może, nie zechcesz[0.1] darować mego życia...
-					3: Wyślij moje pozdrowienia[0.3] do mojego mistrza. Rycerza Świętości.
+					3: Wyślij moje pozdrowienia[0.3] Anielskiemu Rycerzowi. Mojego mistrza.
 					4: Cóż...[0.5] do ponownego spotkania!
 				}
 			}
@@ -1036,14 +1037,14 @@ Mods: {
 
 			TBotIntro: {
 				Normal1: ACH!
-				Normal2: ...M-[0.1]Myślałem, że to ktoś inny.[0.5] Przepraszam za to.
+				Normal2: ...M-[0.1]Myślałem, że to ktoś inny.[0.5] Przepraszam.
 				Normal3: W każdym bądź razie,[0.1] cześć.[0.5] jestem Adam,[0.1] jestem androidem i pochodzę z odległego, śnieżnego pustkowia.
 				Normal4: "[@b]Skoro nie wrócę do tego zamrożonego piekła przez dłuższy czas,[0.1] czy nie masz nic przeciwko, żebym tu został?[0.5] Zakładam, że masz jakieś schronienie."
 				Normal5: ...Podobieństwo między nimi jest zadziwiające...
 				Robot1: CO?
 				Robot2: Jak-[0.1] Co-[0.1] Ja-
-				Robot3: *Westchnięcie*[0.1] Nie spodziewałem się zobaczyć kogoś podobnego nam tutaj.
-				Robot4: Nie wracam tam teraz.[0.5] Skoro jesteś tutaj, a nie tam,[0.1] to mogę bezpiecznie założyć, że nie jesteś z Nią?
+				Robot3: *Westchnięcie*[0.1] Nie spodziewałem się zobaczyć tutaj kogoś podobnego nam.
+				Robot4: Nie wracam tam w tej chwili.[0.5] Skoro jesteś tutaj, a nie tam,[0.1] to mogę bezpiecznie założyć, że nie jesteś z Nią?
 				Robot5: "[@a]...Dobrze.[0.5] W takim razie możemy bezpiecznie się ignorować nawzajem."
 				Chicken1: Ach!
 				Chicken2: Kura..?
@@ -1075,7 +1076,7 @@ Mods: {
 					2: Nie zabierałbym tego ducha z powrotem do Arum, gdybym był tobą.
 					3: A dlaczego miałoby tak być?
 					4: Wybacz moją szczerość,[0.1] ale baronowie Arum to nic innego jak parszywi ludzie przesiąknięci złem.
-					5: "[@b]Słucham?[0.5] Nie widziałam ani jednej kropli zła z ich strony.[0.1] A pracuję z nimi od lat!"
+					5: "[@b]Słucham?[0.5] Nie widziałam ani jednej kszty zła z ich strony.[0.1] A pracuję z nimi od lat!"
 					6: Tak jak ja...[0.3][@c][@d] w bardziej bezpośredni sposób.[0.5][@g] Zaufaj mi, dziewczyno,[0.1] uwolnij ducha Kyrethy.[0.5] Pozwól jej naprawdę odpocząć.
 					7: Wątpić w mądrość uwolnionego ducha byłoby wielką nierozwagą.
 					8: .[0.1].[0.1].[0.5] [@e]Gorhal'on.[0.5][@f] Taborti.[0.6] Uwolnię ją, po tym jak przejdę przez portal.
@@ -1108,13 +1109,13 @@ Mods: {
 				ScannerUnimportant: CEL NIEISTOTNY...
 
 				Intro: {
-					DroneBreak: Serio właśnie zniszczyłeś moje drony?
+					DroneBreak: Serio musiałeś zniszczyłeś moje drony?
 					DroneIfChicken: Dobra, słuchaj kupo piór
-					DroneIfRobot: Dobra, słuchaj ty mała kupo złomu
-					DroneHuman: Dobra, słuchaj ty mała kupo mięsa
-					NoDroneIfRobot: Ach,[0.1] ta mała kupa złomu postanowiła zaoszczędzić mi trudu z jej szukaniem
-					NoDroneIfChicken: Ach,[0.1] ta kupa piór postanowiła zaoszczędzić mi trudu z jej szukaniem
-					NoDroneIfHuman: Ach,[0.1] ta mała kupa mięsa postanowiła zaoszczędzić mi trudu z jej szukaniem
+					DroneIfRobot: Dobra, słuchaj mała kupo złomu
+					DroneHuman: Dobra, słuchaj mała kupo mięsa
+					NoDroneIfRobot: Ach,[0.1] ta mała kupa złomu postanowiła zaoszczędzić mi trudu z jej znalezieniem
+					NoDroneIfChicken: Ach,[0.1] ta kupa piór postanowiła zaoszczędzić mi trudu z jej znalezieniem
+					NoDroneIfHuman: Ach,[0.1] ta mała kupa mięsa postanowiła zaoszczędzić mi trudu z jej znalezieniem
 					Start: Ech,[0.1] nie mam ich za mało,[0.1] ale i tak cię za to zestrzelę!
 					StartGood: Ostrzegałem cię,[0.1] więc nie płacz potem do mamusi, jak wgniote cię w ziemię!
 					StartSSR: Czy ty w ogóle rozumiesz, jak wkurzające jest ciągłe spamowanie powiadomieniami przez moje jednostki przez twoją nadgorliwą łapę na spuście?[1] Może powinienem dać ci nauczkę!
@@ -1141,13 +1142,13 @@ Mods: {
 					Effort1: Jakie to uciążliwe.[1] Wygląda na to, że moja zautomatyzowana tarcza jest nieskuteczna wobec twoich ataków.
 					Effort2: Jakie to uciążliwe.[1] Twoje błahe pociski przechodzą przez moją zautomatyzowaną tarczę.
 					Effort3: Jakie to uciążliwe.[1] Tylko marnujesz nasz wysiłek.
-					RunAway: Po co mnie przywołałeś, jeśli cały czas zamierzasz uciekać?
+					RunAway: Po co mnie przywołałeś, jeśli ty cały czas uciekasz?
 					End: Mogę cię równie dobrze wysadzić na kawałki kilkoma rakietami.
 				}
 
 				Interval2: {
 					StartIfRobot: Ta zardzewiała puszka jest bardziej uparta, niż myślałem...
-					StartIfChicken: Koncepcja przegranej z kurczakiem niezbyt mi odpowiada...
+					StartIfChicken: Koncepcja przegranej z kurą niezbyt mi odpowiada...
 					StartIfHuman: Zadajesz mocniejsze ciosy, niż myślałem, jak na worek z mięsem...
 					Ranged: Lubisz strzelać do rzeczy,[0.1] prawda?[0.5] No to spróbuj teraz strzelać do mnie.
 					Normal: Śmiało,[0.1] strzelaj do mnie, jeśli potrafisz.
@@ -1158,7 +1159,7 @@ Mods: {
 				Interval3: {
 					1: To już zaczyna być śmieszne![0.5] Nie powinieneś być już zmęczony?
 					2: "[@h3]*Ehem*[1] Twoja wytrwałość jest godna podziwu,[0.1] to ci przyznam."
-					3: "[@h2]Ale lepiej sobie uświadom, że prawie się nie staram.[1][@h1] I nie blefuję."
+					3: "[@h2]Ale lepiej sobie uświadom, że prawie się nie staram.[1][@h1] I nawet nie blefuję."
 				}
 
 				Interval4: {
@@ -1177,12 +1178,12 @@ Mods: {
 				}
 
 				Continue: {
-					Accept: Teraz widzę, o co tu chodzi...
+					Accept: Teraz rozumiem, o co ci chodzi...
 					Overclock1: Jeszcze raz,[0.1] naprawdę jesteś żądny wygranej...
 					Overclock2: Jestem zawiedziony, że muszę naprawdę przekatować to naczynie
 					Overclock3: ... Chyba lubisz utrudniać sobie życie.
 					IfRobot: ... I to dla sterty złomu, jakby nie było.
-					IfChicken: ... I dla?[0.5] Jakiegoś pieprzonego kurczaka!?
+					IfChicken: ... I to dla?[0.5] Jakiejś pieprzonej kury!?
 					IfHuman: ... I to dla wkurzającego bachora, jakby nie było.
 					Begin: "[@h0]Czas zacząć.[@c]"
 				}
@@ -1215,8 +1216,8 @@ Mods: {
 			OO: {
 				Intro: {
 					1: Yo.
-					2: Tyle z niespodziewanego ataku...
-					2Alt: Chyba oszukam cię po raz drugi,[0.1] co?
+					2: No i tyle z niespodziewanego ataku...
+					2Alt: Chyba nie zaskoczę cię po raz drugi,[0.1] co?
 					3: "[@a]Czekaj,[0.1] mam połączenie od Girus."
 					4: "'Zbyt szybko straciłem za dużo energii?'"
 					5: "'Jestem Idiotą?'"
@@ -1261,7 +1262,7 @@ Mods: {
 				Defeat: {
 					Refight: Wystarczy.
 					1: ... Masz pozwolenie, żeby przejść?[0.5] Pozwól, że sprawdzę.
-					2: ... A?
+					2: ... E?
 					3: ... Masz pozwolenie na przejście dalej?
 					4: To było trochę żenujące.[0.5] Przepraszam.
 				}
@@ -1280,7 +1281,7 @@ Mods: {
 					1: Dobra,[0.1] dobra!
 					2: W porządku,[0.1] pewnie poradzisz sobie tutaj.
 					3: Weź,[0.1] masz to coś z dostępem do laboratorium i znikaj!
-					4: "[@a]Mam podłogę do wyczyszczenia."
+					4: "[@a]Mam podłogę do mycia."
 					B1: Ej...
 					B2: Czy ty właśnie...[0.5] zablokowałeś mi przejście?
 					B3: Wal się w takim razie!
@@ -1290,27 +1291,27 @@ Mods: {
 			Girus: {
 				Encounter1: {
 					1: Witaj, chyba się jeszcze nie poznaliśmy.
-					2: Nie wiesz o mnie nic, ale ja wiem o tobie dużo.
-					3: Na razie niech tak zostanie.
-					4: Tutaj, wysłałam drona, aby zaoferował ci prezent, proszę, przyjmij go.
+					2: Nie wiesz o mnie nic, za to ja wiem o tobie dużo.
+					3: I niech na razie tak zostanie.
+					4: Właśnie wysłałam drona, aby zaoferował ci prezent, proszę, przyjmij go.
 					5: Do zobaczenia.
 				}
 
 				Encounter2: {
 					1: Szczerze mówiąc, to było trochę rozczarowujące.
 					2: Raczej, można było się tego spodziewać po minimalnych zmianach w oryginalnym projekcie TeoChrome.
-					3: O! Mam teraz wyniki, które będą bardzo przydatne później.
-					4: Wróć później, a ja będę miała kolejną maszynę do przetestwania.
+					3: Ale za to! Mam teraz wyniki, które będą później bardzo przydatne.
+					4: Wróć później, ja za ten czas będę miała kolejną maszynę do przetestwania.
 					5: To nie powinno zająć zbyt dużo czasu, będę używać starej maszyny, która zbiera kurz w piwnicy.
 				}
 
 				Encounter3: {
 					1: Hah, nieźle!
-					2: Trochę jednak smutne to było, jak bezużyteczna okazała się technologia osłon TeoChrome.
+					2: Trochę jednak jest to smutne, jak bezużyteczna okazała się technologia osłon TeoChrome.
 					3: Nie można całkowicie objąć czegoś, ponieważ projektor osłony dostanie furii, jeśli znalazłby się w środku.
 					4: Mimo to, wpadłam na kilka pomysłów, jak wykorzystać to na moją korzyść...
 					5: W każdym bądź razie! Tak jak ostatnim razem, przygotuję kolejną maszynę do testu.
-					6: Może to zająć trochę dłużej, ponieważ wypróbuję mój własny projekt. Do zobaczenia.
+					6: Może to jednak zająć trochę dłużej, ponieważ tym razem wypróbuję mój własny projekt. Do zobaczenia.
 				}
 
 				Encounter4: {
@@ -1318,7 +1319,7 @@ Mods: {
 						1: Och, to trochę niezręczne.
 						2: Wciąż nie pokonałeś poprzednich wyzwań, nawet teraz?
 						3: Cóż, chyba lekko nadmierne przygotowanie jeszcze nikomu nie zaszkodziło.
-						4: Tu, Wysłałem ci kartę dostępu. Uważaj to z góry za mały prezent.
+						4: Trzymaj, Wysłałam ci kartę dostępu. Uważaj to z góry za mały prezent.
 						5:
 							'''
 							... Jednak najpierw będziesz musiał zmierzyć się z pierwszymi dwoma prototypami.
@@ -1339,11 +1340,11 @@ Mods: {
 						3:
 							'''
 							Mimo moich najlepszych starań, po prostu nie mogłam się powstrzymać, żeby nie uczynić jej nieco
-							bardziej... wymagającą, niż to, do czego jesteś gotowy.
+							bardziej... wymagającą, niż to, do czego jesteś potencjalnie gotowy.
 							'''
 						4: Tak Więc!
 						5: Postanowiłam dać ci prywatny dostęp do niższych sekcji mojej bazy operacyjnej.
-						6: Jestem pewna, że znajdziesz tam jakieś stare zabawki, które zostawił TeoChrome.
+						6: Jestem pewna, że znajdziesz tam jakieś stare zabawki, które pozostawiło TeoChrome.
 						7: Będziesz musiał jednak mi wybaczyć tamtejszy bałagan.
 						8: W każdym razie, nie mogę się doczekać twojego kolejnego wyzwania.
 						9: Na pewno ci się spodoba.
@@ -1384,10 +1385,10 @@ Mods: {
 
 				Intro: {
 					1: Ach,[0.1] sam mnie tu przyprowadziłeś.
-					2: Moje oczy spoczywały na tobie wystarczająco długo,[0.1] czas podjąć działanie.
+					2: Moje oczy spoczywały na tobie wystarczająco długo,[0.1] czas abym podjęła działania.
 					2Alt: Wybacz za moje ciekawskie spojrzenie,[0.1] obserwowałam cię z daleka.
 					3: Twoja obecność pochłania całe moje myśli,[0.1] lecz nie ucieknę przed tą szansą, która mi została ofiarowana.
-					4: Gadanina kończy się tutaj.[0.5] Udowodnij mi swoją determinację,[0.1] a ja pokażę swoją.
+					4: Gadanina kończy się tutaj.[0.5] Udowodnij mi swoją determinację,[0.1] a ja ci pokażę swoją.
 					5: Jeśli przegrasz ze mną,[0.1] możesz zostać oszczędzony od bytów znacznie potężniejszych ode mnie.
 				}
 
@@ -1399,12 +1400,12 @@ Mods: {
 				Interval: {
 					1: Co tobą kieruje?[0.1] Jaki jest twój cel?
 					2: Masz w ogóle motyw dla swoich działań?
-					3: Dalej walczysz?[0.1] Ja jeszcze nie skończyłam!
+					3: Dalej walczysz?[0.1] ..Jeszcze nie skończyłam!
 				}
 
 				Transition: {
-					1: Wydaje się, że to beznadziejna walka...
-					2: Odkąd ta wyspa nagle się pojawiła,[0.1] obserwuję.
+					1: Wygląda na to, że toczę beznadziejną walkę...
+					2: Odkąd ta wyspa nagle się pojawiła,[0.1] obserwałam już ją od dłuższego czasu.
 					3: Widziałam, jak giniesz niezliczoną ilość razy,[0.1] jednak nigdy tak naprawdę nie umierasz.
 					4: Wydaje się, że większość nie potrafi lub po prostu nie chce tego zrozumieć.
 					5: Ale ja to rozumiem.
@@ -1427,7 +1428,7 @@ Mods: {
 
 				P2: {
 					1: Wciąż mam tę nadzieję w swojej głowie, że jesteś śmiertelnikiem,[0.4] więc nawet jeśli ja nie znajdę sposobu, by się ciebie pozbyć...
-					2: ... Jest jeszcze wielu przeciwników potężniejszych ode mnie!
+					2: ... Jest jeszcze wiele bytów potężniejszych ode mnie!
 					3: ... Strażnik Epidotry...
 					4: ... Królewski Rycerz...
 					5: ... oraz Półbóg Światła...
@@ -1475,7 +1476,7 @@ Mods: {
 			}
 
 			Chalice: {
-				Name: Kielich Równowagi
+				Name: Kielich Reputacji
 				Alignment: Reputacja
 				ItemInterested: "[c/ffea9b:Jest coś do powiedzenia o przedmiocie, który trzymasz]"
 				GGInterested: "[c/ffea9b:Kielich ma coś do powiedzenia o tym miejscu]"
@@ -1487,10 +1488,10 @@ Mods: {
 				HeartOfThorns2: Zaraza powinna ustąpić, gdy ten nieszczęsny opiekun zostanie zabity.
 				DemonScroll:
 					'''
-					Zakazany zwój, używany do przywoływania wielkich przerażających demonów na ziemię.
+					Zakazany zwój, używany do przywoływania wielkich przerażających demonów.
 					To niebezpieczne przedmioty, nie daj się na nie skusić; chyba że pragniesz podążać ścieżką grzechu.
 					'''
-				DemonScroll2: Próba przywołania demona i {0} z kapłanem... Czy wszystko z tobą w porządku?
+				DemonScroll2: Próba przywołania demona i {0} kapłana... Czy wszystko z tobą w porządku?
 				WeddingRing: Nieumarła... Coś mi mówi, że nie wyszła jeszcze ze swojej męki.
 				WeddingRing2: Część ducha pani pozostała w tym pierścieniu. Może pewien opiekun znajdzie pociechę jeżeli będzie w jego posiadaniu.
 				SorrowfulEssence:
@@ -1512,7 +1513,7 @@ Mods: {
 				MemoryChip:
 					'''
 					Na pierwszy rzut oka wydaje się to bezużytecznym prezentem dla kogoś takiego jak ty.
-					I choć może to być prawda, nie wątpię, że w przyszłości może to odegrać kluczową rolę.
+					I choć może jest to prawda, nie wątpię, że w przyszłości może to odegrać kluczową rolę.
 					'''
 				AnglonicMysticBlossom:
 					'''
@@ -1524,12 +1525,12 @@ Mods: {
 					Laska, która wzywa stworzenia Natury.
 					Nie daj się zaniepokoić ich gadatliwemu duchowi, ponieważ mogą nawet przekonać pewne stworzenia o twojej przyjaźni.
 					'''
-				NebSummon: To przyciąga cichego obserwatora, który przetestuje twoją siłę.
+				NebSummon: Ten przedmiot przyciąga cichego obserwatora, który ma zamiar przetestować twoją siłę.
 				NebSummon2:
 					'''
 					Jej przeszłość to tajemnica,
 					ale w mojej duszy wiem, jak ważną rolę odgrywa w ochronie tego świata.
-					Na podstawie twoich dotychczasowych działań, przewiduję straszną przyszłość.
+					Na podstawie twoich dotychczasowych działań, przewiduję potworną przyszłość.
 					'''
 				NebSummon3: ... Teraz to widzę.
 				A0: Zaprawdę jesteś neutralny...
@@ -1541,11 +1542,11 @@ Mods: {
 				A3: Jestem dumny z ciebie, że potrafisz utrzymać w sobie światło które staje się jaśniejsze i jaśniejsze...
 				A4N: ... Słuchaj, idziesz złą drogą... Proszę, zawróć.
 				A4: Pokonujesz zło tego świata... Naprawdę jesteś kimś wyjątkowym.
-				A5N: Przepraszam, teraz już nie możesz zawrócić...
-				A5: Jasne światło świeci w Tobie, jednak czuję, że przed Tobą czają się teraz bardziej niebezpieczni wrogowie...
-				A6N: Jesteś poza zbawieniem...
+				A5N: Przepraszam, nie możesz już teraz zawrócić...
+				A5: Świeci w tobie jaskrawe światło, jednak czuję, że przed Tobą czają się coraz bardziej niebezpieczni wrogowie...
+				A6N: Jesteś poza wszelkim zbawieniem...
 				A6: Jesteś zbawieniem, którego ten świat potrzebował...
-				ADDDefeat: Nie wiadomo, jak te zapomniane bóstwa rządziły, może ich pokonanie było najlepszym, a być może najgorszym rozwiązaniem.
+				ADDDefeat: Nie wiadomo, jak rządziły te zapomniane bóstwa, może ich pokonanie było najlepszym, a być może najgorszym rozwiązaniem.
 				FowlDefeat: ... Co?
 				KeeperSave: Odkupiłeś swoje winy, Octavia może teraz spoczywać w poko-
 				KS3Spared: Dobrze że zostawiłeś go w spokoju...
@@ -1561,8 +1562,8 @@ Mods: {
 				TreebarkFelled: Pomaganie w wyginięciu tych malejących dryad nie jest czymś, co aprobuję.
 				EaglecrestDefeat: Kamienie, które żyją? Nigdy czegoś takiego nie widziałem.
 				SkullDiggerDefeat: Smutne zakończenie opiekuna oraz pani, ale może jest inny sposób..?
-				CalaviaChoice: Ona pragnie, by ją oszczędzono.
-				CalaviaKilled: Zero litości...
+				CalaviaChoice: Ona pragnie, abyś ją oszczędził.
+				CalaviaKilled: Bez Litości...
 			}
 
 			SpiritWalker: {
@@ -2806,10 +2807,10 @@ Mods: {
 				NurseDialogue: Pielęgniarka, {0}, nie ma pojęcia o promieniowaniu ani o tym, jak je leczyć. Jeśli będziesz mieć pecha i zaczniesz cierpieć na OZS, nie będzie w stanie ci pomóc. Żeby wykrywać zagrożenia, które mogą to wywołać, polecam kupić ode mnie licznik Geigera-Müllera albo znaleźć gdzieś jakiś.
 				ArmsDealerDialogue: Broń {0} jest dla mnie bezużyteczna. Już posiadam szeroki arsenał niszczycielskiej broni palnej i białej, ale wolałbym jej nie używać na istotach żywych — to naruszałoby Pierwsze Prawo Robotów
 				CyborgDialogue: Podczas gdy wszyscy inni lokatorzy patrzą na mnie krzywo, {0} wydaje się nie mieć ze mną problemu. Nie winię pozostałych — nasz gatunek ma niestety skłonność do nienawiści wobec istot żywych, a zwłaszcza takich jak ty, które wykazują znaczące podobieństwo do naszych twórców.
-				Morning: Jest Rano
-				Afternoon: Jest Południe
-				Evening: Jest Wieczór
-				Today: Dzisiaj
+				Morning: Miłego poranka
+				Afternoon: Miłego południa
+				Evening: Miłego wieczoru
+				Today: Tego dnia
 				Tonight: Tej nocy
 				1: Witaj {0}, Epidotrianinie.
 				2: Stamtąd skąd pochodzę, rzadko można było zobaczyć coś poza chmurami. Ostatni raz kiedy widziałem czyste niebo... to chyba było pół życia temu.
@@ -2819,7 +2820,7 @@ Mods: {
 				6: Jak mogę ci pomóc {0}?
 				Healthy1: Wyglądasz na zdrowego. Czegoś ode mnie potrzebujesz?
 				Healthy2: Dobrze dziś wyglądasz. Coś ci chodzi po głowie?
-				Day1: Ciepło słońca i intensywne barwy roślin przywołują wspomnienia minionych dni.
+				Day1: Ciepło słońca i te intensywne barwy roślin przywołują wspomnienia minionych dni.
 				Day2: Ładny dziś dzień, nie sądzisz?
 				Night: Księżyc zawsze jest widokiem wartym uwagi.
 				Unhealthy1: Wyglądasz na rannego. Pozwól, że- ...Proszę, poszukaj pomocy u Pielęgniarki.
@@ -2885,18 +2886,18 @@ Mods: {
 			}
 
 			Daerel: {
-				IntroDialogue1: Cześć, znowu tu jestem. Przepraszam za wtargnięcie, ale zgubiłem przyjaciela przez ten portal. Mogę tu zostać na chwilę, żeby ogarnąć trochę zapasów? Na pewno go kiedyś znajdę.
-				IntroDialogue2: Dzięki. Szukam tylko trochę zapasów, nic z twoich rzeczy. Tylko to, co pomoże mi znaleźć przyjaciela. Jestem Daerel, miło cię poznać.
-				IntroDialogue3: Ach tak, przepraszam, nazywam się Daerel. Radzę sobie całkiem nieźle z łukiem, i na razie to chyba tyle. Mam nadzieję, że wkrótce będę lepszy w swoim fachu — wtedy na pewno twoja skromna wyspa zyska świetnego łucznika. Na razie muszę zająć się sprawą mojego przyjaciela i zebrać trochę potrzebnych rzeczy. Mam nadzieję, że moja obecność nikomu nie przeszkadza.
-				IntroDialogue4: Dzięki. Szukam tylko kilku zapasów, nic z twoich rzeczy. Kilka rzeczy, które pomogą mi znaleźć przyjaciela. Miło mi cię poznać.
+				IntroDialogue1: Cześć, znowu tu jestem. Przepraszam za wtargnięcie, ale zgubiłem przyjaciela przez tamten portal. Mogę tu zostać na chwilę, żeby ogarnąć trochę zapasów? Na pewno go kiedyś znajdę.
+				IntroDialogue2: Dzięki. Szukam tylko trochę zapasów, niczego nie chce z twoich rzeczy. Tylko to, co pomoże znaleźć mojego przyjaciela. Jestem Daerel, miło cię poznać.
+				IntroDialogue3: Ach tak, przepraszam, nazywam się Daerel. Radzę sobie całkiem nieźle z łukiem, i na razie to chyba tyle. Mam nadzieję, że wkrótce będę lepszy w swoim fachu - wtedy na pewno twoja skromna wyspa zyska świetnego łucznika. Na razie muszę zająć się sprawą mojego przyjaciela i zebrać trochę potrzebnych rzeczy. Mam nadzieję, że moja obecność nikomu nie przeszkadza.
+				IntroDialogue4: Dzięki. Szukam tylko kilku zapasów, niczego z twoich rzeczy. Tylko to co pomoże znaleźć mojego przyjaciela. Miło mi cię poznać.
 				PartyGirlDialogue: Przysięgam, {0} przypomina mi kolorowego kucyka z innego wszechświata...
 				Dialogue1: Atmosfera tutaj sprawia, że mam ciarki na plecach, pozwól mi żyć gdzieś mniej przerażającym miejscu.
 				Dialogue2: Coś potrzebujesz? Mogę na nowo naciągnąć twój łuk albo nałożyć na twoją broń truciznę. Ale to będzie kosztować.
-				Dialogue3: Ćwierkanie deszczu w zaciszu przytulnego domu nigdy się nie nudzi.
+				Dialogue3: Padający deszcz w zaciszu przytulnego domu nigdy się nie nudzi.
 				Dialogue4: Nie masz nic przeciwko, jeśli tu zostanę, prawda?
 				Dialogue5: Zauważyłeś, jak łagodne są tutejsze zwierzaki? Mogę podejść do królika i go pogłaskać, bez problemu! To niesamowite!
 				Dialogue6: Lubię deszcz tylko wtedy, gdy jestem w domu, nie gdy mokną mi ubrania.
-				Dialogue7: Mam całkiem niezły łup do sprzedania, trochę teraz potrzebuję kasy.
+				Dialogue7: Mam całkiem niezły łup do sprzedania, potrzebuję teraz trochę kasy.
 				Dialogue8: Mój ulubiony kolor to zielony, chociaż nie wiem, czemu ci to mówię...
 				Dialogue9: Koty zdecydowanie są lepsze od psów.
 				Dialogue10: Widziałeś faceta z zaczesanymi do tyłu, orzechowymi włosami? Niósł miecz i miał na sobie zieloną tunikę, gdy go ostatnio widziałem. Zgubiłem go przed przejściem przez portal, mam nadzieję, że wszystko z nim w porządku.
@@ -2914,7 +2915,7 @@ Mods: {
 					'''
 
 				Advice: {
-					StarSerpent: Szczerze mówiąc, dziwi mnie, że wciąż przychodzisz do mnie po rady. Wydajesz się być bystrą osobą – znacznie bystrzejszą ode mnie. Tak czy inaczej, ostatnio widuję ciekawe wiwerny na niebie – fioletowe i złote. Sprawdź, jeśli masz ochotę.
+					StarSerpent: Szczerze mówiąc, dziwi mnie, że wciąż przychodzisz do mnie po rady. Wydajesz się być bystrą osobą – znacznie bystrzejszą ode mnie. Tak czy inaczej, ostatnio widuję ciekawe wiwerny na niebie – fioletowo-złote. Sprawdź, jeśli masz ochotę.
 					UkkoEye: Hmm, to świecące oko, które masz, wygląda dość... mitycznie. I jeszcze daje ci zagadkę? "Otocz je kamieniami jego pochodzenia"... No to musisz je czymś otoczyć, pytanie tylko – jakim kamieniem? Może zapytaj {0}.
 					Androids: Widziałem kilka robotów kręcących się po wyspie, skanujących losowe przedmioty i stworzenia. Nie mam pojęcia, skąd się wzięły, ale widziałem, jak jednego zaatakowano. Gdy był bliski zniszczenia, przestał się ruszać i teleportował się w niebo. Ich cel pozostaje dla mnie zagadką. Może ty dasz radę to rozgryźć?
 					ForestNymph: Driada, {0}, mówi, że kiedyś widziała na tej wyspie Leśną Nimfę. To rzadkie stworzenia, zwykle trzymają się w pobliżu olbrzymich drzew. Jeśli kiedyś na taką trafisz, nie radziłbym za długo się kręcić – nie przepadają za ludźmi naruszającymi ich przestrzeń. Ciekawe, czy dałoby się jakoś zaprzyjaźnić z jedną z nich?
@@ -2998,7 +2999,7 @@ Mods: {
 			}
 
 			Fallen: {
-				Dialogue1: Zaintrygowany zagubionymi duszami? Gdy żywa istota umiera, jej dusza opuszcza ciało — to właśnie są zagubione dusze. Krążą po świecie w poszukiwaniu zwłok, które mogą opętać. Dla zwykłych ludzi są niewidoczne, ale ci co znają magię widzą, jak migoczą między Krainą Duchów a Światem Materialnym.
+				Dialogue1: Zaintrygowany zagubionymi duszami? Gdy żywa istota umiera, jej dusza opuszcza ciało — tym są właśnie zagubione dusze. Krążą po świecie w poszukiwaniu zwłok, które mogą opętać. Dla zwykłych ludzi są niewidoczne, ale ci co znają magię widzą, jak migoczą między Krainą Duchów a Światem Materialnym.
 				Dialogue2: Wielkość zagubionej duszy zależy od siły pierwotnej istoty — im silniejsza Wola, tym większa dusza. Gdy dusza opuści ciało, nie może się z nim ponownie połączyć. Kiedy znajdzie odpowiedni "naczynie", łączy się z nim. Najczęściej powstaje wtedy szkielet, ale jeśli dusza jest wystarczająco silna, pokrywa szkielet blado-brązowym ciałem, tworząc Upadłego.
 				OkvotDialogue1: Uratowałeś Strażniczkę? Dziękuję ci za to — nie potrafię sobie nawet wyobrazić bólu, jaki czuła. Ale wątpię, żeby to był koniec... Jej mąż też zmarł, podobno z powodu żałoby. Nie stał się jednak nieumarłym — jego odwrócona dusza przemieniła go w coś o wiele gorszego.
 				OkvotDialogue2: Może i jestem nieumarły, ale marzę o świecie bez łez i bez bólu. Świecie pokoju. Taki byłem, zanim umarłem i mimo że nieumarli zwykle bywają bardziej agresywni, ja wciąż czuję to samo, co wtedy.
@@ -3084,7 +3085,7 @@ Mods: {
 				Dialogue5: Jesteś ciekawy o naszym połączeniu ze Światem, prawda? To dość dobrze strzeżona tajemnica, ale Świat ufa ci na tyle, że mogę ci to powiedzieć. Poprzez medytację my, nimfy, potrafimy nawiązać kontakt z Epidotrą i rozmawiać z nią; dzięki temu zyskujemy wgląd wykraczający poza ludzkie możliwości, co pozwala nam poznać prawdziwe intencje istoty albo ostrzec przed niebezpieczeństwami — naturalnymi i nienaturalnymi — które zagrażają ziemi.
 				Dialogue6: Jesteś ciekawy o naszym połączeniu ze Światem, prawda? Hm... To bardzo dobrze strzeżona tajemnica, i na razie niech tak zostanie.
 				Dialogue7: Przestroga dla ciebie. Nigdy nie zapomnę twojego czynu przeciwko ludziom drzewa. Mówię do ciebie teraz tylko z powodu dobra, które uczyniłeś mimo tego.
-				Dialogue8: Wyczułam powrót wielkiej obecności, lecz trwało to krótko. Pokonałeś ją, prawda? Mądra decyzja — Akka była przyjaciółką Natury jedynie w duszy. Jej umysł zaś wypełniały tylko żądze i mroczne pragnienia. Ukko, jej mąż, był podobny.
+				Dialogue8: Wyczułam powrót wielkiego bytu, lecz trwało to krótko. Pokonałeś ją, prawda? Mądra decyzja — Akka była przyjaciółką Natury jedynie w duszy. Jej umysł zaś wypełniały tylko żądze i mroczne pragnienia. Ukko, jej mąż, był podobny.
 				Dialogue9: Nie pochwalam okropnych zniszczeń, które wyrządziłeś części ziemi. Jaką mocą spowodowałeś ten blast, który usycha ziemię, mutuje rośliny i rozkłada powietrze? To moc spoza tego świata.
 				Dialogue10: Straż Ludowa, co? Członkowie ich oddziału kręcili się po lasach, z których pochodzę. Za bardzo się zbliżyli, więc uciekłam i znalazłam ten portal.
 				Dialogue11: Świat mówi mi, że zabiłeś tego skażonego opiekuna Faywood. Szkoda, że musiał zginąć, ale przynajmniej ta ohydna plaga ustaje. Trzymałam się z dala od ludzi w moim dawnym domu, ale pamiętam jego imię — Alder.
@@ -3111,13 +3112,13 @@ Mods: {
 			HazmatGhost.Dialogue: ...Co do diabła się dzieje? Syreny wyją, wprowadzono blokadę, a z głośników nic nie słychać! Nie zamierzam czekać, chcę się stąd jak najszybciej wydostać!
 
 			KingSlayer: {
-				UraniumDialogue1: Naprawdę się postarałeś, dając mi trochę uranu. Dzięki, chyba.
+				UraniumDialogue1: Naprawdę się postarałeś, dając mi uran. Dzięki, chyba.
 				UraniumDialogue2: Sam bym sobie to znalazł, wiesz?
 				UraniumDialogue3: Dzięki... ?
 				NoUraniumDialogue3: Nie masz żadnego uranu, idioto.
 				Quest1CompleteDialogue: Naprawdę się tym zająłeś... Dobra robota.
 				Quest2CompleteDialogue: Jak ty w ogóle to nosisz? Ekh, dzięki, chyba.
-				Quest3CompleteDialogue: Czy naprawdę musiałeś mi we wszystkim pomagać? Nic z tego nie masz. Ale dzięki. Hmm, tego normalnie nie dawałbym za zwykłe naprawy statku, ale w tobie jest coś interesującego, czego nie potrafię dokładnie określić.
+				Quest3CompleteDialogue: Czy naprawdę musiałeś mi we wszystkim pomagać? Nic z tego nie masz. Ale dzięki. Hmm, tego normalnie nie dawałbym za zwykłe naprawy statku, ale jest coś w tobie interesującego, czego nie potrafię dokładnie określić.
 				Quest1Dialogue:
 					'''
 					Chcesz coś zrobić? Zrób mi zestaw okablowania, to powinno być proste. Sam bym to zrobił, ale nie chce mi się wstawać z tego krzesła. Użyj Cyber Drukarki w pokoju pode mną.
@@ -3126,7 +3127,7 @@ Mods: {
 					'''
 				Quest2Dialogue:
 					'''
-					Wygląda na to, że jesteś całkiem chętny do pomocy... No to przynieś mi trochę poszycia kadłuba, dobrze? Dzięki.
+					Wygląda na to, że jesteś całkiem chętny do pomocy... To przynieś mi trochę poszycia kadłuba, dobrze? Dzięki.
 
 					Potrzeba: [i/s50:Redemption/Cyberscrap], [i/s12:Redemption/Plating], [i/s6:Redemption/CarbonMyofibre]
 					'''
@@ -3169,23 +3170,23 @@ Mods: {
 				Chat3: Bo w przeciwieństwie do ciebie, ja mam życie.
 				Chat3B: Po co miałbym teraz walczyć? Przegrałem.
 				Chat3C: Jeśli naprawdę chcesz walczyć, śmiało, użyj tej cybernetycznej zabawki. Mnie to nie obchodzi.
-				Chat3D: Po tym wszystkim, co zrobiłeś, nie mam ochoty na walkę z tobą. Pojedynek, może.
-				Chat4: Nie jestem jakimś facetem w skafandrze kosmicznym, jestem całym robotem z ludzkim umysłem. Możesz uważać, że to fajne, ale tak naprawdę wcale takie nie jest. Naprawdę żałuję, że nim zostałem.
+				Chat3D: Po tym wszystkim, co zrobiłeś, nie mam ochoty na walkę z tobą. Pojedynek, jak już.
+				Chat4: Nie jestem jakimś facetem w skafandrze kosmicznym, jestem stuprocentowym robotem z ludzkim umysłem. Możesz uważać, że to fajne, ale naprawdę wcale takie nie jest. Naprawdę żałuję, że nim zostałem.
 				Chat4B: Zrobiłem to dawno temu. Stałem się robotem, bo zrozumiałem, że to jedyny sposób, żeby przetrwać koniec mojego świata.
-				Chat4C: Chciałbym, żeby nadal tak było. Nie mogę jeść ani spać w tym robotycznym ciele, a mimo to ciągle czuję ból głodu i zmęczenia, których nie da się zaspokoić. Gdyby nie sztuczna inteligencja, którą dla siebie stworzyłem, nie byłbym w stanie ani mówić, ani się ruszać.
-				Chat5: Widziałeś tam moją statuę? Tak, należę do Bohaterów. Ale to nudne — zawsze dostaję zadania zabijania słabeuszy, jak Ta Strażnika.
-				Chat5B: Mówiłem, że należę do Bohaterów, ale rozważam odejście. Zaczyna przeszkadzać to moim... innym projektom.
-				Chat5C: Członkowie Bohaterów to same świry. Lider po prostu bez celu włóczy się po świecie, a nawet nie wiem, co robią pozostali dwaj.
-				Chat5D: W Bohaterach jest czterech członków. Pierwszy to półbóg gapa — szczerze, to spoko gość, tylko nienawidzę, jak bardzo jest ode mnie silniejszy. Drugi to jakiś kretyn, który podobno jest niezniszczalny, ani razu nie widziałem, żeby został zraniony. Trzecia to... cóż, chyba najbardziej normalna z nas wszystkich, ale nie mam pojęcia, co teraz robi.
-				Chat5E: ... Coś jest nie tak z rzeźbą półboga... Nie wygląda jak on. Ktoś ją przerobił?
-				Chat6: Sam tam jeszcze nie byłem, ale się temu przyglądam. Mogą tam być zapasy potrzebne do naprawy statku. Miał system zabezpieczeń, ale się zepsuł, więc może tam zajrzę i może coś sobie przywłaszczę.
-				Chat6B: Planuję to wkrótce sprawdzić, to jest na innej planecie, ale mogę tam łatwo dolecieć SoS-em.
-				Chat7: Co? Nawet nie znasz nazwy planety, na której się znajdujesz? Może w końcu przeczytaj jakąś książkę w swoim życiu.
+				Chat4C: Chciałbym, żeby nadal tak było. Nie mogę jeść ani spać w tym robotycznym ciele, a mimo to ciągle czuję głód i zmęczenie. Nie da się ich zaspokoić. Gdyby nie sztuczna inteligencja, którą dla siebie stworzyłem, nie byłbym w stanie ani mówić, ani się ruszać.
+				Chat5: Widziałeś tam mój pomnik? Tak, należę do Bohaterów. Ale to nudne — zawsze dostaję zadania zabijania słabeuszy, jak Ta Strażniczka.
+				Chat5B: Mówiłem, że należę do Bohaterów, ale rozważam odejście. Zaczyna nachodzić to na moje... inne projekty.
+				Chat5C: Członkowie Bohaterów to kompletne świry. Lider po prostu się włóczy się po świecie bez żadnego celu, a ja nawet nie wiem, co robią pozostali.
+				Chat5D: Bohaterowie liczą czterech członków. Pierwszy to półbóg, trochę przygłup — szczerze, to spoko gość, tylko nienawidzę, jak bardzo jest ode mnie silniejszy. Drugi to jakiś kretyn, który podobno jest niezniszczalny, ani razu nie widziałem, żeby został zraniony. Trzecia to... cóż, chyba najbardziej normalna z nas wszystkich, ale nie mam pojęcia, co teraz robi.
+				Chat5E: ... Coś jest nie tak z pomnikiem półboga... Nie wygląda jak on. Ktoś ją przerobił?
+				Chat6: Sam tam jeszcze nie byłem, ale się temu przyglądam. Mogą być tam zapasy potrzebne do naprawy mojego statku. Miał system zabezpieczeń, ale się zepsuł, więc może tam zajrzę i może sobie coś przywłaszczę.
+				Chat6B: Planuję to wkrótce sprawdzić, jest na innej planecie, ale mogę tam łatwo dolecieć SoS-em.
+				Chat7: Co? Nawet nie znasz nazwy planety, na której się znajdujesz? Może w końcu przeczytaj jakąkolwiek książkę w swoim życiu.
 				Chat7B: Ta planeta nazywa się Epidotra, stąd pochodzą Bohaterowie.
-				Chat7C: Ta malutka wyspa pojawiła się na tej planecie znikąd. Miałem ją zbadać jakiś rok temu, ale przypomniałem sobie, że widziałem tutaj półboga, więc odpuściłem. Wokół tego miejsca jest coś w rodzaju bańki wymiarowej, która sprawia, że z zewnątrz nie da się tego zobaczyć ani wejść — jedyną opcją są portale albo teleportacja. Skoro jest tu tylko jedno słońce, to bańka obejmuje nie tylko tę wyspę, ale cały jej wszechświat. O co chodzi? Za skomplikowane dla twojego małpiego mózgu? Powiem tak: technicznie rzecz biorąc, tutaj nie jesteśmy na „Epidotrze”.
+				Chat7C: Ta malutka wyspa pojawiła się na tej planecie znikąd. Miałem ją zbadać jakiś rok temu, ale przypomniałem sobie, że widziałem tutaj półboga, więc odpuściłem. Wokół tego miejsca jest coś w rodzaju bańki wymiarowej, która sprawia, że z zewnątrz nie da się jej zobaczyć ani wejść — jedyną opcją są portale albo teleportacja. Skoro jest tu tylko jedno słońce, to bańka obejmuje nie tylko tę wyspę, ale cały jej wszechświat. Co jest? Za skomplikowane dla twojego małpiego mózgu? Powiem tak: technicznie rzecz biorąc, tutaj nie jesteśmy na „Epidotrze”.
 				Chat8: Ta druga planeta pojawiła się nagle znikąd, ale mnie ciekawi. Zeskanowałem powierzchnię i wydaje się być raczej zamarznięta, jak na razie bez śladów życia ludzkiego. Przypomina mi planetę, którą kiedyś sprawdzałem w kosmosie... A właściwie przypomina mi wiele planet.
 				Chat8B: Widzisz tę planetę po prawej na tym hologramie? Nazwałem ją Liden — radioaktywne i jałowe pustkowie, pozbawione jakiegokolwiek życia.
-				Chat8C: Wkrótce wyruszę, żeby to sprawdzić. Skanery pokazują prawie brak życia — tylko zamarznięte, radioaktywne pustkowie.
+				Chat8C: Wkrótce wyruszę, żeby to sprawdzić. Skanery ledwo pokazują jakiekolwiek życie — tylko zamarznięte, radioaktywne pustkowie.
 				Chat9: Mógłbyś nie przeglądać moich dzienników pokładowych, proszę?
 				Chat9B: Naprawdę pisałem je tylko po to, żeby zachować zdrowy rozsądek. Nie chcę ci mówić, jak nudne jest podróżowanie przez kosmos przez milion lat.
 				Chat9C: Pisałem je codziennie, kiedy byłem w kosmosie, czekając na odbudowę mojego świata. Mimo że teraz wróciłem, nie jestem usatysfakcjonowany.
@@ -3193,7 +3194,7 @@ Mods: {
 
 			Fool: {
 				WokeDialogue1: Widziałem, co zrobiłeś.
-				WokeDialogue2: Wszystko do mnie wraca... Widziałem, co zrobiłeś... Teraz potrafię pojąć więcej niż tylko ziemię pod stopami. Mam ci coś do powiedzenia, ale jeszcze nie jestem gotowy.
+				WokeDialogue2: Wszystko do mnie wraca... Widziałem, co zrobiłeś... Teraz potrafię pojąć więcej niż tylko ziemię pod stopami. Mam ci coś do powiedzenia, ale nie jestem jeszcze gotowy.
 				WokeDialogue3: Moja śmierć, mój sen pod ziemią, zniszczył mnie. Ale im dłużej jestem obudzony, tym bardziej wraca do mnie zagubione ja.
 				WokeDialogue4: Czuję, jak moje wspomnienia budzą się z głębokiego snu. Wiem, że mam coś do zrobienia, ale nie jestem pewien, co dokładnie.
 				KingSlayerMaskDialogue: Heheh, siemanko, panie Slayer! Chwila... kto to?
@@ -3201,7 +3202,7 @@ Mods: {
 				1: Kury są zabawne! Chciałem ją nakarmić, ale zamiast tego upuściłem koronę, a ona i tak ją dziobała! ...A potem wybuchła!!
 				2: Moje buty nie są zabłocone! Gdzie się podziało całe błoto!?
 				3: Drzewa tutaj mają śmieszne kolory! Gdzie są żółte liście? Wszystkie są zielone! ...Zieleń też jest spoko.
-				4: Jak masz na imię? Garry? Założę się, że Garry, Ten Łagodny! To teraz twoje imię.
+				4: Jak masz na imię? Garry? Założę się, że Garry, ten Łagodny! To teraz twoje imię.
 				5: Ta wyspa to nie MOJA wyspa! Gdzie są moi ludzie!? Ten żółty rycerz zabrał mnie w jakieś dziwne miejsce...
 				6: Nadchodzą, czerwoni nadchodzą! Nie zostawaj! ...O, hej!
 				7: Lubię szmaragdy, są ładnie zielone! Ale rubinów nie znoszę, czerwień jest straszna...
@@ -3249,8 +3250,8 @@ Mods: {
 			}
 
 			SkullDigger: {
-				WeddingRingDialogue1: Co to…? Pierścień? Och, jej duch — ten pogodny duch — wciąż jest w nim zaklęty! Dziękuję ci, łaskawa duszo, za ten dar, który zdjął ciężar z mych ramion. Niech to przypomnienie przyniesie mi spokój.
-				WeddingRingDialogue2: Co to…? Pierścień..? A twój strój… Czy to oświadczyny? …Och! Jej duch, ten radosny duch, wciąż jest zaklęty w tym pierścieniu. Dziękuję ci, łaskawa duszo, za ten dar, który zdjął ciężar z mych ramion. Niech to przypomnienie przyniesie mi również spokój.
+				WeddingRingDialogue1: Co to…? Pierścień? Och, jej duch — ten radosny duch — wciąż jest w nim zaklęty! Dziękuję ci, łaskawa duszo, za ten dar, który zdjął ciężar z mych ramion. Niech ten dar przyniesie mi również spokój.
+				WeddingRingDialogue2: Co to…? Pierścień..? A twój strój… Czy to oświadczyny? …Och! Jej duch, ten radosny duch, wciąż jest zaklęty w tym pierścieniu. Dziękuję ci, łaskawa duszo, za ten dar, który zdjął ciężar z mych ramion. Niech ten dar przyniesie mi również spokój.
 				Talk: Co mógłby bezsensowny obrońca zaoferować w rozmowie..? Może opowiem ci o moim poprzednim życiu... Nie, to już tylko zamazane wspomnienie. Octavia wskrzesiła mnie i podtrzymywała moje więdnące ciało tak długo, że utraciłem dawnego siebie. Już ledwo jestem nieumarłym, bardziej duchem. Ale nie żałuj mi — cieszyłem się czasem z nią, dawało mi to poczucie celu...
 				Dialogue: Och… Dziękuję ci, że uwolniłeś moją panią od jej cierpienia. Ale teraz, bez niej, jaki jest mój cel? Wciąż nie czuję się spełniony. Gdybym tylko mógł mieć coś po niej, jakiś znak pamięci…
 				SpiritTalk: Widzisz, spodziewałem się dołączyć do mojej pani w tym świecie, skoro oboje zostaliśmy uwolnieni od naszych cierpień. Tymczasem nie widzę jej nigdzie, ani na krok… Szukałem i szukałem, lecz czuję, że gonię ducha — zarówno w przenośni, jak i dosłownie. Jeśli nie wiesz, gdzie spoczywa, chyba muszę kontynuować poszukiwania. Nie pozwolę, by moja frustracja mnie zawiodła i uczyniła mnie mściwym.
@@ -3353,7 +3354,7 @@ Mods: {
 				Chat5: Czyżbyś był innym wojownikiem z Żelaznej Domeny, który przypadkiem trafił w to miejsce? A może po prostu ukradłeś zbroję, którą nosisz?
 				Chat6: Powinnam założyć, że jesteś anglońskim rycerzem, sądząc po twoim stroju. Mogłam się domyślić, że nie rozumiesz języka Gatyckiego... No cóż.
 				Chat7: Ta zbroja, którą nosisz, jest dość groźna. Skąd ją masz? Przypomina mi smoki Thamor’in, które od czasu do czasu sprawiają problemy krajom zachodnim.
-				IntroLine1: Tak, przyszłam przez portal, który znajdował się na szczycie ośnieżonego urwiska. Gdy jednak próbowałam wrócić, przenosił mnie do tego, co mogę tylko przypuszczać, że są do Katakumb Gathuram. Wchodziłam i wychodziłam, ale zawsze trafiałem w to samo miejsce. Tutaj katakumby, tam katakumby... To frustrujące! Jak działają te portale!?
+				IntroLine1: Tak, przyszłam przez portal, który znajdował się na szczycie ośnieżonego urwiska. Gdy jednak próbowałam wrócić, przenosił mnie do tego, co mogę tylko przypuszczać, że są do Katakumb Gathuram. Wchodziłam i wychodziłam, ale zawsze trafiałam w to samo miejsce. Tutaj katakumby, tam katakumby... To frustrujące! Jak działają te portale!?
 				IntroLine2: Dokładnie! Mam rodzinę, która czeka na mój powrót, a nie widzę żadnej drogi z powrotem, skąd przybyłam. Czy wiesz cokolwiek o tych portalach?
 				IntroLine3: Nasz oddział wspiął się na górę, by odzyskać ciało słynnej wojowniczki, i natknął się na portal. Powinniśmy to zgłosić Straży Rozłamu i wrócić do swoich spraw, ale moja bezmyślna ciekawość powiedziała inaczej i postanowiłam rzucić okiem. „Wpadnę i wypadnę, szybko i sprawnie” — pomyślałam. Nie muszę chyba mówić, jak mądry to był pomysł.
 				IntroLine4: Jakże pomocne. Nie mam ci tego za złe — to magia z minionej epoki. Tylko Straż Rozłamu zna się na nich. Nawiasem mówiąc, musieli tu być wcześniej. Portale nie pojawiają się same, z kamiennym pierścieniem i fundamentem postawionym z niczego — to zadanie Straży Rozłamu, by je budować. Podobno właśnie po to, by je stabilizować.
@@ -3382,14 +3383,14 @@ Mods: {
 					Dałeś mi już tarczę. Nie wątpię, że to wystarczy, ale z osłoniętą głową czułabym się o wiele pewniej.
 					'''
 				MistfallLine: Ta księga zaklęć, którą trzymasz, jest dość słaba — chciałbyś, żeby stała się podobna do mojej?
-				ZweihanderLine: Noszysz Zweihandera? To słynny miecz Żelaznej Domeny, a także pierwotna forma Ostrza Góry — miecza potężnej wojowniczki, który niestety padła z rąk wielkiej bestii. Ja jestem jego nowym właścicielem. Chciałbyś, żebym wykonała jego replikę?
+				ZweihanderLine: Nosisz Zweihandera? To słynny miecz Żelaznej Domeny, a także pierwotna forma Ostrza Góry — miecza potężnej wojowniczki, który niestety padła z rąk wielkiej bestii. Ja jestem jego nową właścicielką. Chciałbyś, żebym wykonała jego replikę?
 				FurnaceLine: Dobrze, postaw obok mnie [i:Redemption/GathicCryoFurnace]Gatycki Mroźny Piec, a wykuje dla ciebie trochę ekwipunku.
-				AboutMeLine: Ta? Jestem główną wojowniczką i kowalką Żelaznej Domeny. W Khen Boldur mam męża i dwójkę dzieci. Rzadko mam czas, by ich zobaczyć, ale ta rozłąka sprawia, że chwile spędzane razem są jeszcze bardziej wyjątkowe... albo po prostu jestem optymistką? To przykre, ale moja praca nie zostawia miejsca na przyjemności. Dowodzę oddziałem Arumów, który głównie przeczesuje nieoznaczone tereny. Moi ludzie pewnie już dawno uznali mnie za zaginioną. Typowe.
-				CruxDialogue: Duch Kyrethy wydaje się lżejszy — mniej spowity negatywnymi emocjami. Niestety, to oznacza, że to, o czym mówił duch, jest prawdą — baronowie skrywają mrok, na który przymykałam oko. Wiesz co? Jeśli kiedykolwiek wrócę do Arum, przyjrzę się temu… po cichu. Tak czy inaczej, wierzę, że będzie gotowa oddać ci swój crux — oferuje go dobrowolnie.
+				AboutMeLine: Ja? Jestem główną wojowniczką i kowalką Żelaznej Domeny. W Khen Boldur mam męża i dwójkę dzieci. Rzadko mam czas, by ich zobaczyć, ale ta rozłąka sprawia, że chwile spędzane razem są jeszcze bardziej wyjątkowe... albo po prostu jestem optymistką? To przykre, ale moja praca nie zostawia miejsca na przyjemności. Dowodzę oddziałem Arumów, który głównie przeczesuje nieoznaczone tereny. Moi ludzie pewnie już dawno uznali mnie za zaginioną. Typowe.
+				CruxDialogue: Duch Kyrethy wydaje się lżejszy — mniej spowity negatywnymi emocjami. Niestety, to oznacza, że to, o czym mówił duch, jest prawdą — baronowie skrywają mrok, na który przymykałam oko. Wiesz co? Jeśli kiedykolwiek wrócę do Arum, przyjrzę się temu… po cichu. Tak czy inaczej, wierzę, że będzie gotowa ofiarować ci swój crux — oferuje go dobrowolnie.
 				NoCruxDialogue: Duch Kyrethy teraz wydaje się inny. Nigdy nie zdałam sobie sprawy, że aura, którą czułam, nie pochodziła z jej mocy, lecz z silnych negatywnych emocji — głupotą było sądzić, że to normalne u duchów o takiej wspaniałości. Teraz wyraźniej rozumiem jej uczucia i wierzę, że jest gotowa oddać ci swój crux, jeśli masz coś, co można nim nasycić.
 				ConfrontLine1: Hm? Och, więc zauważyłeś. Tak, noszę przy sobie amulet z duchem w środku. Nie wspomniałam wcześniej o mojej pracy, bo to nie twoja sprawa. Ale cóż, chyba należy się wyjaśnienie, żebyś sobie niczego nie dopowiedział.
 				ConfrontLine2: Duch, który noszę przy sobie, to duch pierwotnej właścicielki Ostrza Góry — Kyrethy, poległej w odosobnionym paśmie górskim. Należała do „wyjątkowej” grupy, której dusze były związane z innymi, i właśnie z tego powodu powierzono mi zadanie odzyskania jej ciała i duszy, by odesłać je z powrotem do Bastionu Arum — baronowie uznali to za sprawę najwyższej wagi. Wiem, że uwięzienie ducha w szkle to temat tabu, ale mam nadzieję, że teraz rozumiesz.
-				LeaveLine: Dziękuję za pomoc i wybacz mi kłopot. To, co mnie czeka, budzi we mnie niepokój, ale przetrwam — by znów połączyć się z moim oddziałem i wreszcie wrócić do rodziny. Nie ma lepszej motywacji niż ta. Żegnaj, nieznajomy.
+				LeaveLine: Dziękuję za pomoc i wybacz mi ten kłopot. To, co mnie czeka, budzi we mnie niepokój, ale przetrwam — by znów połączyć się z moim oddziałem i wreszcie wrócić do rodziny. Nie ma lepszej motywacji niż ta. Żegnaj, nieznajomy.
 			}
 
 			TreebarkDryad: {
@@ -3456,23 +3457,23 @@ Mods: {
 				Dialogue2: Czy chcesz, żebym wyjaśnił, czym jest Równowaga?
 				Dialogue3: Dobrze.
 				Dialogue4: Niektóre czyny zbliżą cię do sił dobra lub zła.
-				Dialogue5: Walka ze złem lub pomoc potrzebującym prowadzi cię ścieżką sprawiedliwości, dającą unikalne przedmioty i zadania.
+				Dialogue5: Walka ze złem lub pomoc potrzebującym prowadzi cię ścieżką sprawiedliwości, kieruje cię na unikalne przedmioty i zadania.
 				Dialogue6: Wspieranie zła lub zabijanie jej opozycji kładzie cię na drodze ohydnych czynów i zakazanej mocy.
 				Dialogue7: Walki i dostępne materiały będą się zmieniać w zależności od wybranej ścieżki.
-				Dialogue8: Przeciwnicy mogą potraktować cię poważnie lub mniej.
+				Dialogue8: Niektórzy przeciwnicy mogą potraktować cię poważnie lub mniej.
 				Dialogue9: Niektóre czyny można odkupić, przywracając utraconą równowagę, a nawet podnosząc ją wyżej.
 				Dialogue10: To, którą drogę wybierzesz, zależy tylko od ciebie.
 			}
 
 			Janitor: {
 				ChatJanitor1: A więc przydzielono ci sprzątanie, co? Mam dla ciebie zadanie — idź do reaktorów i usuń tę gęstą lawową breję spod jednego z nich. Nawet moje nano-dłuto nie zostawia na tym rysy!
-				ChatJanitor2: Nareszcie dała mi pomocnika, żeby ogarnąć ten cały burdel. Nie zapomnij zajrzeć pod stołem — kurz lubi się tam chować.
+				ChatJanitor2: Nareszcie dała mi pomocnika, żeby ogarnąć cały ten burdel. Nie zapomnij zajrzeć pod stołem — tam jest najwięcej kurzu.
 				Chat1: Wypad stąd, przynosisz mi tu tony kurzu!
 				Chat2: O, to znowu ty... Lepiej mi nie przeszkadzaj w sprzątaniu.
 				Chat3: Mów szybko — muszę wracać do mycia podłogi.
 				ChatClean: Bez brudu... jaki ja mam cel? Nieważne — będę mopować, aż ostatni pyłek zniknie z tego miejsca. To jest w końcu moja robota.
 				1: Pewnie widziałeś już tych pracowników, co wyglądają jak chodzące trupy, co? Nasze zabezpieczenia zwykle się nimi zajmują, ale to nie wystarcza. Wypełzają z przejętych pomieszczeń jak pieprzone karaluchy! A ja potem muszę sprzątać cały ten bajzel po nich i ochronie.
-				1Clean: Sufit. A teraz pozwól mi wrócić do mopowania! Każda podłoga jest cały czas brudna.
+				1Clean: Sufit. A teraz pozwól mi wrócić do mycia! Każda podłoga jest cały czas brudna.
 				2: Inne boty już nauczyły się mnie bać. I dobrze — mogę się wreszcie skupić na pracy. No, chyba że znowu ktoś mi zawraca głowę… Ciekawe kto to może być… A teraz spadaj!
 				3: Ten wielki bot z Sektora Omikron to spoko gość, jeśli mnie pytasz. Chyba jedyny, który mnie nie wkurza. A teraz, jeśli pozwolisz — świetnie przyniosłeś tu ten śluz i teraz muszę to posprzątać!
 				4: Jest taki jeden rudy bot, którego kojarzę — obsługuje dźwig w Magazynie Mechów. Niewiele o niej wiem, ale ma dość dziwny design. Nie chodzi o to, że wygląda bardziej kobieco... tylko te włosy... Po co?
@@ -3827,9 +3828,12 @@ Mods: {
 				DisplayName: Wieniec Cierni
 				Tooltip:
 					'''
-					Co piąte użycie broni magicznej wystrzeliwuje serię żądeł
-					Zwiększona regeneracja życia podczas przebywania w Dżungli
 					Zwiększa o 6% szansę na trafienie krytyczne żywiołem {0}
+					Następujące klasy broni zyskują nowe efekty:
+					- Walka w zwarciu: Ma szansę wypuścić ciernie wyrastające z pokonanych wrogów
+					- Magiczne: Co piąte użycie wystrzeliwuje wachlarz żądeł
+					- Dystansowe: Pociski mają szansę rozprysnąć się na drzazgi przy zderzeniu
+					- Przywoływania: Przywołane istoty mają szansę wykonać atak pazurami po zadaniu obrażeń od kontaktu
 					'''
 			}
 
@@ -9243,7 +9247,7 @@ Mods: {
 			}
 
 			HallowedHandGrenade: {
-				DisplayName: Poświęcony Granat Ręczny Anglonu
+				DisplayName: Anielski Granat Ręczny Anglonu
 				Tooltip: ""
 			}
 
@@ -10873,6 +10877,21 @@ Mods: {
 				DisplayName: Dżunglowa Statuetka
 				Tooltip: ""
 			}
+
+			SeabreezeStaff: {
+				DisplayName: Kostur Morskiej Bryzy
+				Tooltip:
+					'''
+					Rzuca podmuchy wiatru
+					Co każde 3 kolejne strzały rzuca podmuch morskiej bryzy, zadający dodatkowe {0} obrażeń
+					Podmuchy morskiej bryzy sprawiają, że spod uziemionych wrogów wytryskuje woda
+					'''
+			}
+
+			PoppySeeds: {
+				// DisplayName: Poppy Seeds
+				// Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -11587,6 +11606,10 @@ Mods: {
 			AncientPixie_Proj.DisplayName: Starożytna Wróżka
 			BlueFly_Proj.DisplayName: Niebieska Mucha
 			// XenoSplat.DisplayName: Xeno Splat
+			WindGust_Proj.DisplayName: Podmuch Wiatru
+			ThornCircletSplinter.DisplayName: Drzazga
+			LeechingThornSeed_Friendly.DisplayName: Pochłaniający Życie Cierń
+			// BlightedClaw_Slash.DisplayName: Blighted Claw_ Slash
 		}
 
 		NPCs: {
@@ -12532,9 +12555,21 @@ Mods: {
 
 			ElementDamageTooltipEnum: {
 				Tooltip: ""
-				Disabled.Label: Wyłączony
-				ShowAdded.Label: Pokaż Dodane
-				ShowTotalled.Label: Pokaż Zsumowane
+
+				Disabled: {
+					Label: Wyłączony
+					// Tooltip: ""
+				}
+
+				ShowAdded: {
+					Label: Pokaż Dodane
+					// Tooltip: ""
+				}
+
+				ShowTotalled: {
+					Label: Pokaż Zsumowane
+					// Tooltip: ""
+				}
 			}
 		}
 

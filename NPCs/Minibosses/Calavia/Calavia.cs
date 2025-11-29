@@ -19,7 +19,7 @@ using Terraria.Utilities;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Terraria.Localization;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Textures;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.UI;
@@ -174,6 +174,12 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 RedeQuest.SyncData();
             }
         }
+        public override bool ModifyDeathMessage(ref NetworkText customText, ref Color color)
+        {
+            customText = NetworkText.FromKey(Mod.GetLocalizationKey("StatusMessage.Other.Slain"), NPC.GetFullNetName());
+            color = Color.Red;
+            return true;
+        }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<CalaviaRelic>()));
@@ -193,7 +199,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 modifiers.Defense.Base += 8;
             if (AIState is ActionState.Defeat && TimerRand is 0)
                 modifiers.FinalDamage /= 50;
-            if (blocked && NPC.RedemptionGuard().GuardPoints >= 0)
+            if (blocked && !NPC.RedemptionGuard().GuardBroken)
             {
                 modifiers.DisableCrit();
                 modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Tink, 0.25f, true, DustID.Iron, default, 10, 1, 500);
@@ -213,7 +219,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
 
             if (player.Redemption().meleeHitbox.Intersects(ShieldHitbox))
             {
-                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                if (!NPC.RedemptionGuard().GuardBroken)
                 {
                     modifiers.DisableCrit();
                     modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Tink, 0.25f, true, DustID.Iron, default, 10, 1, 200);
@@ -242,7 +248,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 projBlocked.Remove(projectile.whoAmI);
                 if (!projectile.ProjBlockBlacklist() && projectile.penetrate > 1)
                     projectile.timeLeft = Math.Min(projectile.timeLeft, 2);
-                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                if (!NPC.RedemptionGuard().GuardBroken)
                 {
                     modifiers.DisableCrit();
                     modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Tink, 0.25f, true, DustID.Iron, default, 10, 1, 200);

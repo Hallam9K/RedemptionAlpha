@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Armor.PreHM.CommonGuard;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
@@ -126,7 +126,7 @@ namespace Redemption.NPCs.PreHM
 
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            if (NPC.RedemptionGuard().GuardPoints >= 0)
+            if (!NPC.RedemptionGuard().GuardBroken)
             {
                 modifiers.DisableCrit();
                 modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4, .25f, false, DustID.Web, default, damage: NPC.lifeMax / 4);

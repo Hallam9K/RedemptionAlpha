@@ -14,6 +14,7 @@ using Redemption.Items.Donator.Megaswave;
 using Redemption.Items.Donator.Spoopy;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Tools.PreHM;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.HM.Magic;

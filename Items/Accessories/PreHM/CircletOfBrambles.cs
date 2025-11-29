@@ -14,6 +14,7 @@ namespace Redemption.Items.Accessories.PreHM
         public override void SetStaticDefaults()
         {
             ElementID.ItemPoison[Type] = true;
+            ElementID.ItemNature[Type] = true;
         }
 
         public override void SetDefaults()
@@ -28,10 +29,6 @@ namespace Redemption.Items.Accessories.PreHM
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.RedemptionPlayerBuff().thornCirclet = true;
-            if (player.ZoneJungle)
-            {
-                player.lifeRegen += 2;
-            }
         }
     }
 }

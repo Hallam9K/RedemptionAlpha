@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.NPCs.PreHM;
 using System;
 using System.Collections.Generic;
@@ -86,7 +86,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         private bool blocked;
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            if (blocked && NPC.RedemptionGuard().GuardPoints >= 0)
+            if (blocked && !NPC.RedemptionGuard().GuardBroken)
             {
                 NPC.HitSound = SoundID.DD2_SkeletonHurt with { Volume = 0 };
                 modifiers.DisableCrit();
@@ -123,7 +123,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 projBlocked.Remove(projectile.whoAmI);
                 if (!projectile.ProjBlockBlacklist() && projectile.penetrate > 1)
                     projectile.timeLeft = Math.Min(projectile.timeLeft, 2);
-                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                if (!NPC.RedemptionGuard().GuardBroken)
                 {
                     NPC.HitSound = SoundID.DD2_SkeletonHurt with { Volume = 0 };
                     modifiers.DisableCrit();

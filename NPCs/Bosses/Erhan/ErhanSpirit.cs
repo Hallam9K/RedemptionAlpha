@@ -53,6 +53,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedErhan, -1);
         }
+        public override bool ModifyDeathMessage(ref NetworkText customText, ref Color color) => true;
 
         private bool Funny;
 

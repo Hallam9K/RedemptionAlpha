@@ -1,11 +1,14 @@
-using Terraria.ModLoader;
-using Terraria.ID;
+using Redemption.Globals;
 using Terraria;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
     public class BloodstainedPike : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ArcaneS);
         public override void SetStaticDefaults()
         {
             /* Tooltip.SetDefault("Holding out the pike and charging into weak enemies skewers them\n" +
@@ -19,7 +22,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetDefaults()
         {
             // Common Properties
-            Item.width = 54;
+            Item.width = 72;
             Item.height = 72;
             Item.rare = ItemRarityID.LightRed;
             Item.value = Item.sellPrice(gold: 5);
@@ -41,11 +44,11 @@ namespace Redemption.Items.Weapons.HM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 3.7f;
-            Item.shoot = ModContent.ProjectileType<BloodstainedPike_Proj>();
+            Item.shoot = ProjectileType<BloodstainedPike_Proj>();
         }
         public override bool CanUseItem(Player player)
         {
-            return player.ownedProjectileCounts[ModContent.ProjectileType<BloodstainedPike_Proj2>()] < 1;
+            return player.ownedProjectileCounts[ProjectileType<BloodstainedPike_Proj2>()] < 1;
         }
         public override void AddRecipes()
         {

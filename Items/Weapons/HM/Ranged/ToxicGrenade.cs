@@ -48,6 +48,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 .AddIngredient(ItemID.Grenade, 10)
                 .AddIngredient(ModContent.ItemType<ToxicBile>())
                 .AddTile(TileID.MythrilAnvil)
+                .AddDecraftCondition(Condition.DownedMechBossAny)
                 .Register();
             CreateRecipe()
                 .AddIngredient(ItemID.Grenade)

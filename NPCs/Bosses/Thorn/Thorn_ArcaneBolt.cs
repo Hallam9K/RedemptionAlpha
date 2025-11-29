@@ -79,7 +79,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
             if (Projectile.ai[1] == 60)
             {
-                SoundEngine.PlaySound(SoundID.Item28, Projectile.position);
+                SoundEngine.PlaySound(SoundID.Item28.WithVolumeScale(.6f), Projectile.position);
                 for (int i = 0; i < 10; i++)
                 {
                     ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.StardustPunch, new ParticleOrchestraSettings
@@ -227,6 +227,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             Projectile.hostile = false;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Magic;
+            Projectile.extraUpdates = 1;
             Projectile.Redemption().friendlyHostile = false;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)

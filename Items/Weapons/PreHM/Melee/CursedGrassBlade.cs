@@ -41,7 +41,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (target.life <= 0 && target.lifeMax > 5)
             {
                 for (int i = 0; i < Main.rand.Next(2, 4); i++)
-                    Projectile.NewProjectile(player.GetSource_ItemUse(Item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<ThornArrowSeed>(), hit.Damage, 3, player.whoAmI, 1);
+                {
+                    int p = Projectile.NewProjectile(player.GetSource_ItemUse(Item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ProjectileType<ThornArrowSeed>(), hit.Damage, 3, player.whoAmI, 1);
+                    Main.projectile[p].DamageType = DamageClass.Melee;
+                    Main.projectile[p].netUpdate = true;
+                }
             }
         }
     }

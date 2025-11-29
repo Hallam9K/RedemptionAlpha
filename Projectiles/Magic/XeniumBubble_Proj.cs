@@ -51,7 +51,7 @@ namespace Redemption.Projectiles.Magic
             SoundEngine.PlaySound(SoundID.Item54, Projectile.position);
             if (Projectile.ai[0] == 1)
             {
-                SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
+                SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode.WithVolumeScale(.5f) with { MaxInstances = 5 }, Projectile.position);
                 Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 6;
                 RedeDraw.SpawnExplosion(Projectile.Center, new Color(76, 240, 107), DustID.Smoke, 0, 10, 1, 2);

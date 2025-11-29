@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.NPCs.PreHM;
 using Terraria;
 using Terraria.Audio;
@@ -84,7 +84,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
 
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            if (NPC.RedemptionGuard().GuardPoints >= 0)
+            if (!NPC.RedemptionGuard().GuardBroken)
             {
                 modifiers.DisableCrit();
                 modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4, .25f, false, DustID.DungeonSpirit, damage: NPC.lifeMax / 4);

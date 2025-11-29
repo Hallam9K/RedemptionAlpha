@@ -194,6 +194,15 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedErhan, -1);
         }
+        public override bool ModifyDeathMessage(ref NetworkText customText, ref Color color)
+        {
+            if (!Spared)
+            {
+                customText = NetworkText.FromKey(Mod.GetLocalizationKey("StatusMessage.Other.Slain"), NPC.GetFullNetName());
+                color = Color.Red;
+            }
+            return true;
+        }
         private void AttackChoice()
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)

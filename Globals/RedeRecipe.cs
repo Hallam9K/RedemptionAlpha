@@ -184,24 +184,25 @@ namespace Redemption.Globals
 
             // Living Furniture
             Recipe.Create(ItemID.LivingLoom)
-                .AddIngredient(ModContent.ItemType<LivingTwig>(), 10)
-                .AddTile(TileID.WorkBenches)
+                .AddIngredient(ItemType<LivingTwig>(), 50)
+                .AddIngredient(ItemID.Vine, 3)
+                .AddTile(TileID.Sawmill)
                 .Register();
             Recipe.Create(ItemID.LivingWoodWand)
-                .AddIngredient(ModContent.ItemType<LivingTwig>(), 12)
+                .AddIngredient(ModContent.ItemType<LivingTwig>(), 32)
                 .AddTile(TileID.WorkBenches)
                 .Register();
             Recipe.Create(ItemID.LivingMahoganyWand)
-                .AddIngredient(ModContent.ItemType<LivingTwig>(), 12)
+                .AddIngredient(ModContent.ItemType<LivingTwig>(), 32)
                 .AddIngredient(ItemID.RichMahogany, 6)
                 .AddTile(TileID.WorkBenches)
                 .Register();
             Recipe.Create(ItemID.LeafWand)
-                .AddIngredient(ModContent.ItemType<LivingTwig>(), 12)
+                .AddIngredient(ModContent.ItemType<LivingTwig>(), 32)
                 .AddTile(TileID.WorkBenches)
                 .Register();
             Recipe.Create(ItemID.LivingMahoganyLeafWand)
-                .AddIngredient(ModContent.ItemType<LivingTwig>(), 12)
+                .AddIngredient(ModContent.ItemType<LivingTwig>(), 32)
                 .AddIngredient(ItemID.RichMahogany, 6)
                 .AddTile(TileID.WorkBenches)
                 .Register();

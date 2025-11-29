@@ -34,11 +34,6 @@ namespace Redemption.Projectiles.Ranged
         {
             behindNPCsAndTiles.Add(index);
         }
-        public override void OnSpawn(IEntitySource source)
-        {
-            if (Projectile.ai[0] == 1)
-                Projectile.DamageType = DamageClass.Melee;
-        }
         public override void AI()
         {
             if (++Projectile.frameCounter >= 10)

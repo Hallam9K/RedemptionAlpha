@@ -20,7 +20,7 @@ using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Terraria.Localization;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.UI;
 using Redemption.CrossMod;
 
@@ -136,7 +136,7 @@ namespace Redemption.NPCs.Lab.MACE
         }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            if (NPC.RedemptionGuard().GuardPoints >= 0)
+            if (!NPC.RedemptionGuard().GuardBroken)
             {
                 modifiers.DisableCrit();
                 modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4, .25f, false, DustID.Electric, default, 10, 1, 4000);

@@ -7,6 +7,7 @@ using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Friendly;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Neb.Clone
@@ -63,6 +64,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                     NetMessage.SendData(MessageID.WorldData);
             }
         }
+        public override bool ModifyDeathMessage(ref NetworkText customText, ref Color color) => true;
         public override bool CheckDead() => true;
     }
 }

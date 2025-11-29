@@ -4,7 +4,7 @@ using Redemption.BaseExtension;
 using Redemption.CrossMod;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
@@ -117,7 +117,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            if (NPC.frame.Y == 12 * 84 && AIState is not ActionState.Slash && NPC.RedemptionGuard().GuardPoints >= 0)
+            if (NPC.frame.Y == 12 * 84 && AIState is not ActionState.Slash && !NPC.RedemptionGuard().GuardBroken)
             {
                 modifiers.DisableCrit();
                 modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.DD2_WitherBeastCrystalImpact, 0.25f, true, DustType<SlateRubbleDust>(), CustomSounds.EarthBoom, 60, 2, 500);

@@ -9,6 +9,8 @@ namespace Redemption.Walls
     {
         public override void SetStaticDefaults()
         {
+            WallID.Sets.AllowsPlantsToGrow[Type] = true;
+            WallID.Sets.AllowsWind[Type] = true;
             Main.wallHouse[Type] = true;
             DustType = DustID.Ash;
             AddMapEntry(new Color(48, 44, 42));

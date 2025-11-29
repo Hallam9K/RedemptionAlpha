@@ -4,7 +4,7 @@ using Redemption.BaseExtension;
 using Redemption.Buffs.Minions;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.NPCs.Friendly.SpiritSummons;
 using Redemption.Particles;
 using Redemption.Projectiles;
@@ -96,7 +96,7 @@ namespace Redemption.NPCs.Friendly
 
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            if (NPC.RedemptionGuard().GuardPoints >= 0)
+            if (!NPC.RedemptionGuard().GuardBroken)
             {
                 modifiers.DisableCrit();
                 modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4, .25f, false, DustID.Wraith, default, 10, 1, 150);

@@ -160,6 +160,12 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             int Proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ProjectileType<NebFalling>(), 0, 0, Main.myPlayer);
             Main.npc[Proj].netUpdate = true;
         }
+        public override bool ModifyDeathMessage(ref NetworkText customText, ref Color color)
+        {
+            customText = NetworkText.FromKey(Mod.GetLocalizationKey("StatusMessage.Other.Slain"), NPC.GetFullNetName());
+            color = Color.Red;
+            return true;
+        }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.BossBag(ItemType<NebBag>()));

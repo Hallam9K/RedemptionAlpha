@@ -1,6 +1,6 @@
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
+using Redemption.Globals.NPCs;
 using Redemption.Globals.World;
 using Redemption.Textures.Elements;
 using Redemption.WorldGeneration;
@@ -422,6 +422,18 @@ namespace Redemption
                         }
 
                         return spearProj.Redemption().IsSpear = true;
+                    case "setMeleeProj":
+                        if (args[1] is not Projectile meleeProj)
+                            throw new Exception($"Expected an argument of type Projectile when setting projectile to be technically melee, but got type {args[1].GetType().Name} instead.");
+                        if (args.Length > 2)
+                        {
+                            if (args[2] is bool isMelee)
+                                return meleeProj.Redemption().TechnicallyMelee = isMelee;
+                            else
+                                throw new Exception($"Expected an argument of type bool when setting if projectile is technically melee, but got type {args[2].GetType().Name} instead.");
+                        }
+
+                        return meleeProj.Redemption().TechnicallyMelee = true;
                     case "increaseElementalResistance":
                         if (args[1] is not Player player)
                             throw new Exception($"Expected an argument of type Player when setting player, but got type {args[1].GetType().Name} instead.");
@@ -580,6 +592,12 @@ namespace Redemption
 
                     case "elementsDisabled":
                         return RedeConfigServer.Instance.ElementDisable;
+
+                    case "circletOfBramblesActive":
+                        if (args[1] is not Player bramblePlayer)
+                            throw new Exception($"Expected an argument of type Player, but got type {args[1].GetType().Name} instead.");
+
+                        return bramblePlayer.RedemptionPlayerBuff().thornCirclet;
                 }
             }
             /*

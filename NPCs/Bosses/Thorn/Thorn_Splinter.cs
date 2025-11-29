@@ -39,7 +39,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             Lighting.AddLight(Projectile.Center, Projectile.Opacity * 0.4f, Projectile.Opacity * 0.3f, Projectile.Opacity * 0.2f);
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             if (Projectile.timeLeft < 120)
-                Projectile.velocity.Y += .01f;
+                Projectile.velocity.Y += .1f;
 
             for (int k = oldPos.Length - 1; k > 0; k--)
                 oldPos[k] = oldPos[k - 1];

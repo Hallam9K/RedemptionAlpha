@@ -416,6 +416,7 @@ Mods: {
 				NebGone: Nebuleus is nowhere to be found...
 				NPCWokeUp: "{0} has woken up!"
 				Unconscious: "{0} was knocked unconscious..."
+				Slain: "{0} was slain..."
 				WarheadConditions1: The bomb is too close to unexplodable tiles
 				WarheadConditions2: The bomb must be activated on the surface and in the far reaches of the world
 				NothingHappens: Nothing happens...
@@ -3824,9 +3825,12 @@ Mods: {
 				DisplayName: Circlet of Brambles
 				Tooltip:
 					'''
-					Every 5th use of a magic weapon shoots a spread of stingers
-					Increased life regeneration while in the Jungle
 					6% increased {0} elemental critical strike chance
+					The following class weapons gain new effects:
+					- Melee: Has a chance to sprout brambles of thorns from slain enemies
+					- Magic: Shoots a spread of stingers every 5th use
+					- Ranged: Projectiles have a chance to burst into splinters on collision
+					- Summon: Minions have a chance to do a claw swipe upon dealing contact damage
 					'''
 			}
 
@@ -8162,7 +8166,7 @@ Mods: {
 					'''
 					Holding out the pike and charging into weak enemies skewers them
 					If a target is skewered for 10 seconds or once 5 are skewered at a time:
-					The pike takes their life and becomes enchanted for 10 seconds
+					The pike takes their life and becomes enchanted for 10 seconds, gaining {0} damage
 					'''
 			}
 
@@ -10870,6 +10874,21 @@ Mods: {
 				DisplayName: Jungle Statuette
 				Tooltip: ""
 			}
+
+			SeabreezeStaff: {
+				DisplayName: Seabreeze Staff
+				Tooltip:
+					'''
+					Casts gusts of wind
+					Casts a seabreeze gust every 3 consecutive shots, additionally dealing {0} damage
+					Seabreeze gusts cause water to spout from under grounded enemies
+					'''
+			}
+
+			PoppySeeds: {
+				DisplayName: Poppy Seeds
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -11584,6 +11603,10 @@ Mods: {
 			AncientPixie_Proj.DisplayName: Ancient Pixie
 			BlueFly_Proj.DisplayName: Blue Fly
 			XenoSplat.DisplayName: Xeno Splat
+			WindGust_Proj.DisplayName: Wind Gust
+			ThornCircletSplinter.DisplayName: Splinter
+			LeechingThornSeed_Friendly.DisplayName: Life-Draining Thorn
+			BlightedClaw_Slash.DisplayName: Blighted Claw_ Slash
 		}
 
 		NPCs: {
@@ -12529,9 +12552,21 @@ Mods: {
 
 			ElementDamageTooltipEnum: {
 				Tooltip: ""
-				Disabled.Label: Disabled
-				ShowAdded.Label: Show Added
-				ShowTotalled.Label: Show Totalled
+
+				Disabled: {
+					Label: Disabled
+					Tooltip: ""
+				}
+
+				ShowAdded: {
+					Label: Show Added
+					Tooltip: ""
+				}
+
+				ShowTotalled: {
+					Label: Show Totalled
+					Tooltip: ""
+				}
 			}
 		}
 

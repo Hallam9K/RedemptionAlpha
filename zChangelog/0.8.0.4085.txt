@@ -1,0 +1,23 @@
+=== 0.8 Beta .4085 ===
+- Fixed an Axe Bonus issue for Cross-Mod
+- Fixed Projectiles inheriting elements from Items not working if the spawn source was Item Parent
+- Fixed the Brambles from Cursed Grass Blade dealing Ranged damage instead of Melee
+- Increased falling speed of Thorn's Splinters
+- Improved grammar and wording of Polish localisation
+- Reduced volume of Thorn's and Alder's Staff's Arcane Bolts sounds
+- Reduced volume of Xenium Detonator's bubble explosions
+1611. Disabled shimmering Toxic Grenades into the Toxic Bile recipe until post-Mech
+2306. Doubled Alder's Staff's Arcane Bolts speed
+2307. Added Seabreeze Staff, an early-game staff that deals wind and water damage
+2308. Reworked Circlet of Brambles, removed jungle life regen, it now has a unique effect for each class weapon
+2309. Laboratory Drones are now considered Inorganic and Robotic enemies
+2312. Added Mod Call for checking if player has Circlet of Brambles active, for other modded classes to add their own effects
+2313. Added Poppy Seeds
+2314. Nightshade can be planted on Rock Golem Heads now
+2315. This mod's fences are tagged to allow plants to grow in front of it and doesn't block wind
+2316. Fixed enemies with Guard Points sometimes not being crittable
+2319. Added Mod Call for checking if Elements are disabled
+2320. Changed "x was defeated!" to "x was slain..." for bosses that were killed by you (Erhan, Final Form Nebuleus, and Calavia)
+2332. Resprited Bloodstained Pike, and gave its enchanted projectile Arcane element
+2333. Changed Living Loom, Living Wood Wands, and Leaf Wands recipes
+===============
