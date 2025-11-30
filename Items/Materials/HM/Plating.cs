@@ -1,3 +1,4 @@
+using Redemption.Globals;
 using Redemption.Tiles.Furniture.SlayerShip;
 using Terraria;
 using Terraria.ID;
@@ -24,6 +25,7 @@ namespace Redemption.Items.Materials.HM
             CreateRecipe(2)
                 .AddIngredient(ModContent.ItemType<CyberPlating>())
                 .AddTile(ModContent.TileType<SlayerFabricatorTile>())
+                .AddDecraftCondition(RedeConditions.DownedSlayer)
                 .Register();
         }
     }

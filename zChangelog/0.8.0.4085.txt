@@ -6,6 +6,7 @@
 - Improved grammar and wording of Polish localisation
 - Reduced volume of Thorn's and Alder's Staff's Arcane Bolts sounds
 - Reduced volume of Xenium Detonator's bubble explosions
+- Disabled shimmering Plating into Cyber Plating until post-King Slayer
 1611. Disabled shimmering Toxic Grenades into the Toxic Bile recipe until post-Mech
 2306. Doubled Alder's Staff's Arcane Bolts speed
 2307. Added Seabreeze Staff, an early-game staff that deals wind and water damage
