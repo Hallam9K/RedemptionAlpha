@@ -8169,7 +8169,7 @@ Mods: {
 					'''
 					Trzymając włócznię i ładując na słabych wrogów, nadziewasz ich na ostrze
 					Jeśli cel zostanie nadziany na 10 sekund lub jednocześnie zostanie nadzianych 5 wrogów:
-					Włócznia wysysa ich życie i zostaje zaklęta na 10 sekund
+					Włócznia wysysa ich życie i zostaje zaklęta na 10 sekund, zyskując {0} obrażeń
 					'''
 			}
 

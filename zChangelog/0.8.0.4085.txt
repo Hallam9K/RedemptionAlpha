@@ -6,7 +6,6 @@
 - Improved grammar and wording of Polish localisation
 - Reduced volume of Thorn's and Alder's Staff's Arcane Bolts sounds
 - Reduced volume of Xenium Detonator's bubble explosions
-- Disabled shimmering Plating into Cyber Plating until post-King Slayer
 1611. Disabled shimmering Toxic Grenades into the Toxic Bile recipe until post-Mech
 2306. Doubled Alder's Staff's Arcane Bolts speed
 2307. Added Seabreeze Staff, an early-game staff that deals wind and water damage
@@ -21,4 +20,5 @@
 2320. Changed "x was defeated!" to "x was slain..." for bosses that were killed by you (Erhan, Final Form Nebuleus, and Calavia)
 2332. Resprited Bloodstained Pike, and gave its enchanted projectile Arcane element
 2333. Changed Living Loom, Living Wood Wands, and Leaf Wands recipes
+2335. Disabled shimmering Plating into Cyber Plating until post-King Slayer
 ===============
