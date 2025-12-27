@@ -1,13 +1,11 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.GameContent;
 using Redemption.Base;
-using Terraria.Audio;
-using Terraria.ID;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -32,7 +30,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             LaserSegmentLength = 30;
             LaserWidth = 42;
             LaserEndSegmentLength = 40;
-            MaxLaserLength = 1800;
+            MaxLaserLength = 3600;
             StopsOnTiles = false;
         }
 
@@ -51,8 +49,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                 LaserScale = 0.2f;
             }
 
-            NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || npc.type != ModContent.NPCType<KS3_Magnet>())
+            NPC npc = Main.npc[(int)Projectile.ai[2]];
+            if (!npc.active || npc.type != NPCType<KS3_Magnet>())
                 Projectile.Kill();
 
             Projectile.Center = npc.Center;

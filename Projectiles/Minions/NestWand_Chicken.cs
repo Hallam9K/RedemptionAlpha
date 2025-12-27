@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Minions;
 using Redemption.Globals;
@@ -21,6 +20,7 @@ namespace Redemption.Projectiles.Minions
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+            ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         }
 
         public override void SetDefaults()
@@ -69,7 +69,7 @@ namespace Redemption.Projectiles.Minions
                         int height = 4;
                         if (Projectile.DistanceSQ(target.Center) < 200 * 200)
                             height = 1;
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(0, 16), Projectile.DirectionTo(target.Center) * Main.rand.Next(8, 13) - new Vector2(0, height), ModContent.ProjectileType<Egg_Proj>(), Projectile.damage, Projectile.knockBack, owner.whoAmI);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(0, 16), Projectile.DirectionTo(target.Center) * Main.rand.Next(8, 13) - new Vector2(0, height), ProjectileType<Egg_Proj>(), Projectile.damage, Projectile.knockBack, owner.whoAmI, 1);
                     }
                     if (++Projectile.frame > 4)
                     {
@@ -91,8 +91,8 @@ namespace Redemption.Projectiles.Minions
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D chickenTex = ModContent.Request<Texture2D>("Redemption/Projectiles/Minions/NestWand_Chicken").Value;
-            Texture2D nestBack = ModContent.Request<Texture2D>(Texture + "_Back").Value;
+            Texture2D chickenTex = Request<Texture2D>("Redemption/Projectiles/Minions/NestWand_Chicken").Value;
+            Texture2D nestBack = Request<Texture2D>(Texture + "_Back").Value;
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int height = chickenTex.Height / 5;
             int width = chickenTex.Width / 4;
@@ -124,11 +124,11 @@ namespace Redemption.Projectiles.Minions
         {
             if (owner.dead || !owner.active)
             {
-                owner.ClearBuff(ModContent.BuffType<NestWandBuff>());
+                owner.ClearBuff(BuffType<NestWandBuff>());
                 return false;
             }
 
-            if (owner.HasBuff(ModContent.BuffType<NestWandBuff>()))
+            if (owner.HasBuff(BuffType<NestWandBuff>()))
                 Projectile.timeLeft = 2;
 
             return true;
@@ -137,5 +137,10 @@ namespace Redemption.Projectiles.Minions
     public class Egg_Proj : ChickenEgg_Proj
     {
         public override void SetStaticDefaults() => ProjectileID.Sets.MinionShot[Projectile.type] = true;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Projectile.DamageType = DamageClass.Summon;
+        }
     }
 }

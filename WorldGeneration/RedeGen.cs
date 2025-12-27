@@ -12,6 +12,7 @@ using Redemption.Items.Usable.Summons;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.NPCs.Bosses.KSIII;
+using Redemption.NPCs.Bosses.KSIII.Friendly;
 using Redemption.NPCs.Friendly;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.NPCs.Minibosses.Calavia;
@@ -2700,7 +2701,7 @@ namespace Redemption.WorldGeneration
                 Vector2 shrinePos = new((JoShrinePoint.X + 9) * 16, (JoShrinePoint.Y + 13) * 16);
                 LabArea.SpawnNPCInWorld(shrinePos, ModContent.NPCType<TreebarkDryad>(), 0, 1, 0, 2);
             }
-            if (slayerShipVector.X != -1 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()))
+            if (slayerShipVector.X != -1 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()) && !NPC.AnyNPCs(NPCType<KS3_Friendly>()))
             {
                 Vector2 slayerSittingPos = new((slayerShipVector.X + 92) * 16, (slayerShipVector.Y + 28) * 16);
                 LabArea.SpawnNPCInWorld(slayerSittingPos, ModContent.NPCType<KS3Sitting>());

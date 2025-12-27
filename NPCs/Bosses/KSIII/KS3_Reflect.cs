@@ -1,14 +1,13 @@
-using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.Globals;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
-    public class KS3_Reflect : ModProjectile
+    public class KS3_Reflect : ModRedeProjectile
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
@@ -29,8 +28,8 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void AI()
         {
-            NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || (npc.type != ModContent.NPCType<KS3>() && npc.type != ModContent.NPCType<KS3_Clone>()))
+            NPC npc = Main.npc[(int)Projectile.ai[2]];
+            if (!npc.active || npc.ModNPC is not KS3)
                 Projectile.Kill();
 
             Vector2 Pos = new(npc.Center.X + 48 * npc.spriteDirection, npc.Center.Y - 12);
@@ -38,11 +37,9 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (npc.ai[3] != 6 || npc.ai[0] != 3)
                 Projectile.Kill();
 
-            for (int i = 0; i < Main.maxProjectiles; i++)
+            foreach (Projectile target in Main.ActiveProjectiles)
             {
-                Projectile target = Main.projectile[i];
-                if (Projectile == target || !target.active || target.damage <= 0 || !target.friendly || target.hostile || target.ProjBlockBlacklist())
-                    continue;
+                if (Projectile == target || !target.active || target.damage <= 0 || !target.friendly || target.hostile || target.ProjBlockBlacklist()) continue;
 
                 if (!Projectile.Hitbox.Intersects(target.Hitbox))
                     continue;
@@ -54,6 +51,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                     Main.dust[dustID].noLight = false;
                     Main.dust[dustID].noGravity = true;
                 }
+                RedeDraw.SpawnExplosion(target.Center, new Color(200, 255, 221), shakeAmount: 0, scale: .2f, noDust: true, rot: RedeHelper.RandomRotation(), tex: "Redemption/Textures/SwordClash");
+
                 SoundEngine.PlaySound(SoundID.NPCHit34, Projectile.position);
                 if (ProjectileID.Sets.CultistIsResistantTo[target.type])
                 {
@@ -70,7 +69,6 @@ namespace Redemption.NPCs.Bosses.KSIII
                 target.hostile = true;
                 target.friendly = false;
                 target.velocity = -target.velocity;
-
             }
         }
     }

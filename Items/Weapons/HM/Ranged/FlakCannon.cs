@@ -1,25 +1,20 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.Projectiles.Ranged;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI.Chat;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
     public class FlakCannon : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             /* Tooltip.SetDefault("Uses grenades as ammo, sticky and bouncy grenades included\n" +
                 "Fires flak grenades that penetrate through defense\n" +
                 "\nHolding left-click will charge a stream of grenades with no additional ammo consumption\n" +
                 "'Quite the unreal bang bang and boom boom'"); */
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
+            ItemID.Sets.IsRangedSpecialistWeapon[Type] = true;
             Item.ResearchUnlockCount = 1;
         }
 
@@ -36,7 +31,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.channel = true;
-            Item.knockBack = 9;
+            Item.knockBack = 3;
             Item.value = Item.sellPrice(0, 10, 0, 0);
             Item.rare = ItemRarityID.Pink;
             Item.UseSound = SoundID.Item61;
@@ -45,11 +40,11 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.shootSpeed = 10;
             Item.useAmmo = ItemID.Grenade;
         }
+        public override bool CanConsumeAmmo(Item ammo, Player player) => player.ItemUsesThisAnimation != 0;
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             type = ProjectileType<FlakCannon_Proj>();
         }
-        public override bool CanConsumeAmmo(Item ammo, Player player) => player.ItemUsesThisAnimation != 0;
         public override void AddRecipes()
         {
             CreateRecipe()

@@ -1,20 +1,21 @@
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
 using Redemption.Base;
-using Terraria.GameContent.Bestiary;
-using System.Collections.Generic;
-using Terraria.GameContent;
+using Redemption.Globals;
 using Redemption.Globals.NPCs;
+using ReLogic.Content;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
     public class SpaceKeeper : ModNPC
     {
-        public static int BodyType() => ModContent.NPCType<KS3>();
+        public static int BodyType() => NPCType<KS3>();
 
         public override void SetStaticDefaults()
         {
@@ -74,7 +75,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     Main.dust[dustID].noGravity = true;
                 }
             }
-            if (NPC.ai[2] > 180 && host.life < 10000)
+            if (NPC.ai[2] > 180 && host.life < host.lifeMax)
             {
                 NPC.ai[3] = 1;
                 Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.Frost, 0, 0, 100, new Color(), 2f);
@@ -82,7 +83,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 dust.noGravity = true;
                 NPC.netUpdate = true;
             }
-            if (host.ai[0] == 13)
+            if (host.ai[0] == 13 || host.life >= host.lifeMax)
             {
                 NPC.ai[3] = 0;
                 NPC.velocity.Y -= 0.5f;
@@ -96,16 +97,16 @@ namespace Redemption.NPCs.Bosses.KSIII
                 switch (NPC.ai[1])
                 {
                     case 0:
-                        NPC.MoveToNPC(Main.npc[(int)NPC.ai[0]], new Vector2(-250, -250), 11, 15);
+                        NPC.MoveToVector2(Main.npc[(int)NPC.ai[0]].Center + new Vector2(-250, -250), 11);
                         break;
                     case 1:
-                        NPC.MoveToNPC(Main.npc[(int)NPC.ai[0]], new Vector2(250, -250), 11, 15);
+                        NPC.MoveToVector2(Main.npc[(int)NPC.ai[0]].Center + new Vector2(250, -250), 11);
                         break;
                     case 2:
-                        NPC.MoveToNPC(Main.npc[(int)NPC.ai[0]], new Vector2(-250, 250), 11, 15);
+                        NPC.MoveToVector2(Main.npc[(int)NPC.ai[0]].Center + new Vector2(-250, 250), 11);
                         break;
                     case 3:
-                        NPC.MoveToNPC(Main.npc[(int)NPC.ai[0]], new Vector2(250, 250), 11, 15);
+                        NPC.MoveToVector2(Main.npc[(int)NPC.ai[0]].Center + new Vector2(250, 250), 11);
                         break;
                 }
             }
@@ -124,7 +125,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
                     if (NPC.frame.Y > 7 * frameHeight)
-                        NPC.frame.Y = 4;
+                        NPC.frame.Y = 4 * frameHeight;
                 }
                 return;
             }
@@ -136,14 +137,14 @@ namespace Redemption.NPCs.Bosses.KSIII
                     NPC.frame.Y = 0;
             }
         }
-
+        private Asset<Texture2D> glowMask;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D glowMask = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+            Asset<Texture2D> texture = TextureAssets.Npc[Type];
+            glowMask ??= Request<Texture2D>(Texture + "_Glow");
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(texture.Value, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glowMask.Value, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
 

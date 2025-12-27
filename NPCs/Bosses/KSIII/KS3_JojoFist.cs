@@ -1,18 +1,18 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.NPCs.Bosses.KSIII.Friendly;
+using Redemption.Projectiles;
 using System;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
-    public class KS3_JojoFist : ModProjectile
+    public class KS3_JojoFist : ModRedeProjectile
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("King Slayer III");
             Main.projFrames[Projectile.type] = 7;
         }
         public override void SetDefaults()
@@ -27,6 +27,9 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.timeLeft = 120;
         }
 
+        public override bool CanHitPlayer(Player target) => Projectile.frame <= 3;
+        public override bool? SafeCanHitNPC(NPC target) => Projectile.frame <= 3 ? null : false;
+
         public Vector2 vector;
         public float offset;
         public override void AI()
@@ -40,11 +43,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                     Projectile.Kill();
                 }
             }
-            if (Projectile.frame > 3)
-                Projectile.hostile = false;
 
-            NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || (npc.type != ModContent.NPCType<KS3>() && npc.type != ModContent.NPCType<KS3_Clone>()))
+            NPC npc = Main.npc[(int)Projectile.ai[2]];
+            if (!npc.active || npc.ModNPC is not KS3)
                 Projectile.Kill();
 
             Vector2 HitPos = new((28 * npc.spriteDirection) + Main.rand.Next(-8, 8), -18 + Main.rand.Next(-18, 18));

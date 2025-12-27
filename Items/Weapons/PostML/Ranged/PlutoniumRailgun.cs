@@ -31,6 +31,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.height = 40;
             Item.useTime = 15;
             Item.useAnimation = 45;
+            Item.useLimitPerAnimation = 3;
             Item.reuseDelay = 20;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.shoot = ModContent.ProjectileType<PlutoniumBeam>();

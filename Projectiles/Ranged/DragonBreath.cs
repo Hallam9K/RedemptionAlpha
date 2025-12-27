@@ -28,7 +28,7 @@ namespace Redemption.Projectiles.Ranged
         {
             Player player = Main.player[Projectile.owner];
             Projectile.Center = player.Center;
-            SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, Projectile.position);
+            SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath with { MaxInstances = 2 }, Projectile.position);
             if (Projectile.timeLeft % 4 == 0)
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity * 0.8f, ModContent.ProjectileType<DragonBreath>(), Projectile.damage, Projectile.knockBack, player.whoAmI);
         }

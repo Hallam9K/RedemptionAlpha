@@ -30,6 +30,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.height = 38;
             Item.useTime = 5;
             Item.useAnimation = 30;
+            Item.useLimitPerAnimation = 6;
             Item.reuseDelay = 60;
             Item.knockBack = 7;
             Item.useStyle = ItemUseStyleID.HoldUp;

@@ -86,7 +86,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPC.width = 24;
             NPC.height = 46;
             NPC.aiStyle = 7;
-            NPC.damage = 15;
+            NPC.damage = 28;
             NPC.defense = 5;
             NPC.lifeMax = 250;
             NPC.HitSound = SoundID.NPCHit1;
@@ -219,7 +219,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         {
             if (NPC.ai[0] is 15 && NPC.ai[1] == NPCID.Sets.AttackTime[NPC.type])
             {
-                NPC.Shoot(NPC.Center, ProjectileType<Zephos_SwordSlicer_Slash>(), NPC.damage * NPC.GetAttackDamage_ScaledByStrength(11), new Vector2(5 * NPC.direction, 0), 0, NPC.whoAmI, knockback: 5);
+                NPC.Shoot(NPC.Center, ProjectileType<Zephos_SwordSlicer_Slash>(), (int)(NPC.damage * NPCHelper.TownNPCDamageMultiplier()), new Vector2(5 * NPC.direction, 0), 0, NPC.whoAmI, knockback: 5);
             }
         }
         public override void HitEffect(NPC.HitInfo hit)

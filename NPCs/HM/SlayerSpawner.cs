@@ -1,20 +1,21 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using ParticleLibrary;
+using Redemption.Base;
+using Redemption.BaseExtension;
+using Redemption.Biomes;
+using Redemption.Globals;
+using Redemption.NPCs.Bosses.KSIII;
+using Redemption.NPCs.Friendly;
+using Redemption.Particles;
+using SubworldLibrary;
+using System.IO;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent.Events;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Globals;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using Redemption.BaseExtension;
-using Terraria.Audio;
-using ParticleLibrary;
-using Redemption.Particles;
-using Redemption.NPCs.Bosses.KSIII;
-using System.IO;
 using Terraria.ModLoader.Utilities;
-using Redemption.Biomes;
-using Redemption.Base;
-using Redemption.NPCs.Friendly;
-using SubworldLibrary;
 
 namespace Redemption.NPCs.HM
 {
@@ -226,7 +227,7 @@ namespace Redemption.NPCs.HM
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (RedeQuest.slayerRep < 1 || RedeQuest.slayerRep >= 4 || !NPC.downedMoonlord || RedeWorld.slayerMessageGiven || RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus)
+            if (RedeQuest.slayerRep < 1 || RedeQuest.slayerRep >= 4 || !NPC.downedMoonlord || RedeWorld.slayerMessageGiven || CreditsRollEvent.IsEventOngoing || RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus)
                 return 0;
             if (spawnInfo.Player.InModBiome<SlayerShipBiome>() || SubworldSystem.Current != null)
                 return 0;

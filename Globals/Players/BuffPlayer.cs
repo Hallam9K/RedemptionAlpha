@@ -603,7 +603,7 @@ namespace Redemption.Globals.Players
                     RedeHelper.SpawnNPC(target.GetSource_Loot(), (int)target.Center.X, (int)target.Center.Y, NPCID.DungeonSpirit);
                 }
             }
-            if (thornCirclet && proj.CountsAsClass(DamageClass.Melee) && Main.rand.NextBool(2))
+            if (thornCirclet && proj.CountsAsClass(DamageClass.Melee) && Main.rand.NextBool(3))
             {
                 if (target.life <= 0 && target.lifeMax > 5)
                 {
@@ -658,7 +658,11 @@ namespace Redemption.Globals.Players
                 if (target.life <= 0 && target.lifeMax > 5)
                 {
                     for (int i = 0; i < Main.rand.Next(2, 4); i++)
-                        Projectile.NewProjectile(Player.GetSource_ItemUse(item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ProjectileType<ThornArrowSeed>(), hit.Damage, 3, Player.whoAmI, 1);
+                    {
+                        int p = Projectile.NewProjectile(Player.GetSource_ItemUse(item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ProjectileType<ThornArrowSeed>(), item.damage / 2, 3, Player.whoAmI, 1);
+                        Main.projectile[p].DamageType = DamageClass.Melee;
+                        Main.projectile[p].netUpdate = true;
+                    }
                 }
             }
         }

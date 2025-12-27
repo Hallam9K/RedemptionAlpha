@@ -1,15 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
+using Redemption.Projectiles;
 using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Redemption.BaseExtension;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
-    public class ReboundShot : ModProjectile
+    public class ReboundShot : ModRedeProjectile
     {
         public override void SetStaticDefaults()
         {
@@ -29,9 +28,10 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.tileCollide = true;
             Projectile.timeLeft = 300;
             Projectile.extraUpdates = 1;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
             Projectile.Redemption().EnergyBased = true;
         }
-
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;

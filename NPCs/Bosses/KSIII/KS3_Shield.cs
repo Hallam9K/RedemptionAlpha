@@ -1,16 +1,15 @@
-using System;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.Audio;
-using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Redemption.Projectiles;
+using System;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
-    public class KS3_Shield : ModProjectile
+    public class KS3_Shield : ModRedeProjectile
     {
         public override string Texture => "Redemption/Textures/BubbleShield";
         public override void SetStaticDefaults()
@@ -31,8 +30,8 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void AI()
         {
-            NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || npc.ai[0] == 10 || (npc.type != ModContent.NPCType<KS3>() && npc.type != ModContent.NPCType<KS3_Clone>()))
+            NPC npc = Main.npc[(int)Projectile.ai[2]];
+            if (!npc.active || npc.ai[0] == 10 || npc.ai[0] == 9 || npc.ai[0] == 12 || npc.ModNPC is not KS3)
                 Projectile.Kill();
 
             Projectile.Center = npc.Center;
@@ -44,9 +43,8 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.scale -= 0.02f;
             Projectile.scale = (int)MathHelper.Clamp(Projectile.scale, 1, 2);
 
-            for (int i = 0; i < Main.maxProjectiles; i++)
+            foreach (Projectile target in Main.ActiveProjectiles)
             {
-                Projectile target = Main.projectile[i];
                 if (Projectile == target || !target.active || target.damage <= 0 || !target.friendly || target.hostile || target.ProjBlockBlacklist())
                     continue;
 
@@ -60,7 +58,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 Projectile.alpha -= 40;
                 Projectile.scale += 0.04f;
 
-                if (Projectile.localAI[0] < (npc.type == ModContent.NPCType<KS3>() ? 3000 : 9000))
+                if (Projectile.localAI[0] < (npc.type == NPCType<KS3>() ? 3000 : 9000))
                     continue;
 
                 SoundEngine.PlaySound(SoundID.NPCDeath56, Projectile.position);
@@ -80,7 +78,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D overlay = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield_Overlay").Value;
+            Texture2D overlay = Request<Texture2D>("Redemption/Textures/BubbleShield_Overlay").Value;
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
@@ -89,7 +87,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             return false;
         }
     }
-    public class KS3_Shield2 : ModProjectile
+    public class KS3_Shield2 : ModRedeProjectile
     {
         public override string Texture => "Redemption/Textures/BubbleShield";
         public override void SetStaticDefaults()
@@ -110,15 +108,18 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void AI()
         {
-            NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || (npc.type != ModContent.NPCType<KS3>() && npc.type != ModContent.NPCType<KS3_Clone>()))
+            NPC npc = Main.npc[(int)Projectile.ai[2]];
+            if (!npc.active || npc.ModNPC is not KS3)
+            {
                 Projectile.Kill();
+                return;
+            }
 
             Projectile.Center = npc.Center;
             if (Projectile.alpha > 0)
                 Projectile.alpha -= 5;
 
-            if (npc.dontTakeDamage)
+            if (npc.dontTakeDamage && (npc.ModNPC as KS3).phase < 5)
                 return;
 
             for (int k = 0; k < 20; k++)
@@ -136,7 +137,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D overlay = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield_Overlay").Value;
+            Texture2D overlay = Request<Texture2D>("Redemption/Textures/BubbleShield_Overlay").Value;
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 

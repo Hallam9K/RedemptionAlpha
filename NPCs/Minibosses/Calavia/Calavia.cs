@@ -101,6 +101,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1 };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
+        public int GuardPointMax;
         public override void SetDefaults()
         {
             NPC.width = 26;
@@ -116,7 +117,10 @@ namespace Redemption.NPCs.Minibosses.Calavia
             NPC.aiStyle = -1;
             NPC.boss = true;
             NPC.noGravity = false;
-            NPC.RedemptionGuard().GuardPoints = NPC.lifeMax / 10;
+            GuardPointMax = NPC.lifeMax / 10;
+            NPC.RedemptionGuard().GuardPoints = GuardPointMax;
+            NPC.BossBar = GetInstance<CalaviaHealthBar>();
+            
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Fire] *= .8f;

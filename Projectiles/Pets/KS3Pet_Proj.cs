@@ -4,6 +4,7 @@ using Redemption.Buffs.Pets;
 using Redemption.Globals;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Bosses.KSIII;
+using Redemption.NPCs.Bosses.KSIII.Friendly;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -59,8 +60,7 @@ namespace Redemption.Projectiles.Pets
 			else
 				Projectile.LookAtEntity(player);
 
-			if (RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus || NPC.AnyNPCs(ModContent.NPCType<KS3>()) || player.InModBiome<SlayerShipBiome>())
-				HeadType = 5;
+            if (RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus || NPC.AnyNPCs(NPCType<KS3>()) || NPC.AnyNPCs(NPCType<KS3_Friendly>()) || player.InModBiome<SlayerShipBiome>()) HeadType = 5;
 			else if (player.wellFed)
 				HeadType = 1;
 			else if (NPC.AnyNPCs(ModContent.NPCType<Keeper>()) || NPC.AnyNPCs(ModContent.NPCType<KeeperSpirit>()))

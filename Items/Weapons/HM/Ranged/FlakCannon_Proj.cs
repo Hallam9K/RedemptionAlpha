@@ -1,14 +1,12 @@
-﻿using System;
-using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
-using Terraria.GameContent;
-using Terraria.Audio;
 using Redemption.Projectiles.Ranged;
-using Microsoft.CodeAnalysis;
+using System;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -37,28 +35,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             Player player = Main.player[Projectile.owner];
             Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
-            if (Main.myPlayer == Projectile.owner)
-            {
-                float scaleFactor6 = 1f;
-                if (player.inventory[player.selectedItem].shoot == Projectile.type)
-                    scaleFactor6 = player.inventory[player.selectedItem].shootSpeed * Projectile.scale;
-
-                Vector2 vector13 = Main.MouseWorld - vector;
-                vector13.Normalize();
-                if (vector13.HasNaNs())
-                    vector13 = Vector2.UnitX * player.direction;
-
-                vector13 *= scaleFactor6;
-                if (vector13.X != Projectile.velocity.X || vector13.Y != Projectile.velocity.Y)
-                    Projectile.netUpdate = true;
-
-                Projectile.velocity = vector13;
-                if (player.noItems || player.CCed || player.dead || !player.active)
-                    Projectile.Kill();
-
-                Projectile.netUpdate = true;
-            }
-            Projectile.Center = player.MountedCenter;
+            RedeProjectile.HoldOutProjBasics(Projectile, player, vector);
+            Projectile.Center = vector;
             Projectile.spriteDirection = Projectile.direction;
             Projectile.timeLeft = 2;
             player.ChangeDir(Projectile.direction);
@@ -73,70 +51,74 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Projectile.rotation = Projectile.velocity.ToRotation() + num;
 
             offset -= 6;
-            if (Main.myPlayer == Projectile.owner)
+            if (!player.channel)
             {
-                if (!player.channel)
+                if (Projectile.localAI[0]++ == 0)
                 {
-                    if (Projectile.localAI[0]++ == 0)
+                    if (player.PickAmmo(player.HeldItem, out int grenade, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId, firstShot))
                     {
-                        if (player.PickAmmo(player.HeldItem, out int grenade, out float shootSpeed, out int weaponDamage, out float weaponKnockback, out int usedAmmoId, firstShot))
+                        firstShot = true;
+                        switch (grenade)
                         {
-                            firstShot = true;
-                            switch (grenade)
-                            {
-                                case ProjectileID.Grenade:
-                                    grenade = ProjectileType<FlakGrenade>();
-                                    break;
-                                case ProjectileID.BouncyGrenade:
-                                    grenade = ProjectileType<FlakGrenade_Bouncy>();
-                                    break;
-                                case ProjectileID.StickyGrenade:
-                                    grenade = ProjectileType<FlakGrenade_Sticky>();
-                                    break;
-                            }
-
-                            Vector2 gunPos = Projectile.Center + RedeHelper.PolarVector(36 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-9, Projectile.rotation + MathHelper.PiOver2);
-                            Vector2 gunSmokePos = Projectile.Center + RedeHelper.PolarVector(66 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-19, Projectile.rotation + MathHelper.PiOver2);
-                            for (int i = 0; i < 5; i++)
-                            {
-                                int num5 = Dust.NewDust(gunSmokePos, 6, 22, DustID.Smoke, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
-                                Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
-                                Main.dust[num5].velocity *= 0.66f;
-                                Main.dust[num5].noGravity = true;
-                                Main.dust[num5].scale = 1.4f;
-                            }
-                            for (int i = 0; i < 15; i++)
-                            {
-                                int num5 = Dust.NewDust(gunSmokePos, 6, 22, DustID.Wraith, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f, Scale: 2);
-                                Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
-                                Main.dust[num5].velocity *= 3f;
-                                Main.dust[num5].noGravity = true;
-                            }
-                            offset = 30;
-                            SoundEngine.PlaySound(SoundID.Item61, Projectile.position);
-
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, Projectile.velocity * 20, grenade, Projectile.damage, Projectile.knockBack, player.whoAmI);
+                            case ProjectileID.Grenade:
+                                grenade = ProjectileType<FlakGrenade>();
+                                break;
+                            case ProjectileID.BouncyGrenade:
+                                grenade = ProjectileType<FlakGrenade_Bouncy>();
+                                break;
+                            case ProjectileID.StickyGrenade:
+                                grenade = ProjectileType<FlakGrenade_Sticky>();
+                                break;
+                            case ProjectileID.Beenade:
+                                grenade = ProjectileType<FlakGrenade_Bee>();
+                                break;
                         }
-                    }
+                        
+                        Vector2 gunPos = Projectile.Center + RedeHelper.PolarVector(36 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-9, Projectile.rotation + MathHelper.PiOver2);
+                        Vector2 gunSmokePos = Projectile.Center + RedeHelper.PolarVector(66 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-19, Projectile.rotation + MathHelper.PiOver2);
+                        for (int i = 0; i < 5; i++)
+                        {
+                            int num5 = Dust.NewDust(gunSmokePos, 6, 22, DustID.Smoke, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
+                            Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                            Main.dust[num5].velocity *= 0.66f;
+                            Main.dust[num5].noGravity = true;
+                            Main.dust[num5].scale = 1.4f;
+                        }
+                        for (int i = 0; i < 15; i++)
+                        {
+                            int num5 = Dust.NewDust(gunSmokePos, 6, 22, DustID.Wraith, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f, Scale: 2);
+                            Main.dust[num5].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8) * Projectile.spriteDirection, Projectile.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                            Main.dust[num5].velocity *= 3f;
+                            Main.dust[num5].noGravity = true;
+                        }
+                        offset = 30;
+                        SoundEngine.PlaySound(SoundID.Item61, Projectile.position);
 
-                    if (Projectile.localAI[0] >= 4 && Projectile.localAI[1] >= 30)
-                    {
-                        Projectile.localAI[1] -= 20;
-                        Projectile.localAI[0] = 0;
+                        if (Projectile.owner == Main.myPlayer)
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, Projectile.velocity * 20, grenade, Projectile.damage, Projectile.knockBack, player.whoAmI);
                     }
-
-                    if (Projectile.localAI[0] >= 33)
-                        Projectile.Kill();
                 }
-                else
+
+                if (Projectile.localAI[0] >= 4 && Projectile.localAI[1] >= 30)
                 {
-                    Projectile.localAI[1]++;
-                    if (Projectile.localAI[1] >= 30)
-                        shake += 0.02f;
-                    if (Projectile.localAI[1] == 140)
-                        SoundEngine.PlaySound(CustomSounds.ShootChange, Projectile.position);
-                    Projectile.position += new Vector2(Main.rand.NextFloat(-shake, shake), Main.rand.NextFloat(-shake, shake));
+                    Projectile.localAI[1] -= 20;
+                    Projectile.localAI[0] = 0;
                 }
+
+                if (Projectile.localAI[0] >= 33)
+                    Projectile.Kill();
+            }
+            else
+            {
+                Projectile.localAI[1] += player.GetAttackSpeed(DamageClass.Ranged);
+                if (Projectile.localAI[1] >= 30)
+                    shake += 0.02f;
+                if (Projectile.localAI[1] >= 140 / player.GetAttackSpeed(DamageClass.Ranged) && !Main.dedServ && !fullcharge)
+                {
+                    SoundEngine.PlaySound(CustomSounds.ShootChange, Projectile.position);
+                    fullcharge = true;
+                }
+                Projectile.position += new Vector2(Main.rand.NextFloat(-shake, shake), Main.rand.NextFloat(-shake, shake));
             }
             shake = MathHelper.Min(shake, 0.8f);
             Projectile.localAI[1] = MathHelper.Min(Projectile.localAI[1], 140);
@@ -144,6 +126,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             if (Projectile.ai[1]++ > 1)
                 Projectile.alpha = 0;
         }
+        public bool fullcharge;
         public override bool PreDraw(ref Color lightColor)
         {
             Player player = Main.player[Projectile.owner];
@@ -152,7 +135,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             Vector2 v = RedeHelper.PolarVector(-36 + offset, Projectile.velocity.ToRotation());
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY,
+            Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition,
                 null, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, spriteEffects, 0);
             return false;
         }

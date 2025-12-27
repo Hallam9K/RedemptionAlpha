@@ -36,6 +36,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.shoot = ModContent.ProjectileType<ToxicGrenade_Proj>();
             Item.shootSpeed = 11f;
             Item.ammo = ItemID.Grenade;
+            Item.notAmmo = true;
         }
         public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
         {

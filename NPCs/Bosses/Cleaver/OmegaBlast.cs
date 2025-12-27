@@ -37,7 +37,10 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57f;
             Projectile.velocity *= 1.02f;
         }
-
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return new Color(1f, 1f, 1f, 0f) * Projectile.Opacity;
+        }
         public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);

@@ -1,11 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ParticleLibrary.Utilities;
 using Redemption.Globals;
 using Redemption.Globals.NPCs;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
+using Redemption.Particles;
+using ReLogic.Content;
 using System;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -66,6 +71,27 @@ namespace Redemption.NPCs.PostML
             });
         }
 
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            if (NPC.life <= 0)
+            {
+                Vector2 vel = NPC.velocity;
+                if (NPC.type != NPCType<BabbyDragonHead>() && NPC.realLife >= 0)
+                    vel = Main.npc[NPC.realLife].velocity;
+
+                for (int i = 0; i < 3; i++)
+                {
+                    RedeParticleManager.CreateRainbowParticle(RedeHelper.RandAreaInEntity(NPC), vel + RedeHelper.Spread(3), Main.rand.NextFloat(.3f, .6f), .95f, Main.rand.Next(100, 200));
+
+                    ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.RainbowRodHit, new ParticleOrchestraSettings
+                    {
+                        PositionInWorld = RedeHelper.RandAreaInEntity(NPC),
+                        MovementVector = vel
+                    });
+                }
+            }
+        }
+
         public override bool PreAI()
         {
             NPC.spriteDirection = NPC.velocity.X > 0 ? -1 : 1;
@@ -104,11 +130,15 @@ namespace Redemption.NPCs.PostML
 
                     for (int i = 0; i < 4; ++i)
                     {
-                        latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<BabbyDragonBody>(), NPC.whoAmI, i == 0 ? 1 : 0, latestNPC);
+                        latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<BabbyDragonBody>(), NPC.whoAmI, 0, latestNPC);
                         Main.npc[latestNPC].realLife = NPC.whoAmI;
                         Main.npc[latestNPC].ai[3] = NPC.whoAmI;
 
-                        latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<BabbyDragonLeg>(), NPC.whoAmI, 0, latestNPC);
+                        latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<BabbyDragonLeg>(), NPC.whoAmI, i % 2 == 0 ? 1 : 0, latestNPC);
+                        Main.npc[latestNPC].realLife = NPC.whoAmI;
+                        Main.npc[latestNPC].ai[3] = NPC.whoAmI;
+
+                        latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<BabbyDragonBody>(), NPC.whoAmI, 0, latestNPC);
                         Main.npc[latestNPC].realLife = NPC.whoAmI;
                         Main.npc[latestNPC].ai[3] = NPC.whoAmI;
                     }
@@ -290,6 +320,37 @@ namespace Redemption.NPCs.PostML
         {
             return SpawnCondition.Sky.Chance * (Main.hardMode && !spawnInfo.PlayerSafe && !NPC.AnyNPCs(NPCType<BabbyDragonHead>()) && NPC.downedMoonlord && RedeBossDowned.downedPZ ? 0.1f : 0f);
         }
+        Asset<Texture2D> glow;
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Asset<Texture2D> texture = TextureAssets.Npc[Type];
+
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Vector2 pos = NPC.Center;
+
+            Vector2 origin = NPC.frame.Size() / 2 + new Vector2(0, 23);
+            spriteBatch.Draw(texture.Value, pos + RedeHelper.OffsetWithRotation(NPC, 0, 12) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+            return false;
+        }
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (NPC.type != NPCType<BabbyDragonHead>())
+                return;
+            glow ??= Request<Texture2D>(Texture + "_Glow");
+            Vector2 pos = NPC.Center - screenPos;
+            Vector2 origin = NPC.frame.Size() / 2 + new Vector2(0, 23);
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.HallowBossDye);
+
+            spriteBatch.End();
+            spriteBatch.BeginDefault(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
+            spriteBatch.Draw(glow.Value, pos + RedeHelper.OffsetWithRotation(NPC, 0, 12), null, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale, effects, 0);
+            spriteBatch.End();
+            spriteBatch.BeginDefault();
+            return;
+        }
     }
 
     public class BabbyDragonBody : BabbyDragonHead
@@ -344,7 +405,7 @@ namespace Redemption.NPCs.PostML
                 float dirY = Main.npc[(int)NPC.ai[1]].Center.Y - NPCCenter.Y;
                 NPC.rotation = (float)Math.Atan2(dirY, dirX) + 1.57f;
                 float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
-                float dist = (length - NPC.width) / length;
+                float dist = (length - NPC.frame.Height + 2) / length;
                 float posX = dirX * dist;
                 float posY = dirY * dist;
 
@@ -364,7 +425,7 @@ namespace Redemption.NPCs.PostML
             }
 
             Player player = Main.player[NPC.target];
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target >= 255 || player.dead || !player.active)
                 NPC.TargetClosest(true);
             NPC.netUpdate = true;
             return false;
@@ -373,31 +434,26 @@ namespace Redemption.NPCs.PostML
         {
             return 0f;
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            if (NPC.ai[0] != 1)
-                return;
-            Texture2D wingTex = Request<Texture2D>(Texture + "_Wing").Value;
-            Texture2D wingGlow = Request<Texture2D>(Texture + "_Wing_Glow").Value;
-            Vector2 WingPos = NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY);
+            Asset<Texture2D> texture = TextureAssets.Npc[Type];
+
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Vector2 pos = NPC.Center;
 
-            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.HallowBossDye);
-
-            spriteBatch.Draw(wingTex, WingPos, new Rectangle?(new Rectangle(0, 0, wingTex.Width, wingTex.Height)), NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 14 : 16, 0), NPC.scale, effects, 0);
-
-            spriteBatch.End();
-            spriteBatch.BeginDefault(true);
-            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
-            spriteBatch.Draw(wingGlow, WingPos, new Rectangle?(new Rectangle(0, 0, wingTex.Width, wingTex.Height)), NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 14 : 16, 0), NPC.scale, effects, 0);
-            spriteBatch.End();
-            spriteBatch.BeginDefault();
-            return;
+            Vector2 origin = NPC.frame.Size() / 2;
+            spriteBatch.Draw(texture.Value, pos - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+            return false;
         }
     }
     public class BabbyDragonLeg : BabbyDragonHead
     {
         public override string Texture => "Redemption/NPCs/PostML/BabbyDragonLeg";
+
+        public Vector2[] oldPos = new Vector2[15];
+        public float[] oldRot = new float[15];
+
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Star Serpent");
@@ -447,7 +503,7 @@ namespace Redemption.NPCs.PostML
                 float dirY = Main.npc[(int)NPC.ai[1]].Center.Y - NPCCenter.Y;
                 NPC.rotation = (float)Math.Atan2(dirY, dirX) + 1.57f;
                 float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
-                float dist = (length - NPC.width) / length;
+                float dist = (length - NPC.frame.Height + 2) / length;
                 float posX = dirX * dist;
                 float posY = dirY * dist;
 
@@ -467,16 +523,74 @@ namespace Redemption.NPCs.PostML
             }
 
             Player player = Main.player[NPC.target];
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target >= 255 || player.dead || !player.active)
             {
                 NPC.TargetClosest(true);
             }
             NPC.netUpdate = true;
+
+            for (int k = oldPos.Length - 1; k > 0; k--)
+            {
+                oldPos[k] = oldPos[k - 1];
+                oldRot[k] = oldRot[k - 1];
+            }
+            oldPos[0] = NPC.Center;
+            oldRot[0] = NPC.rotation;
             return false;
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             return 0f;
+        }
+        Asset<Texture2D> glow;
+        Asset<Texture2D> wing;
+        Asset<Texture2D> wingGlow;
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Asset<Texture2D> texture = TextureAssets.Npc[Type];
+
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Vector2 pos = NPC.Center;
+
+            Vector2 origin = NPC.frame.Size() / 2;
+            spriteBatch.Draw(texture.Value, pos - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+
+            glow ??= Request<Texture2D>(Texture + "_Glow");
+
+            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.HallowBossDye);
+
+            spriteBatch.End();
+            spriteBatch.BeginDefault(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
+            spriteBatch.Draw(glow.Value, pos - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale, effects, 0);
+            spriteBatch.End();
+            spriteBatch.BeginDefault();
+
+            if (NPC.ai[0] != 1)
+                return false;
+            wing ??= Request<Texture2D>(Texture + "_Wing");
+            wingGlow ??= Request<Texture2D>(Texture + "_Wing_Glow");
+            Vector2 WingPos = NPC.Center - screenPos;
+
+            spriteBatch.Draw(wing.Value, WingPos + RedeHelper.OffsetWithRotation(NPC, 6, 0), null, NPC.GetAlpha(drawColor), NPC.rotation, origin + new Vector2(NPC.spriteDirection == -1 ? 14 : 16, 0), NPC.scale, effects, 0);
+
+            spriteBatch.End();
+            spriteBatch.BeginDefault(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
+
+            if (!NPC.IsABestiaryIconDummy)
+            {
+                for (int i = 0; i < oldPos.Length; i++)
+                {
+                    Color color = Color.White.WithAlpha(0) * ((oldPos.Length - i) / (float)oldPos.Length);
+                    spriteBatch.Draw(wingGlow.Value, oldPos[i] + RedeHelper.OffsetWithRotation(NPC, 6, 0) - screenPos, null, NPC.GetAlpha(color) * .2f, oldRot[i], origin + new Vector2(NPC.spriteDirection == -1 ? 14 : 16, 0), NPC.scale, effects, 0);
+                }
+            }
+
+            spriteBatch.Draw(wingGlow.Value, WingPos + RedeHelper.OffsetWithRotation(NPC, 6, 0), null, NPC.GetAlpha(Color.White), NPC.rotation, origin + new Vector2(NPC.spriteDirection == -1 ? 14 : 16, 0), NPC.scale, effects, 0);
+            spriteBatch.End();
+            spriteBatch.BeginDefault();
+            return false;
         }
     }
 
@@ -531,7 +645,7 @@ namespace Redemption.NPCs.PostML
                 float dirY = Main.npc[(int)NPC.ai[1]].Center.Y - NPCCenter.Y;
                 NPC.rotation = (float)Math.Atan2(dirY, dirX) + 1.57f;
                 float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
-                float dist = (length - NPC.width) / length;
+                float dist = (length - NPC.frame.Height + 2) / length;
                 float posX = dirX * dist;
                 float posY = dirY * dist;
 
@@ -551,7 +665,7 @@ namespace Redemption.NPCs.PostML
             }
 
             Player player = Main.player[NPC.target];
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target >= 255 || player.dead || !player.active)
             {
                 NPC.TargetClosest(true);
             }
@@ -561,6 +675,17 @@ namespace Redemption.NPCs.PostML
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             return 0f;
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Asset<Texture2D> texture = TextureAssets.Npc[Type];
+
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Vector2 pos = NPC.Center;
+
+            Vector2 origin = NPC.frame.Size() / 2;
+            spriteBatch.Draw(texture.Value, pos - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+            return false;
         }
     }
 
@@ -616,7 +741,7 @@ namespace Redemption.NPCs.PostML
                 float dirY = Main.npc[(int)NPC.ai[1]].Center.Y - NPCCenter.Y;
                 NPC.rotation = (float)Math.Atan2(dirY, dirX) + 1.57f;
                 float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
-                float dist = (length - NPC.width) / length;
+                float dist = (length - NPC.frame.Height / 2) / length;
                 float posX = dirX * dist;
                 float posY = dirY * dist;
 
@@ -631,7 +756,7 @@ namespace Redemption.NPCs.PostML
             }
 
             Player player = Main.player[NPC.target];
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target >= 255 || player.dead || !player.active)
             {
                 NPC.TargetClosest(true);
             }
@@ -641,6 +766,29 @@ namespace Redemption.NPCs.PostML
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             return 0f;
+        }
+        Asset<Texture2D> glow;
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Asset<Texture2D> texture = TextureAssets.Npc[Type];
+
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Vector2 pos = NPC.Center;
+
+            Vector2 origin = NPC.frame.Size() / 2 + new Vector2(0, -27);
+            spriteBatch.Draw(texture.Value, pos + RedeHelper.OffsetWithRotation(NPC, 0, -27) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+
+            glow ??= Request<Texture2D>(Texture + "_Glow");
+
+            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.HallowBossDye);
+
+            spriteBatch.End();
+            spriteBatch.BeginDefault(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
+            spriteBatch.Draw(glow.Value, pos + RedeHelper.OffsetWithRotation(NPC, 0, -27) - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale, effects, 0);
+            spriteBatch.End();
+            spriteBatch.BeginDefault();
+            return false;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Cooldowns;
 using Redemption.Globals;
 using Terraria;
@@ -56,7 +55,7 @@ namespace Redemption.Projectiles.Ranged
                     else
                     {
                         CombatText.NewText(player.getRect(), Color.Cyan, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.NoTargets"));
-                        player.ClearBuff(ModContent.BuffType<HardlightCooldown>());
+                        player.ClearBuff(BuffType<HardlightCooldown>());
                         Projectile.Kill();
                     }
                     break;
@@ -71,11 +70,11 @@ namespace Redemption.Projectiles.Ranged
                     if (Projectile.localAI[1] >= 30 && Projectile.localAI[1] % 5 == 0 && Projectile.localAI[1] < 60 && Projectile.owner == Main.myPlayer)
                     {
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(CustomSounds.MissileFire1, player.position);
+                            SoundEngine.PlaySound(CustomSounds.MissileFire1, Projectile.position);
 
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(player.Center.X + Main.rand.Next(-200, 201), player.Center.Y - 800), RedeHelper.PolarVector(14, (locked.Center - Projectile.Center).ToRotation()), ModContent.ProjectileType<Hardlight_SoSMissile>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, 1);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(player.Center.X + Main.rand.Next(-200, 201), player.Center.Y - 800), RedeHelper.PolarVector(14, (locked.Center - Projectile.Center).ToRotation()), ProjectileType<Hardlight_SoSMissile>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, 1);
                     }
-                    if (Projectile.localAI[1] >= 60 && !RedeHelper.AnyProjectiles(ModContent.ProjectileType<Hardlight_SoSMissile>()))
+                    if (Projectile.localAI[1] >= 60 && !RedeHelper.AnyProjectiles(ProjectileType<Hardlight_SoSMissile>()))
                         Projectile.Kill();
                     break;
             }

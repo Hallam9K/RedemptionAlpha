@@ -1,22 +1,26 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ParticleLibrary.Utilities;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
+using Redemption.Projectiles;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
-    public class KS3_FlashGrenade : ModProjectile
+    public class KS3_FlashGrenade : ModRedeProjectile
     {
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Stun Grenade");
             Main.projFrames[Projectile.type] = 3;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
         public override void SetDefaults()
         {
@@ -54,22 +58,32 @@ namespace Redemption.NPCs.Bosses.KSIII
                 int dustIndex = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Frost, 0f, 0f, 100, default, 4f);
                 Main.dust[dustIndex].velocity *= 12f;
             }
-            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FlashGrenadeBlast>(), Projectile.damage, 0, Main.myPlayer);
+            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileType<FlashGrenadeBlast>(), Projectile.damage, 0, Main.myPlayer);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Projectile.velocity *= 0.98f;
             return false;
         }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Asset<Texture2D> texture = TextureAssets.Projectile[Type];
+            Rectangle rect = texture.Frame(1, 3, 0, Projectile.frame);
+            Vector2 drawOrigin = rect.Size() / 2;
+            for (int k = 0; k < Projectile.oldPos.Length; k++)
+            {
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
+                Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(texture.Value, drawPos, rect, color, Projectile.rotation, drawOrigin, Projectile.scale, 0, 0);
+            }
+
+            Main.EntitySpriteDraw(texture.Value, Projectile.Center - Main.screenPosition, rect, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, 0, 0);
+            return true;
+        }
     }
-    public class FlashGrenadeBlast : ModProjectile
+    public class FlashGrenadeBlast : ModRedeProjectile
     {
         public override string Texture => "Redemption/Textures/TransitionTex";
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Flash");
-        }
-
         public override void SetDefaults()
         {
             Projectile.width = 500;
@@ -99,27 +113,40 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             if (Projectile.localAI[1]++ <= 6)
             {
-                for (int k = 0; k < Main.maxPlayers; k++)
+                foreach (Player target in Main.ActivePlayers)
                 {
-                    Player player = Main.player[k];
-                    if (!player.active || player.dead || Projectile.DistanceSQ(player.Center) >= 60 * 60)
+                    if (target.dead || Projectile.DistanceSQ(target.Center) >= 60 * 60)
                         continue;
 
-                    int hitDirection = player.RightOfDir(Projectile);
-                    BaseAI.DamagePlayer(player, Projectile.damage, 3, hitDirection, Projectile);
+                    int hitDirection = target.RightOfDir(Projectile);
+                    BaseAI.DamagePlayer(target, Projectile.damage, 4.5f, hitDirection, Projectile);
 
-                    player.AddBuff(BuffID.Confused, 180);
-                    player.AddBuff(ModContent.BuffType<StunnedDebuff>(), 60);
+                    target.AddBuff(BuffID.Confused, 180);
+                    target.AddBuff(BuffType<StunnedDebuff>(), 60);
+                }
+                foreach (NPC target in Main.ActiveNPCs)
+                {
+                    if (!target.CanBeChasedBy() || Projectile.DistanceSQ(target.Center) >= 60 * 60)
+                        continue;
+
+                    int hitDirection = target.RightOfDir(Projectile);
+                    BaseAI.DamageNPC(target, Projectile.damage, 4.5f, hitDirection, Projectile);
+
+                    target.AddBuff(BuffID.Confused, 180);
+                    if (target.knockBackResist > 0)
+                        target.AddBuff(BuffType<StunnedDebuff>(), 60);
                 }
             }
 
-            for (int k = 0; k < Main.maxPlayers; k++)
+            if (Projectile.alpha < 150)
             {
-                Player player = Main.player[k];
-                if (Projectile.alpha >= 150 || !player.active || player.dead || Projectile.DistanceSQ(player.Center) >= 400 * 400)
-                    continue;
+                foreach (Player target in Main.ActivePlayers)
+                {
+                    if (target.dead || Projectile.DistanceSQ(target.Center) >= 400 * 400)
+                        continue;
 
-                player.AddBuff(BuffID.Obstructed, 10);
+                    target.AddBuff(BuffID.Obstructed, 10);
+                }
             }
         }
         public override bool PreDraw(ref Color lightColor)

@@ -1,0 +1,48 @@
+=== 0.8 Beta .41 === (Slayer's Patch)
+- Changed recipes of Living Wood and Leaf Wands to need a Vine at a Living Loom
+- Toxic Grenades are now pseudo-ammo like normal grenades
+- Fixed Rainbow Crystal Staff not showing its Arcane bonus and Lunar Portal Staff showing Arcane bonus
+- Nerfed Circlet of Brambles: Reduced chance of Claw Slashes and Splinters to appear from 1/3 -> 1/6, both deal half the weapon's damage, and corrected chance of Thorn Traps to 1/3 for both melee and projectile hits
+- Increased brightness of Omega Blast projectiles
+- Reduced volume of Dragon Slayer's Greatbow fire breath
+- Fixed Nest Wand eggs spawning chickens and dealing wrong damage type
+- Fixed Zephos and Fallen's damage scaling, and increased Zephos' damage from 15 -> 28
+- Fixed Fallen's shop conditions for paintings being wrong (donno when that happened)
+- Added Music Box for King Slayer Overclock theme
+- Added Chickens to the Town Critter set
+- Resprited Space Keeper
+- King Slayer drops 2 random weapons instead of 1
+- Tweaked Chalice dialogue for ADD and King Slayer defeat
+- Flak Cannon is now considered a Specialist ranger weapon
+- Added Spanish translation
+1737. Buffed King Slayer's gun damage from 85% base damage -> 90% base damage
+1793. Increased King Slayer's base damage from 84 -> 90, and defense from 30 -> 40
+1932. Keycard and King Slayer quest reminder cutscenes no longer happen during credits roll
+2146. King Slayer's head tilts to face the player for some attacks, and does more facial expressions during attacks
+2147. Removed telegraph lines from King Slayer's Bullet Spray and Dropkick attacks
+2148. King Slayer's Beam Cell attack has more dust telegraph and sound effects
+2149. King Slayer's Hyperspear Dropkick attack has him fly higher up, has a new telegraph, has more time before the dropkick, and the dropkick is faster in FTW (teehee)
+2150. A friend will assist with Moonlord if you've helped them
+2151. Added new track for King Slayer's Overclock phase
+2152. King Slayer's Overclock phase has him return to full health, but he takes 50% more damage during it, and his boss health bar turns red
+2153. Changed shader effect of King Slayer while immune to damage
+2154. Improved visuals of King Slayer teleporting and some attacks
+2156. Reduced duration of Static Stun debuff from King Slayer's Dropkick from 120 frames -> 80 frames
+2157. Changed and added some King Slayer dialogue
+2158. King Slayer's Beam Cell and Missile projectiles, and Missile Drone and Magnet Drone enemies disappears properly when dialogue triggers
+2159. Added trails to King Slayer's Rocket Fist, Drone Missiles, and Missiles; and added afterimage to Flash Grenade
+2160. Reworked King Slayer's Overclock phase, improved its intro cutscene, he gets visually more damaged as it goes on, and more attacks are buffed for it
+2164. When changing back to gun attacks, King Slayer will now only shoot once the gun appearing animation is finished
+2336. Flak Cannon's flak grenades have more consistent immunity frames, explode into 4 fragments instead of 8, reduced knockback, and the fragments have piercing
+2337. Resprited Boi and Ham Pat paintings
+2338. Added "Do Stones Dream?" painting
+2339. Dragon-Lead and Infested Stone's crumbling behaviour now happens when block-swapping too
+2340. Flak Cannon converts Beenades into a flak variant
+2341. Added explosion animation to OO's Omega Plasma Orbs
+2342. Resprited Star Serpent and gave it particles on death
+2346. King Slayer III will reset his "Shrug It Off" debuff immunities every subphase
+2349. Resprited Zweihander and its Fragments
+2350. Fixed weapon speed altering amount of shots per use for Plutonium Railgun and Blast Battery
+2356. Calavia's Health Bar shows her Guard Points
+2358. Improved Boss Health Bars that show Guard Points as their "shield" bar, both life and shield amounts are shown
+===============

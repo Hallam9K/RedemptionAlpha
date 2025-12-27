@@ -1,15 +1,15 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Redemption.Projectiles;
+using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
-    public class KS3_SoSCrosshair : ModProjectile
+    public class KS3_SoSCrosshair : ModRedeProjectile
     {
         public override string Texture => "Redemption/Projectiles/Ranged/Hardlight_SoSCrosshair";
         public override void SetStaticDefaults()
@@ -44,8 +44,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                     Projectile.frame = 0;
             }
             Projectile.rotation += 0.05f;
-            NPC host = Main.npc[(int)Projectile.ai[0]];
-            if (!host.active || (host.type != ModContent.NPCType<KS3>() && host.type != ModContent.NPCType<KS3_Clone>()))
+            NPC host = Main.npc[(int)Projectile.ai[2]];
+            if (!host.active || host.ModNPC is not KS3)
                 Projectile.Kill();
 
             Player player = Main.player[host.target];
@@ -81,24 +81,24 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.MissileFire1, player.position);
 
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(player.Center.X + Main.rand.Next(-200, 201), player.Center.Y - 800), RedeHelper.PolarVector(14, (player.Center - Projectile.Center).ToRotation()), ModContent.ProjectileType<KS3_SoSMissile>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, 1);
+                        Projectile.NewProjectile(Terraria.Entity.InheritSource(host), new Vector2(player.Center.X + Main.rand.Next(-200, 201), player.Center.Y - 800), RedeHelper.PolarVector(14, (player.Center - Projectile.Center).ToRotation()), ProjectileType<KS3_SoSMissile>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.whoAmI, 1, host.whoAmI);
                     }
-                    if (Projectile.localAI[1] >= 60 && !RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_SoSMissile>()))
+                    if (Projectile.localAI[1] >= 60 && !RedeHelper.AnyProjectiles(ProjectileType<KS3_SoSMissile>()))
                         Projectile.Kill();
                     break;
             }
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            int height = texture.Height / 4;
+            Asset<Texture2D> texture = TextureAssets.Projectile[Type];
+            int height = texture.Height() / 4;
             int y = height * Projectile.frame;
-            Rectangle rect = new(0, y, texture.Width, height);
-            Vector2 drawOrigin = new(texture.Width / 2, height / 2);
+            Rectangle rect = new(0, y, texture.Width(), height);
+            Vector2 drawOrigin = new(texture.Width() / 2, height / 2);
 
             for (int i = 0; i < 4; i++)
             {
-                Main.spriteBatch.Draw(texture, crossPos[i] - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White) * 0.25f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(texture.Value, crossPos[i] - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White) * 0.25f, Projectile.rotation, drawOrigin, Projectile.scale, 0, 0);
             }
             return false;
         }

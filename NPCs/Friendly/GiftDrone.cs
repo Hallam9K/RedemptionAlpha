@@ -1,20 +1,21 @@
-using Terraria;
-using Terraria.ID;
 using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
-using Terraria.Audio;
-using Terraria.GameContent;
-using Redemption.Items.Usable;
-using Terraria.ModLoader.Utilities;
-using Terraria.Localization;
 using Redemption.BaseExtension;
+using Redemption.Globals;
+using Redemption.Globals.NPCs;
+using Redemption.Items.Usable;
 using Redemption.Items.Usable.Summons;
 using Redemption.NPCs.HM;
 using Redemption.UI;
 using SubworldLibrary;
-using Redemption.Globals.NPCs;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.GameContent.Events;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.Utilities;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -490,7 +491,7 @@ namespace Redemption.NPCs.Friendly
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (!NPC.downedMoonlord || RedeWorld.keycardGiven || SubworldSystem.Current != null)
+            if (!NPC.downedMoonlord || RedeWorld.keycardGiven || CreditsRollEvent.IsEventOngoing || SubworldSystem.Current != null)
                 return 0;
 
             float m = NPC.AnyNPCs(Type) || NPC.AnyNPCs(ModContent.NPCType<Android>()) || NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()) ? 0 : 100;

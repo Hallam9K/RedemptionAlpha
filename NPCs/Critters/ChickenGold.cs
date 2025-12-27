@@ -28,6 +28,7 @@ namespace Redemption.NPCs.Critters
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
             NPCID.Sets.NormalGoldCritterBestiaryPriority.Add(Type);
             NPCID.Sets.GoldCrittersCollection.Add(Type);
+            NPCID.Sets.TownCritter[Type] = true;
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Velocity = 1f };
 

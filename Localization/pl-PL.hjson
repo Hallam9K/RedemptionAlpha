@@ -348,6 +348,8 @@ Mods: {
 			Forret: Złośliwe zwierzę z wiecznie zielonych lasów Gathuramu. Lud Gathuramu z dawnych czasów przeniósł te fretki przez podziemny portal, skąd dotarły na powierzchnię tej wyspy.
 			MoonflareSkeleton: Pielgrzymi wierzący w księżyc. Opanowali specyficzną klasę magii, stworzoną do wypychania swoich wrogów z klifów.
 			StarSerpent: Rzadkie węże z najwyższych przestworzy Ithonu. Upodobały sobie pewną postać i podążyły za nią przez Złotą Bramę.
+			KS3_Magnet: Ten dron przekształca nadlatujące pociski w energię, która odlatuje z powrotem w stronę ich celów.
+			KS3_MissileDrone: Rakietowy dron zbudowany przez King Slayera III podczas jego milionletniej podróży.
 		}
 
 		Bestiary.Android: Apidroidy były eksperymentem z wykorzystaniem wyjątkowo trwałego metalu pochodzącego z odległego układu gwiezdnego. Metal – nazwany przez King Slayera III „Różowym Tytanem” – jest jednym z najsilniejszych materiałów odkrytych w galaktyce. Jednak King Slayer III nie znosił jego różowego odcienia i, choć stworzył z niego kilka androidów, uparty nie chciał go używać ponownie.
@@ -1125,13 +1127,21 @@ Mods: {
 					KeeperDowned3: "[@h0]Świetnie,[0.1] teraz mam jeszcze większy powód, żeby zmieść cię w popiół!"
 				}
 
+				PlayerKilled: {
+					0: "[@h4]Ee...[1] Nie spodziewałem się, że po prostu w taki sposób wybuchniesz."
+					1: Ja...[0.2] em...
+					2: "[@h3]Mógłbym przysiąc, że zginąłeś...[1][@h4] To musi być jakaś magia z tego miejsca."
+					3G: "[@h0]Z zalet,[0.1] Nie zabiłem tak po prostu człowieka.[1][@h1] Z wad,[0.1] stwierdziłeś żeby znowu marnować swój czas na denerewowaniu mnie"
+					3B: "[@h1]Nieważne co,[0.1] Mam misję do wykonania.[1][@h3] Wkrótcę odnajdę sposób, aby pokonać cię na dobre."
+				}
+
 				Resummon: {
 					Downed1: "[@h1]Dlaczego musisz mnie znowu przywoływać?"
 					Downed2: "[@h2]Czy mógłbyś może, prawdopodobnie, potencjalnie ZOSTAWIĆ MNIE W SPOKOJU?"
 					Downed3: "[@h1]Serio,[0.1] a rewanż?[0.5] Dobra."
 					Downed4: "[@h1]Czemu nie umrzesz od razu i nie zaoszczędzisz mi wysiłku?"
 					Downed5: "[@h4]Co?[0.5] Chcesz znowu ze mną walczyć?"
-					1: "[@h3]Przysiągłbym, że umarłeś..."
+					1: "[@h3]Ciągle wracasz..."
 					2: Gotowy na rewanż?
 					3: Cóż,[0.1] czas znowu wygrać!
 					4: Dalej chcesz walczyć?
@@ -1169,7 +1179,7 @@ Mods: {
 					Alright: Okej okej okej!
 					Draw1: "[@h1]W takim razie...[0.5] uznajmy to za remis."
 					Draw2: "[@h2]Jeśli zgodzisz się przestać,,[0.1] wrócę do [0.1]WAŻNIEJSZYCH[0.1] spraw."
-					Draw3: "[@h3]Ale,[0.1] jeśli zechcesz,[0.1] możemy kontynuować...[1] Ale nie będę zadowolony, jeśli przegram."
+					Draw3: "[@h3]Ale,[0.1] jeśli wolisz,[0.1] to możemy kontynuować...[1] Zastanów się dobrze nad swoją decyzją."
 				}
 
 				Spare: {
@@ -1181,11 +1191,43 @@ Mods: {
 					Accept: Teraz rozumiem, o co ci chodzi...
 					Overclock1: Jeszcze raz,[0.1] naprawdę jesteś żądny wygranej...
 					Overclock2: Jestem zawiedziony, że muszę naprawdę przekatować to naczynie
-					Overclock3: ... Chyba lubisz utrudniać sobie życie.
+					Overclock3: ... [@b2]Widzę, że lubisz utrudniać sobie życie.
 					IfRobot: ... I to dla sterty złomu, jakby nie było.
 					IfChicken: ... I to dla?[0.5] Jakiejś pieprzonej kury!?
 					IfHuman: ... I to dla wkurzającego bachora, jakby nie było.
-					Begin: "[@h0]Czas zacząć.[@c]"
+					Overclock4: "[@h1]Twoje intencje są niejasne,[0.2][@h3] ale zapamiętaj sobie jedno..."
+					Overclock5: Istnieją poza twoją małą wysepką kretyni, którzy mogliby cię zetrzeć z powierzchni ziemi jednym kichnięciem...
+					Overclock6: "[@h1]Tak więc jeśli chcesz władzy,[0.1] zniszczenia,[0.1] śmierci,[0.2] czy cokolwiek innego..."
+					Overclock7: "[@ov][@b1]... Radziłbym ci się poważnie nad tym zastanowić."
+					Overclock4Alt: "[@h1]To naczynie nigdy nie było przeznaczone do walki."
+					Overclock5Alt: Rozumiem, że chcesz abym poszedł na całego,[0.1] ale wiedz, że...
+					Overclock6Alt: Jeśli to naczynie zostanie zbyt mocno uszkodzone,[0.1] inni się dowiedzą.
+					Overclock7Alt: "[@ov][@b1]A teraz, zaczynajmy."
+					Begin: "[@h0]Żeby było jasne,[0.1] sam się o to prosiłeś.[@c]"
+					Begin2: "[@h0][@ov]Zaczynamy.[@c]"
+					OverclockBreak1: D'ah![0.1] Dlaczego nie potrafię tego zrobić?
+					OverclockBreak2: Oni by poradzili sobie z tobą bez problemu,[0.1] więc czemu JA nie mogę?!
+					OverclockEnd1: "[@b3]Dosyć.[0.5] DOSYĆ.[@b0]"
+					OverclockEnd2: Nie musisz upokarzać mnie bardziej, niż już to zrobiłeś
+					OverclockEnd3: Wygrałeś,[0.1] uczciwie.[1] A teraz daj mi spokój.
+					OverclockEnd4: Będę musiał znowu naprawiać to naczynie,[0.5] jakbym i tak już nie miał wystarczająco problemów.
+					OverclockEnd5: Wynoś się z moich oczu.
+				}
+
+				MLHelp: {
+					1: "[@h0]Cześć,[0.1] potrzebujesz pomocy?[@c]"
+					1Dead: Cze-[0.1][@h3] a,[0.1] nie żyjesz.[0.5][@h1] To akurat zabawne.[0.5] W takim razie poczekam aż się odrodzisz.
+					1DiedAfter: ...[0.5][@h1] a...[0.5][@b2] okej.
+					Decline: Skoro tak mówisz.
+					TooLate: Eh,[0.1] nie ma czasu,[0.1] i tak pomogę.
+					TooLate2: Eh,[0.1] sam zdecyduję.
+					Accept: Świetnie,[0.1] te księżycowe kreatury zaczynały działać mi na nerwy.
+					Win1: Wreszcie,[0.2] co za utrapienie.[2] Wygląda na to, że jesteś silniejszy od momentu naszej ostatniej walki.
+					Win2: Pamiętaj tylko, że pomogłem ci tylko dlatego, że nie chcę się czuć dłużny wobec ciebie,[0.1] jasne?[2] A,[0.1] jeszcze zanim pójdę,[0.1] Powinienem wspomnieć...
+					Win2Alt: Pamiętaj tylko, że pomogłem ci tylko dlatego, że nie chcę się czuć dłużny wobec ciebie,[0.1] jasne?
+					Win3: Za niedługo wyruszam do innego świata,[0.3] tak więc jeśli masz ze mną jakieś niedokończone sprawy,[0.5] to lepiej się z tym pospiesz.
+					Win3Alt: Tak czy inaczej,[0.1] Wyruszam do innego świata.[1] Jeszcze raz,[0.1] dzięki za zmarnowanie swojego czasu, pomagając mi.
+					WinDied: "[@h4]...[2][@h3] Uznam, że zrobiłeś to celowo.[2][@h1] W każdym bądź razie,[0.1] wkrótce opuszczę statek,[0.3] ble ble ble,[0.3] co mi tam."
 				}
 			}
 
@@ -1466,6 +1508,7 @@ Mods: {
 				Fight: Walcz
 				Refuse: Odmów
 				Accept: Akceptuj
+				Decline: Odrzuć
 			}
 		}
 
@@ -1546,14 +1589,14 @@ Mods: {
 				A5: Świeci w tobie jaskrawe światło, jednak czuję, że przed Tobą czają się coraz bardziej niebezpieczni wrogowie...
 				A6N: Jesteś poza wszelkim zbawieniem...
 				A6: Jesteś zbawieniem, którego ten świat potrzebował...
-				ADDDefeat: Nie wiadomo, jak rządziły te zapomniane bóstwa, może ich pokonanie było najlepszym, a być może najgorszym rozwiązaniem.
+				ADDDefeat: Nie wiadomo, jak rządziły te zapomniane bóstwa, więc nie mogę ocenić ich porażki.
 				FowlDefeat: ... Co?
 				KeeperSave: Odkupiłeś swoje winy, Octavia może teraz spoczywać w poko-
 				KS3Spared: Dobrze że zostawiłeś go w spokoju...
 				KS3Defeat:
 					'''
-					Oj, wygląda na to, że ma bardzo krótki temperament, a twoje zwycięstwo prawdopodobnie tylko pogorszyło sytuację.
-					Mam nadzieję, że nie zrobi nic głupiego.
+					Z pewnością zwróciłeś na siebie uwagę Bohaterów.
+					Na dobre lub na złe.
 					'''
 				KS3Choice: Gdybym był na twoim miejscu, zostawiłbym go w spokoju.
 				NebChoice: Proszę, nie idź tą drogą, którą chcesz podążać.
@@ -8404,7 +8447,7 @@ Mods: {
 				DisplayName: Armata Przeciwlotnicza
 				Tooltip:
 					'''
-					Używa granatów jako amunicji, także lepkich i skaczących
+					Używa granatów jako amunicję
 					Wystrzeliwuje przeciwlotnicze granaty przebijające obronę
 
 					Przytrzymanie lewego przycisku ładuje strumień granatów bez zużycia dodatkowej amunicji
@@ -10889,8 +10932,18 @@ Mods: {
 			}
 
 			PoppySeeds: {
-				// DisplayName: Poppy Seeds
-				// Tooltip: ""
+				DisplayName: Nasiona Maku
+				Tooltip: ""
+			}
+
+			SleepingStonesPainting: {
+				DisplayName: Czy Kamienie Śnią?
+				Tooltip: "'E. Laias'"
+			}
+
+			BeyondSteelBox: {
+				DisplayName: Pozytywka (Przeciążony King Slayer)
+				Tooltip: Sc0p3r - Beyond Steel
 			}
 		}
 
@@ -11609,7 +11662,11 @@ Mods: {
 			WindGust_Proj.DisplayName: Podmuch Wiatru
 			ThornCircletSplinter.DisplayName: Drzazga
 			LeechingThornSeed_Friendly.DisplayName: Pochłaniający Życie Cierń
-			// BlightedClaw_Slash.DisplayName: Blighted Claw_ Slash
+			BlightedClaw_Slash.DisplayName: Cięcie Pazurem
+			OmegaPlasmaBall_Explosion.DisplayName: Eksplozja
+			FlakGrenade_Bee.DisplayName: Przeciwlotniczy Pszczeli Granat
+			KS3_BlasterGore.DisplayName: Blaster Hyper-Tech
+			KS3_Lightning.DisplayName: Błyskawica
 		}
 
 		NPCs: {
@@ -12129,6 +12186,7 @@ Mods: {
 			Forret.DisplayName: Frotka
 			MoonflareSkeleton.DisplayName: Pielgrzym Blasku Księżyca
 			TreebarkDryad_Savanna.DisplayName: "{$Mods.Redemption.NPCs.TreebarkDryad.DisplayName}"
+			KS3_Friendly.DisplayName: "{$Mods.Redemption.NPCs.KS3.DisplayName}"
 		}
 
 		Tiles: {

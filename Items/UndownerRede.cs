@@ -41,6 +41,8 @@ namespace Redemption.Items
             RedeBossDowned.erhanDeath = 0;
             RedeBossDowned.downedSlayer = false;
             RedeBossDowned.slayerDeath = 0;
+            RedeBossDowned.slayerDeath2 = 0;
+            RedeQuest.slayerRep = 0;
             RedeBossDowned.downedJanitor = false;
             RedeBossDowned.downedBehemoth = false;
             RedeBossDowned.downedBlisterface = false;

@@ -68,11 +68,16 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     int nearestPlayer = RedeHelper.GetNearestAlivePlayer(Projectile);
                     if (nearestPlayer >= 0 && Projectile.owner == Main.myPlayer)
                     {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ProjectileType<OmegaPlasmaBall_Explosion>(), 0, 0, Main.myPlayer, (Main.player[nearestPlayer].Center - Projectile.Center).ToRotation());
+                        }
                         for (int j = 0; j < 4; j++)
                             Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(Main.rand.NextFloat(9, 19), (Main.player[nearestPlayer].Center - Projectile.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), ModContent.ProjectileType<OmegaBlast>(), (int)(Projectile.damage * 1.077f), 3, Main.myPlayer);
                     }
                     proj.Kill();
                     Projectile.Kill();
+                    break;
                 }
             }
             Vector2 move = Vector2.Zero;
@@ -136,6 +141,36 @@ namespace Redemption.NPCs.Bosses.Obliterator
             float magnitude = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
             if (magnitude > 6f)
                 vector *= 8f / magnitude;
+        }
+    }
+    public class OmegaPlasmaBall_Explosion : ModProjectile
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.projFrames[Projectile.type] = 5;
+        }
+        public override void SetDefaults()
+        {
+            Projectile.width = 120;
+            Projectile.height = 100;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 60;
+        }
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return new Color(1f, 1f, 1f, 0f) * Projectile.Opacity;
+        }
+        public override void AI()
+        {
+            Projectile.rotation = Projectile.ai[0];
+            if (++Projectile.frameCounter >= 5)
+            {
+                Projectile.frameCounter = 0;
+                if (++Projectile.frame >= Main.projFrames[Projectile.type])
+                    Projectile.Kill();
+            }
         }
     }
 }

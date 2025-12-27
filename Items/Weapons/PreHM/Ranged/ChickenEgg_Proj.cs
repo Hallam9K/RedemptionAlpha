@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.NPCs.Critters;
 using Terraria;
 using Terraria.Audio;
@@ -48,7 +47,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                 for (int i = 0; i < 16; i++)
                     Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.MothronEgg, 0, 0, Scale: 2);
 
-                int index = NPC.NewNPC(Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.Center.Y + 8, ModContent.NPCType<Chicken>());
+                int index = NPC.NewNPC(Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.Center.Y + 8, NPCType<Chicken>());
 
                 if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
                     NetMessage.SendData(MessageID.SyncNPC, number: index);

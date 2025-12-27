@@ -27,7 +27,6 @@ namespace Redemption.Projectiles.Minions
             Projectile.width = 10;
             Projectile.height = 10;
             Projectile.aiStyle = -1;
-            Projectile.minion = true;
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.penetrate = 1;

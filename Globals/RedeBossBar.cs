@@ -17,6 +17,7 @@ using Redemption.NPCs.Lab.Blisterface;
 using Redemption.NPCs.Lab.Janitor;
 using Redemption.NPCs.Lab.MACE;
 using Redemption.NPCs.Lab.Volt;
+using Redemption.NPCs.Minibosses.Calavia;
 using Redemption.NPCs.Minibosses.EaglecrestGolem;
 using ReLogic.Content;
 using Terraria;
@@ -82,6 +83,8 @@ namespace Redemption.Globals
                 ukkoBarTex ??= ModContent.Request<Texture2D>("Redemption/Textures/BossBars/UkkoBossBar_Bar");
                 spriteBatch.Draw(ukkoBarTex.Value, drawParams.BarCenter - new Vector2(4, 2), null, Color.White, 0, ukkoBarTex.Size() / 2, 1, 0, 0);
             }
+            else if (npc.ModNPC is Calavia)
+                drawParams.BarTexture = Request<Texture2D>("Redemption/Textures/BossBars/GPBossBar").Value;
             return base.PreDraw(spriteBatch, npc, ref drawParams);
         }
     }

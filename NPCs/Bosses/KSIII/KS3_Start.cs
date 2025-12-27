@@ -1,9 +1,8 @@
-using Terraria;
-using Terraria.ID;
-using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
-using Terraria.Audio;
 using Redemption.Globals;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -14,7 +13,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             // DisplayName.SetDefault("");
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -41,7 +40,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void AI()
         {
             Player player = Main.player[NPC.target];
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target >= 255 || player.dead || !player.active)
                 NPC.TargetClosest(true);
 
             switch (NPC.ai[0])
@@ -65,13 +64,13 @@ namespace Redemption.NPCs.Bosses.KSIII
                 case 1:
                     if (NPC.ai[2]++ == 10 || NPC.ai[2] == 30)
                     {
-                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)player.Center.X + Main.rand.Next(70, 180), (int)player.Center.Y - Main.rand.Next(800, 850), ModContent.NPCType<KS3_ScannerDrone>(), ai3: NPC.whoAmI);
+                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)player.Center.X + Main.rand.Next(70, 180), (int)player.Center.Y - Main.rand.Next(800, 850), NPCType<KS3_ScannerDrone>(), ai3: NPC.whoAmI);
                     }
-                    if (NPC.ai[2] > 30 && !NPC.AnyNPCs(ModContent.NPCType<KS3_ScannerDrone>()))
+                    if (NPC.ai[2] > 30 && !NPC.AnyNPCs(NPCType<KS3_ScannerDrone>()))
                     {
                         if (NPC.ai[1] >= 2)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_DroneKillCheck>(), 0, Vector2.Zero);
+                            NPC.Shoot(NPC.Center, ProjectileType<KS3_DroneKillCheck>(), 0, Vector2.Zero);
                             NPC.ai[0] = 4;
                             NPC.ai[1] = 0;
                             NPC.ai[2] = 0;
@@ -97,7 +96,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     break;
                 case 2:
                     if (NPC.ai[2]++ == 30)
-                        NPC.Shoot(new Vector2(player.Center.X + 90, player.Center.Y - 50), ModContent.ProjectileType<KS3_HeadHologram>(), 0, Vector2.Zero);
+                        NPC.Shoot(new Vector2(player.Center.X + 90, player.Center.Y - 50), ProjectileType<KS3_HeadHologram>(), 0, Vector2.Zero);
 
                     if (NPC.ai[2] > 760)
                     {
@@ -135,7 +134,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     if (NPC.ai[2]++ >= 120)
                     {
-                        if (NPC.AnyNPCs(ModContent.NPCType<KS3>()) || NPC.AnyNPCs(ModContent.NPCType<KS3_Clone>()))
+                        if (NPC.AnyNPCs(NPCType<KS3>()) || NPC.AnyNPCs(NPCType<KS3_Clone>()))
                             NPC.active = false;
                         else
                         {
@@ -149,18 +148,18 @@ namespace Redemption.NPCs.Bosses.KSIII
                             }
                             NPC.netUpdate = true;
                             if (RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus)
-                                NPC.SetDefaults(ModContent.NPCType<KS3_Clone>());
+                                NPC.SetDefaults(NPCType<KS3_Clone>());
                             else
-                                NPC.SetDefaults(ModContent.NPCType<KS3>());
+                                NPC.SetDefaults(NPCType<KS3>());
                         }
                     }
                     break;
                 case 5:
                     if (NPC.ai[2]++ == 10 || NPC.ai[2] == 30)
                     {
-                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)player.Center.X + Main.rand.Next(70, 180), (int)player.Center.Y - Main.rand.Next(800, 850), ModContent.NPCType<KS3_ScannerDrone>(), ai3: NPC.whoAmI);
+                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)player.Center.X + Main.rand.Next(70, 180), (int)player.Center.Y - Main.rand.Next(800, 850), NPCType<KS3_ScannerDrone>(), ai3: NPC.whoAmI);
                     }
-                    if (NPC.ai[2] > 30 && !NPC.AnyNPCs(ModContent.NPCType<KS3_ScannerDrone>()))
+                    if (NPC.ai[2] > 30 && !NPC.AnyNPCs(NPCType<KS3_ScannerDrone>()))
                     {
                         NPC.ai[0] = 4;
                         NPC.ai[1] = 0;

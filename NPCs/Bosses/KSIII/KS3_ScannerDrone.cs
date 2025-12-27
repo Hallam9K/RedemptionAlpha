@@ -1,15 +1,14 @@
-using Terraria;
-using Terraria.ID;
-using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Redemption.Globals.NPCs;
+using System.Collections.Generic;
+using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using System.Collections.Generic;
-using Redemption.Globals.NPCs;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -45,7 +44,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            int associatedNPCType = ModContent.NPCType<KS3>();
+            int associatedNPCType = NPCType<KS3>();
             bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
 
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
@@ -79,7 +78,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             Player player = Main.player[NPC.target];
             NPC.LookAtEntity(player);
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target >= 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
             float soundVolume = NPC.velocity.Length() / 50;
@@ -107,7 +106,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 case 1: // Stop and Scan
                     NPC.velocity *= 0.96f;
                     if (NPC.ai[2]++ == 30)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Scan_Proj>(), 0, Vector2.Zero, CustomSounds.BallFire, NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ProjectileType<Scan_Proj>(), 0, Vector2.Zero, CustomSounds.BallFire, NPC.whoAmI);
 
                     if (NPC.ai[2] > 240)
                     {
@@ -168,10 +167,10 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D glowMask = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+            Texture2D glowMask = Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
     }

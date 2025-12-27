@@ -1,17 +1,16 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Redemption.Globals;
-using Redemption.Effects;
-using System.Collections.Generic;
-using Terraria.ID;
 using Redemption.Dusts;
+using Redemption.Effects;
+using Redemption.Globals;
+using Redemption.Projectiles;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
-    public class KS3_EnergyBolt : ModProjectile
+    public class KS3_EnergyBolt : ModRedeProjectile
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
@@ -28,6 +27,8 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.tileCollide = false;
             Projectile.penetrate = 2;
             Projectile.timeLeft = 600;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
             Projectile.Redemption().EnergyBased = true;
         }
 
@@ -63,7 +64,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             {
                 for (int i = 0; i < 8; i++)
                 {
-                    int dust = Dust.NewDust(Projectile.Center + (Projectile.velocity / 2) - Vector2.One, 2, 2, ModContent.DustType<GlowDust>());
+                    int dust = Dust.NewDust(Projectile.Center + (Projectile.velocity / 2) - Vector2.One, 2, 2, DustType<GlowDust>());
                     Main.dust[dust].noGravity = true;
                     Main.dust[dust].velocity *= .2f;
                     Color dustColor = new(194, 255, 242) { A = 0 };
@@ -103,7 +104,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 
@@ -119,7 +120,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Main.spriteBatch.End();
             Main.spriteBatch.BeginAdditive();
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D flare = Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 origin = new(flare.Width / 2, flare.Height / 2);
             Vector2 position = Projectile.Center - Main.screenPosition;

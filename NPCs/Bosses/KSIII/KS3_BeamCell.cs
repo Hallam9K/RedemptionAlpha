@@ -1,9 +1,8 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.GameContent;
+using Redemption.BaseExtension;
 using Redemption.Globals;
+using Terraria;
+using Terraria.GameContent;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -41,9 +40,12 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             #region Beginning And End Effects
-            NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || (npc.type != ModContent.NPCType<KS3>() && npc.type != ModContent.NPCType<KS3_Clone>()))
+            NPC npc = Main.npc[(int)Projectile.ai[2]];
+            if (!npc.active || npc.ModNPC is not KS3)
+            {
                 Projectile.Kill();
+                return;
+            }
 
             if (AITimer == 0)
             {
@@ -70,8 +72,10 @@ namespace Redemption.NPCs.Bosses.KSIII
             {
                 LaserScale += 0.09f;
             }
-            else if (Projectile.timeLeft < 10 || !npc.active)
+            else if (Projectile.timeLeft < 10 || !npc.active || npc.ai[0] != 3)
             {
+                Projectile.friendly = false;
+                Projectile.hostile = false;
                 if (Projectile.timeLeft > 10)
                 {
                     Projectile.timeLeft = 10;

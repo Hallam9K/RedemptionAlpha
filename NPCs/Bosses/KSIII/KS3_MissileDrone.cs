@@ -1,22 +1,25 @@
-using Terraria;
-using System;
-using Terraria.ID;
-using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
-using Terraria.Audio;
 using Redemption.Base;
+using Redemption.BaseExtension;
+using Redemption.Effects;
+using Redemption.Globals;
+using Redemption.Globals.NPCs;
+using Redemption.Projectiles;
+using ReLogic.Content;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using System.Collections.Generic;
-using Redemption.Globals.NPCs;
+using Terraria.ID;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
-    public class KS3_MissileDrone : ModNPC
+    public class KS3_MissileDrone : ModRedeNPC
     {
-        public static int BodyType() => ModContent.NPCType<KS3>();
+        public static int BodyType() => NPCType<KS3>();
 
         public override void SetStaticDefaults()
         {
@@ -53,7 +56,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
 
-                new FlavorTextBestiaryInfoElement("A missile drone built by King Slayer III during his million year voyage.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.KS3_MissileDrone"))
             });
         }
 
@@ -79,10 +82,10 @@ namespace Redemption.NPCs.Bosses.KSIII
         public int shotCount;
         public override void AI()
         {
+            if (NPC.target < 0 || NPC.target >= 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+                NPC.TargetClosest();
             Player player = Main.player[NPC.target];
             NPC.LookAtEntity(player);
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
-                NPC.TargetClosest();
 
             float soundVolume = NPC.velocity.Length() / 50;
             if (soundVolume > 2f) { soundVolume = 2f; }
@@ -92,8 +95,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                 NPC.soundDelay = 10;
             }
             NPC host = Main.npc[(int)NPC.ai[0]];
-            if (!host.active || (host.type != ModContent.NPCType<KS3>() && host.type != ModContent.NPCType<KS3_Clone>()))
+            if (!host.active || (host.type != NPCType<KS3>() && host.type != NPCType<KS3_Clone>()))
                 NPC.active = false;
+
+            if (host.ai[0] is 9 or 20)
+                NPC.ai[2] = 500;
 
             if (++NPC.ai[1] % 80 == 0)
             {
@@ -116,7 +122,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             {
                 if (NPC.ai[2] % 30 == 0)
                 {
-                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<SlayerMissile>(), 96, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(0.2f, 0.2f)), SoundID.Item74);
+                    Shoot(NPC.Center, ProjectileType<SlayerMissile>(), (int)(host.damage * .9f), RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(0.2f, 0.2f)), SoundID.Item74);
                     shotCount++;
                 }
             }
@@ -151,14 +157,14 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D glowMask = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+            Texture2D glowMask = Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
     }
-    public class SlayerMissile : ModProjectile
+    public class SlayerMissile : ModRedeProjectile
     {
         public override void SetStaticDefaults()
         {
@@ -201,28 +207,48 @@ namespace Redemption.NPCs.Bosses.KSIII
             {
                 Vector2 move = Vector2.Zero;
                 float distance = 1200f;
-                bool target = false;
-                for (int k = 0; k < Main.maxPlayers; k++)
+                bool targetted = false;
+                for (int p = 0; p < Main.maxPlayers; p++)
                 {
-                    Player player = Main.player[k];
-                    if (player.active && !player.dead && !player.invis)
+                    Player target = Main.player[p];
+                    if (!target.active || target.dead || target.invis || !Collision.CanHit(Projectile.Center, 0, 0, target.Center, 0, 0))
+                        continue;
+
+                    Vector2 newMove = target.Center - Projectile.Center;
+                    float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
+                    if (distanceTo < distance)
                     {
-                        Vector2 newMove = player.Center - Projectile.Center;
+                        move = newMove;
+                        distance = distanceTo;
+                        targetted = true;
+                    }
+                }
+                NPC host = Main.npc[(int)Projectile.ai[2]];
+                if (host.HasNPCTarget)
+                {
+                    NPC npc = Main.npc[host.TranslatedTargetIndex];
+                    if (npc.active && npc.whoAmI != Projectile.ai[2] && !npc.Redemption().invisible && npc.chaseable && Collision.CanHit(Projectile.Center, 0, 0, npc.Center, 0, 0))
+                    {
+                        Vector2 newMove = npc.Center - Projectile.Center;
                         float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
                         if (distanceTo < distance)
                         {
                             move = newMove;
-                            distance = distanceTo;
-                            target = true;
+                            targetted = true;
                         }
                     }
                 }
-                if (target)
+                if (targetted)
                 {
                     AdjustMagnitude(ref move);
                     Projectile.velocity = (10 * Projectile.velocity + move) / 11f;
                     AdjustMagnitude(ref Projectile.velocity);
                 }
+            }
+            if (Main.netMode != NetmodeID.Server)
+            {
+                TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
+                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
             }
         }
         private static void AdjustMagnitude(ref Vector2 vector)
@@ -233,16 +259,43 @@ namespace Redemption.NPCs.Bosses.KSIII
                 vector *= 19f / magnitude;
             }
         }
+        private readonly int NUMPOINTS = 14;
+        public Color baseColor = new(193, 255, 219);
+        public Color endColor = new(0, 160, 170);
+        private List<Vector2> cache;
+        private List<Vector2> cache2;
+        private DanTrail trail;
+        private DanTrail trail2;
+        private readonly float thickness = 4f;
+
+        Asset<Texture2D> glow;
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+            Main.spriteBatch.End();
+            Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/Trail_1").Value);
+            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
+            effect.Parameters["repeats"].SetValue(1f);
+
+            trail?.Render(effect);
+            trail2?.Render(effect);
+
+            Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+
+            Asset<Texture2D> texture = TextureAssets.Projectile[Type];
+            glow ??= Request<Texture2D>(Texture + "_Glow");
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            int height = texture.Height / 2;
+            int height = texture.Height() / 2;
             int y = height * Projectile.frame;
 
-            Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, y, texture.Width, height)), lightColor, Projectile.rotation, new Vector2(texture.Width / 2f, height / 2f), Projectile.scale, effects, 0);
-            Main.spriteBatch.Draw(glow, Projectile.Center - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, y, texture.Width, height)), Projectile.GetAlpha(Color.White), Projectile.rotation, new Vector2(texture.Width / 2f, height / 2f), Projectile.scale, effects, 0);
+            Main.spriteBatch.Draw(texture.Value, Projectile.Center - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, y, texture.Width(), height)), lightColor, Projectile.rotation, new Vector2(texture.Width() / 2f, height / 2f), Projectile.scale, effects, 0);
+            Main.spriteBatch.Draw(glow.Value, Projectile.Center - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, y, texture.Width(), height)), Projectile.GetAlpha(Color.White), Projectile.rotation, new Vector2(texture.Width() / 2f, height / 2f), Projectile.scale, effects, 0);
             return false;
         }
 

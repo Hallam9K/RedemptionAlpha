@@ -115,7 +115,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         {
             if (NPC.ai[0] is 15 && NPC.ai[1] == NPCID.Sets.AttackTime[NPC.type])
             {
-                NPC.Shoot(NPC.Center, ProjectileType<Fallen_BeardedHatchet_Proj>(), NPC.damage * NPC.GetAttackDamage_ScaledByStrength(11), new Vector2(5 * NPC.direction, 0), NPC.whoAmI, knockback: 5);
+                NPC.Shoot(NPC.Center, ProjectileType<Fallen_BeardedHatchet_Proj>(), (int)(NPC.damage * NPCHelper.TownNPCDamageMultiplier()), new Vector2(5 * NPC.direction, 0), NPC.whoAmI, knockback: 5);
             }
         }
         public override void HitEffect(NPC.HitInfo hit)
@@ -221,9 +221,9 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 .Add(new Item(ItemType<ViisaanKantele>()) { shopCustomPrice = 24, shopSpecialCurrency = RedeCurrency.AntiqueDorulCurrency }, RedeConditions.DownedADD)
                 .Add(new Item(ItemType<OldTophat>()) { shopCustomPrice = 20, shopSpecialCurrency = RedeCurrency.AntiqueDorulCurrency }, RedeConditions.OldTophat)
                 .Add(new Item(ItemType<ScrunklePainting>()) { shopCustomPrice = 12, shopSpecialCurrency = RedeCurrency.AntiqueDorulCurrency })
-                .Add(new Item(ItemType<SkullDiggerPainting>()) { shopCustomPrice = 12, shopSpecialCurrency = RedeCurrency.AntiqueDorulCurrency }, RedeConditions.DownedEaglecrestGolem)
-                .Add(new Item(ItemType<SunkenCaptainPainting>()) { shopCustomPrice = 12, shopSpecialCurrency = RedeCurrency.AntiqueDorulCurrency }, Condition.DownedPlantera)
-                .Add(new Item(ItemID.Ectoplasm) { shopCustomPrice = 10, shopSpecialCurrency = RedeCurrency.AntiqueDorulCurrency }, Condition.DownedPlantera)
+                .Add(new Item(ItemType<SleepingStonesPainting>()) { shopCustomPrice = 20, shopSpecialCurrency = RedeCurrency.AntiqueDorulCurrency })
+                .Add(new Item(ItemType<SkullDiggerPainting>()) { shopCustomPrice = 12, shopSpecialCurrency = RedeCurrency.AntiqueDorulCurrency }, RedeConditions.DownedSkullDigger)
+                .Add(new Item(ItemType<SunkenCaptainPainting>()) { shopCustomPrice = 12, shopSpecialCurrency = RedeCurrency.AntiqueDorulCurrency }, Condition.DownedPirates).Add(new Item(ItemID.Ectoplasm) { shopCustomPrice = 10, shopSpecialCurrency = RedeCurrency.AntiqueDorulCurrency }, Condition.DownedPlantera)
                 .Add(new Item(ItemType<EmptyCruxCard>()) { shopCustomPrice = 30, shopSpecialCurrency = RedeCurrency.AntiqueDorulCurrency }, RedeConditions.HasSpiritWalker)
                 .Add(new Item(ItemType<SpiritExtractor>()) { shopCustomPrice = 40, shopSpecialCurrency = RedeCurrency.AntiqueDorulCurrency }, RedeConditions.HasSpiritWalker)
                 .Add(new Item(ItemType<DeadRinger>()) { shopCustomPrice = 30, shopSpecialCurrency = RedeCurrency.AntiqueDorulCurrency }, RedeConditions.DeadRingerGiven);

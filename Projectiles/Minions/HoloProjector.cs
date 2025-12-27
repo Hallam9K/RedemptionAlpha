@@ -31,7 +31,10 @@ namespace Redemption.Projectiles.Minions
                     Projectile.frame = 0;
             }
             if (Projectile.timeLeft == 30)
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(0, 40), Vector2.Zero, ModContent.ProjectileType<HoloMinion>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+            {
+                Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(0, 40), Vector2.Zero, ProjectileType<HoloMinion>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                p.originalDamage = Projectile.originalDamage;
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.KSIII.Friendly;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -33,14 +33,14 @@ namespace Redemption.NPCs.Bosses.KSIII
                     Projectile.Kill();
                 }
             }
-            NPC host = Main.npc[(int)Projectile.ai[0]];
-            if (!host.active || (host.type != ModContent.NPCType<KS3>() && host.type != ModContent.NPCType<KS3_Clone>()))
+            NPC host = Main.npc[(int)Projectile.ai[2]];
+            if (!host.active || host.ModNPC is not KS3)
                 Projectile.Kill();
             Vector2 CallPos = new(host.Center.X + 22 * host.spriteDirection, host.Center.Y - 56);
             Projectile.Center = CallPos;
             if (host.spriteDirection == 1)
                 Projectile.spriteDirection = -1;
-            else 
+            else
                 Projectile.spriteDirection = 1;
         }
 

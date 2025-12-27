@@ -46,7 +46,7 @@ namespace Redemption.Globals
         }
         public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (projectile.owner == Main.myPlayer && Main.player[projectile.owner].RedemptionPlayerBuff().thornCirclet && projectile.CountsAsClass(DamageClass.Summon) && Main.rand.NextBool(3) && Main.projPet[projectile.type] && projectile.type != ProjectileType<BlightedClaw_Slash>())
+            if (projectile.owner == Main.myPlayer && Main.player[projectile.owner].RedemptionPlayerBuff().thornCirclet && projectile.CountsAsClass(DamageClass.Summon) && Main.rand.NextBool(6) && Main.projPet[projectile.type] && projectile.type != ProjectileType<BlightedClaw_Slash>())
             {
                 float rotation = (projectile.Center - target.Center).ToRotation() + MathHelper.PiOver2;
 
@@ -65,7 +65,7 @@ namespace Redemption.Globals
                 Vector2 spawnVelocity = new(projectile.direction * 3, upDown * -1);
                 Vector2 velocity = spawnVelocity.SafeNormalize(default).RotatedBy(rotation);
 
-                int p = Projectile.NewProjectile(projectile.GetSource_OnHit(target), position, velocity * 5, ProjectileType<BlightedClaw_Slash>(), projectile.damage, projectile.knockBack, projectile.owner, upDown);
+                int p = Projectile.NewProjectile(projectile.GetSource_OnHit(target), position, velocity * 5, ProjectileType<BlightedClaw_Slash>(), projectile.damage / 2, projectile.knockBack, projectile.owner, upDown);
                 Main.projectile[p].DamageType = DamageClass.Summon;
             }
         }
@@ -77,14 +77,14 @@ namespace Redemption.Globals
 
         public override void OnKill(Projectile projectile, int timeLeft)
         {
-            if (projectile.owner == Main.myPlayer && Main.player[projectile.owner].RedemptionPlayerBuff().thornCirclet && projectile.CountsAsClass(DamageClass.Ranged) && Main.rand.NextBool(3) && projectile.damage > 0 && projectile.type != ProjectileType<ThornCircletSplinter>() && projectile.velocity.Length() > 1)
+            if (projectile.owner == Main.myPlayer && Main.player[projectile.owner].RedemptionPlayerBuff().thornCirclet && projectile.CountsAsClass(DamageClass.Ranged) && Main.rand.NextBool(6) && projectile.damage > 0 && projectile.type != ProjectileType<ThornCircletSplinter>() && projectile.velocity.Length() > 1)
             {
                 int damage = projectile.damage / 2;
                 if (damage <= 0)
                     damage = 1;
                 for (int i = 0; i < Main.rand.Next(2, 4); i++)
                 {
-                    Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, RedeHelper.PolarVector(Main.rand.Next(8, 10), RedeHelper.RandomRotation()), ProjectileType<ThornCircletSplinter>(), damage, 1, Main.myPlayer);
+                    Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, RedeHelper.PolarVector(Main.rand.Next(8, 10), RedeHelper.RandomRotation()), ProjectileType<ThornCircletSplinter>(), damage / 2, 1, Main.myPlayer);
                 }
             }
         }

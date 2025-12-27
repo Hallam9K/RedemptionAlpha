@@ -1,22 +1,22 @@
-using Terraria;
-using System;
-using Terraria.ID;
-using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
-using Terraria.Audio;
 using Redemption.Base;
+using Redemption.Globals;
+using Redemption.Globals.NPCs;
+using Redemption.Projectiles;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using System.Collections.Generic;
-using Redemption.Globals.NPCs;
+using Terraria.ID;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
-    public class KS3_Magnet : ModNPC
+    public class KS3_Magnet : ModRedeNPC
     {
-        public static int BodyType() => ModContent.NPCType<KS3>();
+        public static int BodyType() => NPCType<KS3>();
 
         public override void SetStaticDefaults()
         {
@@ -54,7 +54,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
 
-                new FlavorTextBestiaryInfoElement("This drone converts projectiles into energy to fire back at their targets.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.KS3_Magnet"))
             });
         }
 
@@ -80,10 +80,12 @@ namespace Redemption.NPCs.Bosses.KSIII
         Vector2 playerOrigin;
         public override void AI()
         {
-            Player player = Main.player[NPC.target];
-            NPC.LookAtEntity(player);
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target >= 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
+
+            Player player = Main.player[NPC.target];
+
+            NPC.LookAtEntity(player);
 
             float soundVolume = NPC.velocity.Length() / 50;
             if (soundVolume > 2f) { soundVolume = 2f; }
@@ -94,8 +96,11 @@ namespace Redemption.NPCs.Bosses.KSIII
             }
 
             NPC host = Main.npc[(int)NPC.ai[0]];
-            if (!host.active || (host.type != ModContent.NPCType<KS3>() && host.type != ModContent.NPCType<KS3_Clone>()))
+            if (!host.active || (host.type != NPCType<KS3>() && host.type != NPCType<KS3_Clone>()))
                 NPC.active = false;
+
+            if (host.ai[0] is 9 or 20)
+                NPC.ai[2] = 400;
 
             if (++NPC.ai[1] % 80 == 0)
             {
@@ -126,18 +131,17 @@ namespace Redemption.NPCs.Bosses.KSIII
                     dust2.noGravity = true;
                     dust2.velocity *= 0f;
                 }
-                for (int i = 0; i < Main.maxProjectiles; i++)
+                foreach (Projectile target in Main.ActiveProjectiles)
                 {
-                    Projectile target = Main.projectile[i];
                     if (!target.active || target.width >= 40 || target.height >= 40 || NPC.DistanceSQ(target.Center) >= 200 * 200 || !target.friendly || target.damage <= 0 || target.ProjBlockBlacklist())
                         continue;
 
-                    NPC.Shoot(target.Center, ModContent.ProjectileType<KS3_MagnetPulse>(), 0, Vector2.Zero, NPC.whoAmI);
+                    Shoot(target.Center, ProjectileType<KS3_MagnetPulse>(), 0, Vector2.Zero);
                     NPC.ai[3] += target.damage;
                     target.Kill();
                 }
             }
-            if (NPC.ai[2] >= 180 && NPC.ai[2] < 240)
+            if (NPC.ai[3] > 10 && NPC.ai[2] >= 180 && NPC.ai[2] < 240)
             {
                 for (int k = 0; k < 4; k++)
                 {
@@ -154,8 +158,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 playerOrigin = player.Center;
             if (NPC.ai[2] == 240 && NPC.ai[3] > 10)
             {
-                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_MagnetBeam>(), (int)NPC.ai[3] / 4,
-                    RedeHelper.PolarVector(10, (playerOrigin - NPC.Center).ToRotation()), CustomSounds.BallFire, NPC.whoAmI);
+                Shoot(NPC.Center, ProjectileType<KS3_MagnetBeam>(), NPCHelper.HostileProjDamage((int)NPC.ai[3]), RedeHelper.PolarVector(10, (playerOrigin - NPC.Center).ToRotation()), CustomSounds.BallFire);
             }
             if (NPC.ai[2] >= 400)
             {
@@ -192,14 +195,14 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D glowMask = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+            Texture2D glowMask = Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
     }
-    public class KS3_MagnetPulse : ModProjectile
+    public class KS3_MagnetPulse : ModRedeProjectile
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
@@ -221,7 +224,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             int DustID2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Frost);
             Main.dust[DustID2].noGravity = true;
 
-            NPC projAim = Main.npc[(int)Projectile.ai[0]];
+            NPC projAim = Main.npc[(int)Projectile.ai[2]];
             if (!projAim.active)
                 Projectile.Kill();
 

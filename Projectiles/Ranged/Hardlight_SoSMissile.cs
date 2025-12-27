@@ -1,13 +1,14 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using System.Linq;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
+using Redemption.Effects;
 using Redemption.Globals;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Redemption.BaseExtension;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Ranged
 {
@@ -33,6 +34,15 @@ namespace Redemption.Projectiles.Ranged
             Projectile.DamageType = DamageClass.Ranged;
         }
 
+        private readonly int NUMPOINTS = 30;
+        public Color baseColor = new(193, 255, 219);
+        public Color endColor = new(0, 160, 170);
+        private List<Vector2> cache;
+        private List<Vector2> cache2;
+        private DanTrail trail;
+        private DanTrail trail2;
+        private readonly float thickness = 8f;
+
         public override void AI()
         {
             if (++Projectile.frameCounter >= 5)
@@ -43,12 +53,12 @@ namespace Redemption.Projectiles.Ranged
             }
 
             Projectile projAim = Main.projectile[(int)Projectile.ai[0]];
-            if (!projAim.active || projAim.type != ModContent.ProjectileType<Hardlight_SoSCrosshair>())
+            if (!projAim.active || projAim.type != ProjectileType<Hardlight_SoSCrosshair>())
             {
                 Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 12;
 
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
                 Projectile.Kill();
             }
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
@@ -66,9 +76,14 @@ namespace Redemption.Projectiles.Ranged
                     Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
                     Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 12;
 
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
                     Projectile.Kill();
                 }
+            }
+            if (Main.netMode != NetmodeID.Server)
+            {
+                TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
+                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
             }
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -76,7 +91,7 @@ namespace Redemption.Projectiles.Ranged
             Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 12;
 
-            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
+            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
             Projectile.Kill();
         }
         public override void OnKill(int timeLeft)
@@ -99,8 +114,25 @@ namespace Redemption.Projectiles.Ranged
         }
         public override bool PreDraw(ref Color lightColor)
         {
+            Main.spriteBatch.End();
+            Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/Trail_1").Value);
+            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
+            effect.Parameters["repeats"].SetValue(1f);
+
+            trail?.Render(effect);
+            trail2?.Render(effect);
+
+            Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
+            Texture2D glow = Request<Texture2D>(Texture + "_Glow").Value;
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int height = texture.Height / 4;
             int y = height * Projectile.frame;
@@ -170,20 +202,20 @@ namespace Redemption.Projectiles.Ranged
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 origin = new(texture.Width / 2f, height / 2f);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
         public override void PostDraw(Color lightColor)
         {
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
-            Texture2D teleportGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+            Texture2D teleportGlow = Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
             Rectangle rect2 = new(0, 0, teleportGlow.Width, teleportGlow.Height);
             Vector2 origin2 = new(teleportGlow.Width / 2, teleportGlow.Height / 2);
             Vector2 position2 = Projectile.Center - Main.screenPosition;
@@ -195,7 +227,7 @@ namespace Redemption.Projectiles.Ranged
             }
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
         }
     }
 }

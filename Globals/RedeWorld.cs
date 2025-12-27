@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts;
 using Redemption.NPCs.Bosses.Keeper;
+using Redemption.NPCs.Bosses.KSIII;
+using Redemption.NPCs.Bosses.KSIII.Friendly;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.NPCs.Minibosses.Calavia;
 using Redemption.Projectiles.Misc;
@@ -208,6 +210,28 @@ namespace Redemption.Globals
                         break;
                     }
                 }
+            }
+            #endregion
+
+            #region King Slayer III assist Moonlord
+            if (!NPC.downedMoonlord && NPC.MoonLordCountdown > 0 && NPC.MoonLordCountdown == NPC.MaxMoonLordCountdown / 2 && RedeQuest.slayerRep >= 2 && !NPC.AnyNPCs(NPCType<KS3_Friendly>()) && !NPC.AnyNPCs(NPCType<KS3>()))
+            {
+                for (int k = 0; k < Main.maxPlayers; k++)
+                {
+                    Player player = Main.player[k];
+                    if (!player.active || player.position.Y >= Main.worldSurface * 16.0)
+                        continue;
+
+                    int type = NPCType<KS3_Friendly>();
+
+                    if (!NPC.AnyNPCs(type))
+                    {
+                        Vector2 newPos = new(Main.rand.Next(-400, -250), Main.rand.Next(-200, 50));
+                        LabArea.SpawnNPCInWorld(player.Center + newPos, NPCType<KS3_Friendly>());
+                        break;
+                    }
+                }
+
             }
             #endregion
 

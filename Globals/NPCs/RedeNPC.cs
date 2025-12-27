@@ -57,6 +57,7 @@ namespace Redemption.Globals.NPCs
         public bool invisible;
         public bool fallDownPlatform;
         public bool spiritSummon;
+        public bool ignoreNewTargeting;
         public Entity attacker = Main.LocalPlayer;
         public Terraria.NPC npcTarget;
 
@@ -121,6 +122,7 @@ namespace Redemption.Globals.NPCs
         }
         public override void ResetEffects(Terraria.NPC npc)
         {
+            ignoreNewTargeting = false;
             invisible = false;
         }
         public override void ModifyIncomingHit(Terraria.NPC npc, ref Terraria.NPC.HitModifiers modifiers)
@@ -206,15 +208,17 @@ namespace Redemption.Globals.NPCs
         }
         public override void OnHitNPC(Terraria.NPC npc, Terraria.NPC target, Terraria.NPC.HitInfo hit)
         {
-            target.Redemption().attacker = npc;
+            if (!target.Redemption().ignoreNewTargeting)
+                target.Redemption().attacker = npc;
         }
         public override void OnHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, Terraria.NPC.HitInfo hit, int damageDone)
         {
-            attacker = player;
+            if (!npc.Redemption().ignoreNewTargeting)
+                attacker = player;
         }
         public override void OnHitByProjectile(Terraria.NPC npc, Projectile projectile, Terraria.NPC.HitInfo hit, int damageDone)
         {
-            if (RedeProjectile.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IEntitySource source) value))
+            if (!npc.Redemption().ignoreNewTargeting && RedeProjectile.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IEntitySource source) value))
             {
                 bool g = false;
                 if (value.entity is Terraria.NPC valueNPC && valueNPC.whoAmI == npc.whoAmI)

@@ -60,6 +60,28 @@ namespace Redemption.Tiles.Tiles
                 breakCheck = false;
             }
         }
+        public override void ReplaceTile(int i, int j, int targetType, int targetStyle)
+        {
+            if (Main.rand.NextBool(2) && Main.netMode != NetmodeID.MultiplayerClient)
+                NPC.NewNPC(new EntitySource_TileBreak(i, j), i * 16 + 8, j * 16, NPCType<SpiderSwarmer>());
+
+            if (breakCheck)
+                return;
+            breakCheck = true;
+            for (int k = i - 3; k <= i + 3; k++)
+            {
+                for (int l = j - 3; l <= j + 3; l++)
+                {
+                    if ((k != i || l != j) && Main.tile[k, l].HasTile && Main.tile[k, l].TileType == TileType<InfestedStoneTile>() && !Main.rand.NextBool(3))
+                    {
+                        WorldGen.KillTile(k, l, noItem: true);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, k, l);
+                    }
+                }
+            }
+            breakCheck = false;
+        }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);

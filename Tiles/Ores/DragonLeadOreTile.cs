@@ -63,6 +63,25 @@ namespace Redemption.Tiles.Ores
                 breakCheck = false;
             }
         }
+        public override void ReplaceTile(int i, int j, int targetType, int targetStyle)
+        {
+            if (breakCheck)
+                return;
+            breakCheck = true;
+            for (int k = i - 2; k <= i + 2; k++)
+            {
+                for (int l = j - 2; l <= j + 2; l++)
+                {
+                    if ((k != i || l != j) && Main.tile[k, l].HasTile && Main.tile[k, l].TileType == TileType<DragonLeadOreTile>() && !Main.rand.NextBool(2))
+                    {
+                        WorldGen.KillTile(k, l, noItem: true);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, k, l);
+                    }
+                }
+            }
+            breakCheck = false;
+        }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = fail ? 1 : 3;

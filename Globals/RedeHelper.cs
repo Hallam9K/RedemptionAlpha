@@ -757,11 +757,11 @@ namespace Redemption.Globals
                 if (!target.CanBeChasedBy() && target.type != NPCID.TargetDummy)
                     continue;
 
-                if ((hitter is Projectile proj && target.immune[proj.whoAmI] > 0) || hitter.Distance(target.Center) > radius)
+                if ((hitter is Projectile proj && target.immune[proj.owner] > 0) || hitter.Distance(target.Center) > radius)
                     continue;
 
                 if (hitter is Projectile proj2)
-                    target.immune[proj2.whoAmI] = immuneTime;
+                    target.immune[proj2.owner] = immuneTime;
                 int hitDirection = target.RightOfDir(hitter);
                 BaseAI.DamageNPC(target, damage, knockBack, hitDirection, hitter, crit: hitter is Projectile proj3 && proj3.HeldItemCrit());
             }
@@ -773,11 +773,11 @@ namespace Redemption.Globals
                 if (!target.CanBeChasedBy() && target.type != NPCID.TargetDummy)
                     continue;
 
-                if ((hitter is Projectile proj && target.immune[proj.whoAmI] > 0) || origin.Distance(target.Center) > radius)
+                if ((hitter is Projectile proj && target.immune[proj.owner] > 0) || origin.Distance(target.Center) > radius)
                     continue;
 
                 if (hitter is Projectile proj2)
-                    target.immune[proj2.whoAmI] = immuneTime;
+                    target.immune[proj2.owner] = immuneTime;
                 int hitDirection = target.RightOfDir(hitter);
                 BaseAI.DamageNPC(target, damage, knockBack, hitDirection, hitter, crit: hitter is Projectile proj3 && proj3.HeldItemCrit());
             }
@@ -789,11 +789,11 @@ namespace Redemption.Globals
                 if (!target.CanBeChasedBy() && target.type != NPCID.TargetDummy)
                     continue;
 
-                if ((hitter is Projectile proj && target.immune[proj.whoAmI] > 0) || !target.Hitbox.Intersects(radius))
+                if ((hitter is Projectile proj && target.immune[proj.owner] > 0) || !target.Hitbox.Intersects(radius))
                     continue;
 
                 if (hitter is Projectile proj2)
-                    target.immune[proj2.whoAmI] = 20;
+                    target.immune[proj2.owner] = 20;
                 int hitDirection = target.RightOfDir(hitter);
                 BaseAI.DamageNPC(target, damage, knockBack, hitDirection, hitter, crit: hitter is Projectile proj3 && proj3.HeldItemCrit());
             }
@@ -805,11 +805,11 @@ namespace Redemption.Globals
                 if (!target.CanBeChasedBy() && target.type != NPCID.TargetDummy)
                     continue;
 
-                if ((hitter is Projectile proj && target.immune[proj.whoAmI] > 0) || !target.Hitbox.Intersects(radius))
+                if ((hitter is Projectile proj && target.immune[proj.owner] > 0) || !target.Hitbox.Intersects(radius))
                     continue;
 
                 if (hitter is Projectile proj2)
-                    target.immune[proj2.whoAmI] = 20;
+                    target.immune[proj2.owner] = 20;
                 int hitDirection = target.RightOfDir(hitter);
                 BaseAI.DamageNPC(target, damage, knockBack, hitDirection, hitter, crit: critChance >= Main.rand.Next(1, 101));
             }
@@ -925,24 +925,25 @@ namespace Redemption.Globals
         /// <summary>
         /// For methods that have 'this NPC npc', instead of doing RedeHelper.Shoot(), you can do NPC.Shoot() instead.
         /// </summary>
-        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, SoundStyle sound, float ai0 = 0, float ai1 = 0, float knockback = 4.5f, float ai2 = 0)
+        public static int Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, SoundStyle sound, float ai0 = 0, float ai1 = 0, float knockback = 4.5f, float ai2 = 0)
         {
             if (!Main.dedServ)
                 SoundEngine.PlaySound(sound, npc.position);
-            Shoot(npc, position, projType, damage, velocity, ai0, ai1, knockback, ai2);
+            return Shoot(npc, position, projType, damage, velocity, ai0, ai1, knockback, ai2);
         }
-        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, float ai0 = 0, float ai1 = 0, float knockback = 4.5f, float ai2 = 0)
+        public static int Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, float ai0 = 0, float ai1 = 0, float knockback = 4.5f, float ai2 = 0)
         {
             damage /= 2;
             if (Main.expertMode)
                 damage /= Main.masterMode ? 3 : 2;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, projType, damage, knockback,
+                return Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, projType, damage, knockback,
                     Main.myPlayer, ai0, ai1, ai2);
             }
+            return -1;
         }
-        public static void Shoot(this Projectile proj, Vector2 position, int projType, int damage, Vector2 velocity,
+        public static int Shoot(this Projectile proj, Vector2 position, int projType, int damage, Vector2 velocity,
             bool playSound, SoundStyle sound, float ai0 = 0, float ai1 = 0)
         {
             if (playSound)
@@ -950,9 +951,10 @@ namespace Redemption.Globals
 
             if (proj.owner == Main.myPlayer)
             {
-                Projectile.NewProjectile(proj.GetSource_FromThis(), position, velocity, projType, damage / 4, 0,
+                return Projectile.NewProjectile(proj.GetSource_FromThis(), position, velocity, projType, damage / 4, 0,
                     Main.myPlayer, ai0, ai1);
             }
+            return -1;
         }
 
         /// <summary>
@@ -961,11 +963,10 @@ namespace Redemption.Globals
         public static void Dash(this Terraria.NPC npc, int speed, bool directional, SoundStyle sound,
             Vector2 target)
         {
-            Terraria.Player player = Main.player[npc.target];
             SoundEngine.PlaySound(sound, npc.position);
-            if (target == Vector2.Zero)
+            if (target == Vector2.Zero && npc.HasPlayerTarget)
             {
-                target = player.Center;
+                target = Main.player[npc.target].Center;
             }
 
             if (directional)
@@ -1131,8 +1132,12 @@ namespace Redemption.Globals
         public static void Move(this Terraria.NPC npc, Vector2 vector, float speed, float turnResistance = 10f,
             bool toPlayer = false, bool reverse = false)
         {
-            Terraria.Player player = Main.player[npc.target];
-            Vector2 moveTo = toPlayer ? player.Center + vector : vector;
+            Vector2 moveTo = vector;
+            if (npc.HasPlayerTarget)
+            {
+                Player player = Main.player[npc.target];
+                moveTo = toPlayer ? player.Center + vector : vector;
+            }
             Vector2 move = moveTo - npc.Center;
             float magnitude = Magnitude(move);
             if (magnitude > speed)
@@ -1687,6 +1692,42 @@ namespace Redemption.Globals
             return false;
         }
         public static Color ColorTintedAndOpacity(this Terraria.NPC npc, Color color) => npc.GetAlpha(npc.GetNPCColorTintedByBuffs(color)) * npc.Opacity;
+
+        public static float TownNPCDamageMultiplier()
+        {
+            float dmgInc = 1f;
+            if (NPC.combatBookWasUsed)
+                dmgInc += 0.2f;
+            if (NPC.combatBookVolumeTwoWasUsed)
+                dmgInc += 0.2f;
+            if (NPC.downedBoss1)
+                dmgInc += 0.1f;
+            if (NPC.downedBoss2)
+                dmgInc += 0.1f;
+            if (NPC.downedBoss3)
+                dmgInc += 0.1f;
+            if (NPC.downedQueenBee)
+                dmgInc += 0.1f;
+            if (Main.hardMode)
+                dmgInc += 0.4f;
+            if (NPC.downedQueenSlime)
+                dmgInc += 0.15f;
+            if (NPC.downedMechBoss1)
+                dmgInc += 0.15f;
+            if (NPC.downedMechBoss2)
+                dmgInc += 0.15f;
+            if (NPC.downedMechBoss3)
+                dmgInc += 0.15f;
+            if (NPC.downedPlantBoss)
+                dmgInc += 0.15f;
+            if (NPC.downedEmpressOfLight)
+                dmgInc += 0.15f;
+            if (NPC.downedGolemBoss)
+                dmgInc += 0.15f;
+            if (NPC.downedAncientCultist)
+                dmgInc += 0.15f;
+            return dmgInc;
+        }
         #endregion
     }
     public class TileRunner

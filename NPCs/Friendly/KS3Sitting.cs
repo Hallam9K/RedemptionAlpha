@@ -10,6 +10,7 @@ using Redemption.Items.Lore;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Quest.KingSlayer;
 using Redemption.NPCs.Bosses.KSIII;
+using Redemption.NPCs.Bosses.KSIII.Friendly;
 using Redemption.Tiles.Tiles;
 using Redemption.UI.Dialect;
 using Redemption.Walls;
@@ -97,7 +98,7 @@ namespace Redemption.NPCs.Friendly
                 NPC.active = false;
 
             NPC.direction = 1;
-            if (NPC.AnyNPCs(NPCType<KS3>()))
+            if (NPC.AnyNPCs(NPCType<KS3>()) || NPC.AnyNPCs(NPCType<KS3_Friendly>()))
             {
                 for (int i = 0; i < 15; i++)
                 {

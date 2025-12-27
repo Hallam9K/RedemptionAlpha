@@ -23,8 +23,8 @@ namespace Redemption.Items.Materials.HM
         public override void AddRecipes()
         {
             CreateRecipe(2)
-                .AddIngredient(ModContent.ItemType<CyberPlating>())
-                .AddTile(ModContent.TileType<SlayerFabricatorTile>())
+                .AddIngredient(ItemType<CyberPlating>())
+                .AddTile(TileType<SlayerFabricatorTile>())
                 .AddDecraftCondition(RedeConditions.DownedSlayer)
                 .Register();
         }
