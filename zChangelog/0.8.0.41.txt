@@ -5,7 +5,7 @@
 - Nerfed Circlet of Brambles: Reduced chance of Claw Slashes and Splinters to appear from 1/3 -> 1/6, both deal half the weapon's damage, and corrected chance of Thorn Traps to 1/3 for both melee and projectile hits
 - Increased brightness of Omega Blast projectiles
 - Reduced volume of Dragon Slayer's Greatbow fire breath
-- Fixed Nest Wand eggs spawning chickens and dealing wrong damage type
+- Fixed Nest Wand and Halbirdhouse eggs spawning chickens and dealing wrong damage type
 - Fixed Zephos and Fallen's damage scaling, and increased Zephos' damage from 15 -> 28
 - Fixed Fallen's shop conditions for paintings being wrong (donno when that happened)
 - Added Music Box for King Slayer Overclock theme
