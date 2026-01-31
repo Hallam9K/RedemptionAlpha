@@ -24,8 +24,8 @@ namespace Redemption.Items.Armor.Single
 
 		public override void SetDefaults()
 		{
-			Item.width = 24;
-			Item.height = 26;
+			Item.width = 32;
+			Item.height = 28;
 			Item.sellPrice(silver: 90);
 			Item.rare = ItemRarityID.Orange;
 			Item.defense = 5;

@@ -3025,7 +3025,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Continue.OverclockEnd1"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, false, null, Bubble, null, modifier))
                                  .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Continue.OverclockEnd2"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, false, null, Bubble, null, modifier))
                                  .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Continue.OverclockEnd3"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, false, null, Bubble, null, modifier))
-                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Continue.OverclockEnd4"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, false, null, Bubble, null, modifier));
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Continue.OverclockEnd4"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, false, null, Bubble, null, modifier, RedeQuest.slayerRep < 4 ? 0 : 1));
                             if (RedeQuest.slayerRep < 4)
                                 chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Continue.OverclockEnd5"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, Bubble, null, modifier, 1));
 

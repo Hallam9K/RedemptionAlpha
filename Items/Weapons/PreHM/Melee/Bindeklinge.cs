@@ -62,8 +62,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             if (hit.Crit)
             {
+                int amount = Main.rand.Next(4, 7) - player.ownedProjectileCounts[ProjectileType<Lightmass>()];
+                if (amount <= 0)
+                    amount = 1;
+
                 SoundEngine.PlaySound(SoundID.Item101, player.Center);
-                for (int i = 0; i < Main.rand.Next(4, 7); i++)
+                for (int i = 0; i < amount; i++)
                     Projectile.NewProjectile(player.GetSource_ItemUse(Item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ProjectileType<Lightmass>(), 7, hit.Knockback / 2, player.whoAmI);
             }
         }
@@ -136,13 +140,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             //if (Main.rand.NextFloat() * 2f < Projectile.Opacity)
             {
-                Dust dust8 = Dust.NewDustPerfect(Projectile.Center + num8.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), 278, vector3 * 1f, 100, Color.Lerp(Color.Gold, Color.White, Main.rand.NextFloat() * 0.3f), 0.4f);
+                Dust dust8 = Dust.NewDustPerfect(Projectile.Center + num8.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), DustID.FireworksRGB, vector3 * 1f, 100, Color.Lerp(Color.Gold, Color.White, Main.rand.NextFloat() * 0.3f), 0.4f);
                 dust8.fadeIn = 0.4f + Main.rand.NextFloat() * 0.15f;
                 dust8.noGravity = true;
             }
             //if (Main.rand.NextFloat() * 1.5f < Projectile.Opacity)
             {
-                Dust.NewDustPerfect(vector2, 43, vector3 * 1f, 100, Color.White * opacityAlt, 1.2f * opacityAlt);
+                Dust.NewDustPerfect(vector2, DustID.TintableDustLighted, vector3 * 1f, 100, Color.White * opacityAlt, 1.2f * opacityAlt);
             }
             Projectile.scale *= Projectile.ai[2];
             if (Projectile.localAI[0] >= Projectile.ai[1])
@@ -175,8 +179,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             ParticleOrchestrator.RequestParticleSpawn(false, ParticleOrchestraType.Excalibur, settings, Projectile.owner);
             if (hit.Crit)
             {
+                int amount = Main.rand.Next(4, 7) - player.ownedProjectileCounts[ProjectileType<Lightmass>()];
+                if (amount <= 0)
+                    amount = 1;
+
                 SoundEngine.PlaySound(SoundID.Item101, player.Center);
-                for (int i = 0; i < Main.rand.Next(4, 7); i++)
+                for (int i = 0; i < amount; i++)
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ProjectileType<Lightmass>(), 7, hit.Knockback / 2, player.whoAmI);
             }
         }
@@ -243,7 +251,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public static void DrawPrettyStarSparkle(float opacity, SpriteEffects dir, Vector2 drawpos, Color drawColor, Color shineColor, float flareCounter, float fadeInStart, float fadeInEnd, float fadeOutStart, float fadeOutEnd, float rotation, Vector2 scale, Vector2 fatness)
         {
-            Texture2D value = TextureAssets.Extra[98].Value;
+            Texture2D value = TextureAssets.Extra[ExtrasID.SharpTears].Value;
             Color color = shineColor * opacity * 0.5f;
             color.A = 0;
             Vector2 origin = value.Size() / 2f;

@@ -1,0 +1,9 @@
+=== 0.8 Beta .411 === (January 2026 Patch)
+- Fixed King Slayer awkwardly sticking around after Overclock defeated dialogue for after completing his quests ends
+- Resprited Grave Steel Alloy, Keeper's Circlet, Keeper's Treasure Bag, Keeper's Relic, Happins the Fallen, and Antique Iron Realm Helmet
+- Polish translation of King Slayer's Overclock intro dialogue should be better timed with music
+2362. Reduced amount of Lightmass spawned from Bindeklinge by the amount already present, down to a minimum of 1
+2366. Resprited Mossy Goliath crux spirit
+2377. Fixed Xenium set bonus by making it not activate if another item is in use
+2379. Disabled shimmering Corrupted Xenomite until after Omega Gigapora is defeated
+===============

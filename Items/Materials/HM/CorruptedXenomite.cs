@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
@@ -35,6 +36,7 @@ namespace Redemption.Items.Materials.HM
                 .AddIngredient(ModContent.ItemType<Xenomite>(), 5)
                 .AddIngredient(ModContent.ItemType<OmegaPowerCell>())
                 .AddTile(ModContent.TileType<GirusCorruptorTile>())
+                .AddDecraftCondition(RedeConditions.DownedOmega2)
                 .Register();
         }
     }

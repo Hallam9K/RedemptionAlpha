@@ -74,7 +74,7 @@ namespace Redemption.Items.Placeable.Trophies
     public class KeeperRelic : BaseRelicItem
     {
         protected override int Style => 4;
-        protected override Point Size => new(30, 46);
+        protected override Point Size => new(36, 52);
     }
     public class KS3Relic : BaseRelicItem
     {

@@ -471,8 +471,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         if (++NPC.frameCounter >= 5)
                         {
                             NPC.frameCounter = 0;
-                            NPC.frame.Y += 88;
-                            if (NPC.frame.Y > 440)
+                            NPC.frame.Y += frameHeight;
+                            if (NPC.frame.Y > frameHeight * 5)
                             {
                                 NPC.frameCounter = 0;
                                 NPC.frame.Y = 0;

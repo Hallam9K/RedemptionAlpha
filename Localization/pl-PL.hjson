@@ -1188,16 +1188,16 @@ Mods: {
 				}
 
 				Continue: {
-					Accept: Teraz rozumiem, o co ci chodzi...
-					Overclock1: Jeszcze raz,[0.1] naprawdę jesteś żądny wygranej...
-					Overclock2: Jestem zawiedziony, że muszę naprawdę przekatować to naczynie
+					Accept: Rozumiem...
+					Overclock1: Jeszcze raz, naprawdę jesteś żądny wygranej...
+					Overclock2: Jestem zawiedziony, że muszę katować to naczynie
 					Overclock3: ... [@b2]Widzę, że lubisz utrudniać sobie życie.
-					IfRobot: ... I to dla sterty złomu, jakby nie było.
-					IfChicken: ... I to dla?[0.5] Jakiejś pieprzonej kury!?
-					IfHuman: ... I to dla wkurzającego bachora, jakby nie było.
-					Overclock4: "[@h1]Twoje intencje są niejasne,[0.2][@h3] ale zapamiętaj sobie jedno..."
-					Overclock5: Istnieją poza twoją małą wysepką kretyni, którzy mogliby cię zetrzeć z powierzchni ziemi jednym kichnięciem...
-					Overclock6: "[@h1]Tak więc jeśli chcesz władzy,[0.1] zniszczenia,[0.1] śmierci,[0.2] czy cokolwiek innego..."
+					IfRobot: ... I to na stertę złomu?!
+					IfChicken: ... I to na? Jakąś pieprzoną kurę!?
+					IfHuman: ... I to na jakiegoś bachora?!
+					Overclock4: "[@h1]Twoje intencje są niejasne,[0.2][@h3] ale zapamiętaj jedno..."
+					Overclock5: Istnieją poza twoją wysepką kretyni, którzy mogliby cię zetrzeć z powierzchni ziemi jednym kichnięciem...
+					Overclock6: "[@h1]Tak więc jeśli chcesz władzy, zniszczenia, czy cokolwiek innego..."
 					Overclock7: "[@ov][@b1]... Radziłbym ci się poważnie nad tym zastanowić."
 					Overclock4Alt: "[@h1]To naczynie nigdy nie było przeznaczone do walki."
 					Overclock5Alt: Rozumiem, że chcesz abym poszedł na całego,[0.1] ale wiedz, że...
@@ -1211,7 +1211,7 @@ Mods: {
 					OverclockEnd2: Nie musisz upokarzać mnie bardziej, niż już to zrobiłeś
 					OverclockEnd3: Wygrałeś,[0.1] uczciwie.[1] A teraz daj mi spokój.
 					OverclockEnd4: Będę musiał znowu naprawiać to naczynie,[0.5] jakbym i tak już nie miał wystarczająco problemów.
-					OverclockEnd5: Wynoś się z moich oczu.
+					OverclockEnd5: A teraz zejdź mi z oczu.
 				}
 
 				MLHelp: {

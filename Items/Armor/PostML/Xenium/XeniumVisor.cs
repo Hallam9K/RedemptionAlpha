@@ -115,15 +115,19 @@ namespace Redemption.Items.Armor.PostML.Xenium
                 }
                 else
                 {
-                    player.releaseUseItem = false;
-                    player.controlUseItem = false;
-                    if (!Main.dedServ)
+                    if (player.itemTime == 0)
                     {
-                        SoundEngine.PlaySound(CustomSounds.ShootChange with { Pitch = -.2f }, player.position);
-                        DustHelper.DrawDustImage(player.Center, DustID.GreenFairy, 0.1f, "Redemption/Effects/DustImages/WarpShape", 2, true, 0);
+                        player.releaseUseItem = false;
+                        player.controlUseItem = false;
+
+                        if (!Main.dedServ)
+                        {
+                            SoundEngine.PlaySound(CustomSounds.ShootChange with { Pitch = -.2f }, player.position);
+                            DustHelper.DrawDustImage(player.Center, DustID.GreenFairy, 0.1f, "Redemption/Effects/DustImages/WarpShape", 2, true, 0);
+                        }
+                        dummyCannon.SetDefaults(ItemType<XeniumGrenadeCannon>());
+                        helm.CannonOn = true;
                     }
-                    dummyCannon.SetDefaults(ItemType<XeniumGrenadeCannon>());
-                    helm.CannonOn = true;
                 }
             }
 
