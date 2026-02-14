@@ -11754,7 +11754,11 @@ Mods: {
 				BossChecklistIntegration.SpawnInfo: Use a [i:Redemption/CyberTech] during the day, or attack Androids on the surface and allow them to teleport away.
 			}
 
-			KS3_Clone.DisplayName: King Slayer III... ?
+			KS3_Clone: {
+				DisplayName: King Slayer III... ?
+				DefeatName: A King Slayer III Clone
+			}
+
 			KS3_Magnet.DisplayName: Energy Magnet Drone Mk.I
 			KS3_MissileDrone.DisplayName: Missile Drone Mk.I
 			KS3_ScannerDrone.DisplayName: Scanner Drone Mk.I

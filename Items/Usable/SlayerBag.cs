@@ -44,7 +44,7 @@ namespace Redemption.Items.Usable
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemType<KingSlayerMask>(), 7));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, ItemType<SlayerGun>(), ItemType<Nanoswarmer>(), ItemType<SlayerFist>()));
+            itemLoot.Add(ItemDropRule.FewFromOptions(2, 1, ItemType<SlayerGun>(), ItemType<Nanoswarmer>(), ItemType<SlayerFist>()));
             itemLoot.Add(ItemDropRule.Common(ItemType<SlayerController>(), 10));
             itemLoot.Add(ItemDropRule.Common(ItemType<Holokey>()));
             itemLoot.Add(ItemDropRule.Common(ItemType<CyberPlating>(), 1, 30, 38));

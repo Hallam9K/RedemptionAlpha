@@ -28,6 +28,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.height = 40;
             Item.useTime = 5;
             Item.useAnimation = 15;
+            Item.useLimitPerAnimation = 3;
             Item.reuseDelay = 40;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;

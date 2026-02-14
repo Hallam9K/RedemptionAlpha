@@ -1,0 +1,6 @@
+=== 0.8 Beta .4111 === (Particle Fix)
+- Fixed Particle Library error
+- Fixed King Slayer Clone defeat message
+- Fixed King Slayer's Treasure Bag still dropping 1 random weapon instead of 2
+- Limited Seabreeze Staff to 3 shots per use
+===============
