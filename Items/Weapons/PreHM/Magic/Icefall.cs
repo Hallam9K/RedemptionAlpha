@@ -22,8 +22,9 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.mana = 7;
             Item.width = 30;
             Item.height = 34;
-            Item.useTime = 20;
-            Item.useAnimation = 20;
+            Item.useTime = 5;
+            Item.useAnimation = 60;
+            Item.useLimitPerAnimation = 4;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.noMelee = true;
             Item.autoReuse = true;
@@ -32,8 +33,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.rare = ItemRarityID.Orange;
             Item.shootSpeed = 0;
             Item.shoot = ProjectileType<Icefall_Mist>();
-            if (Main.netMode != NetmodeID.Server)
-                Item.UseSound = CustomSounds.IceMist;
+            Item.UseSound = CustomSounds.IceMist;
         }
         public override bool CanUseItem(Player player)
         {

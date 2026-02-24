@@ -2,10 +2,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Mounts;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework;
 
 namespace Redemption.Items.Accessories.PostML
 {
@@ -29,7 +28,7 @@ namespace Redemption.Items.Accessories.PostML
             Item.master = true;
             Item.UseSound = SoundID.Item79;
             Item.noMelee = true;
-            Item.mountType = ModContent.MountType<JyrinaMount_Chariot>();
+            Item.mountType = MountType<JyrinaMount_Chariot>();
         }
     }
     public class JyrinaMount_Chariot : ModMount
@@ -37,7 +36,7 @@ namespace Redemption.Items.Accessories.PostML
         public override void SetStaticDefaults()
         {
             MountData.spawnDust = DustID.Sandnado;
-            MountData.buff = ModContent.BuffType<JyrinaMountBuff>();
+            MountData.buff = BuffType<JyrinaMountBuff>();
             MountData.heightBoost = 26;
             MountData.fallDamage = 0f;
             MountData.runSpeed = 17f;
@@ -87,7 +86,10 @@ namespace Redemption.Items.Accessories.PostML
         }
         public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle frame, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow)
         {
-            playerDrawData.Add(new DrawData(texture, drawPosition, frame, Color.White, rotation, drawOrigin, drawScale, spriteEffects, 0));
+            playerDrawData.Add(new DrawData(texture, drawPosition, frame, Color.White, rotation, drawOrigin, drawScale, spriteEffects, 0)
+            {
+                shader = drawPlayer.cMount
+            });
             return false;
         }
     }

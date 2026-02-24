@@ -84,6 +84,8 @@ namespace Redemption.NPCs.Bosses.ADD
                 PortraitPositionYOverride = 0
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+
+            NPCSets.UsesGuardPoints[Type] = true;
             ElementID.NPCNature[Type] = true;
             ElementID.NPCEarth[Type] = true;
         }
@@ -398,6 +400,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     DustHelper.DrawCircle(NPC.Center, DustID.DryadsWard, 10, 1, 1, 1, 3, nogravity: true);
                                     NPC.RedemptionGuard().GuardPoints = GuardPointMax;
                                     NPC.RedemptionGuard().GuardBroken = false;
+                                    NPC.netUpdate = true;
                                 }
                                 if (AITimer >= 90)
                                 {

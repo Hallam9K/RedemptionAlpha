@@ -1,7 +1,7 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
+using Redemption.Particles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -13,15 +13,17 @@ namespace Redemption.Projectiles.Magic
 {
     public class Icefall_Mist : ModProjectile
     {
-        public override string Texture => "Redemption/Textures/IceMist";
+        private float noiseOffset;
+
+        public override string Texture => "Redemption/Textures/Smoke";
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Ice Mist");
         }
         public override void SetDefaults()
         {
-            Projectile.width = 150;
-            Projectile.height = 150;
+            Projectile.width = 24;
+            Projectile.height = 24;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.penetrate = -1;
             Projectile.hostile = false;
@@ -29,8 +31,9 @@ namespace Redemption.Projectiles.Magic
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
             Projectile.timeLeft = Main.rand.Next(180, 281);
-            Projectile.scale = Main.rand.NextFloat(0.4f, 0.7f);
+            Projectile.scale = Main.rand.NextFloat(0.4f, 0.7f) * 3;
             Projectile.rotation = RedeHelper.RandomRotation();
+            noiseOffset = Main.rand.NextFloat();
         }
         public override void OnSpawn(IEntitySource source)
         {
@@ -43,8 +46,8 @@ namespace Redemption.Projectiles.Magic
             Projectile.velocity *= 0.98f;
             if (Projectile.localAI[0] == 0)
             {
-                if (weak)
-                    Projectile.timeLeft += 60;
+                if (weak && Projectile.ai[1] != 1)
+                    Projectile.timeLeft += 160;
                 Projectile.localAI[0] = Main.rand.Next(1, 3);
             }
 
@@ -64,13 +67,11 @@ namespace Redemption.Projectiles.Magic
                 Projectile.alpha -= 5;
 
                 if (!weak && Main.rand.NextBool(30) && Projectile.alpha <= 100 && Main.myPlayer == Projectile.owner)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.RandAreaInEntity(), Vector2.Zero, ModContent.ProjectileType<Icefall_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.RandAreaInEntity(), Vector2.Zero, ProjectileType<Icefall_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
-                if (Main.rand.NextBool(20) && Projectile.alpha <= 150)
+                if (Main.rand.NextBool(60) && Projectile.alpha <= 150)
                 {
-                    int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.SilverCoin);
-                    Main.dust[dust].velocity *= 0;
-                    Main.dust[dust].noGravity = true;
+                    RedeParticleManager.CreateSimpleStarParticle(Main.rand.NextVector2FromRectangle(Projectile.Hitbox), Vector2.Zero, Main.rand.NextFloat(0.2f, 1f) * 0.2f, new Color(150, 180, 240, 0));
                 }
 
                 if (Projectile.alpha <= 100)
@@ -84,7 +85,7 @@ namespace Redemption.Projectiles.Magic
                         if (!Projectile.Hitbox.Intersects(target.Hitbox))
                             continue;
 
-                        target.AddBuff(ModContent.BuffType<PureChillDebuff>(), weak ? 5 : 180);
+                        target.AddBuff(BuffType<PureChillDebuff>(), weak ? 5 : 180);
                     }
                 }
             }
@@ -92,13 +93,40 @@ namespace Redemption.Projectiles.Magic
         }
         public override bool PreDraw(ref Color lightColor)
         {
+            //Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D texture = Request<Texture2D>("Redemption/Textures/SoftGlow").Value;
+            Rectangle rect = texture.Frame();
+            Vector2 drawOrigin = rect.Size() / 2f;
+            Color color = new Color(193, 253, 255) * Projectile.Opacity;
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.BeginAdditive(true);
+
+            Effect effect = Request<Effect>("Redemption/Effects/Mist").Value;
+            Texture2D noise = Request<Texture2D>("Redemption/Textures/Noise/noise").Value;
+
+            effect.Parameters["noiseResolution"].SetValue(new Vector2(0.5f, 0.5f));
+            effect.Parameters["noiseOffset"].SetValue(new Vector2(noiseOffset));
+            effect.Parameters["progress"].SetValue(0.5f + 0.25f * Projectile.Opacity);
+            effect.Parameters["fadeoutFactor"].SetValue(2);
+
+            Main.graphics.GraphicsDevice.Textures[1] = noise;
+            effect.CurrentTechnique.Passes[0].Apply();
+            Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, rect, color, Projectile.rotation, drawOrigin, Projectile.scale * 3, 0, 0f);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.BeginDefault(true);
+            return false;
+        }
+        /*public override bool PreDraw(ref Color lightColor)
+        {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
-        }
+        }*/
     }
     public class Icefall_Proj : ModProjectile
     {

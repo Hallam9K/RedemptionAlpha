@@ -13,7 +13,7 @@ namespace Redemption.Items.Placeable.Tiles
         }
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableWall((ushort)ModContent.WallType<AncientHallPillarWallTile>());
+            Item.DefaultToPlaceableWall((ushort)WallType<AncientHallPillarWallTile>());
             Item.width = 24;
             Item.height = 24;
             Item.maxStack = Item.CommonMaxStack;
@@ -21,7 +21,7 @@ namespace Redemption.Items.Placeable.Tiles
         public override void AddRecipes()
         {
             CreateRecipe(4)
-                .AddIngredient(ModContent.ItemType<AncientHallBrickSafe>())
+                .AddIngredient(ItemType<AncientHallBrickSafe>())
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

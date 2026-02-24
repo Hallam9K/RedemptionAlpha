@@ -64,6 +64,8 @@ namespace Redemption.UI
                 pad += 36;
                 BgSprite.Append(new TradePanelUI(new Item(ItemID.Fireblossom, 10), new Item(ItemID.ObsidianRose), 10) { Top = new StyleDimension(pad, 0) });
                 pad += 36;
+                BgSprite.Append(new TradePanelUI(new Item(ItemID.Moonglow, 10), new Item(ItemType<ErleasFlower>()), 10) { Top = new StyleDimension(pad, 0) });
+                pad += 36;
                 BgSprite.Append(new TradePanelUI(new Item(ItemID.Blinkroot, 10), new Item(ItemID.MetalDetector), 10) { Top = new StyleDimension(pad, 0) });
                 pad += 36;
                 BgSprite.Append(new TradePanelUI(new Item(ModContent.ItemType<LostSoul>(), 8), new Item(ItemID.HerbBag), 8) { Top = new StyleDimension(pad, 0) });

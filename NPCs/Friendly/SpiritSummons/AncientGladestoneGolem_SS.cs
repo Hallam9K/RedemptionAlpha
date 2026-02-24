@@ -38,6 +38,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             // DisplayName.SetDefault("Ancient Gladestone Golem");
             Main.npcFrameCount[NPC.type] = 12;
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
+
+            NPCSets.UsesGuardPoints[Type] = true;
             ElementID.NPCEarth[Type] = true;
         }
         public override void SetSafeDefaults()

@@ -49,6 +49,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
             player.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
             player.RedemptionScreen().ScreenShakeIntensity += 3;
 
+            if (Main.rand.NextBool(2))
+                SoundEngine.PlaySound(CustomSounds.RockImpact, Projectile.position);
+
             SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
             for (int i = 0; i < 10; i++)
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Stone,

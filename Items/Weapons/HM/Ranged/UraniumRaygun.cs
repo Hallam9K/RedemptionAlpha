@@ -28,7 +28,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<UraniumRaygun_Proj>();
             Item.shootSpeed = 11f;
-            Item.UseSound = SoundID.Item92;
+            Item.UseSound = CustomSounds.RaygunShot.WithVolumeScale(0.3f);
             Item.DamageType = DamageClass.Ranged;
             Item.width = 48;
             Item.height = 32;

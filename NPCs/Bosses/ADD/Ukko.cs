@@ -116,6 +116,8 @@ namespace Redemption.NPCs.Bosses.ADD
                 PortraitPositionYOverride = 0
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+
+            NPCSets.UsesGuardPoints[Type] = true;
             ElementID.NPCThunder[Type] = true;
             ElementID.NPCEarth[Type] = true;
         }
@@ -545,6 +547,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     DustHelper.DrawCircle(NPC.Center, DustID.Sandnado, 10, 1, 1, 1, 2, nogravity: true);
                                     NPC.RedemptionGuard().GuardPoints = GuardPointMax;
                                     NPC.RedemptionGuard().GuardBroken = false;
+                                    NPC.netUpdate = true;
                                 }
                                 if (AITimer >= 90)
                                 {

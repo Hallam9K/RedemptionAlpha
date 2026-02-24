@@ -19,7 +19,7 @@ namespace Redemption.Projectiles.Misc
             Projectile.width = 20;
             Projectile.height = 20;
             Projectile.friendly = true;
-            Projectile.penetrate = 1;
+            Projectile.penetrate = 2;
             Projectile.alpha = 255;
             Projectile.DamageType = DamageClass.Generic;
             Projectile.timeLeft = 120;

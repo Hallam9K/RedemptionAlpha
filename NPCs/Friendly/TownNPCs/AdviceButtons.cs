@@ -120,7 +120,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             else
                 locked = !RedeQuest.adviceUnlocked[AdviceType];
 
-            return locked || RedeQuest.adviceSeen[AdviceType] ? Color.Gray : null;
+            return locked || RedeQuest.adviceSeen[AdviceType] ? Color.Gray : TalkID <= 2 ? RedeColor.QuestMarkerColour : null;
         }
         public override void OnClick(NPC npc, Player player)
         {

@@ -1,5 +1,4 @@
-using Microsoft.Xna.Framework;
-using Redemption.Dusts;
+using Redemption.BaseExtension;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Bosses.KSIII;
 using Redemption.NPCs.Bosses.KSIII.Friendly;
@@ -9,7 +8,6 @@ using Redemption.Projectiles.Misc;
 using Redemption.UI.ChatUI;
 using Redemption.WorldGeneration;
 using Redemption.WorldGeneration.Misc;
-using Redemption.WorldGeneration.Soulless;
 using SubworldLibrary;
 using System.Collections.Generic;
 using System.IO;
@@ -17,7 +15,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -350,6 +347,10 @@ namespace Redemption.Globals
                 --nukeTimer;
                 if (nukeTimer <= -60)
                 {
+                    SoundEngine.PlaySound(CustomSounds.NukeExplosionFar);
+                    Main.LocalPlayer.RedemptionScreen().Rumble(60 * 8, 5);
+                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 100;
+
                     RedeHelper.ProjectileExplosion(new EntitySource_TileBreak((int)nukeGroundZero.X, (int)nukeGroundZero.Y), nukeGroundZero, 0, 90, ModContent.ProjectileType<NukeShockwave>(), 1, 80, nukeGroundZero.X, nukeGroundZero.Y);
                     HandleNukeExplosion();
                     WorldGen.KillTile((int)(nukeGroundZero.X / 16), (int)(nukeGroundZero.Y / 16), false, false, true);

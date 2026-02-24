@@ -13,7 +13,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
         }
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<BorealStatuetteTile>(), 0);
+            Item.DefaultToPlaceableTile(TileType<BorealStatuetteTile>(), 0);
             Item.width = 22;
             Item.height = 32;
             Item.maxStack = Item.CommonMaxStack;

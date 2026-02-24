@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Placeable.Tiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,7 +14,7 @@ namespace Redemption.Walls
             Main.wallHouse[Type] = false;
             DustType = DustID.Electric;
             HitSound = CustomSounds.MetalHit;
-            RegisterItemDrop(ModContent.ItemType<Cyberscrap>());
+            RegisterItemDrop(ModContent.ItemType<CyberscrapWall>());
             AddMapEntry(new Color(113, 115, 120));
         }
         public override bool CanExplode(int i, int j) => false;

@@ -311,10 +311,10 @@ namespace Redemption.Globals
             bonusDiscoveredflags2[7] = bonusDiscovered[15];
             writer.Write(bonusDiscoveredflags2);
             var bonusDiscoveredflags3 = new BitsByte();
-            bonusDiscoveredflags2[0] = bonusDiscovered[16];
-            bonusDiscoveredflags2[1] = bonusDiscovered[17];
-            bonusDiscoveredflags2[2] = bonusDiscovered[18];
-            bonusDiscoveredflags2[3] = bonusDiscovered[19];
+            bonusDiscoveredflags3[0] = bonusDiscovered[16];
+            bonusDiscoveredflags3[1] = bonusDiscovered[17];
+            bonusDiscoveredflags3[2] = bonusDiscovered[18];
+            bonusDiscoveredflags3[3] = bonusDiscovered[19];
             writer.Write(bonusDiscoveredflags3);
             #endregion
 

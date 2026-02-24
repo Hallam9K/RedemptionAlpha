@@ -36,6 +36,7 @@ namespace Redemption.Textures
         public static Asset<Texture2D> FadeTelegraph;
         public static Asset<Texture2D> FadeTelegraphCap;
         public static Asset<Texture2D> TransitionTex;
+        public static Asset<Texture2D> Shine;
 
         public static Asset<Texture2D> StunVisual;
         public static Asset<Texture2D> RalliedBuffIcon;
@@ -75,6 +76,7 @@ namespace Redemption.Textures
             FadeTelegraph = Request<Texture2D>("Redemption/Textures/FadeTelegraph");
             FadeTelegraphCap = Request<Texture2D>("Redemption/Textures/FadeTelegraphCap");
             TransitionTex = Request<Texture2D>("Redemption/Textures/TransitionTex");
+            Shine = Request<Texture2D>("Redemption/Textures/Shine");
 
             StunVisual = Request<Texture2D>("Redemption/Textures/StunVisual");
             RalliedBuffIcon = Request<Texture2D>("Redemption/Buffs/NPCBuffs/FlagbearerBuff_Icon");

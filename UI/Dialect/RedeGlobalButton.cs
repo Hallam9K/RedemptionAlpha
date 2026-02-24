@@ -1,6 +1,7 @@
 using BetterDialogue.UI;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Globals.Players;
 using Redemption.NPCs;
 using Redemption.NPCs.Friendly;
 using Redemption.NPCs.Friendly.TownNPCs;
@@ -33,8 +34,13 @@ namespace Redemption.UI.Dialect
             if (npc is null)
                 return;
 
-            if (npc.type == NPCType<KS3Sitting>() && chatButton == ChatButton.Shop && RedeQuest.slayerRep < 4)
-                buttonTextColor = Color.Gray;
+            if (chatButton == ChatButton.Shop)
+            {
+                if (npc.type == NPCType<KS3Sitting>() && RedeQuest.slayerRep < 4)
+                    buttonTextColor = Color.Gray;
+                if (npc.type == NPCType<TBot>() && chatButton == ChatButton.Shop && Main.hardMode && !TBot.warheadKnown && !DialoguePlayer.GetTalkStateLocal(DialoguePlayer.TalkType.AdamShop))
+                    buttonTextColor = RedeColor.QuestMarkerColour;
+            }
         }
         public override bool PreClick(ChatButton chatButton, NPC npc, Player player)
         {
@@ -48,17 +54,27 @@ namespace Redemption.UI.Dialect
                 talkActive = false;
                 return false;
             }
-            if (npc.type == NPCType<KS3Sitting>() && chatButton == ChatButton.Shop && RedeQuest.slayerRep < 4)
+            if (chatButton == ChatButton.Shop)
             {
-                Main.npcChatCornerItem = 0;
-                SoundEngine.PlaySound(SoundID.Chat);
-                if (RedeQuest.slayerRep == 2)
-                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat9B");
-                else if (RedeQuest.slayerRep == 3)
-                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat9C");
-                else
-                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat9");
-                return false;
+                if (npc.type == NPCType<KS3Sitting>() && RedeQuest.slayerRep < 4)
+                {
+                    Main.npcChatCornerItem = 0;
+                    SoundEngine.PlaySound(SoundID.Chat);
+                    if (RedeQuest.slayerRep == 2)
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat9B");
+                    else if (RedeQuest.slayerRep == 3)
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat9C");
+                    else
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat9");
+                    return false;
+                }
+                if (npc.type == NPCType<TBot>() && Main.hardMode && !TBot.warheadKnown && !DialoguePlayer.GetTalkStateLocal(DialoguePlayer.TalkType.AdamShop))
+                {
+                    SoundEngine.PlaySound(SoundID.Chat);
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.TBot.NewShop");
+                    DialoguePlayer.SetTalkStateLocal(DialoguePlayer.TalkType.AdamShop);
+                    return false;
+                }
             }
             return base.PreClick(chatButton, npc, player);
         }

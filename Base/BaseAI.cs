@@ -5300,21 +5300,21 @@ namespace Redemption.Base
                 {
                     p.playerImmune[player.whoAmI] = 40;
 
-                    CombinedHooks.ModifyHitByProjectile(player, p, ref stat);
+                    //CombinedHooks.ModifyHitByProjectile(player, p, ref stat);
                     player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage, hitDirection, knockback: knockback);
-                    CombinedHooks.OnHitByProjectile(player, p, hurtInfo);
+                    //CombinedHooks.OnHitByProjectile(player, p, hurtInfo);
                 }
                 else if (p.hostile)
                 {
-                    CombinedHooks.ModifyHitByProjectile(player, p, ref stat);
+                    //CombinedHooks.ModifyHitByProjectile(player, p, ref stat);
                     player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, knockback: knockback);
-                    CombinedHooks.OnHitByProjectile(player, p, hurtInfo);
+                   // CombinedHooks.OnHitByProjectile(player, p, hurtInfo);
                 }
                 else
                 {
-                    CombinedHooks.ModifyHitByProjectile(player, p, ref stat);
+                    //CombinedHooks.ModifyHitByProjectile(player, p, ref stat);
                     player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, knockback: knockback);
-                    CombinedHooks.OnHitByProjectile(player, p, hurtInfo);
+                    //CombinedHooks.OnHitByProjectile(player, p, hurtInfo);
                 }
             }
             else if (damager is NPC npc)
@@ -5322,9 +5322,9 @@ namespace Redemption.Base
                 PlayerDeathReason death = PlayerDeathReason.ByNPC(npc.whoAmI);
                 if (!PlayerLoader.ImmuneTo(player, death, -1, true))
                 {
-                    CombinedHooks.ModifyHitByNPC(player, npc, ref stat);
+                    //CombinedHooks.ModifyHitByNPC(player, npc, ref stat);
                     player.Hurt(death, parsedDamage, hitDirection, knockback: knockback);
-                    CombinedHooks.OnHitByNPC(player, npc, hurtInfo);
+                    //CombinedHooks.OnHitByNPC(player, npc, hurtInfo);
                 }
             }
         }

@@ -1,31 +1,32 @@
-using Terraria;
-using Terraria.ID;
 using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
-using Redemption.Globals;
-using Terraria.Audio;
-using Redemption.BaseExtension;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Redemption.Items.Weapons.PreHM.Magic;
-using System.Collections.Generic;
-using Terraria.GameContent.Bestiary;
-using Redemption.WorldGeneration;
 using Redemption.Base;
-using System;
-using Redemption.UI.ChatUI;
-using ReLogic.Content;
-using Terraria.Utilities;
-using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Weapons.PreHM.Melee;
-using Terraria.Localization;
-using Redemption.Globals.NPCs;
-using Redemption.Textures;
-using Redemption.Items.Weapons.PreHM.Ranged;
-using Redemption.UI;
-using Redemption.Items.Placeable.Trophies;
+using Redemption.BaseExtension;
 using Redemption.CrossMod;
+using Redemption.Globals;
+using Redemption.Globals.NPCs;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.Textures;
+using Redemption.UI;
+using Redemption.UI.ChatUI;
+using Redemption.WorldGeneration;
+using ReLogic.Content;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.UI.Chat;
+using Terraria.Utilities;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -100,6 +101,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1 };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+
+            NPCSets.UsesGuardPoints[Type] = true;
         }
         public int GuardPointMax;
         public override void SetDefaults()
@@ -836,6 +839,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                     }
                                     NPC.RedemptionGuard().GuardPoints = 0;
                                     NPC.RedemptionGuard().GuardBroken = true;
+                                    NPC.netUpdate = true;
                                 }
                                 if (Main.netMode != NetmodeID.Server)
                                     Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/CalaviaHelmGore1").Type, 1);
@@ -865,7 +869,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         case 1:
                             NPC.LookAtEntity(player);
                             NPC.velocity.X *= .8f;
-                            if (AITimer++ >= 400)
+                            if (AITimer++ >= 600)
                             {
                                 NPC.dontTakeDamage = true;
                                 string s1 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Fight.Mercy1");
@@ -1121,6 +1125,16 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 }
             }
             return false;
+        }
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (AIState == ActionState.Defeat && TimerRand == 1 && AITimer < 600)
+            {
+                int time = (int)MathHelper.Lerp(600 / 60, 1, AITimer / 600f);
+                string s = Mod.GetLocalization("UI.SpareTimer").WithFormatArgs(time).Value;
+                int textLength = (int)FontAssets.MouseText.Value.MeasureString(s).X;
+                ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, s, NPC.Center - new Vector2(textLength / 2, (NPC.height / 2) + 20) - screenPos, Color.White, 0, Vector2.Zero, Vector2.One);
+            }
         }
     }
 }

@@ -267,6 +267,9 @@ namespace Redemption.Projectiles.Magic
         }
         public override void OnKill(int timeLeft)
         {
+            if (Main.rand.NextBool(3))
+                SoundEngine.PlaySound(CustomSounds.RockImpact, Projectile.position);
+
             SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
             for (int i = 0; i < 5; i++)
             {

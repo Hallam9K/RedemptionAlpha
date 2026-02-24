@@ -49,6 +49,8 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.DontDoHardmodeScaling[NPC.type] = true;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
+            NPCSets.UsesGuardPoints[Type] = true;
+
             NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }

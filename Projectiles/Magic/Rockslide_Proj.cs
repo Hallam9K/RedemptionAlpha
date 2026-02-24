@@ -104,6 +104,9 @@ namespace Redemption.Projectiles.Magic
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.SpreadUp(7), ProjectileType<RockslidePebble_Proj>(), Projectile.damage / 2, 1, Main.myPlayer);
                 }
             }
+            if (Main.rand.NextBool(2))
+                SoundEngine.PlaySound(CustomSounds.RockImpact, Projectile.position);
+
             SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
             for (int i = 0; i < 10; i++)
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Stone,

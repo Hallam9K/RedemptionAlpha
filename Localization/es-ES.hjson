@@ -280,7 +280,7 @@ Mods: {
 			Gigapora: Una máquina de tunelado modificada, originalmente del diseño TeoChrome, adaptada con propulsores de cohetes, diversas armas y tecnología de escudos proyectados altamente experimental. Los proyectores de escudo de Gigapora tienden a sobrecalentarse y derretirse si están dentro del escudo proyectado, por lo que están colocados en el exterior.
 			Akka: Poco se ha registrado de Akka durante su juventud. Los locales creen que su espíritu se fusionó con un gran árbol en el Reino Espiritual, donde dormiría hasta ser despertada por su esposo para ser adorada una vez más.
 			Ukko: Una vez un herrero en la antigua Tethuram con un inmenso talento para la magia, tan grande que muchos lo consideraban un dios. En su vejez, cansado de su mortalidad, Ukko infundió su alma en un conjunto de rocas, permitiéndose reformarse cuando llegue el momento.
-			PZ: Un desafortunado científico, mutilado y desfigurado por la infección de xenomita. Este espécimen fue Kari Johannson, el padre de todos los T-Bots y paciente cero de la infección de xenomita. Ha estado atrapado durante 50 años, consciente y al tanto de la situación que lo rodea... Dios, eso debe ser tormentoso.
+			PZ: Un desafortunado científico, mutilado y desfigurado por la infección de xenomita. Este espécimen fue Kari Johannson, el padre de todos los T-Bots y el paciente cero de la infección de xenomita. Ha estado atrapado durante 50 años, perdido en su propia conciencia... Dios, eso debe ser tormentoso.
 			Android: Un grupo enviado a la isla por el King Slayer III para escanear. Son la primera iteración de la Unidad Android y los primeros robots diseñados por King Slayer durante su viaje de un millón de años. Su propósito original era traer compañía y vida a la NdS; sin embargo, han sido equipados con piezas más orientadas al combate. Si son dañados, se retirarán a la NdS y alertarán a la red.
 			BloatedGoldfish: Un pececillo hinchado con pus radiactivo.
 			BloatedGhoul: Ghuls irradiados por partículas radiactivas y desfigurado por un crecimiento celular rápido y volátil.
@@ -425,6 +425,7 @@ Mods: {
 				Decapitated: ¡Decapitado!
 				NoTargets: ¡No se encontraron objetivos!
 				BloodLoss: ¡PERDIDA DE SANGRE!
+				GuardBroken: ¡Blindaje roto!
 				MPWarning:
 					'''
 					IMPORTANTE: Mod of Redemption no es completamente funcional en el modo multijugador, se recomienda el modo para un jugador para obtener la mejor experiencia.
@@ -479,8 +480,16 @@ Mods: {
 					Daño invocador incrementado en 1
 					15% más de daño y resistencia elemental a la {0}
 					'''
-				CommonGuardHelm1: 12% más de velocidad cuerpo a cuerpo
-				CommonGuardHelm2: 6% menos de daño recibido
+				CommonGuardHelm1:
+					'''
+					12% más de velocidad cuerpo a cuerpo
+					Pulsa {0} para plantar una bandera en tu ubicación que otorga beneficios a los aliados cercanos
+					'''
+				CommonGuardHelm2:
+					'''
+					6% menos de daño recibido
+					Pulsa {0} para plantar una bandera en tu ubicación que otorga beneficios a los aliados cercanos
+					'''
 				PureIron.Bonus:
 					'''
 					20% más de resistencia elemental contra {0}
@@ -1051,12 +1060,11 @@ Mods: {
 				Chicken3: Parece que realmente entiendes lo que digo.[0.5] Eso es sorprendente.
 				Chicken4: Yo,[0.1] Em,[0.1] me quedaré aquí por el momento.[0.5] Espero que estés bien con eso.
 				Chicken5: Tomaré ese cacareo como afirmativo...
-				Warhead1: Ah,[0.1] debería advertirte si llegas a obtener una ojiva nuclear.
+				Warhead1: Ah,[0.1] debería advertirte si decides hacer detonar eso.
 				Warhead2: La radiación es un peligro grave para seres humanos como tú,[0.1] pero se puede evitar.
-				Warhead3: Si ves un material azul brillante cerca de un cráter,[0.1] no te acerques demasiado.[0.5] Eso sería plutonio.
+				Warhead3: Si ves un material azul brillante cerca de un cráter,[0.1] no te acerques demasiado.[0.5] Eso debería ser plutonio.
 				Warhead4: Un Geiger-Muller te advertirá sobre las áreas irradiadas,[0.2] y si llegas a enfermarte,[0.1] toma una pastilla antirradiación lo antes posible.
-				Warhead5: Las venderé una vez que detones una bomba nuclear.
-				Warhead6: .[0.1].[0.1].[0.1]Emm,[0.1] eso es si DECIDES detonar una.
+				Warhead5: .[0.1].[0.1].[0.1]Personalmente,[0.1] aconsejaría no hacerlo detonar en primer lugar.
 			}
 
 			SoI: ¡Se ha abierto un portal a otro mundo!
@@ -1195,8 +1203,8 @@ Mods: {
 					IfHuman: ... Y nada menos que por un mocoso molesto.
 					Overclock4: "[@h1]No tengo claras tus intenciones,[0.2][@h3] pero ten en cuenta que..."
 					Overclock5: Hay cretinos más allá de tu pequeño mundo que podrían borrarte de la existencia con solo estornudar...
-					Overclock6: "[@h1]Entonces, si buscas conquistar,[0.1] destruir,[0.1] matar,[0.2] o lo que sea..."
-					Overclock7: "[@ov][@b1]... lo reconsideraría muy seriamente."
+					Overclock6: "[@h1]Entonces, si buscas conquistar,[0.1] destruir,[0.1] matar,[0.1] o lo que sea...[0.1][@ov]"
+					Overclock7: "[@b1]... lo reconsideraría muy seriamente."
 					Overclock4Alt: "[@h1]Esta hojalata no fue hecha para el combate."
 					Overclock5Alt: Entiendo que quieres que me desate por completo,[0.1] pero ten en cuenta que...
 					Overclock6Alt: Si me daño demasiado,[0.1] los otros lo sabrán.
@@ -1205,7 +1213,7 @@ Mods: {
 					Begin2: "[@h0][@ov]Comencemos.[@c]"
 					OverclockBreak1: ¡Dah![0.1] ¿Por qué no puedo hacerlo?
 					OverclockBreak2: Ellos podrían encargarse de ti sin problemas...[0.1] ¡¿Por qué yo no?!
-					OverclockEnd1: "[@b3]Suficiente.[0.5] SUFICIENTE.[@b0]"
+					OverclockEnd1: "[@b3] Suficiente.[0.5] SUFICIENTE.[@b0]"
 					OverclockEnd2: No hay necesidad de humillarme más de lo que ya lo has hecho.
 					OverclockEnd3: Tú ganas,[0.1] limpiamente.[1] Ahora déjame en paz de una vez.
 					OverclockEnd4: Tendré que reparar esta hojalata otra vez,[0.5] como si no tuviera ya suficiente con qué lidiar.
@@ -1498,7 +1506,7 @@ Mods: {
 			}
 
 			Choice: {
-				Yes: Si
+				Yes: Sí
 				No: No
 				CallDraw: Un Empate
 				Continue: Continuar
@@ -1570,7 +1578,7 @@ Mods: {
 					Un bastón que llama a las criaturas de la Naturaleza.
 					No te dejes perturbar por su espíritu verboso, pues incluso pueden convencer a cierta criatura de tu amistad.
 					'''
-				NebSummon: Esto hara aproximar a un observador silencioso para poner a prueba tu fuerza.
+				NebSummon: Esto hará aproximar a un observador silencioso para poner a prueba tu fuerza.
 				NebSummon2:
 					'''
 					 Su pasado es un misterio,
@@ -1638,6 +1646,7 @@ Mods: {
 			}
 
 			BookOfBonusesInGameNotification: Nuevo efecto de bonificación descubierto: {0}
+			SpareTimer: Perdonado en: {0}
 		}
 
 		DialogueBox: {
@@ -1652,7 +1661,7 @@ Mods: {
 			AboutYou: ¿Sobre ti?
 			Back: Atrás
 			HomeRequirements: Requisitos para el Hogar
-			RevivialPotion: Usar Poción de Resurrección
+			RevivialPotion: Usar Poción de Reanimación
 			RequestCruxDescription: Revelado Caminando Espiritualmente
 			Offer: Ofrecer {0}
 			Read: Leer {0}
@@ -1794,7 +1803,7 @@ Mods: {
 				Eye: ¿Origen del Ojo?
 			}
 
-			TBot.FloppyDisc.Description: Adam decodificara el disquete que tienes en la mano.
+			TBot.FloppyDisc.Description: Adam decodificará el disquete que tienes en la mano.
 			SkullDigger.Give: Dar Anillo de Bodas
 
 			ForestNymph: {
@@ -2142,14 +2151,9 @@ Mods: {
 				Description: Piupiupiupiupiu
 			}
 
-			MicroshieldCoreBuff: {
-				DisplayName: Núcleo de microescudo
-				Description: Un pequeño núcleo de escudo te está defendiendo
-			}
-
-			MicroshieldDroneBuff: {
-				DisplayName: Dron microescudo
-				Description: Un dron con microescudo te está defendiendo
+			MicroshieldCoreCooldown: {
+				DisplayName: Microescudo dañado
+				Description: El escudo se está regenerando
 			}
 
 			HoloMinionBuff: {
@@ -2392,7 +2396,7 @@ Mods: {
 
 			FlagbearerBuff: {
 				DisplayName: Reagrupado
-				Description: ":D"
+				Description: Velocidad de movimiento, defensa y daño aumentados
 			}
 
 			IceFrozen: {
@@ -2709,6 +2713,11 @@ Mods: {
 				DisplayName: Alma unida
 				Description: Posibilidad de hacer que aparezcan almas perdidas de los enemigos asesinados
 			}
+
+			CommonGuardFlagCooldown: {
+				DisplayName: Enfriamiento de la bandera
+				Description: No puedes colocar otra bandera
+			}
 		}
 
 		Biomes: {
@@ -2769,7 +2778,7 @@ Mods: {
 
 			BlazingBastionBiome: {
 				DisplayName: Bastión flameante
-				TownNPCDialogueName: la Bastión flameante
+				TownNPCDialogueName: el Bastión flameante
 			}
 
 			SoullessBiome: {
@@ -2833,7 +2842,7 @@ Mods: {
 
 		Dialogue: {
 			General: {
-				NoRevivialPotion: No estás sosteniendo una Poción de Resurrección.
+				NoRevivialPotion: No estás sosteniendo una Poción de Reanimación.
 				UnconsciousStatus1: "{0} está noqueado por menos de un minuto."
 				UnconsciousStatus2: "{0} está noqueado por {1} minuto(s)."
 				Lad: muchacho
@@ -2888,6 +2897,7 @@ Mods: {
 				DialogueRad: Pareces enfermo. Vuelve a mí si sientes náuseas. Podría no ser nada, pero... mejor prevenir que lamentar.
 				DialogueRad2: Te ves MUY enfermo. Continuaré monitoreando tus signos vitales... Te recomiendo mantener tu medicina cerca.
 				DialogueRad3: ... ¡Tienes una intoxicación severa por radiación! Por favor, toma una dosis de esas pastillas, ¡urgentemente!
+				NewShop: Mis disculpas por no haber sido de gran ayuda hasta el momento. He conseguido nuevos suministros que podrían resultarte útiles si llegas a encontrarte con áreas irradiadas. Puedes revisarlos si lo deseas, solo… ignora la Ojiva. Todavía no sé cómo deshacerme de ella de manera segura.
 				FloppyDisk1: Dice así - [c/b883d8:'Cuando recibí esta oferta de investigación, no esperaba que me pusieran bajo tierra, pero bueno, supongo que esto es algo secreto. Se descubre un nuevo material y ya están fabricando armas con él. Je, clásico TeoChrome. Aunque este tiene que ser el centro de investigación más mal abastecido que he visto, apenas tenemos suficientes guantes y trajes hazmat para manejar materiales radiactivos. Menos mal que mi trabajo no tiene que ver con ese tipo de cosas.'] - Parece ser una nota personal o un diario digital de uno de los empleados. A juzgar por la escritura, era en los primeros días del proyecto de investigación, incluso entonces ya se mostraban señales del destino que les esperaba.
 				FloppyDisk2: Dice así - [c/87d883:'Al principio me reí del nombre xenomita, pero ahora diría que no le hace justicia. ¿De quién fue la idea de hacer energía con esta cosa? ¡La mitad de las instalaciones están en cuarentena porque todos se están enfermando por ella! Hemos inventado un suero para neutralizar las infecciones existentes, pero aún no hay cura para esto. ¡Nos estamos quedando sin tiempo y recursos! Maldito TeoChrome no nos envía ayuda.']
 				FloppyDisk3:
@@ -3200,7 +3210,7 @@ Mods: {
 				Dialogue9: ¿De verdad sentiste la necesidad de irrumpir en mi nave?
 				Dialogue10: La pelea terminó. Estoy ocupado. Lárgate.
 				Dialogue11: ¿Podrías simplemente dejarme en paz?
-				Dialogue12: Me iré de aquí pronto, así que hazlo rápido.
+				Dialogue12: Me iré de aquí pronto, así que mejor que sea rápido.
 				Dialogue13: ¿Qué llevas en la cabeza? ¿Estás intentando disfrazarte de mí o algo?
 				Dialogue14: Mírate, bien alimentadadito... Bien por ti.
 				Dialogue15: ¿Cómo diablos entró un pollo en mi nave?
@@ -3216,7 +3226,7 @@ Mods: {
 					Uno de los cruceros que envié a explorar el espacio de este universo. Lo dejé a cargo de los androides por un tiempo, pero SUPONGO que uno sufrió un mal funcionamiento y acabó con una estupidez terminal.
 					..¿Por qué sigues aquí de todos modos? La nave ya está arreglada.
 					'''
-				Chat3: Porque a diferencia de ti, yo sí tengo una vida.
+				Chat3: Porque, a diferencia de ti, yo sí tengo una vida.
 				Chat3B: ¿Por qué querría pelear ahora? Perdí.
 				Chat3C: Si tanto quieres pelear, vamos, usa esa cosa ciber tecnologíca. No me importa.
 				Chat3D: Después de todo lo que hiciste, no siento que quiera pelear contigo. Tal vez un duelo.
@@ -3462,7 +3472,7 @@ Mods: {
 			Volt: {
 				Dialogue1: Soy Volt, Comandante de la División Omega. Una vez lideré fuerzas en la superficie. Fui asignado aquí después de que insurgentes me arrancaran la mandíbula. Sin embargo, prefiero estar aquí abajo, es mucho más seguro de lo que podrías imaginar.
 				SubDialogue1: Lidero la lucha contra los investigadores infectados que invaden estas instalaciones. No es un trabajo limpio, para desagrado de algunos de mis compañeros, pero sí uno importante.
-				SubDialogue2: Estoy seguro de que has conocido al conserje. Más abajo está la Operadora de Grúas; es bastante reservada, sin embargo. Hay otra persona, pero lleva tiempo encerrada en su oficina, dudo que la hayas visto.
+				SubDialogue2: Estoy seguro de que has conocido al conserje. Más abajo está el Operador de Grúas; es bastante reservado, sin embargo. Hay otra persona, pero lleva tiempo encerrada en su oficina, dudo que la hayas visto.
 				Dialogue2: Hay algunos que no son parte de Omega, los insurgentes Alfa y los Carroñeros son a quienes me refiero. Sin embargo, los Alfa son la mayor amenaza, ten cuidado si ves a alguno de sus miembros.
 				SubDialogue3: Son un grupo rebelde liderado por Adam, el primero de los nuestros. Junto a él hay un grupo letal de bots y un humano. La mayoría de ellos no han sido vistos en mucho tiempo.
 				SubDialogue4: No debe ser subestimado. Aunque no es diferente en apariencia a un bot promedio, posee una brutalidad como ninguna otra, combinada con un intelecto que rivaliza con el de Girus.
@@ -3487,7 +3497,7 @@ Mods: {
 				Dialogue4: Esta es la base de operaciones para nosotros en Omega. Solía ser una instalación de investigación y desarrollo de armas para los humanos. Cayó ante el Brote de xenomita poco antes de que Girus tomara el poder. No sé mucho más, tal vez algunos de mis compañeros de trabajo puedan elaborarlo más.
 				SubDialogue12: Es una pregunta que aún no hemos resuelto. Han pasado cincuenta años desde el brote, pero siguen apareciendo más. Es improbable que la instalación haya tenido tanto personal.
 				SubDialogue13: No lo hagas enojar, te lo suplico. No le desearía la ira del Conserje ni siquiera a los Alfa. Nadie, excepto la mismísima Girus, desearía hacer algo para enojarlo.
-				SubDialogue14: Esa vieja máquina fue un proyecto de uno de los ingenieros humanos. Desde entonces, está bajo el cuidado de la Operadora de la Grúa. Supongo que algo salió mal, escuché bastante alboroto ahí abajo.
+				SubDialogue14: Esa vieja máquina fue un proyecto de uno de los ingenieros humanos. Desde entonces, está bajo el cuidado del Operador de Grúas. Supongo que algo salió mal, escuché bastante alboroto ahí abajo.
 				SubDialogue15: El Sector Cero, la enfermería. Girus y el Conserje nos prohíben entrar. Entiendo la razón del Conserje: no quiere que la suciedad de allí se esparza. La razón de Girus sigue siendo desconocida.
 				Bot1: ¿Ascendiste a soldado? Bienvenido. Soy tu comandante. Descansa.
 				Bot2: Se recomienda realizar revisiones regulares a tus armas Tesla no letales. No querrás sobrecargar un insurgente frente a Girus. "Esclavos obedientes y sin mente son mejores que chatarra", dice ella.
@@ -3526,7 +3536,7 @@ Mods: {
 				1Clean: El techo. ¡Ahora déjame que me ocupe de fregar! Ningún piso está completamente libre de suciedad.
 				2: Los demás robots han aprendido a tenerme miedo. Por suerte, ahora puedo concentrarme en mi trabajo. Excepto que ahora hay alguien que me molesta. Mmm, me pregunto quién podría ser... ¡Ahora lárgate!
 				3: El gran bot del Sector Ómicron es un tipo genial, si me lo preguntas. Probablemente sea el único robot que no me molesta. Ahora, si me disculpas, ¡trajiste algo de slime contigo y tengo que limpiarla!
-				4: Hay un bot de pelo cobrizo que recuerdo, que trabaja como operadora de grúas en la sala de almacenamiento de mechas. No sé mucho sobre ella, pero su diseño es un poco peculiar. No es que sea más femenina, pero el pelo... ¿Por qué?
+				4: Hay un bot de pelo cobrizo que recuerdo, que trabaja como operador de grúas en la sala de almacenamiento de mechas. No sé mucho sobre él, pero su diseño es un poco peculiar. No es que sea más femenino, pero el pelo... ¿Por qué?
 				5: ¡No te atrevas a entrar en el Sector Cero, ese lugar está completamente lleno de slime negro imposible de eliminar! ¡Y no quiero que traigas esa sustancia aquí para que yo intente arrancar el revestimiento de acero del laboratorio! Lleva una eternidad.
 				5Clean: No lo haré. Girus lo prohíbe y no quisiera traicionarla.
 				6: Respeta a Girus y ella aprenderá a respetarte. Estoy bastante seguro de que conseguiré un cambio de trabajo después de medio siglo de limpiar el laboratorio después del... incidente. No me preguntes al respecto, me activaron DESPUÉS de que ocurriera.
@@ -3664,9 +3674,9 @@ Mods: {
 				DisplayName: Núcleo de microescudo
 				Tooltip:
 					'''
-					Invoca un dron microescudo, que se moverá un poco, en dirección del proyectil enemigo para protegerte
+					Invoca un dron microescudo, que se mueve para bloquear proyectiles entrantes para protegerte.
 					Cuando un proyectil impacta el escudo, reflejará el proyectil en forma de láser con 4 veces más de daño
-					El escudo tiene 500 de vida, una vez destruido, tarda 10 segundos en aparecer
+					El escudo tiene 500 de vida, una vez destruido, tarda 30 segundos en aparecer
 					'''
 			}
 
@@ -4599,7 +4609,7 @@ Mods: {
 			}
 
 			OperatorHead: {
-				DisplayName: Cabeza de operadora
+				DisplayName: Cabeza de operador
 				Tooltip: ""
 			}
 
@@ -6246,9 +6256,10 @@ Mods: {
 				DisplayName: Ojiva nuclear
 				Tooltip:
 					'''
-					Haga clic derecho en la ojiva después de colocarla, para ver el panel lateral
-					La detonación creará el páramo
-					Solo puede detonar dentro de los tercios exteriores del mundo en la superficie, y mientras no haya bloques inexplosionables cerca.
+					La detonación creará un páramo
+					Haz clic derecho en la ojiva después de colocarla, para ver el panel lateral
+					Solo puede detonarse en la superficie, dentro de los tercios exteriores del mundo,
+					y mientras no haya bloques resistentes a explosiones cerca..
 					'''
 			}
 
@@ -7298,12 +7309,12 @@ Mods: {
 			}
 
 			MemoryChip: {
-				DisplayName: Chip de Memoria
+				DisplayName: Chip de memoria
 				Tooltip: No te sirve de nada, pero sería buena idea conservarlo por ahora...
 			}
 
 			SlayerHullPlating: {
-				DisplayName: Cubierta Frontal de la Nave
+				DisplayName: Cubierta frontal de la Nave
 				Tooltip: ""
 			}
 
@@ -7327,7 +7338,7 @@ Mods: {
 				Tooltip:
 					'''
 					Dice así - [c/b8eff5:'Felicidades, me venciste. Ten una medalla.]
-					[c/b8eff5:... Estúpido tonto idiota.]
+					[c/b8eff5:... Estúpido tonto idiota.']
 					'Es solo un trozo de madera pintada en forma de medalla...'
 					'''
 			}
@@ -8888,12 +8899,12 @@ Mods: {
 			}
 
 			SussyEgg: {
-				DisplayName: Huevo Sospechoso
+				DisplayName: Huevo sospechoso
 				Tooltip: Yo no lo rompería si fuera tú
 			}
 
 			SwarmerCannon: {
-				DisplayName: Cañon de enjambres
+				DisplayName: Cañón de enjambres
 				Tooltip:
 					'''
 					Si mantienes presionado el clic izquierdo, crecerá un quiste de colmena dentro del cañón
@@ -9125,6 +9136,7 @@ Mods: {
 					Golpearlo con la punta de la espada puede congelar a los enemigos
 					Los enemigos con inmunidad al retroceso no pueden congelarse
 					No puede desviar proyectiles que hagan más de 100 de daño
+					Tiene sinergia con Cascada helada
 					'Envíalos a su tumba nevada'
 					'''
 				Lore:
@@ -10627,7 +10639,7 @@ Mods: {
 			}
 
 			XeniumGrenadeCannon: {
-				DisplayName: Cañon lanzagranadas de xenio
+				DisplayName: Cañón lanzagranadas de xenio
 				Tooltip: ""
 			}
 
@@ -11036,6 +11048,126 @@ Mods: {
 			BeyondSteelBox: {
 				DisplayName: Caja de música (King Slayer Sobrepotenciado)
 				Tooltip: Sc0p3r - Beyond Steel
+			}
+
+			ThornMask2: {
+				DisplayName: Máscara del corazón espinoso
+				Tooltip: ""
+			}
+
+			TerraBombaCore: {
+				DisplayName: Núcleo de Terraforma bomba
+				Tooltip: ""
+			}
+
+			TerraBombaNose: {
+				DisplayName: Cabeza de Terraforma bomba
+				Tooltip: ""
+			}
+
+			TerraBombaTail: {
+				DisplayName: Cola de Terraforma bomba
+				Tooltip: ""
+			}
+
+			TerraBombaCorruption: {
+				DisplayName: Terraforma bomba
+				Tooltip:
+					'''
+					[c/b883d8:Corrupción]
+					Convierte una gran zona en Corrupción
+					'Country roads, take me home...'
+					'''
+			}
+
+			TerraBombaCrimson: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/d88383:Carmesí]
+					Convierte una gran zona en Carmesí
+					'Country roads, take me home...'
+					'''
+			}
+
+			TerraBombaGlowingMushroom: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/4561d7:Champiñones brillantes]
+					Convierte una gran zona en Champiñones brillantes
+					'Country roads, take me home...'
+					'''
+			}
+
+			TerraBombaHallow: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/7de4e8:Sagrado]
+					Convierte una gran zona en Sagrado
+					'Country roads, take me home...'
+					'''
+			}
+
+			TerraBombaPurity: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/87d883:Pureza]
+					Purifica una gran zona.
+					'Country roads, take me home...'
+					'''
+			}
+
+			TerraBombaDirt: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/BFA17A:Bosque]
+					Convierte una gran zona en Bosque
+					'Country roads, take me home...'
+					'''
+			}
+
+			TerraBombaSand: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/F7DE9E:Desierto]
+					Convierte una gran zona en Desierto
+					'Country roads, take me home...'
+					'''
+			}
+
+			TerraBombaSnow: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/D9E0EE:Nieve]
+					Convierte una gran zona en Nieve
+					'Country roads, take me home...'
+					'''
+			}
+
+			ClayStatuette: {
+				DisplayName: Estatuilla de arcilla
+				Tooltip: ""
+			}
+
+			DesertStatuette: {
+				DisplayName: Estatuilla desértica
+				Tooltip: ""
+			}
+
+			ObsidianStatuette: {
+				DisplayName: Estatuilla de obsidiana
+				Tooltip: ""
+			}
+
+			AncientHallBrickWall: {
+				DisplayName: Pared de ladrillo del pabellón antiguo
+				Tooltip: ""
 			}
 		}
 
@@ -11757,8 +11889,18 @@ Mods: {
 			BlightedClaw_Slash.DisplayName: Garra marchita cortante
 			OmegaPlasmaBall_Explosion.DisplayName: Explosión
 			FlakGrenade_Bee.DisplayName: Granabeja antiaérea
-			// KS3_BlasterGore.DisplayName: Hyper-Tech Blaster
+			KS3_BlasterGore.DisplayName: Bláster hiper-tecnológico
 			KS3_Lightning.DisplayName: Relámpago
+			CommonGuardFlag_Proj.DisplayName: Bandera de reagrupamiento
+			Icefall_HeldProj.DisplayName: "{$Mods.Redemption.Items.Icefall.DisplayName}"
+			TerraBombaCorruption_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaCrimson_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaGlowingMushroom_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaHallow_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaPurity_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaDirt_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaSand_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaSnow_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
 		}
 
 		NPCs: {
@@ -11846,12 +11988,12 @@ Mods: {
 
 			KS3: {
 				DisplayName: King Slayer III
-				BossChecklistIntegration.SpawnInfo: Usa el [i:Redemption/CyberTech] de día, o atacar a los androides en la superficie y permitirles escaparse.
+				BossChecklistIntegration.SpawnInfo: Usa el [i:Redemption/CyberTech], o atacar a los androides en la superficie y permitirles escaparse.
 			}
 
 			KS3_Clone: {
 				DisplayName: King Slayer III... ¿?
-				// DefeatName: A King Slayer III Clone
+				DefeatName: Un Clon de King Slayer III
 			}
 
 			KS3_Magnet.DisplayName: Dron con imán de energía Mk.I
@@ -12168,7 +12310,7 @@ Mods: {
 			Blisterface.DisplayName: Caratumor
 			Blisterface_Holo.DisplayName: "{$Mods.Redemption.NPCs.Blisterface.DisplayName}"
 			BloatedScientist.DisplayName: Científico hinchado
-			CraneOperator.DisplayName: Operadora de grúas
+			CraneOperator.DisplayName: Operador de grúas
 			JanitorBot.DisplayName: El Conserje
 			JanitorBot_Cleaning.DisplayName: "{$Mods.Redemption.NPCs.JanitorBot.DisplayName}"
 			JanitorBot_Defeated.DisplayName: "{$Mods.Redemption.NPCs.JanitorBot.DisplayName}"
@@ -12530,6 +12672,9 @@ Mods: {
 			GloomShroomFoliage2.MapEntry: Champiñón tenebroso
 			SoulCandleTile.MapEntry: Vela de alma
 			JungleStatuetteTile.MapEntry: Estatuilla de la jungla
+			ClayStatuetteTile.MapEntry: Estatuilla de arcilla
+			DesertStatuetteTile.MapEntry: Estatuilla desértica
+			ObsidianStatuetteTile.MapEntry: Estatuilla de obsidiana
 		}
 
 		Keybinds: {

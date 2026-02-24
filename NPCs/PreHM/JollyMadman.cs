@@ -60,6 +60,8 @@ namespace Redemption.NPCs.PreHM
             };
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+
+            NPCSets.UsesGuardPoints[Type] = true;
             ElementID.NPCBlood[Type] = true;
             ElementID.NPCShadow[Type] = true;
 

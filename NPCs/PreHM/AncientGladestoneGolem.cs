@@ -53,6 +53,8 @@ namespace Redemption.NPCs.PreHM
                 Velocity = 1f
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+
+            NPCSets.UsesGuardPoints[Type] = true;
             ElementID.NPCEarth[Type] = true;
         }
         public override void SetDefaults()

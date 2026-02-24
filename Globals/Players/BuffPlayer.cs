@@ -112,6 +112,7 @@ namespace Redemption.Globals.Players
         public bool blastBattery;
         public bool xenomiteBonus;
         public bool elderWoodBonus;
+        public bool commonGuardBonus;
 
         public bool MetalSet;
         public bool WastelandWaterImmune;
@@ -187,6 +188,7 @@ namespace Redemption.Globals.Players
             spiderFriendly = false;
             cruxSpiritExtractor = false;
             beelzebub = false;
+            commonGuardBonus = false;
 
             Player.RedemptionRad().protectionLevel = 0;
 
@@ -290,6 +292,19 @@ namespace Redemption.Globals.Players
                             break;
 
                     }
+                }
+                if (commonGuardBonus && !Player.HasBuff<CommonGuardFlagCooldown>())
+                {
+                    Player.AddBuff(BuffType<CommonGuardFlagCooldown>(), 600);
+
+                    foreach (Projectile proj in Main.ActiveProjectiles)
+                    {
+                        if (proj.type != ProjectileType<CommonGuardFlag_Proj>() || proj.owner != Player.whoAmI)
+                            continue;
+                        proj.timeLeft = 2;
+                    }
+
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center - new Vector2(0, 96), Vector2.Zero, ProjectileType<CommonGuardFlag_Proj>(), 0, 0, Main.myPlayer);
                 }
             }
         }

@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Magic;
 using Terraria;
 using Terraria.DataStructures;
@@ -13,7 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         {
             // DisplayName.SetDefault("Mistfall");
             // Tooltip.SetDefault("Lowers the air temperature at cursor point, slowing enemies caught in the mist");
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Earthbind>();
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<Earthbind>();
             Item.ResearchUnlockCount = 1;
         }
 
@@ -22,15 +21,17 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.mana = 8;
             Item.width = 30;
             Item.height = 34;
-            Item.useTime = 40;
+            Item.useTime = 4;
             Item.useAnimation = 40;
+            Item.reuseDelay = 40;
+            Item.useLimitPerAnimation = 10;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.noMelee = true;
             Item.autoReuse = true;
             Item.value = Item.sellPrice(0, 0, 78, 0);
             Item.rare = ItemRarityID.Blue;
             Item.shootSpeed = 0;
-            Item.shoot = ModContent.ProjectileType<Icefall_Mist>();
+            Item.shoot = ProjectileType<Icefall_Mist>();
             if (Main.netMode != NetmodeID.Server)
                 Item.UseSound = CustomSounds.IceMist;
         }

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Globals;
+using Redemption.Globals.Players;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity.TBot;
 using Redemption.Items.Donator.Lordfunnyman;
@@ -335,20 +336,23 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 .Add<IrradiatedCrimsonGrassSeeds>(RedeConditions.NukeDropped, Condition.InGraveyard, Condition.BloodMoon, Condition.CrimsonWorld)
                 .Add<IrradiatedEbonstone>(RedeConditions.NukeDropped, Condition.InGraveyard, Condition.BloodMoon, Condition.CorruptWorld)
                 .Add<IrradiatedCorruptGrassSeeds>(RedeConditions.NukeDropped, Condition.InGraveyard, Condition.BloodMoon, Condition.CorruptWorld)
-                .Add<CrystalSerum>(RedeConditions.NukeDropped)
+                .Add<CrystalSerum>(RedeConditions.NukeDroppedOrDownedMechBossAll)
                 .Add<BleachedSolution>(RedeConditions.NukeDropped)
-                .Add<GasMask>(RedeConditions.NukeDropped)
-                .Add<HazmatSuit4>(RedeConditions.NukeDropped, RedeConditions.IsFinlandDay)
-                .Add<HazmatSuit>(RedeConditions.NukeDropped, RedeConditions.IsNotFinlandDay)
+                .Add<GasMask>(Condition.Hardmode)
+                .Add<HazmatSuit4>(Condition.Hardmode, RedeConditions.IsFinlandDay)
+                .Add<HazmatSuit>(Condition.Hardmode, RedeConditions.IsNotFinlandDay)
                 .Add<AIChip>(Condition.Hardmode)
                 .Add<CarbonMyofibre>(Condition.Hardmode)
                 .Add<Capacitor>(Condition.Hardmode)
                 .Add<Plating>(Condition.Hardmode)
-                .Add<RadiationPill>(RedeConditions.NukeDroppedOrDownedMechBossAll)
-                .Add<GeigerMuller>(RedeConditions.NukeDroppedOrDownedMechBossAll)
+                .Add<RadiationPill>(Condition.Hardmode)
+                .Add<GeigerMuller>(Condition.Hardmode)
                 .Add<IOLocator>(Condition.DownedMechBossAll)
                 .Add<MiniWarhead>(Condition.DownedMechBossAll)
                 .Add<AnomalyDetector>(RedeConditions.DownedSeed)
+                .Add<TerraBombaTail>(Condition.DownedMechBossAll)
+                .Add<TerraBombaCore>(Condition.DownedMechBossAll)
+                .Add<TerraBombaNose>(Condition.DownedMechBossAll)
                 .Add<MedicOutfit>()
                 .Add<MedicLegs>()
                 .Add<MedicBackpack>()
@@ -376,7 +380,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 return false;
             }
 
-            if (!NPC.IsABestiaryIconDummy && Main.hardMode && !warheadKnown && !RedeBossDowned.nukeDropped)
+            if (!NPC.IsABestiaryIconDummy && Main.hardMode && !DialoguePlayer.GetTalkStateLocal(DialoguePlayer.TalkType.AdamShop) && !RedeBossDowned.nukeDropped)
             {
                 Texture2D questMark = Request<Texture2D>("Redemption/Textures/QuestMark").Value;
                 int Height = questMark.Height / 3;

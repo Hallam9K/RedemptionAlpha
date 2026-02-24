@@ -14,7 +14,7 @@ namespace Redemption.Items.Placeable.Tiles
         }
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<AncientHallBrickTile>(), 0);
+            Item.DefaultToPlaceableTile(TileType<AncientHallBrickTile>(), 0);
             Item.width = 16;
             Item.height = 16;
             Item.maxStack = Item.CommonMaxStack;
@@ -29,7 +29,7 @@ namespace Redemption.Items.Placeable.Tiles
         }
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<AncientHallBrickTileSafe>(), 0);
+            Item.DefaultToPlaceableTile(TileType<AncientHallBrickTileSafe>(), 0);
             Item.width = 16;
             Item.height = 16;
             Item.maxStack = Item.CommonMaxStack;
@@ -39,6 +39,10 @@ namespace Redemption.Items.Placeable.Tiles
             CreateRecipe()
                 .AddRecipeGroup(RedeRecipe.GathicStoneRecipeGroup, 2)
                 .AddTile(TileID.HeavyWorkBench)
+                .Register();
+            CreateRecipe()
+                .AddIngredient<AncientHallBrickWall>(4)
+                .AddTile(TileID.WorkBenches)
                 .Register();
             CreateRecipe()
                 .AddIngredient<AncientHallPillarWall>(4)

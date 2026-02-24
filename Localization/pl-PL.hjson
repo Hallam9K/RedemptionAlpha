@@ -280,7 +280,7 @@ Mods: {
 			Gigapora: Zmodyfikowana maszyna do wydrążania tunelów, pierwotnie zaprojektowana przez TeoChrome, przerobiona z dodatkowymi silnikami rakietowymi, różnymi rodzajami broni oraz eksperymentalną technologią tarcz projekcyjnych. Projektory tarcz Gigapory są podatne na przegrzewanie i topnienie, jeśli znajdują się wewnątrz wyświetlanej tarczy, dlatego zostały umieszczone na zewnątrz.
 			Akka: Niewiele zostało zapisane o Akce z jej młodości, ale miejscowi wierzą, że jej duch połączył się z wielkim drzewem w Krainie Duchów, gdzie miała spoczywać, aż zostanie obudzona przez swojego męża, by być ponownie czczoną.
 			Ukko: Niegdyś kowal w starożytnym Tethuram, obdarzony ogromnym talentem magicznym, tak wielkim, że był postrzegany jako bóg przez wielu. W swoim starczym wieku, zmęczony swoją śmiertelnością, Ukko połączył swoją duszę z wiązką kamieni, pozwalając sobie na ponowne odrodzenie, gdy nadejdzie odpowiedni czas.
-			PZ: Nieszczęśliwy naukowiec, okaleczony i zniekształcony przez infekcję Xenomitem. Ten okaz to Kari Johannson, ojciec wszystkich T-Botów i Pacjent Zero infekcji xenomitem. Jest uwięziony od 50 lat, świadomy i obeznany z sytuacją wokół niego... Boże, to musi być prawdziwa męczarnia.
+			PZ: Nieszczęśliwy naukowiec, okaleczony i zniekształcony przez infekcję Xenomitem. Ten okaz to Kari Johannson, ojciec wszystkich T-Botów i Pacjent Zero infekcji xenomitem. Jest uwięziony od 50 lat, utraciwszy swoją własną świadomość... Boże, to musi być prawdziwa męczarnia.
 			Android: Jednostki wysłane na wyspę przez King Slayera III w celu przeprowadzenia skanowania. To pierwsza iteracja Jednostki Androidów i pierwsze roboty zaprojektowane przez King Slayera podczas jego milionletniej podróży. Ich pierwotnym celem było zapewnienie towarzystwa i życia na Statku Slayera, jednak z biegiem czasu zostały przeprojektowane, by lepiej nadawały się do walki. Gdy zostaną uszkodzone, wycofają się z powrotem na Statek Slayera i powiadomią sieć.
 			BloatedGoldfish: Złota rybka napuchnięta radioaktywną ropą.
 			BloatedGhoul: Ghule napromieniowane cząstkami radioaktywnymi, zniekształceni przez gwałtowny i niestabilny wzrost komórek.
@@ -425,6 +425,7 @@ Mods: {
 				Decapitated: Dekapitacja!
 				NoTargets: Nie znaleziono celów!
 				BloodLoss: UTRATA KRWI!
+				GuardBroken: Obrona Złamana!
 				MPWarning:
 					'''
 					IMPORTANT: Mod of Redemption nie działa w pełni poprawnie w trybie wieloosobowym — zalecana jest rozgrywka dla jednego gracza, by uzyskać najlepsze wrażenia.
@@ -483,8 +484,16 @@ Mods: {
 				}
 
 				LivingWood: Odporność na truciznę, zwiększa maksymalną liczbę minionów
-				CommonGuardHelm1: 12% zwiększona prędkość ataków w zwarciu
-				CommonGuardHelm2: Zmniejsza otrzymywane obrażenia o 6%
+				CommonGuardHelm1:
+					'''
+					Zwiększona szybkość walki w zwarciu o 12%
+					Naciśnij {0}, aby postawić flagę, która wzmacnia pobliskich sojuszników
+					'''
+				CommonGuardHelm2:
+					'''
+					Zmniejsza otrzymywane obrażenia o 6%
+					Naciśnij {0}, aby postawić flagę, która wzmacnia pobliskich sojuszników
+					'''
 				PureIron.Bonus:
 					'''
 					Zwiększona odporność na żywioł {0} o 20%
@@ -1053,12 +1062,11 @@ Mods: {
 				Chicken3: Wyglądasz, jakbyś naprawdę rozumiał, co mówię.[0.5] To zaskakujące.
 				Chicken4: Ja,[0.1] uh,[0.1] będę tu na razie przebywać.[0.5] Mam nadzieję, że nie będziesz miał z tym problemu.
 				Chicken5: Uznam to skrzeknięcie jako zgodę...
-				Warhead1: Ach,[0.1] powinienem ostrzec, jeśli weźmiesz głowice nuklearną.
+				Warhead1: Ach,[0.1] powinienem ostrzec, jeśli postanowisz to wysadzić.
 				Warhead2: Promieniowanie to poważne zagrożenie dla ludzi takich jak ty,[0.1] ale da się go uniknąć.
 				Warhead3: Jeśli zobaczysz świecący niebieski materiał w pobliżu krateru,[0.1] nie podchodź za blisko.[0.5] To Pluton.
 				Warhead4: Geiger-Muller ostrzeże cię o napromieniowanych obszarach,[0.2] a jeśli zachorujesz,[0.1] weź tabletkę przeciwpromienną jak najszybciej.
-				Warhead5: Będę je sprzedawał w momencie kiedy ją wysadzisz
-				Warhead6: .[0.1].[0.1].[0.1]Err,[0.1] to znaczy, jeśli zdecydujesz się zdetonować jedną z nich.
+				Warhead5: .[0.1].[0.1].[0.1]Osobiście,[0.1] odradzałbym detonowanie tego w pierwszej kolejności.
 			}
 
 			SoI: Portal z innego świata otworzył się!
@@ -1635,6 +1643,7 @@ Mods: {
 			}
 
 			BookOfBonusesInGameNotification: Odkryto nowy bonusowy efekt!: {0}
+			SpareTimer: Oszczędzenie za: {0}
 		}
 
 		DialogueBox: {
@@ -2139,14 +2148,9 @@ Mods: {
 				Description: Pewpewpewpewpewpew
 			}
 
-			MicroshieldCoreBuff: {
-				DisplayName: Rdzeń mikrotarczy
-				Description: Mały rdzeń tarczy chroni cię
-			}
-
-			MicroshieldDroneBuff: {
-				DisplayName: Dron mikrotarczy
-				Description: Dron mikrotarczy chroni cię
+			MicroshieldCoreCooldown: {
+				DisplayName: Zniszczona Mikrotarcza
+				Description: Tarcza się odnawia
 			}
 
 			HoloMinionBuff: {
@@ -2385,7 +2389,7 @@ Mods: {
 
 			FlagbearerBuff: {
 				DisplayName: Zmobilizowany
-				Description: ":D"
+				Description: Zwiększona szybkość ruchu, obrona i obrażenia
 			}
 
 			IceFrozen: {
@@ -2702,6 +2706,11 @@ Mods: {
 				DisplayName: Związany z Duszą
 				Description: Szansa na pojawienie się zagubionej duszy po zabiciu wroga
 			}
+
+			CommonGuardFlagCooldown: {
+				DisplayName: Czas odnowienia Sztandaru Mobilizacji
+				Description: Nie możesz postawić kolejnej flagi
+			}
 		}
 
 		Biomes: {
@@ -2881,6 +2890,7 @@ Mods: {
 				DialogueRad: Wyglądasz na chorego. Wracaj do mnie, jeśli poczujesz nudności. Może to nic, ale... lepiej dmuchać na zimne.
 				DialogueRad2: Wyglądasz BARDZO źle. Kontynuuję monitorowanie twoich parametrów... Zalecam mieć lekarstwa pod ręką.
 				DialogueRad3: …! Masz ciężkie zatrucie promieniotwórcze! Proszę, natychmiast zażyj te tabletki!
+				NewShop: Przepraszam, że jak dotąd niewiele ci pomogłem. Mam nowe zapasy, które mogą się przydać, jeśli natkniesz się na skażone promieniowaniem obszary. Zerknij, jeśli chcesz, tylko… zignoruj głowicę. Jeszcze nie wiem, gdzie można ją bezpiecznie zutylizować.
 				FloppyDisk1:
 					'''
 					Tekst Brzmi - [c/b883d8:'Gdy dostałem tę ofertę badań, nie spodziewałem się, że trafię pod ziemię, ale cóż, to chyba trochę tajne. Odkryto nowy materiał i już robią z niego broń. Heh, klasyczne TeoChrome. Chociaż to chyba najbardziej niedostatecznie wyposażony obiekt, jaki widziałem — ledwo mamy wystarczająco rękawiczek i kombinezonów ochronnych do pracy z materiałami radioaktywnymi. Dobrze, że moja praca nie dotyczy takich rzeczy.']
@@ -3653,9 +3663,9 @@ Mods: {
 				DisplayName: Rdzeń Mikrotarczy
 				Tooltip:
 					'''
-					Przyzywa Drona Mikrotarczy, który pojawia się za każdym razem, gdy wrogi pocisk trafi gracza
+					Przywołuje Drona z Mikrotarczą, który przemieszcza się na drodze nadlatujących pocisków
 					Gdy pocisk trafi w tarczę, następuje wyładowanie, które odbija pocisk
-					Tarcza może wytrzymać 500 obrażeń, po zniszczeniu aktywuje się ponownie po 10 sekundach
+					Tarcza może wytrzymać 500 obrażeń, po zniszczeniu aktywuje się ponownie po 30 sekundach
 					'''
 			}
 
@@ -6221,9 +6231,9 @@ Mods: {
 				DisplayName: Głowica Nuklearna
 				Tooltip:
 					'''
-					Kliknij prawym przyciskiem na umieszczoną głowicę, aby otworzyć panel boczny
 					Detonacja stworzy Pustkowie
-					Można detonować tylko na powierzchni, na rogach świata, albo ich dalszych terenach. I jeśli w pobliżu nie ma niezniszczalnych bloków
+					Kliknij prawym przyciskiem myszy na umieszczoną głowicę, aby wyświetlić panel boczny
+					Może zostać zdetonowana wyłącznie w zewnętrznych trzecich częściach świata na powierzchni oraz gdy w pobliżu nie ma bloków odpornych na eksplozje
 					'''
 			}
 
@@ -9055,6 +9065,7 @@ Mods: {
 					Zadaje więcej obrażeń jeżeli trafisz końcem twojego ostrza
 					Uderzenie samym czubkiem ostrza może zamrozić wrogów
 					Wrogowie odporni na odrzut nie mogą zostać zamrożeni
+					Posiada synergię z Lodospadem
 					'Wyślij ich do mroźnego grobu'
 					'''
 				Lore:
@@ -10945,6 +10956,126 @@ Mods: {
 				DisplayName: Pozytywka (Przeciążony King Slayer)
 				Tooltip: Sc0p3r - Beyond Steel
 			}
+
+			ThornMask2: {
+				DisplayName: Maska Serca Cierni
+				Tooltip: ""
+			}
+
+			TerraBombaCore: {
+				DisplayName: Rdzeń Bomby Terraforma
+				Tooltip: ""
+			}
+
+			TerraBombaNose: {
+				DisplayName: Dziób Bomby Terraforma
+				Tooltip: ""
+			}
+
+			TerraBombaTail: {
+				DisplayName: Ogon Bomby Terraforma
+				Tooltip: ""
+			}
+
+			TerraBombaCorruption: {
+				DisplayName: Bomba Terraforma
+				Tooltip:
+					'''
+					[c/b883d8:Corruption]
+					Przekształca duży obszar w Zepsucie
+					'Wiejskie drogi, zaprowadźcie mnie do domu...'
+					'''
+			}
+
+			TerraBombaCrimson: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/d88383:Crimson]
+					Przekształca duży obszar w Szkarłat
+					'Wiejskie drogi, zaprowadźcie mnie do domu...'
+					'''
+			}
+
+			TerraBombaGlowingMushroom: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/4561d7:Glowing Mushroom]
+					Przekształca duży obszar w Pola Lśniących Grzybów
+					'Wiejskie drogi, zaprowadźcie mnie do domu...'
+					'''
+			}
+
+			TerraBombaHallow: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/7de4e8:Hallow]
+					Przekształca duży obszar w Bajkową Krainę
+					'Wiejskie drogi, zaprowadźcie mnie do domu...'
+					'''
+			}
+
+			TerraBombaPurity: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/87d883:Purity]
+					Oczyszcza duży obszar
+					'Wiejskie drogi, zaprowadźcie mnie do domu...'
+					'''
+			}
+
+			TerraBombaDirt: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/BFA17A:Forest]
+					Przekształca duży obszar w Las
+					'Wiejskie drogi, zaprowadźcie mnie do domu...'
+					'''
+			}
+
+			TerraBombaSand: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/F7DE9E:Desert]
+					Przekształca duży obszar w Pustynię
+					'Wiejskie drogi, zaprowadźcie mnie do domu...'
+					'''
+			}
+
+			TerraBombaSnow: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/D9E0EE:Snow]
+					Przekształca duży obszar w Śnieg
+					'Wiejskie drogi, zaprowadźcie mnie do domu...'
+					'''
+			}
+
+			ClayStatuette: {
+				DisplayName: Gliniana Statuetka
+				Tooltip: ""
+			}
+
+			DesertStatuette: {
+				DisplayName: Pustynna Statuetka
+				Tooltip: ""
+			}
+
+			ObsidianStatuette: {
+				DisplayName: Obsydianowa Statuetka
+				Tooltip: ""
+			}
+
+			AncientHallBrickWall: {
+				DisplayName: Ściana z Cegły Starożytnej Hali
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -11658,7 +11789,7 @@ Mods: {
 			ElderWoodStaff_Proj.DisplayName: "{$Mods.Redemption.Items.ElderWoodStaff.DisplayName}"
 			AncientPixie_Proj.DisplayName: Starożytna Wróżka
 			BlueFly_Proj.DisplayName: Niebieska Mucha
-			// XenoSplat.DisplayName: Xeno Splat
+			XenoSplat.DisplayName: Xeno Splat
 			WindGust_Proj.DisplayName: Podmuch Wiatru
 			ThornCircletSplinter.DisplayName: Drzazga
 			LeechingThornSeed_Friendly.DisplayName: Pochłaniający Życie Cierń
@@ -11667,6 +11798,16 @@ Mods: {
 			FlakGrenade_Bee.DisplayName: Przeciwlotniczy Pszczeli Granat
 			KS3_BlasterGore.DisplayName: Blaster Hyper-Tech
 			KS3_Lightning.DisplayName: Błyskawica
+			CommonGuardFlag_Proj.DisplayName: Flaga Mobilizacji
+			Icefall_HeldProj.DisplayName: "{$Mods.Redemption.Items.Icefall.DisplayName}"
+			TerraBombaCorruption_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaCrimson_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaGlowingMushroom_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaHallow_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaPurity_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaDirt_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaSand_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaSnow_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
 		}
 
 		NPCs: {
@@ -11754,12 +11895,12 @@ Mods: {
 
 			KS3: {
 				DisplayName: King Slayer III
-				BossChecklistIntegration.SpawnInfo: Użyj [i:Redemption/CyberTech] w ciągu dnia lub atakuj Androidy na powierzchni, pozwalając im ucieknąć.
+				BossChecklistIntegration.SpawnInfo: Użyj [i:Redemption/CyberTech] lub atakuj Androidy na powierzchni, pozwalając im uciec.
 			}
 
 			KS3_Clone: {
 				DisplayName: King Slayer III... ?
-				// DefeatName: A King Slayer III Clone
+				DefeatName: Klon King Slayera III
 			}
 
 			KS3_Magnet.DisplayName: Dron Magnetycznej Energii Mk.I
@@ -12438,6 +12579,9 @@ Mods: {
 			GloomShroomFoliage2.MapEntry: Ponury Grzyb
 			SoulCandleTile.MapEntry: Duchowa Świeca
 			JungleStatuetteTile.MapEntry: Dżunglowa Statuetka
+			ClayStatuetteTile.MapEntry: Gliniana Statuetka
+			DesertStatuetteTile.MapEntry: Pustynna Statuetka
+			ObsidianStatuetteTile.MapEntry: Obsydianowa Statuetka
 		}
 
 		Keybinds: {

@@ -49,8 +49,9 @@ namespace Redemption.NPCs.PreHM
             Main.npcFrameCount[NPC.type] = 16;
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
-
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+
+            NPCSets.UsesGuardPoints[Type] = true;
         }
         public override void SetDefaults()
         {

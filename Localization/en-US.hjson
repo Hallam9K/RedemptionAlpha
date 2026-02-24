@@ -280,7 +280,7 @@ Mods: {
 			Gigapora: A modified tunnelling machine, originally of TeoChrome design, retrofitted with rocket boosters, various weaponry and very experimental projected shield technology. Gigapora's shield projectors are prone to overheating and melting if they're inside the projected shield, hence why they're outside.
 			Akka: Little has been recorded of Akka during her youth, it is believed by the locals that her spirit infused with a great tree in the Spirit Realm, where she would sleep until awoken by her husband to be worshipped once more.
 			Ukko: Once a blacksmith in ancient Tethuram who had an immense talent in magic, so immense that he was seen as a God to many. In his old age, growing weary of his mortality, Ukko infused his soul into a bundle of rocks, allowing him to eventually reform when the time comes.
-			PZ: An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 50 years, conscious and aware of the situation around him... God, that must be tormentous.
+			PZ: An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 50 years, lost of his own consciousness... God, that must be tormentous.
 			Android: Fodder sent down to the island by King Slayer III to scan. These are the first iteration of the Android Unit and the first robots designed by King Slayer during his million year voyage. Their original purpose was to bring company and life to the SoS, however they have since been fitted with more combat-oriented parts. When damaged, they will retreat back to the SoS and alert the network.
 			BloatedGoldfish: A goldfish bloated with radioactive pus.
 			BloatedGhoul: Ghouls irradiated by radioactive particles that have been disfigured by rapid, volatile cell growth.
@@ -425,6 +425,7 @@ Mods: {
 				Decapitated: Decapitated!
 				NoTargets: No targets found!
 				BloodLoss: BLOOD LOSS!
+				GuardBroken: Guard Broken!
 				MPWarning:
 					'''
 					IMPORTANT: Mod of Redemption is not fully functional in multiplayer, singleplayer is recommended for the best experience.
@@ -479,8 +480,16 @@ Mods: {
 					Increased summon damage by 1
 					15% increased {0} elemental damage and resistance
 					'''
-				CommonGuardHelm1: 12% increased melee speed
-				CommonGuardHelm2: Reduces damage taken by 6%
+				CommonGuardHelm1:
+					'''
+					12% increased melee speed
+					Press {0} to plant a flag at your location that buffs nearby friendly characters
+					'''
+				CommonGuardHelm2:
+					'''
+					Reduces damage taken by 6%
+					Press {0} to plant a flag at your location that buffs nearby friendly characters
+					'''
 				PureIron.Bonus:
 					'''
 					20% increased {0} elemental resistance
@@ -1049,12 +1058,11 @@ Mods: {
 				Chicken3: You look like you actually understand what I'm saying.[0.5] That's surprising.
 				Chicken4: I,[0.1] uh,[0.1] will be staying here for the time being.[0.5] I hope you'll be fine with that.
 				Chicken5: I'm taking that cluck as an affirmative...
-				Warhead1: Ah,[0.1] I should caution if you get the Nuclear Warhead.
+				Warhead1: Ah,[0.1] I should caution if you choose to detonate that...
 				Warhead2: Radiation is a serious hazard for humans like you,[0.1] but an avoidable one.
 				Warhead3: If you see a glowing blue material near the crater,[0.1] don't get too close.[0.5] That'd be Plutonium.
 				Warhead4: A Geiger-Muller will warn you of irradiated areas,[0.2] and if you do get sick,[0.1] take a Radiation Pill as soon as possible.
-				Warhead5: I will sell these once you set the nuke off.
-				Warhead6: .[0.1].[0.1].[0.1]Err,[0.1] that is if you DO decide to detonate one.
+				Warhead5: .[0.1].[0.1].[0.1]Personally,[0.1] I'd advise against detonating it in the first place.
 			}
 
 			SoI: A portal to another world has opened!
@@ -1631,6 +1639,7 @@ Mods: {
 			}
 
 			BookOfBonusesInGameNotification: New bonus effect discovered: {0}
+			SpareTimer: Spared In: {0}
 		}
 
 		DialogueBox: {
@@ -2135,14 +2144,9 @@ Mods: {
 				Description: Pewpewpewpewpewpew
 			}
 
-			MicroshieldCoreBuff: {
-				DisplayName: Microshield Core
-				Description: A tiny shield core is defending you
-			}
-
-			MicroshieldDroneBuff: {
-				DisplayName: Microshield Drone
-				Description: A microshield drone is defending you
+			MicroshieldCoreCooldown: {
+				DisplayName: Broken Microshield
+				Description: Shield is restoring
 			}
 
 			HoloMinionBuff: {
@@ -2381,7 +2385,7 @@ Mods: {
 
 			FlagbearerBuff: {
 				DisplayName: Rallied
-				Description: ":D"
+				Description: Increased movement speed, defense, and damage
 			}
 
 			IceFrozen: {
@@ -2698,6 +2702,11 @@ Mods: {
 				DisplayName: Soulbound
 				Description: Chance to cause lost souls to appear from slain enemies
 			}
+
+			CommonGuardFlagCooldown: {
+				DisplayName: Rallying Flag Cooldown
+				Description: You cannot place another flag
+			}
 		}
 
 		Biomes: {
@@ -2877,6 +2886,7 @@ Mods: {
 				DialogueRad: You look ill. Come back to me if you feel nauseous. Could be nothing, but... better safe than sorry.
 				DialogueRad2: You look VERY ill. Continuing monitoring your vitals... I recommend keeping your medicine close.
 				DialogueRad3: ..! You have severe radiation poisoning! Please, take a dosage of these pills, urgently!
+				NewShop: Apologies for not being much use to you thus far. I have new supplies that may benefit you in the off chance you encounter irradiated areas. Take a look if you wish, just... ignore the warhead. I don't know where to safely dispose of it just yet.
 				FloppyDisk1:
 					'''
 					It reads - [c/b883d8:'When I got this research offer I didn't expect to be put underground, but hey, guess this is a bit secretive. New material is discovered and weapons are already being made using it. Heh, classic TeoChrome. Although this has to be the most under-supplied facility I've seen, we barely have enough gloves and hazmat suits to be dealing with radioactive materials. Good thing my job doesn't concern those types of things.']
@@ -3650,9 +3660,9 @@ Mods: {
 				DisplayName: Microshield Core
 				Tooltip:
 					'''
-					Summons a Microshield Drone that appears whenever a hostile projectile is shot at the player
+					Summons a Microshield Drone that moves in the way of incoming projectiles
 					When a projectile hits the shield, it will release a discharge and reflect it
-					The shield can take 500 damage, once destroyed, it will take 10 seconds to reactivate
+					The shield can take 500 damage, once destroyed, it will take 30 seconds to reactivate
 					'''
 			}
 
@@ -6218,9 +6228,9 @@ Mods: {
 				DisplayName: Nuclear Warhead
 				Tooltip:
 					'''
+					Detonation will create a Wasteland
 					Right-click the placed warhead to view the side panel
-					Detonation will create a wasteland
-					Can only detonate within the outer thirds of the world on the surface, and while no unexplodable tiles are nearby
+					Can only detonate within the outer thirds of the world on the surface, and while no explosion-resistant blocks are nearby
 					'''
 			}
 
@@ -9052,6 +9062,7 @@ Mods: {
 					Deals more damage at the tip of the blade
 					Hitting on the very tip of the blade can freeze enemies
 					Enemies with knockback immunity cannot be frozen
+					Has synergy with Icefall
 					'Send them to their snowy grave'
 					'''
 				Lore:
@@ -10942,6 +10953,126 @@ Mods: {
 				DisplayName: Music Box (King Slayer Overclock)
 				Tooltip: Sc0p3r - Beyond Steel
 			}
+
+			ThornMask2: {
+				DisplayName: Heart of Thorns Mask
+				Tooltip: ""
+			}
+
+			TerraBombaCore: {
+				DisplayName: Terraforma Bomba Core
+				Tooltip: ""
+			}
+
+			TerraBombaNose: {
+				DisplayName: Terraforma Bomba Nose
+				Tooltip: ""
+			}
+
+			TerraBombaTail: {
+				DisplayName: Terraforma Bomba Tail
+				Tooltip: ""
+			}
+
+			TerraBombaCorruption: {
+				DisplayName: Terraforma Bomba
+				Tooltip:
+					'''
+					[c/b883d8:Corruption]
+					Converts a large radius into Corruption
+					'Country roads, take me home...'
+					'''
+			}
+
+			TerraBombaCrimson: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/d88383:Crimson]
+					Converts a large radius into Crimson
+					'Country roads, take me home...'
+					'''
+			}
+
+			TerraBombaGlowingMushroom: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/4561d7:Glowing Mushroom]
+					Converts a large radius into Glowing Mushroom
+					'Country roads, take me home...'
+					'''
+			}
+
+			TerraBombaHallow: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/7de4e8:Hallow]
+					Converts a large radius into Hallow
+					'Country roads, take me home...'
+					'''
+			}
+
+			TerraBombaPurity: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/87d883:Purity]
+					Purifies a large radius
+					'Country roads, take me home...'
+					'''
+			}
+
+			TerraBombaDirt: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/BFA17A:Forest]
+					Converts a large radius into Forest
+					'Country roads, take me home...'
+					'''
+			}
+
+			TerraBombaSand: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/F7DE9E:Desert]
+					Converts a large radius into Desert
+					'Country roads, take me home...'
+					'''
+			}
+
+			TerraBombaSnow: {
+				DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+				Tooltip:
+					'''
+					[c/D9E0EE:Snow]
+					Converts a large radius into Snow
+					'Country roads, take me home...'
+					'''
+			}
+
+			ClayStatuette: {
+				DisplayName: Clay Statuette
+				Tooltip: ""
+			}
+
+			DesertStatuette: {
+				DisplayName: Desert Statuette
+				Tooltip: ""
+			}
+
+			ObsidianStatuette: {
+				DisplayName: Obsidian Statuette
+				Tooltip: ""
+			}
+
+			AncientHallBrickWall: {
+				DisplayName: Ancient Hall Brick Wall
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -11664,6 +11795,16 @@ Mods: {
 			FlakGrenade_Bee.DisplayName: Flak Beenade
 			KS3_BlasterGore.DisplayName: Hyper-Tech Blaster
 			KS3_Lightning.DisplayName: Lightning
+			CommonGuardFlag_Proj.DisplayName: Rallying Flag
+			Icefall_HeldProj.DisplayName: "{$Mods.Redemption.Items.Icefall.DisplayName}"
+			TerraBombaCorruption_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaCrimson_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaGlowingMushroom_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaHallow_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaPurity_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaDirt_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaSand_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			TerraBombaSnow_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
 		}
 
 		NPCs: {
@@ -11751,7 +11892,7 @@ Mods: {
 
 			KS3: {
 				DisplayName: King Slayer III
-				BossChecklistIntegration.SpawnInfo: Use a [i:Redemption/CyberTech] during the day, or attack Androids on the surface and allow them to teleport away.
+				BossChecklistIntegration.SpawnInfo: Use a [i:Redemption/CyberTech], or attack Androids on the surface and allow them to teleport away.
 			}
 
 			KS3_Clone: {
@@ -12435,6 +12576,9 @@ Mods: {
 			GloomShroomFoliage2.MapEntry: Gloom Mushroom
 			SoulCandleTile.MapEntry: Soul Candle
 			JungleStatuetteTile.MapEntry: Jungle Statuette
+			ClayStatuetteTile.MapEntry: Clay Statuette
+			DesertStatuetteTile.MapEntry: Desert Statuette
+			ObsidianStatuetteTile.MapEntry: Obsidian Statuette
 		}
 
 		Keybinds: {

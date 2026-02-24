@@ -12,6 +12,8 @@ namespace Redemption.BaseExtension
     {
         /// <summary>References the RedePlayer instance.</summary>
         public static RedePlayer Redemption(this Player player) => player.GetModPlayer<RedePlayer>();
+        /// <summary>References the QuestPlayer instance.</summary>
+        public static DialoguePlayer RedemptionDialogue(this Player player) => player.GetModPlayer<DialoguePlayer>();
         /// <summary>References the ScreenPlayer instance.</summary>
         public static ScreenPlayer RedemptionScreen(this Player player) => player.GetModPlayer<ScreenPlayer>();
         /// <summary>References the Radiation instance.</summary>
@@ -34,6 +36,8 @@ namespace Redemption.BaseExtension
         public static ItemUseGlow RedemptionGlow(this Item item) => item.GetGlobalItem<ItemUseGlow>();
         /// <summary>References the RedeProjectile instance.</summary>
         public static RedeProjectile Redemption(this Projectile proj) => proj.GetGlobalProjectile<RedeProjectile>();
+        /// <summary>References the RedeProjectile instance.</summary>
+        public static ProjReflect RedemptionReflect(this Projectile proj) => proj.GetGlobalProjectile<ProjReflect>();
 
         public static bool IsRedeNPC(this NPC npc, ref ModRedeNPC redeNPC)
         {

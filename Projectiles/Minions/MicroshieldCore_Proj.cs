@@ -1,4 +1,4 @@
-﻿using Redemption.Buffs.Minions;
+﻿/*using Redemption.Buffs.Minions;
 using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
@@ -79,3 +79,4 @@ namespace Redemption.Projectiles.Minions
         }
     }
 }
+*/

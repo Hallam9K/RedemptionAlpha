@@ -1,16 +1,18 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
-using Redemption.Items.Accessories.PostML;
 using Redemption.NPCs.Friendly.SpiritSummons;
 using Redemption.NPCs.Minibosses.Calavia;
 using Redemption.NPCs.PreHM;
 using Redemption.UI.ChatUI;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace Redemption.Globals.NPCs
 {
@@ -23,7 +25,65 @@ namespace Redemption.Globals.NPCs
         public bool GuardPierce;
         public bool GuardHammer;
         public double GuardDamage = 1;
-        public void GuardHit(ref Terraria.NPC.HitInfo info, Terraria.NPC npc, SoundStyle sound, float dmgReduction = .25f, bool noNPCHitSound = false, int dustType = 0, SoundStyle breakSound = default, int dustAmount = 10, float dustScale = 1, int damage = 0)
+        public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
+        {
+            base.SendExtraAI(npc, bitWriter, binaryWriter);
+            if (NPCSets.UsesGuardPoints[npc.type])
+            {
+                binaryWriter.Write(GuardPoints);
+                binaryWriter.Write(GuardBroken);
+            }
+        }
+        public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
+        {
+            base.ReceiveExtraAI(npc, bitReader, binaryReader);
+            if (NPCSets.UsesGuardPoints[npc.type])
+            {
+                GuardPoints = binaryReader.ReadInt32();
+                GuardBroken = binaryReader.ReadBoolean();
+            }
+        }
+
+        private static void GuardBreakEffects(NPC npc)
+        {
+            if (npc.ModNPC == null)
+                return;
+
+            switch (npc.ModNPC)
+            {
+                case SkeletonWarden:
+                    if (Main.netMode != NetmodeID.Server)
+                        Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, Find<ModGore>("Redemption/SkeletonWardenGore2").Type, 1);
+                    break;
+                case SkeletonWarden_SS:
+                    for (int i = 0; i < 4; i++)
+                    {
+                        int dust = Dust.NewDust(npc.position + npc.velocity, npc.width, npc.height, DustID.DungeonSpirit,
+                            npc.velocity.X * 0.5f, npc.velocity.Y * 0.5f, Scale: 2);
+                        Main.dust[dust].velocity *= 5f;
+                        Main.dust[dust].noGravity = true;
+                    }
+                    break;
+                case Calavia:
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, Find<ModGore>("Redemption/CalaviaShieldGore1").Type, 1);
+                        Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, Find<ModGore>("Redemption/CalaviaShieldGore2").Type, 1);
+                    }
+                    EmoteBubble.NewBubble(1, new WorldUIAnchor(npc), 120);
+                    if (!Main.dedServ)
+                    {
+                        Texture2D bubble = !Main.dedServ ? Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value : null;
+                        SoundStyle voice = CustomSounds.Voice1 with { Pitch = 0.6f };
+                        Dialogue d1 = new(npc, "Oru'takh!", Color.White, Color.Gray, voice, 0.01f, 1f, .5f, true, bubble: bubble);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(d1);
+                    }
+                    break;
+            }
+        }
+
+        public void GuardHit(ref NPC.HitInfo info, NPC npc, SoundStyle sound, float dmgReduction = .25f, bool noNPCHitSound = false, int dustType = 0, SoundStyle breakSound = default, int dustAmount = 10, float dustScale = 1, int damage = 0)
         {
             if (breakSound == default)
                 breakSound = CustomSounds.GuardBreak;
@@ -60,7 +120,7 @@ namespace Redemption.Globals.NPCs
 
             GuardBreakCheck(npc, dustType, breakSound, dustAmount, dustScale, damage);
         }
-        public void GuardBreakCheck(Terraria.NPC npc, int dustType, SoundStyle sound, int dustAmount = 10, float dustScale = 1, int damage = 0)
+        public void GuardBreakCheck(NPC npc, int dustType, SoundStyle sound, int dustAmount = 10, float dustScale = 1, int damage = 0)
         {
             if (IgnoreArmour)
                 IgnoreArmour = false;
@@ -70,7 +130,7 @@ namespace Redemption.Globals.NPCs
 
             SoundEngine.PlaySound(sound, npc.position);
 
-            CombatText.NewText(npc.getRect(), Colors.RarityPurple, "Guard Broken!", false, true);
+            CombatText.NewText(npc.getRect(), Colors.RarityPurple, Language.GetTextValue("Mods.Redemption.StatusMessage.Other.GuardBroken"), false, true);
             for (int i = 0; i < dustAmount; i++)
                 Dust.NewDust(npc.position + npc.velocity, npc.width, npc.height, dustType, npc.velocity.X * 0.5f, npc.velocity.Y * 0.5f, Scale: dustScale);
             GuardBroken = true;
@@ -78,43 +138,12 @@ namespace Redemption.Globals.NPCs
                 BaseAI.DamageNPC(npc, damage, 0, Main.LocalPlayer, true, true);
 
             #region Unique NPC Effects
-            if (npc.type == NPCType<SkeletonWarden>())
-            {
-                if (Main.netMode != NetmodeID.Server)
-                    Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, Find<ModGore>("Redemption/SkeletonWardenGore2").Type, 1);
-            }
-            else if (npc.type == NPCType<SkeletonWarden_SS>())
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    int dust = Dust.NewDust(npc.position + npc.velocity, npc.width, npc.height, DustID.DungeonSpirit,
-                        npc.velocity.X * 0.5f, npc.velocity.Y * 0.5f, Scale: 2);
-                    Main.dust[dust].velocity *= 5f;
-                    Main.dust[dust].noGravity = true;
-                }
-            }
-            else if (npc.type == NPCType<Calavia>())
-            {
-                if (Main.netMode != NetmodeID.Server)
-                {
-                    Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, Find<ModGore>("Redemption/CalaviaShieldGore1").Type, 1);
-                    Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, Find<ModGore>("Redemption/CalaviaShieldGore2").Type, 1);
-                }
-                EmoteBubble.NewBubble(1, new WorldUIAnchor(npc), 120);
-                if (!Main.dedServ)
-                {
-                    Texture2D bubble = !Main.dedServ ? Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value : null;
-                    SoundStyle voice = CustomSounds.Voice1 with { Pitch = 0.6f };
-                    Dialogue d1 = new(npc, "Oru'takh!", Color.White, Color.Gray, voice, 0.01f, 1f, .5f, true, bubble: bubble);
-                    ChatUI.Visible = true;
-                    ChatUI.Add(d1);
-                }
-            }
+            GuardBreakEffects(npc);
             #endregion
         }
-        public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref Terraria.NPC.HitModifiers modifiers)
+        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {
-            if (GuardPoints <= 0)
+            if (GuardPoints <= 0 || !NPCSets.UsesGuardPoints[npc.type])
                 return;
             GuardDamage = 1;
             if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned)
@@ -143,9 +172,9 @@ namespace Redemption.Globals.NPCs
                 RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Hammer);
             }
         }
-        public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
         {
-            if (GuardPoints <= 0)
+            if (GuardPoints <= 0 || !NPCSets.UsesGuardPoints[npc.type])
                 return;
             GuardDamage = 1;
             if (projectile.HasElement(ElementID.Psychic))
@@ -180,10 +209,10 @@ namespace Redemption.Globals.NPCs
                 RedeQuest.SetBonusDiscovered(RedeQuest.Bonuses.Explosive);
             }
         }
-        public override void SetDefaults(Terraria.NPC npc)
+        public override void SetDefaults(NPC npc)
         {
             base.SetDefaults(npc);
-            if (RedeConfigServer.Instance.VanillaGuardPointsDisable)
+            if (RedeConfigServer.Instance.VanillaGuardPointsDisable || !NPCSets.UsesGuardPoints[npc.type])
                 return;
             if (npc.type is NPCID.GreekSkeleton or NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.GoblinWarrior)
                 GuardPoints = 25;
@@ -194,9 +223,9 @@ namespace Redemption.Globals.NPCs
             if (npc.type is NPCID.Paladin)
                 GuardPoints = 500;
         }
-        public override void ModifyIncomingHit(Terraria.NPC npc, ref Terraria.NPC.HitModifiers modifiers)
+        public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
-            if (RedeConfigServer.Instance.VanillaGuardPointsDisable)
+            if (RedeConfigServer.Instance.VanillaGuardPointsDisable || !NPCSets.UsesGuardPoints[npc.type])
                 return;
 
             if (npc.type is NPCID.GreekSkeleton)
@@ -204,7 +233,7 @@ namespace Redemption.Globals.NPCs
                 if (!GuardBroken)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .25f, false, DustID.Gold, damage: npc.lifeMax / 4);
+                    modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .25f, false, DustID.Gold, damage: npc.lifeMax / 4);
                 }
             }
             if (npc.type is NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.ArmoredSkeleton or NPCID.ArmoredViking or NPCID.BlueArmoredBones or NPCID.BlueArmoredBonesMace or NPCID.BlueArmoredBonesNoPants or NPCID.BlueArmoredBonesSword or NPCID.RustyArmoredBonesAxe or NPCID.RustyArmoredBonesFlail or NPCID.RustyArmoredBonesSword)
@@ -212,7 +241,7 @@ namespace Redemption.Globals.NPCs
                 if (!GuardBroken)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .35f, false, DustID.Bone, damage: npc.lifeMax / 4);
+                    modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .35f, false, DustID.Bone, damage: npc.lifeMax / 4);
                 }
             }
             if (npc.type is NPCID.HellArmoredBones or NPCID.HellArmoredBonesMace or NPCID.HellArmoredBonesSpikeShield or NPCID.HellArmoredBonesSword)
@@ -220,7 +249,7 @@ namespace Redemption.Globals.NPCs
                 if (!GuardBroken)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .35f, false, DustID.Torch, damage: npc.lifeMax / 4);
+                    modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .35f, false, DustID.Torch, damage: npc.lifeMax / 4);
                 }
             }
             if (npc.type is NPCID.PossessedArmor)
@@ -228,7 +257,7 @@ namespace Redemption.Globals.NPCs
                 if (!GuardBroken)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .25f, false, DustID.Demonite, damage: npc.lifeMax / 2);
+                    modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .25f, false, DustID.Demonite, damage: npc.lifeMax / 2);
                 }
             }
             if (npc.type is NPCID.GoblinWarrior)
@@ -236,7 +265,7 @@ namespace Redemption.Globals.NPCs
                 if (!GuardBroken)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .4f, false, DustID.Iron, damage: npc.lifeMax / 4);
+                    modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .4f, false, DustID.Iron, damage: npc.lifeMax / 4);
                 }
             }
             if (npc.type is NPCID.Paladin)
@@ -244,7 +273,7 @@ namespace Redemption.Globals.NPCs
                 if (!GuardBroken)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .2f, false, DustID.GoldCoin, damage: npc.lifeMax / 3);
+                    modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .2f, false, DustID.GoldCoin, damage: npc.lifeMax / 3);
                 }
             }
         }

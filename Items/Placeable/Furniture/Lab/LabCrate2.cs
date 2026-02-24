@@ -74,6 +74,13 @@ namespace Redemption.Items.Placeable.Furniture.Lab
                 ModContent.ItemType<Uranium>(),
                 ModContent.ItemType<Plutonium>()
             };
+            int[] LabChestLoot5 = new int[]
+            {
+                ItemType<TerraBombaTail>(),
+                ItemType<TerraBombaCore>(),
+                ItemType<TerraBombaNose>()
+            };
+
             int[] OreLoot = new int[] { ItemID.CobaltOre, ItemID.PalladiumOre, ItemID.MythrilOre, ItemID.OrichalcumOre, ItemID.AdamantiteOre, ItemID.TitaniumOre };
             int[] BarLoot = new int[] { ItemID.CobaltBar, ItemID.PalladiumBar, ItemID.MythrilBar, ItemID.OrichalcumBar, ItemID.AdamantiteBar, ItemID.TitaniumBar };
             int[] PotionLoot = new int[] { ItemID.ObsidianSkinPotion, ItemID.SpelunkerPotion, ItemID.HunterPotion, ItemID.GravitationPotion, ItemID.MiningPotion, ItemID.HeartreachPotion };
@@ -88,6 +95,8 @@ namespace Redemption.Items.Placeable.Furniture.Lab
 
             if (Main.rand.NextBool(4))
                 player.QuickSpawnItem(entitySource, Utils.Next(Main.rand, FloppyDiskLoot));
+            if (Main.rand.NextBool(4))
+                player.QuickSpawnItem(entitySource, Utils.Next(WorldGen.genRand, LabChestLoot5));
 
             if (Main.rand.NextBool(14))
                 player.QuickSpawnItem(entitySource, Utils.Next(Main.rand, OreLoot), Main.rand.Next(30, 50));

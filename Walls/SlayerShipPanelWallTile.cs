@@ -12,5 +12,11 @@ namespace Redemption.Walls
             AddMapEntry(new Color(35, 34, 40));
         }
         public override bool CanExplode(int i, int j) => false;
+        public override void KillWall(int i, int j, ref bool fail)
+        {
+            if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+                return;
+            fail = true;
+        }
     }
 }

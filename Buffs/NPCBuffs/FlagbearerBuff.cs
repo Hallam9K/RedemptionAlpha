@@ -16,5 +16,11 @@ namespace Redemption.Buffs.NPCBuffs
         {
             npc.RedemptionNPCBuff().rallied = true;
         }
+        public override void Update(Player player, ref int buffIndex)
+        {
+            player.moveSpeed *= 1.2f;
+            player.statDefense += 4;
+            player.GetDamage(DamageClass.Generic).Flat += 1;
+        }
     }
 }

@@ -1,0 +1,36 @@
+=== 0.8 Beta .412 === (Bomba Patch)
+- Wayfarer advice buttons in Encounters and Locations are the questy colour when available
+- Fixed certain discovered elemental bonuses being sent incorrectly in multiplayer
+- Increased piercing of Blood projectile (from Keeper's Claw) from 1 -> 2 (Fixes it from triggering BLOOD LOSS at rapid rates sometimes)
+- Removed "during the day" part of King Slayer's Boss Log Spawn Info
+- Resprited Banners for Coast Scarab, Tree Bug, and Vagrant Spirit
+- Minor touch-up to Boreal Statuette's sprite
+- Changed tooltip of the Rallied buff
+- Reworded Nuclear Warhead's tooltip
+- Added localisation for "Guard Broken!" text
+- Improved Spanish localisation
+1723. Ported Terraforma Bombas, reduced radius to 100 tiles, now available post-mechs, crafted with the seeds of a biome instead of 333 solution, and added Bombas for Dirt, Sand, and Snow conversions
+2382. Added Clay Statuette, Desert Statuette, and Obsidian Statuette
+2387. Added Heart of Thorns Mask, from shimmering the Thorn Mask
+2389. Added a new effect for Common Guard set bonus: Press [keybind] to plant a flag on the ground that rallies any friendly character in its radius (including players, town npcs, and spirit summons)
+2391. Improved Microshield Drone's movement and shield visuals, increased recharging duration from 10 -> 30 seconds
+2394. Added Ancient Hall Brick Wall
+2395. Fixed visual issue with Ancient Hall Pillar Walls with certain connections
+2396. Ukon Ratsu mount can now be dyed
+2397. Added dialogue for Adam when clicking Shop for the first time in Hardmode that clears the ! marker
+2399. Changed Adam's shop conditions: Crystal Serum are now also sold after all mech bosses are defeated; Gas Mask, Hazmat Suits, Radiation Pill, and Geiger Muller are now sold in Hardmode without needing to detonate the warhead
+2403. Fixed Space Paladin from floating away like a free bird under specific conditions
+2404. Added new Trade offer from Forest Nymph for Erlea's Flower
+2406. Unsafe Cyberscrap Walls drop their item counterpart instead of Cyberscrap
+2407. Made unsafe Cyberscrap Walls unbreakable until post-mechs
+2408. Added new sounds for Nuclear Warhead explosion, Uranium Raygun, Rockslide rocks, Gigapora rubble, and Space Paladin footsteps
+2409. Added screenshake to Nuclear Warhead explosion
+2411. Improved visuals of Icefall's mist
+2412. Fixed BLOOD LOSS from triggering itself and getting triggered multiple times a frame in certain scenarios
+2413. Changed Mistfall and Icefall's use times, Mistfall will shoot up to 10 mists every 4 frames of its use and added 40 frames of reuse delay, Icefall will shoot up to 4 mists every 5 frames of use and increased use time from 20 -> 60 frames (This is mostly to fix the use sound overlapping itself)
+2414. Synergy of Icefall and Blade of the Mountain increased by 100% (Right-clicking with Blade of the Mountain with Icefall neighboring it in the hotbar will use Icefall)
+2415. Fixed visuals of "scream" shockwave (from Keeper shrieking) in multiplayer
+2416. Improved Guard Points syncing in multiplayer and added a BoolSet for npcs with Guard Points (For making Guard Points work for cross-mod, the NPC will need this BoolSet applied to it, the key is "Redemption/UsesGuardPoints" (For more info: https://github.com/tModLoader/tModLoader/pull/4381))
+2419. Added a visual countdown until spared above Erhan and Calavia during the sparing phase, and increased duration of Calavia's sparing phase from 6.66 -> 10 seconds
+2420. Fixed manual player damage running ModifyHit/OnHit checks twice
+===============

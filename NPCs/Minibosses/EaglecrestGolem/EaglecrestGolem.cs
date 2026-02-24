@@ -85,6 +85,8 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                 PortraitPositionYOverride = 0
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+
+            NPCSets.UsesGuardPoints[Type] = true;
             ElementID.NPCEarth[Type] = true;
         }
 

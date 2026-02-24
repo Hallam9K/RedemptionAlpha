@@ -43,9 +43,17 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.CommonGuardHelm2");
+            if (!Main.dedServ)
+            {
+                string keybind = "[" + Language.GetTextValue("Mods.Redemption.Keybinds.SpecialAbilityKey.DisplayName") + "]";
+                foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
+                    keybind = key;
+
+                player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.CommonGuardHelm2", keybind);
+            }
             player.endurance += .06f;
             player.RedemptionPlayerBuff().MetalSet = true;
+            player.RedemptionPlayerBuff().commonGuardBonus = true;
 
             if (Main.rand.NextBool(10) && Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
             {

@@ -34,6 +34,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.UI.Chat;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -1466,6 +1467,14 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
             spriteBatch.End();
             spriteBatch.BeginDefault();
+
+            if (AIState == ActionState.Death && TimerRand == 3 && AITimer >= 600 && AITimer < 1200)
+            {
+                int time = (int)MathHelper.Lerp(600 / 60, 1, (AITimer - 600) / 600f);
+                string s = Mod.GetLocalization("UI.SpareTimer").WithFormatArgs(time).Value;
+                int textLength = (int)FontAssets.MouseText.Value.MeasureString(s).X;
+                ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, s, NPC.Center - new Vector2(textLength / 2, (NPC.height / 2) + 20) - screenPos, Color.White, 0, Vector2.Zero, Vector2.One);
+            }
         }
 
         public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)

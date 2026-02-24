@@ -101,6 +101,7 @@ namespace Redemption.NPCs.Lab.Janitor
                 target.ai[1] = 0;
                 target.ai[2] = 0;
                 target.RedemptionGuard().GuardBreakCheck(target, DustID.Electric, CustomSounds.GuardBreak, 10, 1, 1000);
+                target.netUpdate = true;
             }
         }
         public override void OnKill(int timeLeft)

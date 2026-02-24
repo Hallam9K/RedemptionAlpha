@@ -29,6 +29,7 @@ namespace Redemption.Globals
         private float bloodLossExtra;
         private float bloodLossCD;
         private float bloodLossResistance = 1;
+        private bool bloodLossed;
 
         public override void SetDefaults(Terraria.NPC npc)
         {
@@ -36,6 +37,7 @@ namespace Redemption.Globals
         }
         public override void ResetEffects(Terraria.NPC npc)
         {
+            bloodLossed = false;
             bloodLossCD--;
             if (bloodLossCD <= 0)
                 bloodLossExtra--;
@@ -45,7 +47,7 @@ namespace Redemption.Globals
         }
         private bool BloodLossEffect(Terraria.NPC target, int maxHealth, int damage, bool crit = false)
         {
-            if (target.buffImmune[BuffID.BloodButcherer] || NPCLists.Inorganic.Contains(target.type))
+            if (bloodLossed || target.dontTakeDamage || target.immortal || target.buffImmune[BuffID.BloodButcherer] || NPCLists.Inorganic.Contains(target.type))
                 return false;
 
             bloodLossExtra = Math.Max(bloodLossExtra, 0);
@@ -70,6 +72,7 @@ namespace Redemption.Globals
                 bloodLossFill = 0;
                 bloodLossExtra = 0;
                 bloodLossResistance += .5f;
+                bloodLossed = true;
 
                 AdvancedPopupRequest bloodText = new();
                 bloodText.Text = Language.GetTextValue("Mods.Redemption.StatusMessage.Other.BloodLoss");
@@ -98,7 +101,7 @@ namespace Redemption.Globals
                 {
                     int damage = target.boss ? (int)(target.lifeMax * 0.05f) : (int)(target.lifeMax * 0.15f);
                     damage += (int)(100 * target.GetGlobalNPC<ElementalNPC>().elementDmg[ElementID.Blood]);
-                    BaseAI.DamageNPC(target, damage, 0, npc, false);
+                    BaseAI.DamageNPC(target, damage, 0, null, false);
                 }
 
                 if (NPCLists.Infected.Contains(target.type))
@@ -183,7 +186,7 @@ namespace Redemption.Globals
                 {
                     int damage = npc.boss ? (int)(npc.lifeMax * 0.05f) : (int)(npc.lifeMax * 0.15f);
                     damage += (int)(100 * npc.GetGlobalNPC<ElementalNPC>().elementDmg[ElementID.Blood]);
-                    BaseAI.DamageNPC(npc, damage, 0, player, false);
+                    BaseAI.DamageNPC(npc, damage, 0, null, false);
                 }
 
                 if (NPCLists.Infected.Contains(npc.type))
@@ -289,7 +292,7 @@ namespace Redemption.Globals
                 {
                     int damage = npc.boss ? (int)(npc.lifeMax * 0.05f) : (int)(npc.lifeMax * 0.15f);
                     damage += (int)(100 * npc.GetGlobalNPC<ElementalNPC>().elementDmg[ElementID.Blood]);
-                    BaseAI.DamageNPC(npc, damage, 0, projectile, false);
+                    BaseAI.DamageNPC(npc, damage, 0, null, false);
                 }
 
                 if (NPCLists.Infected.Contains(npc.type))

@@ -459,12 +459,12 @@ namespace Redemption.WorldGeneration
                 ModContent.ItemType<Uranium>(),
                 ModContent.ItemType<Plutonium>()
             };
-            /*int[] LabChestLoot4 = new int[]
+            int[] LabChestLoot5 = new int[]
             {
-                ModContent.ItemType<TerraBombaPart1>(),
-                ModContent.ItemType<TerraBombaPart2>(),
-                ModContent.ItemType<TerraBombaPart3>()
-            };*/
+                ItemType<TerraBombaTail>(),
+                ItemType<TerraBombaCore>(),
+                ItemType<TerraBombaNose>()
+            };
             if (PlacementSuccess >= 0)
             {
                 int slot = 0;
@@ -502,10 +502,8 @@ namespace Redemption.WorldGeneration
                     chest.item[slot++].SetDefaults(ID, false);
                     labDatalogLoot2.Remove(ID);
                 }
-                /*if (WorldGen.genRand.Next(4) == 0)
-                {
-                    chest.item[4].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot4));
-                }*/
+                if (WorldGen.genRand.NextBool(4))
+                    chest.item[slot++].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot5));
             }
         }
         public static void LabLocker(int x, int y, int id = 0)
@@ -529,6 +527,13 @@ namespace Redemption.WorldGeneration
                 ModContent.ItemType<CarbonMyofibre>(),
                 ModContent.ItemType<XenomiteShard>()
             };
+            int[] LabChestLoot5 = new int[]
+            {
+                ItemType<TerraBombaTail>(),
+                ItemType<TerraBombaCore>(),
+                ItemType<TerraBombaNose>()
+            };
+
             if (PlacementSuccess >= 0)
             {
                 int slot = 0;
@@ -555,6 +560,9 @@ namespace Redemption.WorldGeneration
                     chest.item[slot++].SetDefaults(ID, false);
                     labDatalogLoot.Remove(ID);
                 }
+
+                if (WorldGen.genRand.NextBool(4))
+                    chest.item[slot++].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot5));
 
                 if (WorldGen.genRand.NextBool(4))
                 {

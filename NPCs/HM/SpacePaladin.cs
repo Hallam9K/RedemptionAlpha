@@ -88,7 +88,6 @@ namespace Redemption.NPCs.HM
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -288,6 +287,8 @@ namespace Redemption.NPCs.HM
                 case ActionState.Stomp:
                     if (NPC.ThreatenedCheck(ref runCooldown, 300, 3))
                     {
+                        NPC.rotation = 0;
+                        NPC.noGravity = false;
                         runCooldown = 0;
                         AITimer = 0;
                         moveTo = NPC.FindGround(20);
@@ -368,6 +369,7 @@ namespace Redemption.NPCs.HM
                         case 2:
                             if (AITimer++ >= 20)
                             {
+                                NPC.rotation = 0;
                                 NPC.knockBackResist = 0.001f;
                                 AITimer = 0;
                                 TimerRand = 0;
@@ -444,6 +446,8 @@ namespace Redemption.NPCs.HM
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y == 5 * frameHeight || NPC.frame.Y == 10 * frameHeight)
+                            SoundEngine.PlaySound(CustomSounds.MechFootstep.WithVolumeScale(0.5f), NPC.Bottom);
                         if (NPC.frame.Y > 11 * frameHeight)
                             NPC.frame.Y = 2 * frameHeight;
                     }

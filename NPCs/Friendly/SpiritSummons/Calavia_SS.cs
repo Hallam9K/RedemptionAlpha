@@ -49,6 +49,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Hot);
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Cold);
+
+            NPCSets.UsesGuardPoints[Type] = true;
         }
         public override void SetSafeDefaults()
         {

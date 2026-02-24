@@ -1,4 +1,5 @@
-﻿using Redemption.Buffs.Minions;
+﻿using Redemption.Buffs.Cooldowns;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -10,11 +11,7 @@ namespace Redemption.Items.Accessories.HM
     {
         public override void SetStaticDefaults()
         {
-            /* Tooltip.SetDefault("Summons a Microshield Drone that appears whenever a hostile projectile is shot at the player\n" +
-                "When a projectile hits the shield, it will release a discharge and reflect it\n" +
-                "The shield can take 500 damage, once destroyed, it will take 10 seconds to reactivate"); */
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(3, 5));
-            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -26,11 +23,42 @@ namespace Redemption.Items.Accessories.HM
             Item.rare = ItemRarityID.Expert;
             Item.accessory = true;
         }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (hideVisual)
                 return;
-            player.AddBuff(ModContent.BuffType<MicroshieldDroneBuff>(), 2);
+
+            player.GetModPlayer<MicroshieldCore_Player>().microshieldDrone = true;
+        }
+    }
+    public class MicroshieldCore_Player : ModPlayer
+    {
+        public bool microshieldDrone;
+
+        public int restoreTimer;
+
+        public float damageEndured;
+
+        public bool shieldDisabled;
+        public override void ResetEffects()
+        {
+            microshieldDrone = false;
+        }
+        public override void UpdateDead()
+        {
+            microshieldDrone = false;
+        }
+        public override void PostUpdate()
+        {
+            if (!microshieldDrone)
+                return;
+            if (Player.ownedProjectileCounts[ProjectileType<MicroshieldDrone>()] <= 0)
+            {
+                Projectile.NewProjectile(Player.GetSource_FromAI(), Player.Center, Vector2.Zero, ProjectileType<MicroshieldDrone>(), 0, 0, Player.whoAmI);
+            }
+            if (shieldDisabled)
+                Player.AddBuff(BuffType<MicroshieldCoreCooldown>(), 2);
         }
     }
 }

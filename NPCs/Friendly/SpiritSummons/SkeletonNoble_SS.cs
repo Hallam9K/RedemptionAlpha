@@ -42,6 +42,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+
+            NPCSets.UsesGuardPoints[Type] = true;
         }
         public override void SetDefaults()
         {
