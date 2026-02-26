@@ -16,6 +16,8 @@ namespace Redemption.Projectiles.Melee
         {
             // DisplayName.SetDefault("Electric Eruption");
             Main.projFrames[Projectile.type] = 6;
+            ElementID.ProjThunder[Type] = true;
+            ElementID.ProjEarth[Type] = true;
         }
 
         public override void SetDefaults()

@@ -2,6 +2,7 @@
 - Wayfarer advice buttons in Encounters and Locations are the questy colour when available
 - Fixed certain discovered elemental bonuses being sent incorrectly in multiplayer
 - Increased piercing of Blood projectile (from Keeper's Claw) from 1 -> 2 (Fixes it from triggering BLOOD LOSS at rapid rates sometimes)
+- Added Thunder and Earth element to Gravity Hammer and MACE Project's Electric Eruption
 - Removed "during the day" part of King Slayer's Boss Log Spawn Info
 - Resprited Banners for Coast Scarab, Tree Bug, and Vagrant Spirit
 - Minor touch-up to Boreal Statuette's sprite

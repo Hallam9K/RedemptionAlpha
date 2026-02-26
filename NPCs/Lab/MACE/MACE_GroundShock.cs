@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Redemption.WorldGeneration;
 using System.Collections.Generic;
 using Terraria;
@@ -14,6 +15,8 @@ namespace Redemption.NPCs.Lab.MACE
         {
             // DisplayName.SetDefault("Electric Eruption");
             Main.projFrames[Projectile.type] = 6;
+            ElementID.ProjThunder[Type] = true;
+            ElementID.ProjEarth[Type] = true;
         }
 
         public override void SetDefaults()
