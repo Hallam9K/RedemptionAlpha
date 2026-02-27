@@ -642,7 +642,7 @@ namespace Redemption.CrossMod
             AddMusic("Sounds/Music/OmegaOverheat", "Meltdown (Obliterator Overheat Theme)", "Universe");
             AddMusic("Sounds/Music/SilentCaverns", "The Loudness of Silence (Skull Digger Theme)", "Yuri O");
             AddMusic("Sounds/Music/SpiritRealm", "Spectral Interloper (Spirit Realm Theme)", "Yuri O");
-            AddMusic("Sounds/Music/Raveyard", "Rattle Thy Bones (Raveyard Theme)", "Zeus073");
+            AddMusic("Sounds/Music/Raveyard", "Spook3 (Raveyard Theme)", "PeriTune");
             AddMusic("Sounds/Music/Warhead", "Detonation Sequence (Nuclear Countdown Theme)", "musicman");
             AddMusic("Sounds/Music/BossThorn", "Every Rose... (Thorn Theme)", "musicman");
         }

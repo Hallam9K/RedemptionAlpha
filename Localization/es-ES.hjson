@@ -219,17 +219,17 @@ Mods: {
 
 			Ukko: {
 				Name: Ukko
-				Modifier: Antiguo Dios del clima
+				Modifier: Antiguo dios del Clima
 			}
 
 			Akka: {
 				Name: Akka
-				Modifier: Antigua Diosa de la naturaleza
+				Modifier: Antigua diosa de la Naturaleza
 			}
 
 			Neb: {
 				Name: Nebuleus
-				Modifier: Ángel del cosmos
+				Modifier: Ángel del Cosmos
 				Ultimate: Forma definitiva
 			}
 
@@ -411,7 +411,7 @@ Mods: {
 				Warning2: ADVERTENCIA: ¡No se puede localizar una estructura importante, se requiere crear un nuevo mundo!
 				Caution: PRECAUCIÓN: Tienes habilitada una configuración Chistosita que afecta la generación de mundos. Si creaste un mundo ahora mismo, verifica cuál tienes habilitado y deshabilítalo para la próxima vez.
 				Keeper1: Gritos de tormento resuenan en esta noche...
-				Keeper2: La Custodia notó el osito de peluche abandonado que estás sosteniendo...
+				Keeper2: La Custodia notó el osito de peluche abandonado que llevas...
 				Keeper3: El espíritu de La Custodia se desvanece...
 				SkullDigger: El espíritu de Skull Digger se desvanece...
 				GolemSpawn: Una piedra durmiente aparece...
@@ -483,12 +483,12 @@ Mods: {
 				CommonGuardHelm1:
 					'''
 					12% más de velocidad cuerpo a cuerpo
-					Pulsa {0} para plantar una bandera en tu ubicación que otorga beneficios a los aliados cercanos
+					Pulsa {0} para plantar una bandera en tu ubicación, otorga beneficios a los aliados cercanos
 					'''
 				CommonGuardHelm2:
 					'''
 					6% menos de daño recibido
-					Pulsa {0} para plantar una bandera en tu ubicación que otorga beneficios a los aliados cercanos
+					Pulsa {0} para plantar una bandera en tu ubicación, otorga beneficios a los aliados cercanos
 					'''
 				PureIron.Bonus:
 					'''
@@ -2396,7 +2396,7 @@ Mods: {
 
 			FlagbearerBuff: {
 				DisplayName: Reagrupado
-				Description: Velocidad de movimiento, defensa y daño aumentados
+				Description: "Velocidad de movimiento, defensa y daño aumentados"
 			}
 
 			IceFrozen: {
@@ -10507,7 +10507,7 @@ Mods: {
 
 			RaveyardBox: {
 				DisplayName: Caja de música (Fiesta de los esqueletos)
-				Tooltip: Zeus073 - Rattle Thy Bones
+				Tooltip: Peritune - Spook3
 			}
 
 			AetherianGreathelm: {
