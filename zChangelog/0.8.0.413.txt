@@ -1,0 +1,12 @@
+=== 0.8 Beta .413 === (March 2026 Patch)
+- Added Smart Cursor highlight to the lab's Keycard Doors
+- Changed knockback modifier of Antler Staff's minion
+- Resprited Slayer's Crashed Ship Music Box
+2421. Reduced Yellow and Black Paint in the 4 lab sign recipes from 4/2 -> 2/1
+2422. Replaced the 5 Ash Blocks in Ancient Dirt & Elder Wood recipes with 2 Silt Blocks
+2423. Changed Gathic Stone recipe to 10 Stone + Grave Steel Shards = 10 Gathic Stone, and is now crafted at a Furnace
+2424. Increased result quantity of Gathic Froststone's recipe from 1 -> 2
+2425. Made Energized Gathic Stone obtainable as an item by shimmering Gathic Stone post-Ancient Deity Duo
+2427. Weapons forged by Calavia now show that when asking Guide about them (like how repairable weapons have a "recipe")
+2428. Improved Elemental Multiplier bestiary panel, header is now "Elemental Resistances", shows percentages the same way as Elemental Stats panel, can have 2 columns to compress size
+===============
