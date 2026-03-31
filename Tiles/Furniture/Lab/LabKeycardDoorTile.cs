@@ -1,10 +1,10 @@
-using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Redemption.Items.Usable;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -20,9 +20,12 @@ namespace Redemption.Tiles.Furniture.Lab
             Main.tileBlockLight[Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileNoAttach[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             TileID.Sets.NotReallySolid[Type] = true;
             TileID.Sets.DrawsWalls[Type] = true;
-            RedeTileHelper.CannotMineTileBelow[Type] = true;
+            TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
+            TileID.Sets.PreventsTileHammeringIfOnTopOfIt[Type] = true;
             RedeTileHelper.CannotMineTileAbove[Type] = true;
             TileObjectData.newTile.Width = 1;
             TileObjectData.newTile.Height = 4;
@@ -52,6 +55,7 @@ namespace Redemption.Tiles.Furniture.Lab
             AdjTiles = new int[] { TileID.ClosedDoor };
             AnimationFrameHeight = 72;
         }
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.LocalPlayer.HasItem(ItemType<Keycard>());
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override bool CanExplode(int i, int j) => false;
         public override void NearbyEffects(int i, int j, bool closer)
@@ -60,7 +64,7 @@ namespace Redemption.Tiles.Furniture.Lab
             float dist = Vector2.Distance(player.Center / 16f, new Vector2(i + 0.5f, j + 0.5f));
             if (dist <= 1)
             {
-                player.KillMe(PlayerDeathReason.ByCustomReason(player.name + " experienced DOOR STUCK."), 999999, 1);
+                player.KillMe(PlayerDeathReason.ByCustomReason(NetworkText.FromKey("Mods.Redemption.StatusMessage.Death.DoorStuck", player.name)), 999999, 1);
             }
         }
         public override void MouseOver(int i, int j)
@@ -68,12 +72,11 @@ namespace Redemption.Tiles.Furniture.Lab
             Player player = Main.LocalPlayer;
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
-            player.cursorItemIconID = ModContent.ItemType<Keycard>();
+            player.cursorItemIconID = ItemType<Keycard>();
         }
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {
-            frameCounter++;
-            if (frameCounter > 15)
+            if (++frameCounter >= 12)
             {
                 frameCounter = 0;
                 frame++;
@@ -84,14 +87,14 @@ namespace Redemption.Tiles.Furniture.Lab
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
-            if (player.HasItem(ModContent.ItemType<Keycard>()))
+            if (player.HasItem(ItemType<Keycard>()))
             {
                 SoundEngine.PlaySound(SoundID.Unlock);
                 int left = i - Main.tile[i, j].TileFrameX / 18 % 1;
                 int top = j - Main.tile[i, j].TileFrameY / 18 % 4;
                 WorldGen.KillTile(i, j, noItem: true);
-                WorldGen.PlaceObject(i, j, ModContent.TileType<LabKeycardDoorOpen>());
-                NetMessage.SendObjectPlacement(-1, i, j, ModContent.TileType<LabKeycardDoorOpen>(), 0, 0, -1, -1);
+                WorldGen.PlaceObject(i, j, TileType<LabKeycardDoorOpen>());
+                NetMessage.SendObjectPlacement(-1, i, j, TileType<LabKeycardDoorOpen>(), 0, 0, -1, -1);
                 NetMessage.SendTileSquare(-1, left, top + 1, 2);
             }
             return true;
@@ -141,8 +144,7 @@ namespace Redemption.Tiles.Furniture.Lab
         public override bool CanExplode(int i, int j) => false;
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {
-            frameCounter++;
-            if (frameCounter > 15)
+            if (++frameCounter >= 12)
             {
                 frameCounter = 0;
                 frame++;
@@ -157,7 +159,7 @@ namespace Redemption.Tiles.Furniture.Lab
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.createTile = ModContent.TileType<LabKeycardDoorClosed>();
+            Item.createTile = TileType<LabKeycardDoorClosed>();
         }
     }
 }

@@ -50,6 +50,7 @@ namespace Redemption.Globals
         public static Condition IsNotFinlandDay = new("Mods.Redemption.Conditions.IsNotFinlandDay", () => !Redemption.FinlandDay);
         public static Condition InMoonlight = new("Mods.Redemption.Conditions.InMoonlight", () => !Main.dayTime && Main.moonPhase != 4);
         public static Condition RepairedByFallen = new("Mods.Redemption.Conditions.RepairedByFallen", () => false);
+        public static Condition ForgedByCalavia = new("Mods.Redemption.Conditions.ForgedByCalavia", () => false);
         public static Condition DownedEarlyGameBossAndMoR = new("Mods.Redemption.Conditions.DownedEarlyGameBossAndMoR", () => Terraria.NPC.downedBoss1 || Terraria.NPC.downedSlimeKing || RedeBossDowned.downedThorn || RedeBossDowned.downedErhan);
         public static Condition DownedEoCOrBoCOrKeeper = new("Mods.Redemption.Conditions.DownedEoCOrBoCOrKeeper", () => Terraria.NPC.downedBoss2 || RedeBossDowned.downedKeeper);
         public static Condition DownedSkeletronOrSeed = new("Mods.Redemption.Conditions.DownedSkeletronOrSeed", () => Terraria.NPC.downedBoss3 || RedeBossDowned.downedSeed);

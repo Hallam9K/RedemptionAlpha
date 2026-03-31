@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
@@ -22,28 +21,27 @@ namespace Redemption.Tiles.Tiles
             Main.tileLighted[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<AncientHallBrickTile>()] = true;
-            Main.tileMerge[ModContent.TileType<AncientHallBrickTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<GathicGladestoneBrickTile>()] = true;
-            Main.tileMerge[ModContent.TileType<GathicGladestoneBrickTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<AncientDirtTile>()] = true;
-            Main.tileMerge[ModContent.TileType<AncientDirtTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<AncientGrassTile>()] = true;
-            Main.tileMerge[ModContent.TileType<AncientGrassTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<GathicStoneBrickTile>()] = true;
-            Main.tileMerge[ModContent.TileType<GathicStoneBrickTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<GathicGladestoneTile>()] = true;
-            Main.tileMerge[ModContent.TileType<GathicGladestoneTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<GathicStoneTile>()] = true;
-            Main.tileMerge[ModContent.TileType<GathicStoneTile>()][Type] = true;
-            RegisterItemDrop(ModContent.ItemType<GathicStone>());
-            DustType = ModContent.DustType<SlateDust>();
+            Main.tileMerge[Type][TileType<AncientHallBrickTile>()] = true;
+            Main.tileMerge[TileType<AncientHallBrickTile>()][Type] = true;
+            Main.tileMerge[Type][TileType<GathicGladestoneBrickTile>()] = true;
+            Main.tileMerge[TileType<GathicGladestoneBrickTile>()][Type] = true;
+            Main.tileMerge[Type][TileType<AncientDirtTile>()] = true;
+            Main.tileMerge[TileType<AncientDirtTile>()][Type] = true;
+            Main.tileMerge[Type][TileType<AncientGrassTile>()] = true;
+            Main.tileMerge[TileType<AncientGrassTile>()][Type] = true;
+            Main.tileMerge[Type][TileType<GathicStoneBrickTile>()] = true;
+            Main.tileMerge[TileType<GathicStoneBrickTile>()][Type] = true;
+            Main.tileMerge[Type][TileType<GathicGladestoneTile>()] = true;
+            Main.tileMerge[TileType<GathicGladestoneTile>()][Type] = true;
+            Main.tileMerge[Type][TileType<GathicStoneTile>()] = true;
+            Main.tileMerge[TileType<GathicStoneTile>()][Type] = true;
+            DustType = DustType<SlateDust>();
             HitSound = CustomSounds.StoneHit;
             MinPick = 0;
             MineResist = 5f;
             AddMapEntry(new Color(206, 130, 68));
             if (!Main.dedServ)
-                glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
+                glowTexture = Request<Texture2D>(Texture + "_Glow");
         }
         private float drawTimer;
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)

@@ -14,8 +14,8 @@ namespace Redemption.Items.Accessories.PreHM
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ArcaneS);
         public override void SetDefaults()
         {
-            Item.width = 26;
-            Item.height = 26;
+            Item.width = 28;
+            Item.height = 28;
             Item.value = Item.buyPrice(0, 4, 0, 0);
             Item.rare = ItemRarityID.Orange;
             Item.accessory = true;

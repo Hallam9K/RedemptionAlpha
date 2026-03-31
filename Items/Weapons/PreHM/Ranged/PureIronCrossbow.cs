@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.ID;
@@ -50,6 +51,13 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         public override Vector2? HoldoutOffset()
         {
             return new Vector2(-4, 0);
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<ElderWoodCrossbow>()
+                .AddCondition(RedeConditions.ForgedByCalavia)
+                .Register();
         }
     }
 }

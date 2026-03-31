@@ -11169,6 +11169,11 @@ Mods: {
 				DisplayName: Pared de ladrillo del pabellón antiguo
 				Tooltip: ""
 			}
+
+			EnergizedGathicStone: {
+				// DisplayName: Energized Gathic Stone
+				// Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -12714,6 +12719,7 @@ Mods: {
 			IsNotFinlandDay: Mientras no sea el Día de la Independencia de Finlandia
 			InMoonlight: Mientras estés a la luz de la luna
 			RepairedByFallen: Reparado por el Caído
+			// ForgedByCalavia: Forged by Calavia
 			DownedEarlyGameBossAndMoR: Tras derrotar a cualquier jefe al comenzar
 			DownedEoCOrBoCOrKeeper: Tras derrotar a cualquier jefe de la etapa media del pre-hardmode
 			DownedSkeletronOrSeed: Tras derrotar a cualquier jefe de la etapa final del pre-harmode

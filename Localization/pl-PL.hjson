@@ -11076,6 +11076,11 @@ Mods: {
 				DisplayName: Ściana z Cegły Starożytnej Hali
 				Tooltip: ""
 			}
+
+			EnergizedGathicStone: {
+				// DisplayName: Energized Gathic Stone
+				// Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -12621,6 +12626,7 @@ Mods: {
 			IsNotFinlandDay: Gdy nie ma Dnia Niepodległości Finlandii
 			InMoonlight: Podczas Blasku Księżyca
 			RepairedByFallen: Naprawione przez Upadłych
+			// ForgedByCalavia: Forged by Calavia
 			DownedEarlyGameBossAndMoR: Po pokonaniu dowolnego bossa z wczesnej fazy gry
 			DownedEoCOrBoCOrKeeper: Po pokonaniu dowolnego bossa z środkowej fazy pre-hardmode
 			DownedSkeletronOrSeed: Po pokonaniu dowolnego bossa z końcowej fazy pre-hardmode

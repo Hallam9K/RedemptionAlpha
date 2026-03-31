@@ -14,7 +14,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         }
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<RadioactiveSignTile>(), 0);
+            Item.DefaultToPlaceableTile(TileType<RadioactiveSignTile>(), 0);
             Item.width = 28;
             Item.height = 28;
             Item.maxStack = Item.CommonMaxStack;
@@ -24,9 +24,9 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         public override void AddRecipes()
         {
             CreateRecipe(2)
-                .AddIngredient(ModContent.ItemType<LabPlating>(), 6)
-                .AddIngredient(ItemID.YellowPaint, 4)
-                .AddIngredient(ItemID.BlackPaint, 2)
+                .AddIngredient(ItemType<LabPlating>(), 6)
+                .AddIngredient(ItemID.YellowPaint, 2)
+                .AddIngredient(ItemID.BlackPaint, 1)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

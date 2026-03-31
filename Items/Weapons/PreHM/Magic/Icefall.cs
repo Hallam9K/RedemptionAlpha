@@ -49,5 +49,12 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             position = Main.MouseWorld;
             velocity = new Vector2(Main.rand.NextFloat(-2, 2), 0);
         }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<Mistfall>()
+                .AddCondition(RedeConditions.ForgedByCalavia)
+                .Register();
+        }
     }
 }

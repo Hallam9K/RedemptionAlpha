@@ -16,7 +16,7 @@ namespace Redemption.Items.Placeable.Tiles
 
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<ElderWoodTile>(), 0);
+            Item.DefaultToPlaceableTile(TileType<ElderWoodTile>(), 0);
             Item.width = 24;
             Item.height = 22;
             Item.maxStack = Item.CommonMaxStack;
@@ -26,15 +26,15 @@ namespace Redemption.Items.Placeable.Tiles
         {
             CreateRecipe()
                 .AddRecipeGroup(RecipeGroupID.Wood)
-                .AddIngredient(ItemID.AshBlock, 5)
+                .AddIngredient(ItemID.SiltBlock, 2)
                 .AddTile(TileID.Solidifier)
                 .Register();
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<ElderWoodWall>(), 4)
+                .AddIngredient(ItemType<ElderWoodWall>(), 4)
                 .AddTile(TileID.WorkBenches)
                 .Register();
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<ElderWoodPlatform>(), 2)
+                .AddIngredient(ItemType<ElderWoodPlatform>(), 2)
                 .Register();
         }
     }

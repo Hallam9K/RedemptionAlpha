@@ -24,7 +24,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
             Item.DefaultToPlaceableTile(TileType<SlayerShipBoxTile>(), 0);
             Item.createTile = TileType<SlayerShipBoxTile>();
             Item.width = 32;
-            Item.height = 18;
+            Item.height = 24;
             Item.rare = ItemRarityID.LightRed;
             Item.accessory = true;
         }

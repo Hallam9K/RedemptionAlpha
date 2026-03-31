@@ -240,7 +240,7 @@ Mods: {
 		}
 
 		FlavorTextBestiary: {
-			Multiplier: Elemental Multipliers
+			Multiplier: Elemental Resistances
 			Daerel: A traveller from mainland Epidotra who is friends with Zephos. Most skilled at archery and stealth.
 			Zephos: A traveller from mainland Epidotra who is friends with Daerel. Most skilled at swordplay.
 			Fallen: Fallen are a category of undead with a soul strong enough to form pale brown flesh. Most being aggressive towards humans, this one is a rare case who can sell ritualist equipment and repair fragments of ancient weapons.
@@ -8485,7 +8485,7 @@ Mods: {
 				DisplayName: Prototype Atom Rifle
 				Tooltip:
 					'''
-					(4[i:Redemption/EnergyCell]) Replaces normal bullets with Plasma Rounds
+					(4[i:Redemption/EnergyCell]) Replaces bullets with Plasma Rounds
 					Requires an Energy Pack to be in your inventory
 					'''
 				Lore:
@@ -8682,7 +8682,7 @@ Mods: {
 					'''
 				Lore:
 					'''
-					'The mighty blade of Zephos, recieved during his time in Arrgath - Capital of Erellon.
+					'The mighty blade of Zephos, received during his time in Arrgath - Capital of Erellon.
 					Similarly to his previous weapon, this sword has a slit for catching opponent's blades and snapping them.
 					The name of the blade was given by Daerel, his friend.'
 					'''
@@ -11073,6 +11073,11 @@ Mods: {
 				DisplayName: Ancient Hall Brick Wall
 				Tooltip: ""
 			}
+
+			EnergizedGathicStone: {
+				DisplayName: Energized Gathic Stone
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -12618,6 +12623,7 @@ Mods: {
 			IsNotFinlandDay: While it isn't Finland Independance Day
 			InMoonlight: While in moonlight
 			RepairedByFallen: Repaired by the Fallen
+			ForgedByCalavia: Forged by Calavia
 			DownedEarlyGameBossAndMoR: After any early-game boss is defeated
 			DownedEoCOrBoCOrKeeper: After any mid-pre-hardmode boss is defeated
 			DownedSkeletronOrSeed: After any late-pre-hardmode boss is defeated

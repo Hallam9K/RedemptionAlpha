@@ -1,3 +1,5 @@
+using Redemption.Globals;
+using Redemption.Items.Materials.PreHM;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.ID;
@@ -13,7 +15,7 @@ namespace Redemption.Items.Placeable.Tiles
         }
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<GathicStoneTile>(), 0);
+            Item.DefaultToPlaceableTile(TileType<GathicStoneTile>(), 0);
             Item.width = 16;
             Item.height = 16;
             Item.maxStack = Item.CommonMaxStack;
@@ -21,16 +23,18 @@ namespace Redemption.Items.Placeable.Tiles
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<GathicStoneWall>(), 4)
+                .AddCustomShimmerResult(ItemType<EnergizedGathicStone>())
+                .AddDecraftCondition(RedeConditions.DownedADD)
+                .AddIngredient(ItemType<GathicStoneWall>(), 4)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            CreateRecipe()
-                .AddIngredient(ItemID.StoneBlock)
-                .AddIngredient(ItemID.AshBlock, 5)
-                .AddTile(TileID.Solidifier)
+            CreateRecipe(10)
+                .AddIngredient(ItemID.StoneBlock, 10)
+                .AddIngredient<GraveSteelShards>()
+                .AddTile(TileID.Furnaces)
                 .Register();
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<GathicGladestone>())
+                .AddIngredient(ItemType<GathicGladestone>())
                 .Register();
         }
     }

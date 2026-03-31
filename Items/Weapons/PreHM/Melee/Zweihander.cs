@@ -73,7 +73,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 .AddCondition(RedeConditions.RepairedByFallen)
                 .Register();
         }
-        private static readonly int[] unwantedPrefixes = new int[] { PrefixID.Terrible, PrefixID.Dull, PrefixID.Shameful, PrefixID.Annoying, PrefixID.Broken, PrefixID.Damaged, PrefixID.Shoddy, PrefixID.Weak, PrefixID.Lazy, PrefixID.Small, PrefixID.Slow, PrefixID.Tiny, PrefixID.Sluggish, PrefixID.Unhappy };
+        private static readonly int[] unwantedPrefixes = new int[] { PrefixID.Terrible, PrefixID.Dull, PrefixID.Shameful, PrefixID.Annoying, PrefixID.Broken, PrefixID.Damaged, PrefixID.Shoddy, PrefixID.Weak, PrefixID.Slow, PrefixID.Sluggish, PrefixID.Lazy, PrefixID.Annoying, PrefixID.Tiny, PrefixID.Terrible, PrefixID.Small, PrefixID.Unhappy };
         public override bool AllowPrefix(int pre)
         {
             if (Array.IndexOf(unwantedPrefixes, pre) > -1)

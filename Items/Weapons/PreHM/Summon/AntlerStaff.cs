@@ -31,7 +31,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.noMelee = true;
-			Item.knockBack = 6;
+			Item.knockBack = 4;
 			Item.value = Item.sellPrice(0, 0, 45, 0);
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item44;
@@ -52,7 +52,6 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
-			knockback = 0;
 			position = Main.MouseWorld;
 		}
 

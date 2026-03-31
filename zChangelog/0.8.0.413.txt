@@ -1,7 +1,11 @@
 === 0.8 Beta .413 === (March 2026 Patch)
 - Added Smart Cursor highlight to the lab's Keycard Doors
-- Changed knockback modifier of Antler Staff's minion
-- Resprited Slayer's Crashed Ship Music Box
+- Fixed knockback of Antler Staff's minion, reduced base knockback from 6 -> 4
+- Resprited Wardbreaker Ring and Slayer's Crashed Ship Music Box
+- Resprited Splinter Ball projectile from Thorn
+- Fixed incorrect Asteroid Wall item sprite
+- Blacklisted more negative prefixes for the repaired weapons
+- Fixed minor tooltips issues
 2421. Reduced Yellow and Black Paint in the 4 lab sign recipes from 4/2 -> 2/1
 2422. Replaced the 5 Ash Blocks in Ancient Dirt & Elder Wood recipes with 2 Silt Blocks
 2423. Changed Gathic Stone recipe to 10 Stone + Grave Steel Shards = 10 Gathic Stone, and is now crafted at a Furnace
