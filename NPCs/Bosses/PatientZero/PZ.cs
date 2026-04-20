@@ -203,7 +203,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PZMask>(), 7));
 
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PZGauntlet>(), ModContent.ItemType<SwarmerCannon>(), ModContent.ItemType<Petridish>(), ModContent.ItemType<PortableHoloProjector>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<InfectedEye>(), ModContent.ItemType<SwarmerCannon>(), ModContent.ItemType<Petridish>(), ModContent.ItemType<PortableHoloProjector>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<MedicKit>()));
             npcLoot.Add(notExpertRule);
         }

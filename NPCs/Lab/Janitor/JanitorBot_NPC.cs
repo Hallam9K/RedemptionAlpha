@@ -69,7 +69,7 @@ namespace Redemption.NPCs.Lab.Janitor
         {
             var npcShop = new NPCShop(Type)
                 .Add<LabHologramDevice>()
-                .Add<OmegaTransmitter>(RedeConditions.DownedBehemoth)
+                .Add<OmegaTransmitter>(RedeConditions.DownedBlisterface)
                 .Add<LabPlating>()
                 .Add<HalogenLamp>()
                 .Add<LabRail_L>()

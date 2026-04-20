@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
@@ -33,6 +34,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.scale *= 2;
             Projectile.alpha = 255;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
             Projectile.Redemption().ParryBlacklist = true;
         }
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.frame >= 12 && Projectile.frame < 15 ? null : false;
@@ -70,20 +72,6 @@ namespace Redemption.Projectiles.Ranged
                     Main.dust[dustIndex].noGravity = true;
                     Main.dust[dustIndex].velocity *= 2;
                 }
-                Rectangle boom = new((int)Projectile.Center.X - 25, (int)Projectile.Bottom.Y - 25, 50, 50);
-                for (int i = 0; i < Main.maxNPCs; i++)
-                {
-                    NPC target = Main.npc[i];
-                    if (!target.active || target.friendly || target.dontTakeDamage)
-                        continue;
-
-                    if (target.immune[Projectile.whoAmI] > 0 || !target.Hitbox.Intersects(boom))
-                        continue;
-
-                    target.immune[Projectile.whoAmI] = 20;
-                    int hitDirection = target.RightOfDir(Projectile);
-                    BaseAI.DamageNPC(target, (int)(Projectile.damage * 1.2f), Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
-                }
             }
         }
         private float drawTimer;
@@ -112,7 +100,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.localNPCImmunity[target.whoAmI] = 10;
             target.immune[Projectile.owner] = 0;
 
-            target.AddBuff(BuffID.Electrified, target.HasBuff(BuffID.Wet) ? 320 : 160);
+            target.AddBuff(BuffType<ElectrifiedDebuff>(), target.HasBuff(BuffID.Wet) ? 320 : 160);
         }
     }
 }

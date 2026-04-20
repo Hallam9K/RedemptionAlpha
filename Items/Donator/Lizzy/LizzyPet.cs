@@ -1,10 +1,11 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
+using Redemption.Dusts.Tiles;
 using Redemption.Globals;
 using Redemption.NPCs.Friendly;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
 using Terraria.ID;
@@ -39,7 +40,7 @@ namespace Redemption.Items.Donator.Lizzy
             Player player = Main.player[Projectile.owner];
             player.dino = false;
 
-            int KS3ID = NPC.FindFirstNPC(ModContent.NPCType<KS3Sitting>());
+            int KS3ID = NPC.FindFirstNPC(NPCType<KS3Sitting>());
             if (KS3ID >= 0 && player.DistanceSQ(Main.npc[KS3ID].Center) < 300 * 300)
             {
                 Projectile.tileCollide = false;
@@ -106,6 +107,7 @@ namespace Redemption.Items.Donator.Lizzy
             return true;
         }
 
+        bool combust;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -119,6 +121,29 @@ namespace Redemption.Items.Donator.Lizzy
                 if (Projectile.DistanceSQ(npc.Center) > 140 * 140)
                     continue;
                 npc.AddBuff(BuffID.Lovestruck, 10);
+            }
+            if (player.ZoneUnderworldHeight)
+            {
+                if (!combust)
+                {
+                    SoundEngine.PlaySound(SoundID.DD2_KoboldExplosion.WithVolumeScale(.3f).WithPitchOffset(.4f), Projectile.position);
+                    for (int i = 0; i < 40; i++)
+                    {
+                        int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, Scale: 2);
+                        Main.dust[d].velocity *= 4;
+                        d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke);
+                        Main.dust[d].velocity *= 5;
+                    }
+                    combust = true;
+                }
+            }
+            else
+                combust = false;
+
+            if (combust)
+            {
+                int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, Scale: 1.5f);
+                Main.dust[d].noGravity = true;
             }
 
             if (Main.myPlayer == player.whoAmI && Projectile.DistanceSQ(player.Center) > 2000 * 2000)
@@ -134,9 +159,9 @@ namespace Redemption.Items.Donator.Lizzy
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D maskOverlay = ModContent.Request<Texture2D>(Texture + "_MaskOverlay").Value;
-            Texture2D swordOverlay = ModContent.Request<Texture2D>(Texture + "_SwordOverlay").Value;
-            Texture2D xmasOverlay = ModContent.Request<Texture2D>(Texture + "_XmasOverlay").Value;
+            Texture2D maskOverlay = Request<Texture2D>(Texture + "_MaskOverlay").Value;
+            Texture2D swordOverlay = Request<Texture2D>(Texture + "_SwordOverlay").Value;
+            Texture2D xmasOverlay = Request<Texture2D>(Texture + "_XmasOverlay").Value;
             int height = texture.Height / 11;
             int y = height * frameY;
             Rectangle rect = new(0, y, texture.Width, height);
@@ -161,7 +186,7 @@ namespace Redemption.Items.Donator.Lizzy
 
         private void CheckActive(Player player)
         {
-            if (!player.dead && player.HasBuff(ModContent.BuffType<LizzyPetBuff>()))
+            if (!player.dead && player.HasBuff(BuffType<LizzyPetBuff>()))
                 Projectile.timeLeft = 2;
         }
 

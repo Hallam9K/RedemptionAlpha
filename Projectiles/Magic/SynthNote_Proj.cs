@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria;
@@ -31,6 +30,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.frame = Main.rand.Next(2);
             Projectile.alpha = 255;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
         public override void AI()
         {
@@ -53,6 +53,7 @@ namespace Redemption.Projectiles.Magic
             int y = height * Projectile.frame;
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 origin = new(texture.Width / 2f, height / 2f);
+            float scale = MathHelper.Lerp(1.3f, 0.2f, Projectile.ai[0] / 10f);
 
             Main.spriteBatch.End();
             Main.spriteBatch.BeginAdditive();
@@ -61,12 +62,12 @@ namespace Redemption.Projectiles.Magic
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
                 Color color = Projectile.GetAlpha(Color.White) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), color, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), color, Projectile.rotation, origin, scale, SpriteEffects.None, 0);
             }
 
-            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.White * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale, 0);
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.White * Projectile.Opacity, Projectile.rotation, origin, scale, 0);
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, 0, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, origin, scale, 0, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.BeginDefault();
@@ -80,9 +81,6 @@ namespace Redemption.Projectiles.Magic
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Projectile.localNPCImmunity[target.whoAmI] = 20;
-            target.immune[Projectile.owner] = 0;
-
             if (target.knockBackResist > 0)
                 target.velocity.Y -= 7 * target.knockBackResist;
         }

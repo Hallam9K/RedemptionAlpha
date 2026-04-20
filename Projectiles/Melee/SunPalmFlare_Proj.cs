@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using System;
@@ -11,13 +10,12 @@ using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Melee
 {
-    public class PZGauntlet_Proj2 : ModProjectile
+    public class SunPalmFlare_Proj : ModProjectile
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Infectious Fist");
             Main.projFrames[Projectile.type] = 7;
-            ElementID.ProjPoison[Type] = true;
+            ElementID.ProjFire[Type] = true;
         }
 
         public override void SetDefaults()
@@ -39,7 +37,7 @@ namespace Redemption.Projectiles.Melee
                 float y = 1 * MathF.Sin(k);
                 Vector2 ellipse = new(x, y);
                 Vector2 rotVec = ellipse.RotatedBy(Projectile.velocity.ToRotation() + MathHelper.PiOver2);
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Green, rotVec * 2f);
+                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Red, rotVec * 2f);
                 dust.noGravity = true;
             }
         }
@@ -77,7 +75,7 @@ namespace Redemption.Projectiles.Melee
                 double angle = Main.rand.NextDouble() * MathHelper.Pi * 2f;
                 vector.X = (float)(Math.Sin(angle) * 2);
                 vector.Y = (float)(Math.Cos(angle) * 2);
-                Dust dust = Main.dust[Dust.NewDust(Projectile.Center + vector, 4, 4, DustID.Clentaminator_Green)];
+                Dust dust = Main.dust[Dust.NewDust(Projectile.Center + vector, 4, 4, DustID.Clentaminator_Red)];
                 dust.noGravity = true;
                 dust.velocity = Projectile.velocity * 0.2f;
             }

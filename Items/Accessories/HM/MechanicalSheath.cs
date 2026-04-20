@@ -1,7 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -43,7 +44,10 @@ namespace Redemption.Items.Accessories.HM
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 30;
         }
+        public override bool? CanCutTiles() => false;
         public override void AI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
@@ -51,13 +55,18 @@ namespace Redemption.Items.Accessories.HM
             switch (Projectile.localAI[1])
             {
                 case 0:
+                    Projectile.alpha -= 5;
                     if (!npc.active)
                         Projectile.velocity *= 0;
                     else
-                        Projectile.Center = new Vector2(npc.Center.X, npc.position.Y - 200);
-                    Projectile.alpha -= 5;
+                    {
+                        float y = MathHelper.Lerp(npc.position.Y - 300, npc.position.Y - 200, EaseFunction.EaseCubicIn.Ease(Projectile.alpha / 255f));
+                        Projectile.Center = new Vector2(npc.Center.X, y);
+                    }
+
                     if (Projectile.alpha <= 80)
                     {
+                        SoundEngine.PlaySound(SoundID.Item74, Projectile.position);
                         Projectile.friendly = true;
                         Projectile.localAI[1] = 1;
                     }

@@ -373,7 +373,7 @@ namespace Redemption.NPCs.Friendly
             if (NPC.ai[3]++ >= 540)
                 RedeSystem.Silence = true;
 
-            if (RedeBossDowned.downedBehemoth && (!RedeBossDowned.downedOmega1 || !RedeBossDowned.downedOmega2))
+            if (RedeBossDowned.downedBlisterface && (!RedeBossDowned.downedOmega1 || !RedeBossDowned.downedOmega2))
             {
                 endTime = 2180;
                 if (NPC.ai[3] == 1780)
@@ -399,7 +399,7 @@ namespace Redemption.NPCs.Friendly
                         RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v1.5"), 460, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
                 }
             }
-            else if (!RedeBossDowned.downedBehemoth)
+            else if (!RedeBossDowned.downedBlisterface)
             {
                 endTime = 1780;
                 if (NPC.ai[3] == endTime)

@@ -11,6 +11,7 @@ using Redemption.Dusts;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Armor.PostML.Xenium;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.Neb.Phase2;
@@ -305,6 +306,30 @@ namespace Redemption.Globals.Players
                     }
 
                     Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center - new Vector2(0, 96), Vector2.Zero, ProjectileType<CommonGuardFlag_Proj>(), 0, 0, Main.myPlayer);
+                }
+                if (xeniumBonus)
+                {
+                    var helm = Player.armor[0].ModItem as XeniumVisor;
+
+                    if (helm.CannonOn)
+                    {
+                        if (!Main.dedServ)
+                        {
+                            SoundEngine.PlaySound(CustomSounds.ShootChange with { Pitch = -.1f }, Player.position);
+                        }
+                        helm.CannonOn = false;
+                    }
+                    else
+                    {
+                        Player.releaseUseItem = false;
+                        Player.controlUseItem = false;
+                        if (!Main.dedServ)
+                        {
+                            SoundEngine.PlaySound(CustomSounds.ShootChange with { Pitch = -.2f }, Player.position);
+                            DustHelper.DrawDustImage(Player.Center, DustID.GreenFairy, 0.1f, "Redemption/Effects/DustImages/WarpShape", 1.5f, true, 0);
+                        }
+                        helm.CannonOn = true;
+                    }
                 }
             }
         }

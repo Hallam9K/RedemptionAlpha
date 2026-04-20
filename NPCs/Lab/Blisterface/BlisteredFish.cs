@@ -1,12 +1,15 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.CrossMod;
 using Redemption.Globals;
 using Redemption.Globals.NPCs;
+using Redemption.Items.Usable.Potions;
+using Redemption.NPCs.Bosses.Cleaver;
+using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.Localization;
@@ -16,41 +19,41 @@ namespace Redemption.NPCs.Lab.Blisterface
 {
     public class BlisteredFish : ModNPC
     {
-        public static int BodyType() => ModContent.NPCType<Blisterface>();
+        public static int BodyType() => NPCType<Blisterface>();
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Infected);
-            if (NPC.type == ModContent.NPCType<BlisteredFish>())
+            if (NPC.type == NPCType<BlisteredFish>())
             {
                 NPCID.Sets.BossBestiaryPriority.Add(Type);
-                NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+                NPCID.Sets.NPCBestiaryDrawModifiers value = new()
                 {
                     Velocity = 1
                 };
                 NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
-            }
 
-            ThoriumHelper.AddFishRepellentNPCID(Type);
+                ThoriumHelper.AddFishRepellentNPCID(Type);
+            }
         }
         public override void SetDefaults()
         {
             NPC.width = 32;
             NPC.height = 28;
             NPC.friendly = false;
-            NPC.damage = 60;
-            NPC.defense = 0;
-            NPC.lifeMax = 750;
+            NPC.damage = 50;
+            NPC.defense = 10;
+            NPC.lifeMax = 300;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.value = 0f;
             NPC.noGravity = true;
             NPC.knockBackResist = 0.1f;
-            NPC.aiStyle = 16;
+            NPC.aiStyle = NPCAIStyleID.Piranha;
             AIType = NPCID.Piranha;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
+            SpawnModBiomes = new int[1] { GetInstance<LabBiome>().Type };
         }
         public override void HitEffect(NPC.HitInfo hit)
         {
@@ -70,7 +73,7 @@ namespace Redemption.NPCs.Lab.Blisterface
             bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
 
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.BlisteredFish"))
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.Bestiary.BlisteredFish"))
             });
         }
         public override void FindFrame(int frameHeight)
@@ -87,7 +90,7 @@ namespace Redemption.NPCs.Lab.Blisterface
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2) || Main.expertMode)
-                target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(200, 600));
+                target.AddBuff(BuffType<GreenRashesDebuff>(), Main.rand.Next(200, 600));
         }
     }
     public class BlisteredFish2 : BlisteredFish
@@ -97,7 +100,7 @@ namespace Redemption.NPCs.Lab.Blisterface
         {
             base.SetStaticDefaults();
             // DisplayName.SetDefault("Blistered Fish");
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         private int Timer;
@@ -136,13 +139,28 @@ namespace Redemption.NPCs.Lab.Blisterface
                 }
             }
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        float drawTimer;
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+            if (!GlowActive)
+                return true;
+
+            Asset<Texture2D> texture = TextureAssets.Npc[Type];
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Color colour = Color.Lerp(Color.White, Color.White, 1f / GlowTimer * 10f) * (1f / GlowTimer * 10f);
-            if (GlowActive)
-                spriteBatch.Draw(glow, NPC.Center - screenPos + new Vector2(0, 4), NPC.frame, colour, NPC.rotation, NPC.frame.Size() / 2, 1f, effects, 0);
+            float opacity = MathHelper.Lerp(0, 1, 1f / GlowTimer * 10f) * (1f / GlowTimer * 10f);
+            RedeDraw.DrawTreasureBagEffect(spriteBatch, texture.Value, ref drawTimer, NPC.Center - screenPos + new Vector2(0, 4), NPC.frame, colour, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, NPC.Opacity * opacity);
+            return true;
+        }
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (!GlowActive)
+                return;
+
+            Texture2D glow = Request<Texture2D>(Texture + "_Glow").Value;
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Color colour = Color.Lerp(Color.White, Color.White, 1f / GlowTimer * 10f) * (1f / GlowTimer * 10f);
+            spriteBatch.Draw(glow, NPC.Center - screenPos + new Vector2(0, 4), NPC.frame, NPC.ColorTintedAndOpacity(colour), NPC.rotation, NPC.frame.Size() / 2, 1f, effects, 0);
         }
     }
 }

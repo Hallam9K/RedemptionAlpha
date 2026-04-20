@@ -60,7 +60,7 @@ namespace Redemption.UI
             if (Main.FrameSkipMode == FrameSkipMode.Subtle)
                 passedTime = 1f / 60f;
 
-            frameCounter += (int)(passedTime * 60);
+            frameCounter += passedTime * 60;
             if (frameCounter >= 12)
             {
                 frameCounter = 0;
@@ -184,7 +184,7 @@ namespace Redemption.UI
             }
         }
         private float fade;
-        private int frameCounter;
+        private float frameCounter;
         private int eyeFrame;
         Asset<Texture2D> eyeTex;
         Asset<Texture2D> eyeFlameTex;

@@ -171,6 +171,7 @@ namespace Redemption.NPCs.Bosses.Neb
                     NetMessage.SendData(MessageID.WorldData);
             }
         }
+        public override LocalizedText DeathMessage => transforming ? Language.GetText("Mods.Redemption.NPCs.Nebuleus.Transform") : null;
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.BossBag(ItemType<NebBag>()));
@@ -1780,10 +1781,10 @@ namespace Redemption.NPCs.Bosses.Neb
         }
         private void Teleport(bool specialPos, Vector2 teleportPos)
         {
-            DustHelper.DrawParticleStar(NPC.Center, Color.Blue * 0.4f, 5, 0.75f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
-            DustHelper.DrawParticleStar(NPC.Center, Color.Purple * 0.4f, 5, 1.5f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
-            DustHelper.DrawParticleStar(NPC.Center, Color.Pink * 0.4f, 5, 2.25f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
-            DustHelper.DrawParticleStar(NPC.Center, Color.IndianRed * 0.4f, 5, 3f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+            DustHelper.DrawParticleStar(NPC.Center, Color.Blue * 0.4f, 5, 0.75f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(20, 40));
+            DustHelper.DrawParticleStar(NPC.Center, Color.Purple * 0.4f, 5, 1.5f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(20, 40));
+            DustHelper.DrawParticleStar(NPC.Center, Color.Pink * 0.4f, 5, 2.25f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(20, 40));
+            DustHelper.DrawParticleStar(NPC.Center, Color.IndianRed * 0.4f, 5, 3f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(20, 40));
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (!specialPos)
@@ -1838,10 +1839,10 @@ namespace Redemption.NPCs.Bosses.Neb
                 for (int d = 0; d < 16; d++)
                     RedeParticleManager.CreateRainbowParticle(NPC.Center, RedeHelper.Spread(6), Main.rand.NextFloat(1f, 1.4f), 1, Main.rand.Next(20, 40));
 
-                DustHelper.DrawParticleStar(NPC.Center, Color.IndianRed, 5, 0.75f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
-                DustHelper.DrawParticleStar(NPC.Center, Color.Pink, 5, 1.5f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
-                DustHelper.DrawParticleStar(NPC.Center, Color.Purple, 5, 2.25f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
-                DustHelper.DrawParticleStar(NPC.Center, Color.Blue, 5, 3f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+                DustHelper.DrawParticleStar(NPC.Center, Color.IndianRed, 5, 0.75f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(20, 40));
+                DustHelper.DrawParticleStar(NPC.Center, Color.Pink, 5, 1.5f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(20, 40));
+                DustHelper.DrawParticleStar(NPC.Center, Color.Purple, 5, 2.25f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(20, 40));
+                DustHelper.DrawParticleStar(NPC.Center, Color.Blue, 5, 3f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(20, 40));
             }
         }
         private void ArmAnimation(int ID, bool resetFrame = false)

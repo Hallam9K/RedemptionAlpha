@@ -1,15 +1,14 @@
-using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Redemption.NPCs.Friendly;
 using Redemption.UI;
 using Redemption.WorldGeneration;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
-namespace Redemption.NPCs.Lab.Behemoth
+namespace Redemption.NPCs.Lab.Blisterface
 {
-    public class IB_GirusTalk : ModProjectile
+    public class Blisterface_GirusTalk : ModProjectile
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
@@ -51,7 +50,7 @@ namespace Redemption.NPCs.Lab.Behemoth
                         if (!player.active)
                             continue;
 
-                        RedeHelper.SpawnNPC(Projectile.GetSource_FromAI(), (int)DronePos.X, (int)DronePos.Y, ModContent.NPCType<GiftDrone2>(), 0, i);
+                        RedeHelper.SpawnNPC(Projectile.GetSource_FromAI(), (int)DronePos.X, (int)DronePos.Y, NPCType<GiftDrone2>(), 0, i);
                     }
                     RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter1.4"), 300, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
                 }

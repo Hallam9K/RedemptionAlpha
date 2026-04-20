@@ -21,8 +21,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void SetDefaults()
         {
             // Common Properties
-            Item.width = 26;
-            Item.height = 88;
+            Item.width = 30;
+            Item.height = 76;
             Item.rare = ItemRarityID.Yellow;
             Item.value = Item.sellPrice(gold: 5);
 

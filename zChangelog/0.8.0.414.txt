@@ -1,0 +1,35 @@
+=== 0.8 Beta .414 === (Blistering Patch)
+- Resprited Ghastly Recurve and Infested debuff
+- Fixed Chalice UI animation speed with certain monitor refresh rates
+- Added localisation to the Fowl Morning starting message
+- Added new dialogue to Adam when other NPCs are present
+- Widened some hallways in Abandoned Lab
+2448. Gave the Phantom Cleaver projectiles of Mechanical Sheath Static NPC Immunity to make them hit consistently, and made them rise a bit before moving down
+2449. Reduced right-click cooldown of Xenium Lance from 20 -> 5 seconds
+2450. Salamanisku now has Local NPC Immunity and removed radius damage to fix hit consistency; Its lightning inflicts the mod's Electrified instead of vanilla's
+2455. Reduced duration of star particles from Nebuleus' teleportation
+2456. Buffed Dragon Cleaver's damage from 50 -> 70
+2457. Xenium armor set bonus is now activated by pressing the armor ability key instead of double-tapping DOWN, and added Poison element to the grenades
+2458. Nerfed Synthesizer: 6.6% damage falloff for each note in the wave, visualised by the notes being smaller the further from middle they are. Reduced number of notes a bit. Each note can only hit the same enemy once
+2459. Buffed Flak Cannon damage from 60 -> 100
+2463. Removed True Night's Edge projectile from Physical Melee list
+2465. Nerfed Diseased Meatball's damage from 12 -> 9
+2466. Added Infected Eye           , A new melee drop from Patient Zero
+2471. Buffed Mythril's Bane damage from 170 -> 300
+2472. Buffed Zephos' Sword Slicer damage from 44 -> 60
+2473. Buffed Daerel's Silverwood Bow damage from 11 -> 23
+2477. Removed Infectious Gauntlet
+2478. Sun-in-Palm has the ability of Infectious Gauntlet for its right-click
+2479. Blisterface is now the final miniboss of Hardmode Lab, balancing out the amount of minibosses for both stages
+2480. Changed stats of Blistered Fish and Blisterface to account for new place in progression
+2481. Removed the 2nd Keycard, Black Security Crates can be opened with normal Keycard after Volt is defeated
+2482. Omega Transmitter drone is sent after Blisterface instead of Irradiated Behemoth
+2483. Increased width of Blisterface's arena
+2484. Moved the Nano Pickaxe chest to the room past Volt
+2485. Replaced a few placements of Post-ML Lab chests with the hardmode Lab chests
+2486. Added Keycard Doors before Volt's room and removed the Black Hardened Sludge that blocks the way to it
+2487. Added 2 new attacks to Blisterface
+2493. Nerfed the fricking lasers in the abandoned lab
+2494. Replaced "x is defeated!" message when Nebuleus transforms to "x transforms!"
+2495. Blisterface and his fishies have a more noticeable glow before jumping
+===============

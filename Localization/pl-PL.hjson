@@ -397,6 +397,7 @@ Mods: {
 			}
 
 			Event: {
+				// ChickBegin: The fowl legion charges in!
 				ChickRetreat: Kury się wycofują!
 				SkeletonParty1: Szkielety planują imprezę o zmierzchu...
 				SkeletonParty2: Szkielety się bawią!
@@ -543,13 +544,13 @@ Mods: {
 					Bonus2: " aby uwolnić toksyczny gaz w promieniu wokół gracza, zadając obrażenia Żrącym Kwasem"
 				}
 
-				Xenium.Bonus:
+				/* Xenium:
 					'''
-					Zwiększa regenerację Energii, jeśli w ekwipunku znajduje się Plecak Energetyczny
-					Podwójnie naciśnij w dół, aby uruchomić [c/BCF160:Cannon Mode]:
-					Podczas trybu Cannon Mode wszystkie bronie są wyłączone, a atakowanie powoduje wystrzał granatów którymi możesz celować
-					Granat powoduje, że wszyscy wrogowie znajdujący się w zasięgu wybuchu otrzymają zwiększoną podatność na obrażenia
-					'''
+					Increased Energy regeneration if an Energy Pack is in your inventory
+					Press {0} to enter [c/BCF160:Cannon Mode]:
+					While in Cannon Mode, all weapons are disabled and attacking fires aimable grenades
+					The grenade gives all enemies caught in the blast damage vulnerability, and deal {2} {1} damage
+					''' */
 				ElderWood:
 					'''
 					Odporność na truciznę
@@ -2859,6 +2860,9 @@ Mods: {
 				NurseDialogue: Pielęgniarka, {0}, nie ma pojęcia o promieniowaniu ani o tym, jak je leczyć. Jeśli będziesz mieć pecha i zaczniesz cierpieć na OZS, nie będzie w stanie ci pomóc. Żeby wykrywać zagrożenia, które mogą to wywołać, polecam kupić ode mnie licznik Geigera-Müllera albo znaleźć gdzieś jakiś.
 				ArmsDealerDialogue: Broń {0} jest dla mnie bezużyteczna. Już posiadam szeroki arsenał niszczycielskiej broni palnej i białej, ale wolałbym jej nie używać na istotach żywych — to naruszałoby Pierwsze Prawo Robotów
 				CyborgDialogue: Podczas gdy wszyscy inni lokatorzy patrzą na mnie krzywo, {0} wydaje się nie mieć ze mną problemu. Nie winię pozostałych — nasz gatunek ma niestety skłonność do nienawiści wobec istot żywych, a zwłaszcza takich jak ty, które wykazują znaczące podobieństwo do naszych twórców.
+				// PrincessDialogue: "{0} asks me for lollipops after her checkups. Reminds me of someone I cared for. Heh."
+				// MechanicDialogue: "{0} and I have a knack for tinkering with the mechanical. We get along well."
+				// TruffleDialogue: "{0}'s physiology confuses me."
 				Morning: Miłego poranka
 				Afternoon: Miłego południa
 				Evening: Miłego wieczoru
@@ -11081,6 +11085,11 @@ Mods: {
 				// DisplayName: Energized Gathic Stone
 				// Tooltip: ""
 			}
+
+			InfectedEye: {
+				// DisplayName: Infected Eye
+				// Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -11813,6 +11822,13 @@ Mods: {
 			TerraBombaDirt_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
 			TerraBombaSand_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
 			TerraBombaSnow_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			// InfectedEye_Ball.DisplayName: "{$Mods.Redemption.Items.InfectedEye.DisplayName}"
+			// InfectedEye_Ball2.DisplayName: "{$Mods.Redemption.Items.InfectedEye.DisplayName}"
+			// SunInThePalm_Explosion.DisplayName: Explosion
+			// SunInThePalm_Proj2.DisplayName: "{$Mods.Redemption.Items.SunInThePalm.DisplayName}"
+			// SunPalmFlare_Proj.DisplayName: Sun Palm Flare
+			// Blisterface_GirusTalk.DisplayName: Ominous Voice
+			// Blisterface_Drip_Proj.DisplayName: Sludge Droplet
 		}
 
 		NPCs: {
@@ -11917,6 +11933,7 @@ Mods: {
 
 			Nebuleus: {
 				DisplayName: Nebuleus, Anioł Kosmosu
+				// Transform: Nebuleus transforms!
 
 				BossChecklistIntegration: {
 					SpawnInfo: Użyj [i:Redemption/NebSummon] w nocy, zdobywany od Gwiezdnych Węży na niebie.

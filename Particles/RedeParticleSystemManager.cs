@@ -155,6 +155,39 @@ namespace Redemption.Particles
             ParticleManagerV3.RegisterUpdatable(_speedParticleBuffer);
             ParticleManagerV3.RegisterRenderable(Layer.BeforeDust, _speedParticleBuffer);
         }
+        public override void Unload()
+        {
+            emberColors = null;
+            blueEmberColors = null;
+            purpleEmberColors = null;
+            lightningColors = null;
+            yellowLightningColors = null;
+            redColors = null;
+            purpleColors = null;
+            goldColors = null;
+            greenColors = null;
+            spiritColors = null;
+            infernalSpiritColors = null;
+            redThrusterColors = null;
+            blueThrusterColors = null;
+            soulColors = null;
+
+            if (Main.netMode is NetmodeID.Server)
+                return;
+
+            _glowParticleCollections = null;
+            _soullessParticleCollections = null;
+            _glowParticleBuffer = null;
+            _glowParticle3Buffer = null;
+            _glowParticle4Buffer = null;
+            _whiteFlareParticleBuffer = null;
+            _blackholeParticleBuffer = null;
+            _slashParticleBuffer = null;
+            _pulseParticleBuffer = null;
+            _rainbowParticleBuffer = null;
+            _speedParticleBuffer = null;
+            _glowParticleAdditiveBuffer = null;
+        }
 
         #region QuadParticles
         // These just have the same behaviour and settings as the 2.0 QuadParticles, these aren't actual QuadParticles

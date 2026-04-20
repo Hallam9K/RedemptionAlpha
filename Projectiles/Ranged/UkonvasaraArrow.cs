@@ -31,6 +31,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.timeLeft = 600;
             Projectile.hide = true;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
         private float drawTimer;
         public override bool PreDraw(ref Color lightColor)

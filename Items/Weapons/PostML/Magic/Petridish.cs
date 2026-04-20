@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
         {
             // DisplayName.SetDefault("Mitosis");
             // Tooltip.SetDefault("Throw a Petridish filled with bacteria");
-            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<PZGauntlet>();
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<InfectedEye>();
         }
 
         public override void SetDefaults()

@@ -397,6 +397,7 @@ Mods: {
 			}
 
 			Event: {
+				ChickBegin: The fowl legion charges in!
 				ChickRetreat: The chickens retreat!
 				SkeletonParty1: The skeletons are plotting a party at dusk...
 				SkeletonParty2: The skeletons are partying!
@@ -539,12 +540,12 @@ Mods: {
 					Bonus2: " to unleash toxic gas in a radius around the player, inflicting Burning Acid"
 				}
 
-				Xenium.Bonus:
+				Xenium:
 					'''
 					Increased Energy regeneration if an Energy Pack is in your inventory
-					Double tap Down to enter [c/BCF160:Cannon Mode]:
+					Press {0} to enter [c/BCF160:Cannon Mode]:
 					While in Cannon Mode, all weapons are disabled and attacking fires aimable grenades
-					The grenade gives all enemies caught in the blast damage vulnerability
+					The grenade gives all enemies caught in the blast damage vulnerability, and deal {2} {1} damage
 					'''
 				ElderWood:
 					'''
@@ -2575,7 +2576,7 @@ Mods: {
 
 			LizzyPetBuff: {
 				DisplayName: Lizzy
-				Description: "'w'"
+				Description: The green with horns
 			}
 
 			LegoPetBuff: {
@@ -2852,9 +2853,12 @@ Mods: {
 				GuideDialogue: "{0} knows quite a lot about this place you call home. It's way more interesting and lively compared to where I'm from. And less hazardous to your kind."
 				MerchantDialogue: "{0} is... Interesting I suppose. Though I don't appreciate him constantly trying to barter with me, I don't want his relatively weak tools or dirt."
 				DryadDialogue: "{0} has informed me of 'Corruption' in your world. What is it exactly? A plague in the world that spreads madness and hate, or something more eldritch in nature? It's somewhat similar to my concept of corruption, more accurately called assimilation. My kind being assimilated turns them from free-thinking and having personality, into husks of themselves, who only take orders from Girus."
-				NurseDialogue: The nurse, {0}, doesn't know anything about irradiation or how to treat it. If you're unfortunate enough to start suffering ARS, she won't be able to help you. To detect hazards that might cause it, I suggest buying a Geiger Muller from me or finding one somewhere.
+				NurseDialogue: "{0} asks for my second opinion often. I'm happy to help."
 				ArmsDealerDialogue: "{0}'s weapons are useless to me. I already own a wide arsenal of destructive firearms and melee weapons, and I would rather not use them on living beings, as it would violate the first Law of Robotics."
-				CyborgDialogue: Meanwhile every other tenant gives me a bit of a stink eye, {0} seems to be fine with me. I don't blame the others, my kind tends to be very hateful towards living beings, more importantly the likes of you, that show a significant similarity to our creators.
+				CyborgDialogue: That... thing. The Cyborg. It disturbs me to my very core.
+				PrincessDialogue: "{0} asks me for lollipops after her checkups. Reminds me of someone I cared for. Heh."
+				MechanicDialogue: "{0} and I have a knack for tinkering with the mechanical. We get along well."
+				TruffleDialogue: "{0}'s physiology confuses me."
 				Morning: morning
 				Afternoon: afternoon
 				Evening: evening
@@ -8713,6 +8717,8 @@ Mods: {
 					Hold out this mechanical hand to grow a ball of energy
 					Disintegrates most projectiles after reaching a certain size
 					Release left-click to shrink it back down, overcharging will cause it to explode and set the player on fire
+					Hold right-click to charge a punch
+					Grants contact damage immunity while punching
 					'The power of the sun, in the palm of my hand'
 					'''
 				Lore:
@@ -8760,7 +8766,7 @@ Mods: {
 					'''
 					Left click to do a close ranged combo attack
 					Right-click to thrust forward, doing more damage at the tail-end of the thrust
-					Hitting with the thrust allows chaining the right-click, while missing gives a 20 second cooldown
+					Hitting with the thrust allows chaining the right-click, while missing gives a 5 second cooldown
 					'''
 			}
 
@@ -11078,6 +11084,11 @@ Mods: {
 				DisplayName: Energized Gathic Stone
 				Tooltip: ""
 			}
+
+			InfectedEye: {
+				DisplayName: Infected Eye
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -11810,6 +11821,13 @@ Mods: {
 			TerraBombaDirt_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
 			TerraBombaSand_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
 			TerraBombaSnow_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
+			InfectedEye_Ball.DisplayName: "{$Mods.Redemption.Items.InfectedEye.DisplayName}"
+			InfectedEye_Ball2.DisplayName: "{$Mods.Redemption.Items.InfectedEye.DisplayName}"
+			SunInThePalm_Explosion.DisplayName: Explosion
+			SunInThePalm_Proj2.DisplayName: "{$Mods.Redemption.Items.SunInThePalm.DisplayName}"
+			SunPalmFlare_Proj.DisplayName: Sun Palm Flare
+			Blisterface_GirusTalk.DisplayName: Ominous Voice
+			Blisterface_Drip_Proj.DisplayName: Sludge Droplet
 		}
 
 		NPCs: {
@@ -11914,6 +11932,7 @@ Mods: {
 
 			Nebuleus: {
 				DisplayName: Nebuleus, Angel of the Cosmos
+				Transform: Nebuleus transforms!
 
 				BossChecklistIntegration: {
 					SpawnInfo: Use a [i:Redemption/NebSummon] at night, dropped from Star Serpents in the sky.
@@ -12784,7 +12803,7 @@ Mods: {
 
 		BossChecklistIntegration: {
 			AbandonedLaboratory: {
-				SpawnInfo: Find the Abandoned Lab far below the surface, defeat the first 2 minibosses within. Requires all mech bosses to be defeated.
+				SpawnInfo: Find the Abandoned Lab far below the surface, defeat the first 3 minibosses within. Requires all mech bosses to be defeated.
 				EntryName: Abandoned Laboratory
 			}
 

@@ -331,14 +331,15 @@ namespace Redemption.CrossMod
                 #endregion
 
                 #region The Abandoned Lab
-                bossChecklist.Call("LogEvent", mod, "AbandonedLaboratory", 11.1f, () => RedeBossDowned.downedBehemoth, new List<int>()
+                bossChecklist.Call("LogEvent", mod, "AbandonedLaboratory", 11.1f, () => RedeBossDowned.downedBlisterface, new List<int>()
                     {
                         ModContent.NPCType<OozeBlob>(),
                         ModContent.NPCType<BlisteredScientist>(),
                         ModContent.NPCType<OozingScientist>(),
                         ModContent.NPCType<BloatedScientist>(),
                         ModContent.NPCType<JanitorBot>(),
-                        ModContent.NPCType<IrradiatedBehemoth>()
+                        ModContent.NPCType<IrradiatedBehemoth>(),
+                        ModContent.NPCType<Blisterface>()
                     }, new Dictionary<string, object>()
                     {
                         ["spawnItems"] = ModContent.ItemType<IOLocator>(),
@@ -448,7 +449,6 @@ namespace Redemption.CrossMod
                 #region Patient Zero
                 bossChecklist.Call("LogEvent", mod, "AbandonedLaboratory2", 18.05f, () => RedeBossDowned.downedMACE, new List<int>()
                 {
-                    ModContent.NPCType<Blisterface>(),
                     ModContent.NPCType<ProtectorVolt>(),
                     ModContent.NPCType<MACEProject>()
                 }, new Dictionary<string, object>()
@@ -456,7 +456,6 @@ namespace Redemption.CrossMod
                     ["spawnItems"] = ModContent.ItemType<Keycard>(),
                     ["collectibles"] = new List<int>
                         {
-                            ModContent.ItemType<Keycard2>(),
                             ModContent.ItemType<NanoPickaxe>(),
                             ModContent.ItemType<Electronade>(),
                             ModContent.ItemType<FloppyDisk5>(),

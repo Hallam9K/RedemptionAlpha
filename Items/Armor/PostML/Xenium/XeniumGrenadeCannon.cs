@@ -1,27 +1,23 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Effects;
 using Redemption.Globals;
+using Redemption.Globals.Projectiles;
 using Redemption.Helpers;
 using Redemption.Projectiles.Misc;
-using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI;
-using static Terraria.ModLoader.ModContent;
 
 namespace Redemption.Items.Armor.PostML.Xenium
 {
-    public class XeniumGrenadeCannon : HeldOnlyItem
+    public class XeniumGrenadeCannon : TemporaryItem
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
-        public override bool VisibleInUI => false;
         public override void SetDefaults()
         {
             Item.damage = 800;
@@ -46,7 +42,6 @@ namespace Redemption.Items.Armor.PostML.Xenium
         {
             return XeniumVisor.Activate(player);
         }
-
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             position = player.Center + new Vector2(0, -8);
@@ -80,69 +75,13 @@ namespace Redemption.Items.Armor.PostML.Xenium
             return true;
         }
     }
-    public abstract class HeldOnlyItem : ModItem //code from calamity mod
-    {
-        public virtual bool VisibleInUI => false;
-
-        public override void Load()
-        {
-            On_Player.dropItemCheck += new On_Player.hook_dropItemCheck(DontDropCoolStuff);
-            On_ItemSlot.LeftClick_ItemArray_int_int += new On_ItemSlot.hook_LeftClick_ItemArray_int_int(LockMouseToSpecialItem);
-            On_ItemSlot.Draw_SpriteBatch_ItemArray_int_int_Vector2_Color += new On_ItemSlot.hook_Draw_SpriteBatch_ItemArray_int_int_Vector2_Color(DrawSpecial);
-        }
-        public override void Unload()
-        {
-            On_Player.dropItemCheck -= new On_Player.hook_dropItemCheck(DontDropCoolStuff);
-            On_ItemSlot.LeftClick_ItemArray_int_int -= new On_ItemSlot.hook_LeftClick_ItemArray_int_int(LockMouseToSpecialItem);
-            On_ItemSlot.Draw_SpriteBatch_ItemArray_int_int_Vector2_Color -= new On_ItemSlot.hook_Draw_SpriteBatch_ItemArray_int_int_Vector2_Color(DrawSpecial);
-        }
-
-        private void DrawSpecial(On_ItemSlot.orig_Draw_SpriteBatch_ItemArray_int_int_Vector2_Color orig, SpriteBatch sb, Item[] inv, int context, int slot, Vector2 position, Color color)
-        {
-            if (inv[slot].ModItem is not HeldOnlyItem || (inv[slot].ModItem as HeldOnlyItem).VisibleInUI)
-            {
-                orig.Invoke(sb, inv, context, slot, position, color);
-            }
-        }
-
-        public override void PostUpdate()
-        {
-            Item.type = ItemID.None;
-            Item.stack = 0;
-        }
-
-        public override bool CanPickup(Player player)
-        {
-            return false;
-        }
-
-        private void LockMouseToSpecialItem(On_ItemSlot.orig_LeftClick_ItemArray_int_int orig, Item[] inv, int context, int slot)
-        {
-            if (Main.mouseItem.ModItem is not HeldOnlyItem)
-            {
-                orig.Invoke(inv, context, slot);
-            }
-        }
-
-        private void DontDropCoolStuff(On_Player.orig_dropItemCheck orig, Player self)
-        {
-            if (Main.mouseItem.ModItem is not HeldOnlyItem)
-            {
-                orig.Invoke(self);
-            }
-        }
-
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-        {
-            return false;
-        }
-    }
     public class XeniumGrenade : ModProjectile
     {
         public override string Texture => "Redemption/Items/Weapons/HM/Ranged/ToxicGrenade";
 
         public override void SetStaticDefaults()
         {
+            ElementID.ProjPoison[Type] = true;
             ElementID.ProjExplosive[Type] = true;
         }
         public override void SetDefaults()
@@ -173,7 +112,7 @@ namespace Redemption.Items.Armor.PostML.Xenium
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D flare = Request<Texture2D>("Redemption/Textures/BubbleShield").Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 origin2 = new(flare.Width / 2, flare.Height / 2);
             Color colour = Color.LightGreen;
@@ -188,7 +127,7 @@ namespace Redemption.Items.Armor.PostML.Xenium
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 
@@ -410,8 +349,8 @@ namespace Redemption.Items.Armor.PostML.Xenium
             Main.spriteBatch.End();
             Main.spriteBatch.BeginAdditive();
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/RadialTelegraph3", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D flare2 = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D flare = Request<Texture2D>("Redemption/Textures/RadialTelegraph3").Value;
+            Texture2D flare2 = Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Rectangle rect2 = new(0, 0, flare2.Width, flare2.Height);
 
@@ -497,4 +436,5 @@ namespace Redemption.Items.Armor.PostML.Xenium
             return false;
         }
     }
+
 }

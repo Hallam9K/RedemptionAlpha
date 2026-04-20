@@ -4,6 +4,7 @@ using Redemption.Biomes;
 using Redemption.Buffs;
 using Redemption.CrossMod;
 using Redemption.DamageClasses;
+using Redemption.Items;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.PostML.Xenium;
@@ -352,7 +353,7 @@ namespace Redemption.Globals
             int tooltipVanity = tooltips.FindIndex(TooltipLine => TooltipLine.Name.Equals("Social"));
             if (tooltipVanity != -1)
                 return;
-            if (item.ModItem is HeldOnlyItem)
+            if (item.ModItem is TemporaryItem)
                 return;
 
             if (item.type is ItemID.RodOfHarmony)

@@ -227,18 +227,30 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.DryadDialogue", Main.npc[DryadID].GivenName));
             */
             int NurseID = NPC.FindFirstNPC(NPCID.Nurse);
-            /*if (NurseID >= 0 && RedeBossDowned.nukeDropped)
+            if (NurseID >= 0)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.NurseDialogue", Main.npc[NurseID].GivenName));
 
-            int ArmsDealerID = NPC.FindFirstNPC(NPCID.ArmsDealer);
-            if (ArmsDealerID >= 0)
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.ArmsDealerDialogue", Main.npc[ArmsDealerID].GivenName));
+            //int ArmsDealerID = NPC.FindFirstNPC(NPCID.ArmsDealer);
+            //if (ArmsDealerID >= 0)
+            //    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.ArmsDealerDialogue", Main.npc[ArmsDealerID].GivenName));
 
             int cyborgID = NPC.FindFirstNPC(NPCID.Cyborg);
             if (cyborgID >= 0)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.CyborgDialogue", Main.npc[cyborgID].GivenName));
 
-            if (BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true))
+            int princessID = NPC.FindFirstNPC(NPCID.Princess);
+            if (princessID >= 0)
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.PrincessDialogue", Main.npc[princessID].GivenName));
+
+            int mechanicID = NPC.FindFirstNPC(NPCID.Mechanic);
+            if (mechanicID >= 0)
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.MechanicDialogue", Main.npc[mechanicID].GivenName));
+
+            int truffleID = NPC.FindFirstNPC(NPCID.Truffle);
+            if (truffleID >= 0)
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.TruffleDialogue", Main.npc[truffleID].GivenName));
+
+            /*if (BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true))
             {
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.AdamHeadDialogue1"), 3);
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.AdamHeadDialogue2"), 3);

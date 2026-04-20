@@ -36,7 +36,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.autoReuse = true;
 
             // Weapon Properties
-            Item.damage = 11;
+            Item.damage = 23;
             Item.knockBack = 2;
             Item.DamageType = DamageClass.Ranged;
             Item.noMelee = true;

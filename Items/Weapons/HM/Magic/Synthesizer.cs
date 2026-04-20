@@ -49,16 +49,11 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             float cursorPosFromPlayer = player.Distance(Main.MouseWorld) / (Main.screenHeight / 2 / 24);
-            if (!Main.dedServ)
-            {
-                if (cursorPosFromPlayer > 24) cursorPosFromPlayer = 1;
-                else cursorPosFromPlayer = (cursorPosFromPlayer / 12) - 1;
-                if (!Main.dedServ)
-                {
-                    SoundStyle s = CustomSounds.Synth with { Pitch = cursorPosFromPlayer };
-                    SoundEngine.PlaySound(s, player.Center);
-                }
-            }
+            if (cursorPosFromPlayer > 24) cursorPosFromPlayer = 1;
+            else cursorPosFromPlayer = (cursorPosFromPlayer / 12) - 1;
+            SoundStyle s = CustomSounds.Synth with { Pitch = cursorPosFromPlayer };
+            SoundEngine.PlaySound(s, player.Center);
+
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback, Main.myPlayer, cursorPosFromPlayer);
             return false;
         }
@@ -89,12 +84,16 @@ namespace Redemption.Items.Weapons.HM.Magic
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
             Projectile.DamageType = DamageClass.Magic;
-            Projectile.timeLeft = 40;
+            Projectile.timeLeft = 28;
+            Projectile.localAI[1] = 1;
         }
         public override void AI()
         {
             if (Projectile.localAI[0]++ % 3 == 0 && Main.myPlayer == Projectile.owner)
             {
+                Projectile.localAI[1] -= 1 / 15f;
+                int dmg = (int)(Projectile.damage * Projectile.localAI[1]);
+                dmg = (int)MathHelper.Max(dmg, 1);
                 for (int i = -1; i <= 1; i += 2)
                 {
                     Vector2 origin = Projectile.Center;
@@ -116,7 +115,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                     if (numtries >= 20)
                         break;
 
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), origin + new Vector2(0, 18), new Vector2(0, -14), ProjectileType<SynthNote_Proj>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), origin + new Vector2(0, 18), new Vector2(0, -14), ProjectileType<SynthNote_Proj>(), dmg, Projectile.knockBack, Main.myPlayer, Projectile.localAI[0] / 3);
                 }
             }
         }

@@ -121,7 +121,7 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 29, origin.Y + 71, (ushort)ModContent.TileType<LabKeycardDoorClosed>());
             GenUtils.ObjectPlace(origin.X + 29, origin.Y + 83, (ushort)ModContent.TileType<LabKeycardDoorClosed>());
             GenUtils.ObjectPlace(origin.X + 227, origin.Y + 84, (ushort)ModContent.TileType<LabKeycardDoorClosed>());
-            GenUtils.ObjectPlace(origin.X + 194, origin.Y + 130, (ushort)ModContent.TileType<LabKeycardDoorClosed>());
+            GenUtils.ObjectPlace(origin.X + 136, origin.Y + 98, (ushort)TileType<LabKeycardDoorClosed>());
 
             GenUtils.ObjectPlace(origin.X + 156, origin.Y + 7, (ushort)ModContent.TileType<LabBossDoorTileH>());
             GenUtils.ObjectPlace(origin.X + 200, origin.Y + 56, (ushort)ModContent.TileType<LabBossDoorTile>());
@@ -136,7 +136,7 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 206, origin.Y + 55, (ushort)ModContent.TileType<BiohazardSignTile>());
             GenUtils.ObjectPlace(origin.X + 203, origin.Y + 55, (ushort)ModContent.TileType<SkullSignTile>());
             GenUtils.ObjectPlace(origin.X + 210, origin.Y + 178, (ushort)ModContent.TileType<SkullSignTile>());
-            GenUtils.ObjectPlace(origin.X + 204, origin.Y + 178, (ushort)ModContent.TileType<BiohazardSignTile>());
+            GenUtils.ObjectPlace(origin.X + 199, origin.Y + 178, (ushort)ModContent.TileType<BiohazardSignTile>());
             GenUtils.ObjectPlace(origin.X + 75, origin.Y + 137, (ushort)ModContent.TileType<ElectricitySignTile>());
             GenUtils.ObjectPlace(origin.X + 107, origin.Y + 164, (ushort)ModContent.TileType<SkullSignTile>());
             GenUtils.ObjectPlace(origin.X + 108, origin.Y + 173, (ushort)ModContent.TileType<BiohazardSignTile>());
@@ -271,8 +271,8 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 233, origin.Y + 159, (ushort)ModContent.TileType<SewerHoleTile>());
             GenUtils.ObjectPlace(origin.X + 238, origin.Y + 173, (ushort)ModContent.TileType<SewerHoleTile>());
             // Blisterface Arena
-            GenUtils.ObjectPlace(origin.X + 194, origin.Y + 180, (ushort)ModContent.TileType<SmallVentTile>());
-            GenUtils.ObjectPlace(origin.X + 203, origin.Y + 180, (ushort)ModContent.TileType<SmallVentTile>());
+            GenUtils.ObjectPlace(origin.X + 189, origin.Y + 180, (ushort)ModContent.TileType<SmallVentTile>());
+            GenUtils.ObjectPlace(origin.X + 198, origin.Y + 180, (ushort)ModContent.TileType<SmallVentTile>());
             GenUtils.ObjectPlace(origin.X + 211, origin.Y + 180, (ushort)ModContent.TileType<SmallVentTile>());
             GenUtils.ObjectPlace(origin.X + 220, origin.Y + 180, (ushort)ModContent.TileType<SmallVentTile>());
             // Broken Elevator
@@ -392,13 +392,10 @@ namespace Redemption.WorldGeneration
             LabChest(origin.X + 243, origin.Y + 73, 22);
             LabChest(origin.X + 231, origin.Y + 101, 23);
             LabChest(origin.X + 159, origin.Y + 157, 24);
-            LabChest(origin.X + 156, origin.Y + 157, 25);
-            LabChest(origin.X + 184, origin.Y + 181, 26);
-            LabChest(origin.X + 187, origin.Y + 181, 27);
-            LabChest(origin.X + 276, origin.Y + 164, 28);
-            LabChest(origin.X + 279, origin.Y + 164, 29);
+            LabChest(origin.X + 151, origin.Y + 154, 25);
+            LabChest(origin.X + 279, origin.Y + 164, 26);
 
-            SpecialLabChest(origin.X + 151, origin.Y + 154);
+            SpecialLabChest(origin.X + 39, origin.Y + 121);
             PZLabChest(origin.X + 76, origin.Y + 194);
 
             LabLocker(origin.X + 130, origin.Y + 37);
@@ -410,6 +407,8 @@ namespace Redemption.WorldGeneration
             LabLocker(origin.X + 167, origin.Y + 87, 6);
             LabLocker(origin.X + 198, origin.Y + 86, 7);
             LabLocker(origin.X + 202, origin.Y + 87, 8);
+            LabLocker(origin.X + 156, origin.Y + 157, 9);
+            LabLocker(origin.X + 276, origin.Y + 164, 10);
 
             int[] TileArray = { ModContent.TileType<HardenedSludgeTile>(),
                 ModContent.TileType<BlackHardenedSludgeTile>(),
@@ -595,7 +594,7 @@ namespace Redemption.WorldGeneration
                 int slot = 0;
                 Chest chest = Main.chest[PlacementSuccess];
 
-                chest.item[slot++].SetDefaults(ModContent.ItemType<PZGauntlet>());
+                chest.item[slot++].SetDefaults(ModContent.ItemType<InfectedEye>());
                 chest.item[slot++].SetDefaults(ModContent.ItemType<SwarmerCannon>());
                 chest.item[slot++].SetDefaults(ModContent.ItemType<Petridish>());
                 chest.item[slot++].SetDefaults(ModContent.ItemType<PortableHoloProjector>());

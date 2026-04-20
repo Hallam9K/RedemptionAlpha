@@ -52,7 +52,7 @@ namespace Redemption.Items.Usable.Summons
             else
                 FowlMorningWorld.FowlMorningActive = true;
 
-            string status = "The fowl legion charges in!";
+            string status = Mod.GetLocalization("StatusMessage.Event.ChickBegin").Value;
             if (Main.netMode == NetmodeID.Server)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), new Color(250, 170, 50));
             else if (Main.netMode == NetmodeID.SinglePlayer)

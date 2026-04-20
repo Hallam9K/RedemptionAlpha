@@ -45,7 +45,7 @@ namespace Redemption.Items.Usable.Summons
         {
             Rectangle janitorRect = new((int)(RedeGen.LabVector.X + 145) * 16, (int)(RedeGen.LabVector.Y + 11) * 16, 47 * 16, 11 * 16);
             Rectangle behemothRect = new((int)(RedeGen.LabVector.X + 201) * 16, (int)(RedeGen.LabVector.Y + 45) * 16, 25 * 16, 76 * 16);
-            Rectangle blisterfaceRect = new((int)(RedeGen.LabVector.X + 193) * 16, (int)(RedeGen.LabVector.Y + 163) * 16, 30 * 16, 20 * 16);
+            Rectangle blisterfaceRect = new((int)(RedeGen.LabVector.X + 188) * 16, (int)(RedeGen.LabVector.Y + 163) * 16, 35 * 16, 20 * 16);
             Rectangle maceRect = new((int)(RedeGen.LabVector.X + 43) * 16, (int)(RedeGen.LabVector.Y + 153) * 16, 61 * 16, 29 * 16);
             Rectangle pzRect = new((int)(RedeGen.LabVector.X + 109) * 16, (int)(RedeGen.LabVector.Y + 170) * 16, 70 * 16, 42 * 16);
 

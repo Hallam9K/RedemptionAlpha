@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
@@ -37,9 +36,9 @@ namespace Redemption.Tiles.Containers
             TileID.Sets.IsAContainer[Type] = true;
             TileID.Sets.FriendlyFairyCanLureTo[Type] = true;
 
-            DustType = ModContent.DustType<LabPlatingDust>();
+            DustType = DustType<LabPlatingDust>();
             AdjTiles = new int[] { TileID.Containers };
-            RegisterItemDrop(ModContent.ItemType<LabChest2>(), 1);
+            RegisterItemDrop(ItemType<LabChest2>(), 1);
             RegisterItemDrop(ItemID.Chest);
 
             AddMapEntry(new Color(0, 242, 170), this.GetLocalization("MapEntry0"), MapChestName);
@@ -155,10 +154,12 @@ namespace Redemption.Tiles.Containers
             {
                 if (isLocked)
                 {
+                    if (!RedeBossDowned.downedVolt)
+                        return false;
                     if (!RedeBossDowned.downedPZ && i >= RedeGen.LabVector.X + 74 && i <= RedeGen.LabVector.X + 79 && j >= RedeGen.LabVector.Y + 190 && j <= RedeGen.LabVector.Y + 195)
                         return false;
 
-                    int key = ModContent.ItemType<Keycard2>();
+                    int key = ItemType<Keycard>();
                     if (player.HasItemInInventoryOrOpenVoidBag(key) && Chest.Unlock(left, top))
                     {
                         if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -210,9 +211,9 @@ namespace Redemption.Tiles.Containers
                 player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : defaultName;
                 if (player.cursorItemIconText == defaultName)
                 {
-                    player.cursorItemIconID = ModContent.ItemType<LabChest2>();
+                    player.cursorItemIconID = ItemType<LabChest2>();
                     if (Main.tile[left, top].TileFrameX / 36 == 1)
-                        player.cursorItemIconID = ModContent.ItemType<Keycard2>();
+                        player.cursorItemIconID = ItemType<Keycard>();
                     player.cursorItemIconText = "";
                 }
             }
@@ -228,18 +229,12 @@ namespace Redemption.Tiles.Containers
             if (player.cursorItemIconText == "")
             {
                 player.cursorItemIconEnabled = false;
-                player.cursorItemIconID = 0;
+                player.cursorItemIconID = ItemID.None;
             }
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            Tile tile = Framing.GetTileSafely(i, j);
-            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
-            if (Main.drawToScreen)
-                zero = Vector2.Zero;
-
-            int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            RedeTileHelper.SimpleGlowmask(i, j, Color.White, Texture);
         }
     }
 }
