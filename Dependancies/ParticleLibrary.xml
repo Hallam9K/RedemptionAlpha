@@ -193,6 +193,28 @@
             After Main Menu.
             </summary>
         </member>
+        <member name="T:ParticleLibrary.Core.SpriteBatchState">
+            <summary>
+            This file uses <see href="https://github.com/krafs/Publicizer"/> to publicize the private fields set by <see cref="M:Microsoft.Xna.Framework.Graphics.SpriteBatch.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState,Microsoft.Xna.Framework.Graphics.Effect,Microsoft.Xna.Framework.Matrix)"/>.<br/>
+            This allows them to be restored later using <see cref="M:ParticleLibrary.Core.SpriteBatchState.Apply(Microsoft.Xna.Framework.Graphics.SpriteBatch,ParticleLibrary.Core.SpriteBatchState@)"/>. The private field <see cref="F:Microsoft.Xna.Framework.Graphics.SpriteBatch.beginCalled"/> is also publicized and is used to ensure runtime safety for <see cref="M:ParticleLibrary.Core.SpriteBatchState.Apply(Microsoft.Xna.Framework.Graphics.SpriteBatch,ParticleLibrary.Core.SpriteBatchState@)"/>.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="M:ParticleLibrary.Core.SpriteBatchState.#ctor(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            This file uses <see href="https://github.com/krafs/Publicizer"/> to publicize the private fields set by <see cref="M:Microsoft.Xna.Framework.Graphics.SpriteBatch.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState,Microsoft.Xna.Framework.Graphics.Effect,Microsoft.Xna.Framework.Matrix)"/>.<br/>
+            This allows them to be restored later using <see cref="M:ParticleLibrary.Core.SpriteBatchState.Apply(Microsoft.Xna.Framework.Graphics.SpriteBatch,ParticleLibrary.Core.SpriteBatchState@)"/>. The private field <see cref="F:Microsoft.Xna.Framework.Graphics.SpriteBatch.beginCalled"/> is also publicized and is used to ensure runtime safety for <see cref="M:ParticleLibrary.Core.SpriteBatchState.Apply(Microsoft.Xna.Framework.Graphics.SpriteBatch,ParticleLibrary.Core.SpriteBatchState@)"/>.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="M:ParticleLibrary.Core.SpriteBatchState.Apply(Microsoft.Xna.Framework.Graphics.SpriteBatch,ParticleLibrary.Core.SpriteBatchState@)">
+            <summary>
+            Applies the provided <see cref="T:ParticleLibrary.Core.SpriteBatchState"/>'s values to the provided <see cref="T:Microsoft.Xna.Framework.Graphics.SpriteBatch"/>.
+            This method <b>will end</b> the provided <see cref="T:Microsoft.Xna.Framework.Graphics.SpriteBatch"/> if Begin has already been called.
+            </summary>
+            <param name="spriteBatch">The <see cref="T:Microsoft.Xna.Framework.Graphics.SpriteBatch"/> to apply to.</param>
+            <param name="spriteBatchState">The <see cref="T:ParticleLibrary.Core.SpriteBatchState"/> to reference the values of.</param>
+        </member>
         <member name="T:ParticleLibrary.Core.Emitter">
             <summary>
             Base class for all emitters. Inherit this class to create your own emitter.
@@ -1419,11 +1441,43 @@
             <param name="maxInstances">The maxiumum expected instances.</param>
             <returns>The actual value of instances to use, given the initial value and calculated depending on <see cref="F:ParticleLibrary.ParticleLibraryConfig.ParticleLimit"/>.</returns>
         </member>
+        <member name="P:ParticleLibrary.Core.V3.Particles.Behavior`1.Texture">
+            <summary>
+            The texture for this behavior.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.V3.Particles.Behavior`1.Initialize(`0@)">
+            <summary>
+            Called once upon creation.
+            </summary>
+            <param name="info">The <see cref="!:TInfo"/>'s data.</param>
+        </member>
+        <member name="M:ParticleLibrary.Core.V3.Particles.Behavior`1.Update(`0@)">
+            <summary>
+            Called every frame.
+            </summary>
+            <param name="info">The <see cref="!:TInfo"/>'s data.</param>
+        </member>
         <member name="T:ParticleLibrary.Core.V3.Particles.ParticleBuffer`1">
             <summary>
             Creates a new buffer of particles.
             </summary>
             <typeparam name="TBehavior"></typeparam>
+        </member>
+        <member name="P:ParticleLibrary.Core.V3.Particles.ParticleBuffer`1.BlendState">
+            <summary>
+            The <see cref="P:ParticleLibrary.Core.V3.Particles.ParticleBuffer`1.BlendState"/> of this <see cref="T:ParticleLibrary.Core.V3.Particles.ParticleBuffer`1"/>.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.V3.Particles.ParticleBuffer`1.SamplerState">
+            <summary>
+            The <see cref="P:ParticleLibrary.Core.V3.Particles.ParticleBuffer`1.SamplerState"/> of this <see cref="T:ParticleLibrary.Core.V3.Particles.ParticleBuffer`1"/>.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.V3.Particles.ParticleBuffer`1.Behavior">
+            <summary>
+            The <typeparamref name="TBehavior"/> associated with this <see cref="T:ParticleLibrary.Core.V3.Particles.ParticleBuffer`1"/>.
+            </summary>
         </member>
         <member name="M:ParticleLibrary.Core.V3.Particles.ParticleBuffer`1.Update">
             <summary>
@@ -2229,7 +2283,7 @@
             <summary>
             A container providing an easy way to store multiple buffers under the same collection.
             </summary>
-            <typeparam name="TKey">They key to use for the dictionary.</typeparam>
+            <typeparam name="TKey">The key to use for the dictionary.</typeparam>
         </member>
         <member name="P:ParticleLibrary.Examples.V3.ParticleDictionary`1.ParticleBuffers">
             <summary>

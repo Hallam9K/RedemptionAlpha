@@ -40,7 +40,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.UseSound = SoundID.Item36;
             Item.autoReuse = true;
             Item.shootSpeed = 90;
-            Item.shoot = ItemID.PurificationPowder;
+            Item.shoot = ProjectileID.PurificationPowder;
             Item.useAmmo = AmmoID.Bullet;
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = Request<Texture2D>(Texture + "_Glow").Value;

@@ -227,7 +227,7 @@ namespace Redemption.Particles
             info.Data[1]++;
 
             float progress = info.Data[1] / 10;
-            float modifiedProgress = MathF.Pow(progress, 3f);
+            float modifiedProgress = MathF.Pow(progress, 1.5f);
             float ScaleX = info.InitialScale.X + Extension * progress;
             float ScaleY = info.InitialScale.X - info.InitialScale.X * progress;
 
@@ -403,17 +403,35 @@ namespace Redemption.Particles
             float progress = 1 - info.Time / (float)info.Duration;
             float reverseOpacity = 1 - info.InitialColor.A / 255f;
 
-            if (progress < 0.66f)
+            if (info.Time == 2)
             {
                 float scaleMulti = info.InitialScale.Y;
-                RedeParticleManager.CreateAdditiveGlowParticle(SystemVector2.Lerp(leftEnd, rightEnd, Main.rand.NextFloat(0.4f, 0.6f)), info.Velocity * Main.rand.NextFloatDirection() * 0.025f, scaleMulti * 0.075f, info.InitialColor.WithAlpha(1) * reverseOpacity, info.Duration + 10);
+                if (info.InitialColor.A == 0)
+                {
+                    RedeParticleManager.CreateAdditiveGlowParticle(SystemVector2.Lerp(leftEnd, rightEnd, Main.rand.NextFloat(0.2f, 0.8f)), info.Velocity * Main.rand.NextFloatDirection() * 0.025f, new Vector2(2, 0.25f) * scaleMulti * 0.075f, info.InitialColor.WithAlpha(1), info.Time + 20);
+                    RedeParticleManager.CreateAdditiveGlowParticle(SystemVector2.Lerp(leftEnd, rightEnd, Main.rand.NextFloat(0.2f, 0.8f)), info.Velocity * Main.rand.NextFloatDirection() * 0.025f, new Vector2(2, 0.25f) * scaleMulti * 0.075f, info.InitialColor.WithAlpha(1), info.Time + 20);
+                    RedeParticleManager.CreateAdditiveGlowParticle(SystemVector2.Lerp(leftEnd, rightEnd, Main.rand.NextFloat(0.2f, 0.8f)), info.Velocity * Main.rand.NextFloatDirection() * 0.025f, new Vector2(2, 0.25f) * scaleMulti * 0.075f, info.InitialColor.WithAlpha(1), info.Time + 20);
+                    RedeParticleManager.CreateAdditiveGlowParticle(SystemVector2.Lerp(leftEnd, rightEnd, Main.rand.NextFloat(0.2f, 0.8f)), info.Velocity * Main.rand.NextFloatDirection() * 0.025f, new Vector2(2, 0.25f) * scaleMulti * 0.075f, info.InitialColor.WithAlpha(1), info.Time + 20);
+                    RedeParticleManager.CreateAdditiveGlowParticle(SystemVector2.Lerp(leftEnd, rightEnd, Main.rand.NextFloat(0.2f, 0.8f)), info.Velocity * Main.rand.NextFloatDirection() * 0.025f, new Vector2(2, 0.25f) * scaleMulti * 0.075f, info.InitialColor.WithAlpha(1), info.Time + 20);
+                }
+                else
+                {
+                    RedeParticleManager.CreateWhiteGlowParticle(SystemVector2.Lerp(leftEnd, rightEnd, Main.rand.NextFloat(0.2f, 0.8f)), info.Velocity * Main.rand.NextFloatDirection() * 0.025f, new Vector2(2, 0.25f) * scaleMulti * 0.025f, info.InitialColor, info.Time + 20);
+                    RedeParticleManager.CreateWhiteGlowParticle(SystemVector2.Lerp(leftEnd, rightEnd, Main.rand.NextFloat(0.2f, 0.8f)), info.Velocity * Main.rand.NextFloatDirection() * 0.025f, new Vector2(2, 0.25f) * scaleMulti * 0.025f, info.InitialColor, info.Time + 20);
+                    RedeParticleManager.CreateWhiteGlowParticle(SystemVector2.Lerp(leftEnd, rightEnd, Main.rand.NextFloat(0.2f, 0.8f)), info.Velocity * Main.rand.NextFloatDirection() * 0.025f, new Vector2(2, 0.25f) * scaleMulti * 0.025f, info.InitialColor, info.Time + 20);
+                    RedeParticleManager.CreateWhiteGlowParticle(SystemVector2.Lerp(leftEnd, rightEnd, Main.rand.NextFloat(0.2f, 0.8f)), info.Velocity * Main.rand.NextFloatDirection() * 0.025f, new Vector2(2, 0.25f) * scaleMulti * 0.025f, info.InitialColor, info.Time + 20);
+                    RedeParticleManager.CreateWhiteGlowParticle(SystemVector2.Lerp(leftEnd, rightEnd, Main.rand.NextFloat(0.2f, 0.8f)), info.Velocity * Main.rand.NextFloatDirection() * 0.025f, new Vector2(2, 0.25f) * scaleMulti * 0.025f, info.InitialColor, info.Time + 20);
+                }
             }
+            float fadeOut = MathF.Min(1, 1 - 1 * progress);
+            float scaleX = 0.4f - 0.2f * MathF.Abs(info.Data[1]);
+            SystemVector2 scale = new SystemVector2(scaleX * fadeOut, 0.5f) * 1.3f * (info.InitialScale * new SystemVector2(72));
 
-            float fadeOut = MathF.Min(1, 2 - 2 * progress);
-            SystemVector2 scale = new SystemVector2(0.2f, 0.5f) * 1.3f * (info.InitialScale * new SystemVector2(72)) * fadeOut;
-
-            info.Color = info.InitialColor * fadeOut;
+            info.Color = info.InitialColor;
             info.Scale = scale;
+
+            float moveSpeed = info.Data[1] / info.Duration; 
+            info.Position += info.Velocity * moveSpeed;
 
             info.Time--;
         }
@@ -427,7 +445,7 @@ namespace Redemption.Particles
                 Vector2 dustPosition = new(info.Position.X, info.Position.Y);
                 for (float num4 = 0f; num4 < 3f; num4++)
                 {
-                    Vector2 vector2 = (MathHelper.PiOver4 + MathHelper.PiOver4 * num4).ToRotationVector2() * 4f;
+                    Vector2 vector2 = (MathHelper.PiOver4 + MathHelper.PiOver4 * num4).ToRotationVector2().RotatedBy(info.Rotation) * 4f;
                     Dust dust = Dust.NewDustPerfect(dustPosition, DustType, vector2.RotatedBy(Main.rand.NextFloatDirection() * (MathHelper.Pi * 2f) * 0.025f) * Main.rand.NextFloat() * new Vector2(info.Scale.X / 72, info.Scale.Y / 72), newColor: Color.White);
                     dust.noGravity = true;
                     dust = Dust.NewDustPerfect(dustPosition, DustType, -vector2.RotatedBy(Main.rand.NextFloatDirection() * (MathHelper.Pi * 2f) * 0.025f) * Main.rand.NextFloat() * new Vector2(info.Scale.X / 72, info.Scale.Y / 72), newColor: Color.White);
@@ -439,7 +457,6 @@ namespace Redemption.Particles
 
             Color color = Color.Multiply(info.InitialColor, Opacity);
             info.Color = color * Opacity;
-            info.Position += info.Velocity;
 
             if (Opacity < 0)
                 info.Time = 0;

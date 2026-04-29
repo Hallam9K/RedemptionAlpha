@@ -7,8 +7,8 @@ namespace Redemption.Particles
         public override string Texture { get; } = "Terraria/Images/Extra_98";
         public override void Update(ref ParticleInfo info)
         {
-            float timer = info.Time - 10;
-            info.Data[0] = 1 - timer / 8f;
+            float timer = info.Time ;
+            info.Data[0] = 1 - timer / info.Duration;
 
             float x = (info.Data[0] - 0.5f) * info.Data[1];
             float opacity = 1 / (1 + x * x);

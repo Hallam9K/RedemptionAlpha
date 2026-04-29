@@ -12,6 +12,7 @@ namespace Redemption.Particles
             if (info.Data[0] <= 0)
             {
                 info.Velocity *= .9f;
+                info.Scale *= info.Data[2];
                 // Halfway through, start fading.
                 if (info.Time <= info.Duration / 2f)
                     Opacity = MathHelper.Lerp(1f, 0f, (float)(info.Duration / 2f - info.Time) / (info.Duration / 2f));

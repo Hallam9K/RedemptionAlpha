@@ -84,7 +84,7 @@ Mods: {
 				LikeNPC: "{NPCName} y yo tenemos talento para manipular lo mecánico. Nos llevamos bien."
 				DislikeNPC: La fisiología de {NPCName} me confunde.
 				HateNPC: Esa... cosa. El cíborg. Me perturba hasta lo más profundo de mis circuitos.
-				LikeNPC_Princess: "{NPCName} me pide caramelos después de sus chequeos. Me recuerda a alguien que me importaba. Je."
+				LikeNPC_Princess: "{NPCName} me pide caramelos luego de sus chequeos. Me recuerda a alguien que me importaba. Jeh."
 				Princess_LovesNPC: Me agrada {NPCName}.
 			}
 
@@ -397,7 +397,7 @@ Mods: {
 			}
 
 			Event: {
-				// ChickBegin: The fowl legion charges in!
+				ChickBegin: ¡La legión aviar se lanza al ataque!
 				ChickRetreat: ¡Las gallinas se retiran!
 				SkeletonParty1: Los esqueletos están planeando una fiesta al anochecer...
 				SkeletonParty2: ¡Los esqueletos están de fiesta!
@@ -540,13 +540,13 @@ Mods: {
 					Bonus2: " para liberar un gas tóxico alrededor del jugador, lo que Inflige quemadura ácida"
 				}
 
-				/* Xenium:
+				Xenium:
 					'''
-					Increased Energy regeneration if an Energy Pack is in your inventory
-					Press {0} to enter [c/BCF160:Cannon Mode]:
-					While in Cannon Mode, all weapons are disabled and attacking fires aimable grenades
-					The grenade gives all enemies caught in the blast damage vulnerability, and deal {2} {1} damage
-					''' */
+					Regeneración de energía incrementada si un Paquete de Energía está presente en tu inventario
+					Presiona {0} para entrar al [c/BCF160:Modo cañón]:
+					Durante el modo cañón, todas las armas son deshabilitadas y atacar hace disparar granadas apuntables
+					"La explosión de la granada aplica vulnerabilidad al daño a los enemigos y causa daño {2} {1}"
+					'''
 				ElderWood:
 					'''
 					Inmune al veneno
@@ -2864,12 +2864,12 @@ Mods: {
 				GuideDialogue: "{0} sabe mucho sobre este lugar que llamas hogar. Es mucho más interesante y animado en comparación con de donde yo vengo. Y menos peligroso para tu especie."
 				MerchantDialogue: "{0} es... interesante, supongo. Aunque no me agrada que intente constantemente negociar conmigo. No quiero sus herramientas relativamente débiles ni su tierra."
 				DryadDialogue: "{0} me ha informado sobre la 'Corrupción' en tu mundo. ¿Qué es exactamente? ¿Una plaga que extiende locura y odio, o algo más primigenio en su naturaleza? Es algo similar a mi concepto de corrupción, más exactamente llamado asimilación. Mi especie, al ser asimilada, se convierte en cascarones de sí mismos, perdiendo su pensamiento libre y personalidad, para solo recibir órdenes de Girus."
-				NurseDialogue: La enfermera, {0}, no sabe nada sobre irradiación o cómo tratarla. Si tienes la mala suerte de comenzar a sufrir el síndrome de irradiación aguda (ARS), ella no podrá ayudarte. Para detectar peligros que puedan causarlo, te sugiero que me compres un Geiger Muller o encuentres uno en algún lugar.
+				NurseDialogue: "{0} pide mi segunda opinión a menudo. Estoy feliz de ayudar."
 				ArmsDealerDialogue: Las armas de {0} son inútiles para mí. Ya poseo un amplio arsenal de armas destructivas, tanto de fuego como cuerpo a cuerpo, y preferiría no usarlas en seres vivos, ya que violarían la Primera Ley de la Robótica.
-				CyborgDialogue: Mientras que todos los demás inquilinos me miran un poco mal, {0} parece estar bien conmigo. No culpo a los demás, mi especie tiende a ser muy hostil hacia los seres vivos, especialmente a los como tú, que muestran una notable similitud con nuestros creadores.
-				// PrincessDialogue: "{0} asks me for lollipops after her checkups. Reminds me of someone I cared for. Heh."
-				// MechanicDialogue: "{0} and I have a knack for tinkering with the mechanical. We get along well."
-				// TruffleDialogue: "{0}'s physiology confuses me."
+				CyborgDialogue: Esa... cosa. El cíborg. Me perturba hasta lo más profundo de mis circuitos.
+				PrincessDialogue: "{0} me pide caramelos luego de sus chequeos. Me recuerda a alguien que me importaba. Jeh."
+				MechanicDialogue: "{0} y yo tenemos una habilidad con arreglar todo lo que sea mecánico. Nos llevamos bien."
+				TruffleDialogue: La fisiología de {0} me confunde.
 				Morning: Buenos días
 				Afternoon: Buenas tardes
 				Evening: Buenas noches
@@ -8782,13 +8782,15 @@ Mods: {
 					Extiende esta mano mecánica para hacer crecer una bola de energía
 					Desintegra la mayoría de los proyectiles después de alcanzar un tamaño determinado
 					Suelta el clic izquierdo para reducirlo; si se sobrecarga, explotará y prenderá fuego al jugador
+					Mantén clic derecho para cargar un golpe
+					Otorga inmunidad al daño de contacto mientras golpeas
 					'El poder del sol, en la palma de mi mano'
 					'''
 				Lore:
 					'''
 					"¡Usando la misma tecnología revolucionaria de disipación de calor que
 					usa el súper rayo térmico del Obliterador, en lugar de estar enterrado en tu pecho,
-					está en tu palma! ¡Es así de simple!
+					está en tu palma! ¡Así de simple!
 
 					Precaución: Girus no se hace responsable del uso irresponsable o peligroso del producto Sol-en-Palma.
 					Mantenga el producto Sol-en-Palma alejado de usted mientras lo utiliza."
@@ -11175,13 +11177,13 @@ Mods: {
 			}
 
 			EnergizedGathicStone: {
-				// DisplayName: Energized Gathic Stone
-				// Tooltip: ""
+				DisplayName: Piedra Gáthica energizada
+				Tooltip: ""
 			}
 
 			InfectedEye: {
-				// DisplayName: Infected Eye
-				// Tooltip: ""
+				DisplayName: Ojo infectado
+				Tooltip: ""
 			}
 		}
 
@@ -11354,7 +11356,7 @@ Mods: {
 			UkkoThunderwave.DisplayName: Onda de trueno de Ukko
 			CleaverHitbox.DisplayName: "{$Mods.Redemption.NPCs.OmegaCleaver.DisplayName}"
 			OmegaBlast.DisplayName: Explosión Omega
-			OmegaCleaver_GirusTalk.DisplayName: Voz Ominosa
+			OmegaCleaver_GirusTalk.DisplayName: Voz ominosa
 			PhantomCleaver.DisplayName: Cuchilla fantasma
 			PhantomCleaver_F.DisplayName: "{$Mods.Redemption.Projectiles.PhantomCleaver.DisplayName}"
 			PhantomCleaver2.DisplayName: "{$Mods.Redemption.Projectiles.PhantomCleaver.DisplayName}"
@@ -11389,7 +11391,7 @@ Mods: {
 			Gigapora_Fireball.DisplayName: Bola de fuego
 			Gigapora_Flame.DisplayName: Llamas
 			Gigapora_FlameTele.DisplayName: "{$Mods.Redemption.Projectiles.Gigapora_Flame.DisplayName}"
-			Gigapora_GirusTalk.DisplayName: Voz Ominosa
+			Gigapora_GirusTalk.DisplayName: Voz ominosa
 			Gigapora_Rubble.DisplayName: Escombros
 			ShieldCore_Bolt.DisplayName: Rayo de energía
 			ShieldCore_DualcastBall.DisplayName: Dualcast
@@ -11477,7 +11479,7 @@ Mods: {
 			OO_BarrageMissile.DisplayName: Barrage Missile
 			OO_Crosshair.DisplayName: Mira
 			OO_Fingerflash.DisplayName: Fingerflash
-			OO_GirusTalk.DisplayName: Voz Ominosa
+			OO_GirusTalk.DisplayName: Voz ominosa
 			OO_Laser.DisplayName: Omega Láser
 			OO_MissileBlast.DisplayName: Explosión
 			OO_NormalBeam.DisplayName: Omega rayo
@@ -11541,7 +11543,7 @@ Mods: {
 			GreenGas_Tele.DisplayName: Telegraph
 			GreenGloop_Proj.DisplayName: Gloop
 			GreenGloop_Tele.DisplayName: Telegraph
-			IB_GirusTalk.DisplayName: Voz Ominosa
+			IB_GirusTalk.DisplayName: Voz ominosa
 			Blisterface_Bubble.DisplayName: Burbuja tóxica
 			BucketSplash.DisplayName: Agua
 			JanitorBucket_Proj.DisplayName: Cubeta
@@ -11915,13 +11917,13 @@ Mods: {
 			TerraBombaDirt_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
 			TerraBombaSand_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
 			TerraBombaSnow_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
-			// InfectedEye_Ball.DisplayName: "{$Mods.Redemption.Items.InfectedEye.DisplayName}"
-			// InfectedEye_Ball2.DisplayName: "{$Mods.Redemption.Items.InfectedEye.DisplayName}"
-			// SunInThePalm_Explosion.DisplayName: Explosion
-			// SunInThePalm_Proj2.DisplayName: "{$Mods.Redemption.Items.SunInThePalm.DisplayName}"
-			// SunPalmFlare_Proj.DisplayName: Sun Palm Flare
-			// Blisterface_GirusTalk.DisplayName: Ominous Voice
-			// Blisterface_Drip_Proj.DisplayName: Sludge Droplet
+			InfectedEye_Ball.DisplayName: "{$Mods.Redemption.Items.InfectedEye.DisplayName}"
+			InfectedEye_Ball2.DisplayName: "{$Mods.Redemption.Items.InfectedEye.DisplayName}"
+			SunInThePalm_Explosion.DisplayName: Explosión
+			SunInThePalm_Proj2.DisplayName: "{$Mods.Redemption.Items.SunInThePalm.DisplayName}"
+			SunPalmFlare_Proj.DisplayName: Sol Palma Flare
+			Blisterface_GirusTalk.DisplayName: Voz ominosa
+			Blisterface_Drip_Proj.DisplayName: Sludge Droplet
 		}
 
 		NPCs: {
@@ -11932,7 +11934,7 @@ Mods: {
 
 				BossChecklistIntegration: {
 					SpawnInfo: Coloca el [i:Redemption/GolemEye] en el suelo y rodea el ojo con las piedras de sus orígenes, y su verdadero poder se presentará ante ti.
-					EntryName: Gólem de Eaglecrest Revancha
+					EntryName: Revancha del Gólem de Eaglecrest
 				}
 			}
 
@@ -12026,7 +12028,7 @@ Mods: {
 
 			Nebuleus: {
 				DisplayName: Nebuleus, Ángel del cosmos
-				// Transform: Nebuleus transforms!
+				Transform: ¡Nebuleus se transforma!
 
 				BossChecklistIntegration: {
 					SpawnInfo: Usa [i:Redemption/NebSummon] de noche, lo sueltan las Serpientes estelares que están en el espacio.
@@ -12736,7 +12738,7 @@ Mods: {
 			IsNotFinlandDay: Mientras no sea el Día de la Independencia de Finlandia
 			InMoonlight: Mientras estés a la luz de la luna
 			RepairedByFallen: Reparado por el Caído
-			// ForgedByCalavia: Forged by Calavia
+			ForgedByCalavia: Forjado por Calavia
 			DownedEarlyGameBossAndMoR: Tras derrotar a cualquier jefe al comenzar
 			DownedEoCOrBoCOrKeeper: Tras derrotar a cualquier jefe de la etapa media del pre-hardmode
 			DownedSkeletronOrSeed: Tras derrotar a cualquier jefe de la etapa final del pre-harmode

@@ -397,7 +397,7 @@ Mods: {
 			}
 
 			Event: {
-				// ChickBegin: The fowl legion charges in!
+				ChickBegin: Kurzy Legion nadlatuje!
 				ChickRetreat: Kury się wycofują!
 				SkeletonParty1: Szkielety planują imprezę o zmierzchu...
 				SkeletonParty2: Szkielety się bawią!
@@ -544,13 +544,13 @@ Mods: {
 					Bonus2: " aby uwolnić toksyczny gaz w promieniu wokół gracza, zadając obrażenia Żrącym Kwasem"
 				}
 
-				/* Xenium:
+				Xenium:
 					'''
-					Increased Energy regeneration if an Energy Pack is in your inventory
-					Press {0} to enter [c/BCF160:Cannon Mode]:
-					While in Cannon Mode, all weapons are disabled and attacking fires aimable grenades
-					The grenade gives all enemies caught in the blast damage vulnerability, and deal {2} {1} damage
-					''' */
+					Zwiększona regeneracja energii, jeśli w ekwipunku znajduje się Nabój Energii
+					Naciśnij {0} aby wejść w [c/BCF160:Tryb Działa]:
+					W Trybie Działa wszystkie bronie są wyłączone, a atak wystrzeliwuje celowalne granaty
+					Granat nakłada na wszystkich wrogów w zasięgu wybuchu podatność na obrażenia i zadaje {2} {1} obrażeń
+					'''
 				ElderWood:
 					'''
 					Odporność na truciznę
@@ -2580,7 +2580,7 @@ Mods: {
 
 			LizzyPetBuff: {
 				DisplayName: Lizzy
-				Description: "'w'"
+				Description: Zielona z Rogami
 			}
 
 			LegoPetBuff: {
@@ -2857,15 +2857,15 @@ Mods: {
 				GuideDialogue: "{0} wie całkiem sporo o tym miejscu, które nazywasz domem. Jest o wiele ciekawsze i bardziej tętniące życiem niż tam, skąd pochodzę. I mniej niebezpieczne dla waszego rodzaju."
 				MerchantDialogue: "{0} jest... Cóż, interesujący. Choć nie cierpię, gdy ciągle próbuje się ze mną targować — nie chcę jego słabych narzędzi ani śmieci."
 				DryadDialogue: "{0} poinformowała mnie o „Zepsuciu” w twoim świecie. Czym dokładnie jest? Zarazą, która szerzy szaleństwo i nienawiść, czy czymś bardziej pradawnym w naturze? To trochę przypomina moją koncepcję zepsucia, którą dokładniej nazwałbym asymilacją. Moi pobratymcy podlegający asymilacji tracą wolę i osobowość, stając się jedynie pustymi powłokami, które wykonują rozkazy Girus."
-				NurseDialogue: Pielęgniarka, {0}, nie ma pojęcia o promieniowaniu ani o tym, jak je leczyć. Jeśli będziesz mieć pecha i zaczniesz cierpieć na OZS, nie będzie w stanie ci pomóc. Żeby wykrywać zagrożenia, które mogą to wywołać, polecam kupić ode mnie licznik Geigera-Müllera albo znaleźć gdzieś jakiś.
+				NurseDialogue: "{0} często prosi mnie o drugą opinię. Chętnie pomagam."
 				ArmsDealerDialogue: Broń {0} jest dla mnie bezużyteczna. Już posiadam szeroki arsenał niszczycielskiej broni palnej i białej, ale wolałbym jej nie używać na istotach żywych — to naruszałoby Pierwsze Prawo Robotów
-				CyborgDialogue: Podczas gdy wszyscy inni lokatorzy patrzą na mnie krzywo, {0} wydaje się nie mieć ze mną problemu. Nie winię pozostałych — nasz gatunek ma niestety skłonność do nienawiści wobec istot żywych, a zwłaszcza takich jak ty, które wykazują znaczące podobieństwo do naszych twórców.
-				// PrincessDialogue: "{0} asks me for lollipops after her checkups. Reminds me of someone I cared for. Heh."
-				// MechanicDialogue: "{0} and I have a knack for tinkering with the mechanical. We get along well."
-				// TruffleDialogue: "{0}'s physiology confuses me."
-				Morning: Miłego poranka
-				Afternoon: Miłego południa
-				Evening: Miłego wieczoru
+				CyborgDialogue: Ta... rzecz. Ten Cyborg. Niepokoi mnie do głębi.
+				PrincessDialogue: "{0} prosi mnie o lizaki po swoich badaniach. Przypomina mi osobę, o którą się kiedyś troszczyłem. Heh."
+				MechanicDialogue: "{0} i ja mamy smykałkę do majsterkowania przy mechanice. Dobrze się dogadujemy."
+				TruffleDialogue: Fizjologia {0} wprawia mnie w zakłopotanie.
+				Morning: Dzień Dobry
+				Afternoon: Dzień Dobry
+				Evening: Dobry Wieczór
 				Today: Tego dnia
 				Tonight: Tej nocy
 				1: Witaj {0}, Epidotrianinie.
@@ -7738,7 +7738,7 @@ Mods: {
 					PRZECZYTAJ INSTRUKCJE:
 					- Upewnij się, że na pewno masz zatrucie promieniowaniem, inaczej sobie zaszkodzisz!
 					- Lek działa powoli i nie leczy silnych dawek. Jeśli widzisz zieloną mgłę,
-					  polecamy użyć łopaty, żeby wykopać sobie grób bo wkrótce taka ci się przyda.
+					polecamy użyć łopaty, żeby wykopać sobie grób bo wkrótce taka ci się przyda.
 					- Po użyciu poczujesz się słaby i kruchy, ale to minie po kilku minutach.
 					'Zatrucie promieniowaniem zwykle jest nieuleczalne, ale dzięki temu lekowi powoli robimy postępy.'
 					'''
@@ -8717,10 +8717,13 @@ Mods: {
 				DisplayName: Słońce-W-Dłoni
 				Tooltip:
 					'''
-					Wyciągnij tę mechaniczną dłoń, aby wytworzyć kulę energii
-					Po osiągnięciu określonego rozmiaru rozkłada większość pocisków
-					Puść lewy przycisk, by zmniejszyć ją z powrotem — obciążenie spowoduje eksplozję i podpalenie gracza
-					'Moc słońca w mojej dłoni'
+					Przytrzymaj tę mechaniczną dłoń, aby wytworzyć powiększającą się kulę energii
+					Po osiągnięciu odpowiedniego rozmiaru dezintegruje większość pocisków
+					Puść lewy przycisk myszy, aby ją zmniejszyć, przeładowanie
+					spowoduje eksplozję i podpali gracza
+					Przytrzymaj prawy przycisk myszy, aby naładować cios
+					Zapewnia odporność na obrażenia przy kontakcie podczas zadawania ciosu
+					'Moc słońca znajduję się w mojej dłoni'
 					'''
 				Lore:
 					'''
@@ -11822,13 +11825,13 @@ Mods: {
 			TerraBombaDirt_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
 			TerraBombaSand_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
 			TerraBombaSnow_Proj.DisplayName: "{$Mods.Redemption.Items.TerraBombaCorruption.DisplayName}"
-			// InfectedEye_Ball.DisplayName: "{$Mods.Redemption.Items.InfectedEye.DisplayName}"
-			// InfectedEye_Ball2.DisplayName: "{$Mods.Redemption.Items.InfectedEye.DisplayName}"
-			// SunInThePalm_Explosion.DisplayName: Explosion
-			// SunInThePalm_Proj2.DisplayName: "{$Mods.Redemption.Items.SunInThePalm.DisplayName}"
-			// SunPalmFlare_Proj.DisplayName: Sun Palm Flare
-			// Blisterface_GirusTalk.DisplayName: Ominous Voice
-			// Blisterface_Drip_Proj.DisplayName: Sludge Droplet
+			InfectedEye_Ball.DisplayName: "{$Mods.Redemption.Items.InfectedEye.DisplayName}"
+			InfectedEye_Ball2.DisplayName: "{$Mods.Redemption.Items.InfectedEye.DisplayName}"
+			SunInThePalm_Explosion.DisplayName: Eksplozja
+			SunInThePalm_Proj2.DisplayName: "{$Mods.Redemption.Items.SunInThePalm.DisplayName}"
+			SunPalmFlare_Proj.DisplayName: Flara Słońca w Dłoniach
+			Blisterface_GirusTalk.DisplayName: Złowieszczy Głos
+			Blisterface_Drip_Proj.DisplayName: Kropla Mułu
 		}
 
 		NPCs: {
@@ -11933,7 +11936,7 @@ Mods: {
 
 			Nebuleus: {
 				DisplayName: Nebuleus, Anioł Kosmosu
-				// Transform: Nebuleus transforms!
+				Transform: Nebuleus przemienia się!
 
 				BossChecklistIntegration: {
 					SpawnInfo: Użyj [i:Redemption/NebSummon] w nocy, zdobywany od Gwiezdnych Węży na niebie.
@@ -12643,7 +12646,7 @@ Mods: {
 			IsNotFinlandDay: Gdy nie ma Dnia Niepodległości Finlandii
 			InMoonlight: Podczas Blasku Księżyca
 			RepairedByFallen: Naprawione przez Upadłych
-			// ForgedByCalavia: Forged by Calavia
+			ForgedByCalavia: Wykute przez Calavię
 			DownedEarlyGameBossAndMoR: Po pokonaniu dowolnego bossa z wczesnej fazy gry
 			DownedEoCOrBoCOrKeeper: Po pokonaniu dowolnego bossa z środkowej fazy pre-hardmode
 			DownedSkeletronOrSeed: Po pokonaniu dowolnego bossa z końcowej fazy pre-hardmode

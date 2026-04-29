@@ -192,7 +192,7 @@ namespace Redemption.NPCs.PreHM
             choice.Add(SpawnType.Group, 3); // 6.38%
             choice.Add(SpawnType.LargeGroup, 1); // 2%
             if (player.ZoneRockLayerHeight)
-                choice.Add(SpawnType.Dance, 0.003); // 0.0063%
+                choice.Add(SpawnType.Dance, 0.004); // 0.0063%
 
             WeightedRandom<int> NPCType = new(Main.rand);
             NPCType.Add(ModContent.NPCType<SkeletonWanderer>());

@@ -4,6 +4,7 @@
 - Added localisation to the Fowl Morning starting message
 - Added new dialogue to Adam when other NPCs are present
 - Widened some hallways in Abandoned Lab
+- Fixed fading in particles being visible on the first frame
 2448. Gave the Phantom Cleaver projectiles of Mechanical Sheath Static NPC Immunity to make them hit consistently, and made them rise a bit before moving down
 2449. Reduced right-click cooldown of Xenium Lance from 20 -> 5 seconds
 2450. Salamanisku now has Local NPC Immunity and removed radius damage to fix hit consistency; Its lightning inflicts the mod's Electrified instead of vanilla's
