@@ -34,6 +34,7 @@ using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection.Metadata;
 using System.Threading;
 using Terraria;
 using Terraria.Audio;
@@ -432,6 +433,28 @@ namespace Redemption.WorldGeneration
         {
             if (SubworldSystem.Current != null)
                 return;
+
+            // For worlds before Blistering Patch
+            Tile doorTile = Framing.GetTileSafely((int)(LabVector.X + 194), (int)(LabVector.Y + 131));
+            if (doorTile.TileType == TileType<LabKeycardDoorOpen>() || doorTile.TileType == TileType<LabKeycardDoorClosed>())
+            {
+                for (int x = (int)(LabVector.X + 136); x < (int)LabVector.X + 162; x++)
+                {
+                    for (int y = (int)(LabVector.Y + 107); y < (int)LabVector.Y + 146; y++)
+                    {
+                        if (Framing.GetTileSafely(x, y).TileType == TileType<BlackHardenedSludgeTile>())
+                        {
+                            Framing.GetTileSafely(x, y).TileType = (ushort)TileType<HardenedSludgeTile>();
+                            WorldGen.SquareTileFrame(x, y);
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendTileSquare(-1, x, y);
+                        }
+                    }
+                }
+                WorldGen.KillTile((int)(LabVector.X + 194), (int)(LabVector.Y + 131));
+                GenUtils.ObjectPlace((int)LabVector.X + 130, (int)LabVector.Y + 102, (ushort)TileType<LabKeycardDoorClosed>());
+            }
+
             if (NPC.downedBoss3 && !dragonLeadSpawn && !cryoCrystalSpawn)
             {
                 if (RedeWorld.Alignment >= 0)
