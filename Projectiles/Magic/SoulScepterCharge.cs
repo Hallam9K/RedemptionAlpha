@@ -1,8 +1,9 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
 using Redemption.Globals;
+using Redemption.Globals.Projectiles;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -64,15 +65,18 @@ namespace Redemption.Projectiles.Magic
             player.itemTime = 2;
             player.itemAnimation = 2;
 
-            if (Main.myPlayer == Projectile.owner && Projectile.localAI[0] == 0)
+            if (Projectile.localAI[0] == 0)
             {
                 if (player.channel)
                 {
                     Projectile.ai[0] += 4;
                     Projectile.ai[1] += 0.2f;
                     Projectile.ai[1] = MathHelper.Clamp(Projectile.ai[1], 0, 40);
-                    move = Main.MouseWorld + Vector2.One.RotatedBy(MathHelper.ToRadians(Projectile.ai[0])) * (Projectile.ai[1] + 10);
-                    Projectile.Move(move, 16, 20);
+                    if (Projectile.owner == Main.myPlayer)
+                    {
+                        move = Main.MouseWorld + Vector2.One.RotatedBy(MathHelper.ToRadians(Projectile.ai[0])) * (Projectile.ai[1] + 10);
+                        Projectile.Move(move, 16, 20);
+                    }
 
                     Projectile.localAI[1]++;
                 }
@@ -85,7 +89,7 @@ namespace Redemption.Projectiles.Magic
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, baseColor, baseColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, baseColor, baseColor, thickness);
             }
 
             if (fakeTimer > 0)
@@ -122,7 +126,7 @@ namespace Redemption.Projectiles.Magic
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 
@@ -152,7 +156,7 @@ namespace Redemption.Projectiles.Magic
 
         public override bool PreAI()
         {
-            if (Main.myPlayer == Projectile.owner && Projectile.localAI[0] == 0)
+            if (Projectile.localAI[0] == 0)
             {
                 Player player = Main.player[Projectile.owner];
                 if (player.channel)
@@ -168,7 +172,8 @@ namespace Redemption.Projectiles.Magic
                         if (BasePlayer.ReduceMana(player, (int)(mana * 1.5f)))
                         {
                             SoundEngine.PlaySound(SoundID.NPCDeath52, player.position);
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.One, ModContent.ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 90, Projectile.ai[1]);
+                            if (Projectile.owner == Main.myPlayer)
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.One, ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 90, Projectile.ai[1]);
                         }
                     }
                     if (Projectile.localAI[1] == 240)
@@ -176,7 +181,8 @@ namespace Redemption.Projectiles.Magic
                         if (BasePlayer.ReduceMana(player, (int)(mana * 2f)))
                         {
                             SoundEngine.PlaySound(SoundID.NPCDeath52, player.position);
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.One, ModContent.ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 180, Projectile.ai[1]);
+                            if (Projectile.owner == Main.myPlayer)
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.One, ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 180, Projectile.ai[1]);
                         }
                     }
                     if (Projectile.localAI[1] == 360)
@@ -184,7 +190,8 @@ namespace Redemption.Projectiles.Magic
                         if (BasePlayer.ReduceMana(player, (int)(mana * 2.5f)))
                         {
                             SoundEngine.PlaySound(SoundID.NPCDeath52, player.position);
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.One, ModContent.ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 270, Projectile.ai[1]);
+                            if (Projectile.owner == Main.myPlayer)
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.One, ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 270, Projectile.ai[1]);
                         }
                     }
                 }

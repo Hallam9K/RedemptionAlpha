@@ -4,11 +4,13 @@ using Redemption.Effects;
 using Redemption.Globals;
 using System.Collections.Generic;
 using System.Linq;
+using Redemption.Effects.Trails;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.Globals.Projectiles;
 
 namespace Redemption.Projectiles.Ranged
 {
@@ -83,7 +85,7 @@ namespace Redemption.Projectiles.Ranged
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
             }
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

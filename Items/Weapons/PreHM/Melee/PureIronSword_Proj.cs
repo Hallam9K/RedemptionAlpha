@@ -1,18 +1,18 @@
 using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary.Core;
 using ParticleLibrary.Utilities;
-using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
-using Redemption.Effects;
+using Redemption.Effects.Trails;
+using Redemption.Effects.Trails.Tips;
 using Redemption.Globals;
 using Redemption.Particles;
 using Redemption.Projectiles.Melee;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 
@@ -35,7 +35,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             Projectile.width = 60;
             Projectile.height = 60;
-            Projectile.friendly = true;
+            Projectile.friendly = false;
             Projectile.penetrate = 4;
             Projectile.alpha = 255;
             Projectile.extraUpdates = 4;
@@ -44,195 +44,218 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.ownerHitCheck = true;
             Projectile.ownerHitCheckDistance = 300f;
             Projectile.stopsDealingDamageAfterPenetrateHits = true;
+
+            InitializeTrail();
         }
-        private Vector2 vector;
-        private float startRotation;
-        public ref float Length => ref Projectile.localAI[0];
-        public ref float Rot => ref Projectile.localAI[1];
+        public Vector2 positionVector;
+        public float startRotation;
         public float Timer;
         public float progress;
-        private float SwingSpeed;
-        private float glow;
-        private bool parried;
-        private Player Player => Main.player[Projectile.owner];
+        public float SwingSpeed;
+        public float glow;
+        private Player Owner => Main.player[Projectile.owner];
+        public int maxTime;
+        public int origDamage;
+        public override void OnSpawn(IEntitySource source)
+        {
+            maxTime = SetUseTime(Owner.HeldItem.useTime);
+            Projectile.scale *= Owner.GetAdjustedItemScale(Owner.HeldItem);
+            origDamage = Projectile.damage;
+        }
         public override void AI()
         {
-            if (Player.noItems || Player.CCed || Player.dead || !Player.active)
+            if (Owner.noItems || Owner.CCed || Owner.dead || !Owner.active)
                 Projectile.Kill();
 
-            SwingSpeed = SetSwingSpeed(1);
+            Owner.heldProj = Projectile.whoAmI;
+            Owner.itemTime = 2;
+            Owner.itemAnimation = 2;
 
-            Player.heldProj = Projectile.whoAmI;
-            Player.itemTime = 2;
-            Player.itemAnimation = 2;
+            Vector2 armCenter = Owner.RotatedRelativePoint(Owner.MountedCenter) + new Vector2(Owner.direction * -4, -4);
+            switch (Projectile.ai[0])
+            {
+                case 0:
+                    Projectile.scale *= Projectile.ai[2];
+                    Projectile.ai[0] = 2;
+                    Projectile.netUpdate = true;
+                    break;
+                case 1: //down
+                    BlockProj();
+                    progress = Timer / (maxTime * 2 * Projectile.MaxUpdates);
+                    Projectile.friendly = progress >= 0.4f && progress <= 0.6f;
+                    if (Timer++ == 0)
+                    {
+                        Projectile.spriteDirection = Owner.direction;
+                        startRotation = Owner.direction == 1 ? Projectile.velocity.ToRotation() : -Projectile.velocity.ToRotation() + MathHelper.Pi;
+                    }
+                    if (progress < 1)
+                    {
+                        float swingProgress = EaseFunction.EaseQuinticInOut.Ease(progress);
+                        float initialRotation = -0.375f;
+                        float angle = (swingProgress * 0.75f + initialRotation) * MathHelper.TwoPi;
 
-            Vector2 armCenter = Player.RotatedRelativePoint(Player.MountedCenter, true) + new Vector2(-Player.direction * 4, -4);
-            Projectile.Center = armCenter + vector;
+                        Vector2 ellipse = new(90 * MathF.Cos(angle), 90 * MathF.Sin(angle));
+                        ellipse = ellipse.RotatedBy(startRotation);
+                        ellipse.X *= Owner.direction;
+                        positionVector = ellipse * Projectile.scale;
+                    }
+                    if (Timer == (int)(maxTime * Projectile.MaxUpdates))
+                    {
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
+                    }
+                    if (progress >= 1)
+                    {
+                        if (!Owner.channel)
+                        {
+                            Projectile.Kill();
+                            return;
+                        }
+                        if (glow >= 0.8f)
+                        {
+                            RedeDraw.SpawnRing(Owner.Center, Color.LightCyan, 0.2f, 0.85f, 4);
+                            RedeDraw.SpawnRing(Owner.Center, Color.LightCyan, 0.2f);
+                            SoundEngine.PlaySound(SoundID.Item30, Projectile.position);
+                            SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, Projectile.position);
 
+                            if (Projectile.owner == Main.myPlayer)
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<ArcticWind_Proj>(), 0, 0, Projectile.owner);
+                            Projectile.ai[0] = 3;
+                        }
+                        else
+                        {
+                            if (Projectile.owner == Main.myPlayer)
+                            {
+                                if (Main.MouseWorld.X < Owner.Center.X)
+                                    Owner.direction = -1;
+                                else
+                                    Owner.direction = 1;
+                                Projectile.velocity = RedeHelper.PolarVector(5, (Main.MouseWorld - Owner.Center).ToRotation());
+                            }
+                            Projectile.alpha = 255;
+                            Projectile.ai[0]++;
+                        }
+                        Timer = 0;
+                        Projectile.netUpdate = true;
+                    }
+                    break;
+                case 2: //up
+                    BlockProj();
+                    progress = Timer / (maxTime * 2 * Projectile.MaxUpdates);
+                    Projectile.friendly = progress >= 0.4f && progress <= 0.6f;
+                    if (Timer++ == 0)
+                    {
+                        Projectile.spriteDirection = Owner.direction;
+                        startRotation = Owner.direction == 1 ? Projectile.velocity.ToRotation() : -Projectile.velocity.ToRotation() + MathHelper.Pi;
+                    }
+                    if (progress < 1)
+                    {
+                        float swingProgress = EaseFunction.EaseQuinticInOut.Ease(progress);
+                        float initialRotation = 0.375f;
+                        float angle = (swingProgress * -0.75f + initialRotation) * MathHelper.TwoPi;
+
+                        Vector2 ellipse = new(90 * MathF.Cos(angle), 90 * MathF.Sin(angle));
+                        ellipse = ellipse.RotatedBy(startRotation);
+                        ellipse.X *= Owner.direction;
+                        positionVector = ellipse * Projectile.scale;
+                    }
+                    if (Timer == (int)(maxTime * Projectile.MaxUpdates))
+                    {
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
+                    }
+                    if (progress >= 1)
+                    {
+                        if (!Owner.channel)
+                        {
+                            Projectile.Kill();
+                            return;
+                        }
+                        if (glow >= 0.8f)
+                        {
+                            RedeDraw.SpawnRing(Owner.Center, Color.LightCyan, 0.2f, 0.85f, 4);
+                            RedeDraw.SpawnRing(Owner.Center, Color.LightCyan, 0.2f);
+                            SoundEngine.PlaySound(SoundID.Item30, Projectile.position);
+                            SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, Projectile.position);
+
+                            if (Projectile.owner == Main.myPlayer)
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<ArcticWind_Proj>(), 0, 0, Projectile.owner);
+                            Projectile.ai[0] = 3;
+                        }
+                        else
+                        {
+                            if (Projectile.owner == Main.myPlayer)
+                            {
+                                if (Main.MouseWorld.X < Owner.Center.X)
+                                    Owner.direction = -1;
+                                else
+                                    Owner.direction = 1;
+                                Projectile.velocity = RedeHelper.PolarVector(5, (Main.MouseWorld - Owner.Center).ToRotation());
+                            }
+                            Projectile.alpha = 255;
+                            Projectile.ai[0] = 1;
+                        }
+                        Timer = 0;
+                        Projectile.netUpdate = true;
+                    }
+                    break;
+                case 3:
+                    BlockProj();
+                    progress = Timer / (maxTime * 4 * Projectile.MaxUpdates);
+                    Projectile.friendly = true;
+                    if (Timer++ == 0)
+                    {
+                        Projectile.spriteDirection = Owner.direction;
+                        Projectile.localNPCHitCooldown = maxTime * Projectile.MaxUpdates;
+                        Projectile.penetrate += 12;
+                        Projectile.damage = origDamage;
+                        Projectile.scale *= 1.25f;
+                    }
+                    if (progress < 1)
+                    {
+                        float swingProgress = EaseFunction.Linear.Ease(progress);
+                        float initialRotation = 0.375f;
+                        float angle = (swingProgress * 4f + initialRotation) * MathHelper.TwoPi;
+
+                        Vector2 ellipse = new(90 * MathF.Cos(angle), 90 * MathF.Sin(angle));
+                        ellipse = ellipse.RotatedBy(startRotation);
+                        ellipse.X *= Projectile.spriteDirection;
+                        positionVector = ellipse * Projectile.scale;
+
+                        if (Timer % (int)(maxTime / 2 * Projectile.MaxUpdates) == 0)
+                            Owner.direction *= -1;
+                    }
+                    if (progress > 1)
+                    {
+                        Projectile.Kill();
+                    }
+                    thickness = 36;
+                    break;
+            }
+            Projectile.Center = armCenter + positionVector;
             if (Projectile.spriteDirection == 1)
                 Projectile.rotation = (Projectile.Center - armCenter).ToRotation() + MathHelper.PiOver4;
             else
                 Projectile.rotation = (Projectile.Center - armCenter).ToRotation() + 3 * MathHelper.PiOver4;
+            Owner.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (armCenter - Projectile.Center).ToRotation() + MathHelper.PiOver2);
 
-            Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (armCenter - Projectile.Center).ToRotation() + MathHelper.PiOver2);
-            if (Main.myPlayer == Projectile.owner)
-            {
-                switch (Projectile.ai[0])
-                {
-                    case 0:
-                        Projectile.scale *= Projectile.ai[2];
-                        Projectile.ai[0] = 2;
-                        Projectile.netUpdate = true;
-                        break;
-                    case 1: //down
-                        BlockProj();
-                        progress = Timer / (20 * (Projectile.extraUpdates + 1) * SwingSpeed);
-                        if (Timer++ == 0)
-                        {
-                            Projectile.spriteDirection = Player.direction;
-                            startRotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
-                        }
-                        if (progress < 1)
-                        {
-                            float modifiedProgress = 0.05f + 1 / (1 + MathF.Pow(3, -15 * (progress - 0.5f)));
-                            float x = 30 * MathF.Cos(modifiedProgress * MathHelper.TwoPi * Projectile.spriteDirection * 0.9f);
-                            float y = 20 * MathF.Sin(modifiedProgress * MathHelper.TwoPi * Projectile.spriteDirection * 0.9f);
-                            Vector2 ellipse = new(x, y);
-                            vector = ellipse.RotatedBy(startRotation) * 2.25f * Projectile.scale;
-                        }
-                        if (Timer == (int)(10 * (Projectile.extraUpdates + 1) * SwingSpeed))
-                        {
-                            if (!Main.dedServ)
-                                SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
-                        }
-                        if (progress >= 1)
-                        {
-                            if (!Player.channel)
-                            {
-                                Projectile.Kill();
-                                return;
-                            }
-                            if (glow >= 0.8f)
-                            {
-                                RedeDraw.SpawnRing(Player.Center, Color.LightCyan, 0.2f, 0.85f, 4);
-                                RedeDraw.SpawnRing(Player.Center, Color.LightCyan, 0.2f);
-                                SoundEngine.PlaySound(SoundID.Item30, Projectile.position);
-                                SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, Projectile.position);
-                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Player.Center, Vector2.Zero, ProjectileType<ArcticWind_Proj>(), 0, 0, Projectile.owner);
-                                Projectile.ai[0] = 3;
-                            }
-                            else
-                            {
-                                if (Main.MouseWorld.X < Player.Center.X)
-                                    Player.direction = -1;
-                                else
-                                    Player.direction = 1;
-                                Projectile.velocity = RedeHelper.PolarVector(5, (Main.MouseWorld - Player.Center).ToRotation());
-                                Projectile.alpha = 255;
-                                Projectile.ai[0]++;
-                            }
-                            Timer = 0;
-                            Projectile.netUpdate = true;
-                        }
-                        break;
-                    case 2: //up
-                        BlockProj();
-                        Projectile.spriteDirection = Player.direction;
-                        progress = Timer / (20 * (Projectile.extraUpdates + 1) * SwingSpeed);
-                        if (Timer++ == 0)
-                        {
-                            Projectile.spriteDirection = Player.direction;
-                            startRotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
-                        }
-                        if (progress < 1)
-                        {
-                            float modifiedProgress = -0.05f + 1 / (1 + MathF.Pow(3, -15 * (progress - 0.5f)));
-                            float x = 30 * MathF.Cos((1 - modifiedProgress) * MathHelper.TwoPi * Projectile.spriteDirection * 0.9f);
-                            float y = 20 * MathF.Sin((1 - modifiedProgress) * MathHelper.TwoPi * Projectile.spriteDirection * 0.9f);
-                            Vector2 ellipse = new(x, y);
-                            vector = ellipse.RotatedBy(startRotation) * 2.25f * Projectile.scale;
-                        }
-                        if (Timer == (int)(10 * (Projectile.extraUpdates + 1) * SwingSpeed))
-                        {
-                            if (!Main.dedServ)
-                                SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
-                        }
-                        if (progress >= 1)
-                        {
-                            if (!Player.channel)
-                            {
-                                Projectile.Kill();
-                                return;
-                            }
-                            if (glow >= 0.8f)
-                            {
-                                RedeDraw.SpawnRing(Player.Center, Color.LightCyan, 0.2f, 0.85f, 4);
-                                RedeDraw.SpawnRing(Player.Center, Color.LightCyan, 0.2f);
-                                SoundEngine.PlaySound(SoundID.Item30, Projectile.position);
-                                SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, Projectile.position);
-                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Player.Center, Vector2.Zero, ProjectileType<ArcticWind_Proj>(), 0, 0, Projectile.owner);
-                                Projectile.ai[0] = 3;
-                            }
-                            else
-                            {
-                                if (Main.MouseWorld.X < Player.Center.X)
-                                    Player.direction = -1;
-                                else
-                                    Player.direction = 1;
-                                Projectile.velocity = RedeHelper.PolarVector(5, (Main.MouseWorld - Player.Center).ToRotation());
-                                Projectile.alpha = 255;
-                                Projectile.ai[0] = 1;
-                            }
-                            Timer = 0;
-                            Projectile.netUpdate = true;
-                        }
-                        break;
-                    case 3:
-                        BlockProj();
-                        progress = Timer / (40 * (Projectile.extraUpdates + 1) * SwingSpeed);
-                        thickness = 40;
-                        if (Timer++ == 0)
-                        {
-                            Projectile.penetrate += 12;
-                            Projectile.damage = Projectile.originalDamage;
-                        }
-                        if (progress < 1)
-                        {
-                            float x = 30 * MathF.Cos(4 * progress * MathHelper.TwoPi * Projectile.spriteDirection);
-                            float y = 30 * MathF.Sin(4 * progress * MathHelper.TwoPi * Projectile.spriteDirection);
-                            Vector2 ellipse = new(x, y);
-                            vector = ellipse.RotatedBy(MathHelper.Pi) * 2.5f;
-
-                            if (Timer % (int)(20 * SwingSpeed) == 0)
-                                Player.direction *= -1;
-                        }
-
-                        if (progress > 1)
-                        {
-                            Projectile.Kill();
-                        }
-                        break;
-                }
-            }
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
                 oldrot[k] = oldrot[k - 1];
             oldrot[0] = Projectile.rotation;
-
 
             if (progress > 0.3f && progress < 0.65f)
             {
                 MakeDust(50 * Projectile.scale);
             }
-
-            if (Main.netMode != NetmodeID.Server && --pauseTimer <= 0)
+            if (Main.netMode != NetmodeID.Server)
             {
                 TrailSetUp();
             }
         }
         public void MakeDust(float pos)
         {
-            float rotation = (Projectile.Center - Player.Center).ToRotation();
-            Dust dust8 = Dust.NewDustPerfect(Player.Center + RedeHelper.PolarVector(pos, rotation) + new Vector2(Main.rand.NextFloat(-10 * Projectile.scale, 10 * Projectile.scale)), DustID.IceTorch, RedeHelper.PolarVector(5, rotation), 0, Scale: 2);
+            float rotation = (Projectile.Center - Owner.Center).ToRotation();
+            Dust dust8 = Dust.NewDustPerfect(Owner.Center + RedeHelper.PolarVector(pos, rotation) + new Vector2(Main.rand.NextFloat(-10 * Projectile.scale, 10 * Projectile.scale)), DustID.IceTorch, RedeHelper.PolarVector(5, rotation), 0, Scale: 2);
             dust8.fadeIn = 0.4f + Main.rand.NextFloat() * 0.15f;
             dust8.noGravity = true;
         }
@@ -240,10 +263,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             foreach (Projectile target in Main.ActiveProjectiles)
             {
-                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 200 / 4)
+                if (!ProjReflect.FriendlyReflectCheck(Projectile, target, 500) || ProjReflect.ProjBlockBlacklist(target, true))
                     continue;
 
-                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !target.HasElement(ElementID.Ice) || target.ProjBlockBlacklist(true))
+                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !target.HasElement(ElementID.Ice))
                     continue;
 
                 RedeDraw.SpawnExplosion(target.Center, new Color(214, 239, 243), shakeAmount: 0, scale: .5f, noDust: true, rot: RedeHelper.RandomRotation(), tex: "Redemption/Textures/SwordClash");
@@ -255,14 +278,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (Projectile.ai[0] == 3)
                 modifiers.FinalDamage *= 2;
         }
-        public int pauseTimer;
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Player Player = Main.player[Projectile.owner];
             RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
             if (glow < 0.8f)
                 glow += 0.2f;
-            if (Player.RedemptionPlayerBuff().pureIronBonus)
+            if (Owner.RedemptionPlayerBuff().pureIronBonus)
                 target.AddBuff(BuffType<PureChillDebuff>(), 300);
 
             Vector2 dir = Projectile.Center.DirectionFrom(target.Center);
@@ -273,20 +294,39 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 float randomRotation = Main.rand.NextFloat(-0.5f, 0.5f);
                 float randomVel = Main.rand.NextFloat(2f, 3f);
-                Vector2 direction = target.Center.DirectionFrom(Player.Center);
+                Vector2 direction = target.Center.DirectionFrom(Owner.Center);
                 Vector2 position = target.Center - direction * 10;
                 RedeParticleManager.CreateSpeedParticle(position, direction.RotatedBy(randomRotation) * randomVel * 12, .8f, Color.LightCyan.WithAlpha(0));
             }
         }
-        public override bool? CanHitNPC(NPC target)
+        public override void CutTiles()
         {
-            if (Projectile.ai[0] is 1 or 2)
-            {
-                return progress >= 0.45f && progress <= 0.55f ? null : false;
-            }
-            else if (Projectile.ai[0] is 3)
-                return null;
-
+            DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
+            Utils.TileActionAttempt cut = new(DelegateMethods.CutTiles);
+            Vector2 lineStart = Owner.RotatedRelativePoint(Owner.MountedCenter);
+            Vector2 lineEnd = Projectile.Center;
+            float height = Projectile.height * Projectile.scale;
+            Utils.PlotTileLine(lineStart, lineEnd, height, cut);
+        }
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            float point = 0f;
+            Vector2 lineStart = Owner.RotatedRelativePoint(Owner.MountedCenter);
+            Vector2 lineEnd = Projectile.Center;
+            float height = Projectile.height * Projectile.scale;
+            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), lineStart, lineEnd, height, ref point))
+                return true;
+            return false;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawTrail();
+            SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
+            Vector2 armCenter = Owner.RotatedRelativePoint(Owner.MountedCenter) + new Vector2(Owner.direction * -4, -4);
+            Vector2 drawPos = armCenter + positionVector.SafeNormalize(default) * 50f * Projectile.scale;
+            Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
             return false;
         }
         #region draw trail
@@ -300,19 +340,18 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         private float opacity;
         public void TrailSetUp()
         {
-            Vector2 armCenter = Player.RotatedRelativePoint(Player.MountedCenter, true) + new Vector2(-Player.direction * 4, -4);
+            Vector2 armCenter = Owner.RotatedRelativePoint(Owner.MountedCenter) + new Vector2(-Owner.direction * 4, -4);
             if (Timer == 2)
             {
                 Projectile.alpha = 0;
                 for (int i = 0; i < oldDirVector.Length; i++)
-                    oldDirVector.SetValue(vector, i);
+                    oldDirVector.SetValue(positionVector * 0.75f, i);
             }
-
             for (int k = oldDirVector.Length - 1; k > 0; k--)
             {
                 oldDirVector[k] = oldDirVector[k - 1];
             }
-            oldDirVector[0] = vector;
+            oldDirVector[0] = positionVector * 0.75f;
 
             if (Projectile.ai[0] == 3)
                 opacity = MathHelper.Lerp(1, 0, progress);
@@ -326,13 +365,14 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             }
             if (Projectile.ai[0] != 0 && Main.netMode != NetmodeID.Server)
             {
-                TrailHelper.ManageSwordTrailPosition(oldDirVector.Length, armCenter, oldDirVector, ref directionVectorCache, ref positionCache, 1.05f);
+                TrailHelper.ManageSwordTrailPosition(oldDirVector.Length, armCenter, oldDirVector, ref directionVectorCache, ref positionCache, 1);
                 ManageTrail();
             }
         }
-        public void ManageTrail()
+
+        public void InitializeTrail()
         {
-            trail ??= new DanTrail(Main.instance.GraphicsDevice, oldDirVector.Length, new NoTip(),
+            trail = new DanTrail(RedeGraphics.Instance.Primitives, new NoTip(),
             factor =>
             {
                 float mult = factor;
@@ -346,22 +386,25 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 float progress = EaseFunction.EaseCubicOut.Ease(1 - factor.X);
                 return Color.Lerp(baseColor, endColor, EaseFunction.EaseCubicIn.Ease(progress)) * (1 - progress) * opacity;
             });
-            trail.Positions = positionCache.ToArray();
-            trail.NextPosition = Projectile.Center;
+        }
+
+        public void ManageTrail()
+        {
+            trail.SetPositions(positionCache.ToArray(), Projectile.Center);
         }
         public void DrawTrail()
         {
             Main.spriteBatch.End();
             Main.spriteBatch.BeginDefault();
 
-            Effect effect = Request<Effect>("Redemption/Effects/GlowTrailShader", AssetRequestMode.ImmediateLoad).Value;
+            Effect effect = Request<Effect>("Redemption/Effects/GlowTrailShader").Value;
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.X, -Main.screenPosition.Y, 0);
             Matrix view = Main.GameViewMatrix.ZoomMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-            bool flip1 = Projectile.ai[0] == 1 && Player.direction == -1;
-            bool flip2 = Projectile.ai[0] == 2 && Player.direction == 1;
+            bool flip1 = Projectile.ai[0] == 1 && Owner.direction == -1;
+            bool flip2 = Projectile.ai[0] == 2 && Owner.direction == 1;
             bool flip3 = Projectile.ai[0] == 3 && Projectile.spriteDirection == -1;
             Texture2D texture = Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5").Value;
             if (flip1 || flip2 || flip3)
@@ -378,18 +421,5 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Main.spriteBatch.BeginDefault();
         }
         #endregion
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            DrawTrail();
-            Player Player = Main.player[Projectile.owner];
-            SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
-            float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.2f, 1.1f, 1.2f);
-            Vector2 v = RedeHelper.PolarVector(10, (Projectile.Center - Player.Center).ToRotation());
-            Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
-            return false;
-        }
     }
 }

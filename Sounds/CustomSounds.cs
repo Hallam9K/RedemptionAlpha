@@ -182,6 +182,8 @@ namespace Redemption
         public static readonly SoundStyle Ghost3 = new("Redemption/Sounds/Custom/Ghost", 2) { PitchVariance = .4f, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
         public static readonly SoundStyle FlameRise2 = new("Redemption/Sounds/Custom/FlameRise2") { PitchVariance = .1f };
 
+        public static readonly SoundStyle StaticFlare = new("Redemption/Sounds/Custom/EVFX/StaticFlare") { PitchVariance = .2f };
+
         public static readonly SoundStyle BoneHit = new("Redemption/Sounds/Tiles/BoneHit", 3);
         public static readonly SoundStyle BrickHit = new("Redemption/Sounds/Tiles/BrickHit", 3);
         public static readonly SoundStyle ChainHit = new("Redemption/Sounds/Tiles/ChainHit", 3);

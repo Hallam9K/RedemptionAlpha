@@ -865,13 +865,14 @@ namespace Redemption
             spriteBatch.Draw(timerBarInner2, drawPos, new Rectangle?(new Rectangle(0, 0, timerProgress2, timerBarInner.Height)), Color.White * .5f, 0f, timerBarInner.Size() / 2f, 1f, SpriteEffects.None, 0f);
 
             Texture2D shieldTex = Request<Texture2D>("Redemption/Textures/BubbleShield").Value;
-            Texture2D overlay = Request<Texture2D>("Redemption/Textures/BubbleShield_Overlay").Value;
-            Vector2 drawOrigin = new(shieldTex.Width / 2, shieldTex.Height / 2);
+            Rectangle rect = shieldTex.Frame(1, 2, 0, 1);
+            Vector2 drawOrigin = rect.Size() / 2;
 
             if (bP.shieldGeneratorCD <= 0)
             {
-                spriteBatch.Draw(overlay, playerCenter - Main.screenPosition, null, RedeColor.FadeColour1 with { A = 0 } * ((float)bP.shieldGeneratorLife / 200) * (bP.shieldGeneratorAlpha + 0.3f), 0, drawOrigin, .5f, 0, 0);
-                spriteBatch.Draw(shieldTex, playerCenter - Main.screenPosition, null, Color.White * ((float)bP.shieldGeneratorLife / 200) * (bP.shieldGeneratorAlpha + 0.3f), 0, drawOrigin, .5f, 0, 0);
+                spriteBatch.Draw(shieldTex, playerCenter - Main.screenPosition, rect, RedeColor.FadeColour1 with { A = 0 } * ((float)bP.shieldGeneratorLife / 200) * (bP.shieldGeneratorAlpha + 0.3f), 0, drawOrigin, .5f, 0, 0);
+                rect = shieldTex.Frame(1, 2, 0, 0);
+                spriteBatch.Draw(shieldTex, playerCenter - Main.screenPosition, rect, Color.White * ((float)bP.shieldGeneratorLife / 200) * (bP.shieldGeneratorAlpha + 0.3f), 0, drawOrigin, .5f, 0, 0);
             }
 
             spriteBatch.End();

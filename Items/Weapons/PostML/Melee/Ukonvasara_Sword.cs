@@ -1,14 +1,12 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
-using Redemption.Effects;
+using Redemption.Effects.Trails;
+using Redemption.Effects.Trails.Tips;
 using Redemption.Globals;
 using Redemption.Helpers;
-using Redemption.Particles;
 using Redemption.Projectiles.Ranged;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -21,8 +19,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
 {
     public class Ukonvasara_Sword : TrueMeleeProjectile
     {
-        public float[] oldrot = new float[8];
-        public Vector2[] oldPos = new Vector2[8];
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Ukonvasara");
@@ -32,12 +28,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
             ElementID.ProjThunder[Type] = true;
         }
         public override bool ShouldUpdatePosition() => false;
-        public override bool? CanHitNPC(NPC target)
-        {
-            if (progress > 0.43f && progress < 0.75f)
-                return null;
-            return false;
-        }
         public override void SetSafeDefaults()
         {
             Projectile.aiStyle = -1;
@@ -51,84 +41,71 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.extraUpdates = 4;
 
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 8;
+            Projectile.localNPCHitCooldown = -1;
             Projectile.usesOwnerMeleeHitCD = true;
             Projectile.ownerHitCheck = true;
             Projectile.ownerHitCheckDistance = 300f;
-        }
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            if (!strike)
-            {
-                strike = true;
-                SoundEngine.PlaySound(CustomSounds.Slice4 with { Volume = .7f, Pitch = .2f }, Projectile.position);
-                Player.RedemptionScreen().ScreenShakeIntensity += 8;
-                pauseTimer = Projectile.extraUpdates - 1;
-            }
-            Vector2 directionTo = target.DirectionTo(Player.Center);
-            for (int i = 0; i < 8; i++)
-                Dust.NewDustPerfect(target.Center + directionTo * 5 + new Vector2(0, 70) + Player.velocity, ModContent.DustType<DustSpark2>(), directionTo.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f) + 3.14f) * Main.rand.NextFloat(4f, 5f) + (Player.velocity / 2), 0, Color.White * .8f, 3f);
 
-            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
-
-            Projectile.localNPCImmunity[target.whoAmI] = 8;
-            target.immune[Projectile.owner] = 0;
+            InitializeTrail();
         }
-        Player Player => Main.player[Projectile.owner];
-        private bool strike;
-        private Vector2 startVector;
-        private Vector2 vector;
+        public Player Owner => Main.player[Projectile.owner];
         public ref float Length => ref Projectile.localAI[0];
         public ref float Rot => ref Projectile.localAI[1];
         public ref float Timer => ref Projectile.localAI[2];
-        private float SwingSpeed;
-        public int pauseTimer;
-        public float progress;
         public ref float SwingAngle => ref Projectile.ai[0];
         public ref float LockedDir => ref Projectile.ai[1];
+        public float[] oldrot = new float[8];
+        public Vector2[] oldPos = new Vector2[8];
+        public Vector2 startVector;
+        public Vector2 positionVector;
+        public float SwingSpeed;
+        public int pauseTimer;
+        public float progress;
+        public int maxTime;
         public override void AI()
         {
-            if (Player.noItems || Player.CCed || Player.dead || !Player.active)
+            if (Owner.noItems || Owner.CCed || Owner.dead || !Owner.active)
                 Projectile.Kill();
 
-            SwingSpeed = SetSwingSpeed(1);
-            Player.heldProj = Projectile.whoAmI;
-            Player.itemTime = 2;
-            Player.itemAnimation = 2;
+            maxTime = SetUseTime(Owner.HeldItem.useTime);
+            Owner.heldProj = Projectile.whoAmI;
+            Owner.itemTime = 2;
+            Owner.itemAnimation = 2;
 
-            Vector2 armCenter = Player.RotatedRelativePoint(Player.MountedCenter, true) + new Vector2(-Player.direction * 4, -4);
-            Projectile.Center = armCenter + vector;
+            Vector2 armCenter = Owner.RotatedRelativePoint(Owner.MountedCenter) + new Vector2(-Owner.direction * 4, -4);
 
-            Player.direction = (int)LockedDir;
-            Projectile.spriteDirection = Player.direction;
-            Projectile.rotation = (Projectile.Center - armCenter).ToRotation() + MathHelper.PiOver2;
+            Owner.direction = (int)LockedDir;
+            Projectile.spriteDirection = Owner.direction;
 
-            Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (armCenter - Projectile.Center).ToRotation() + MathHelper.PiOver2);
-            if (Main.myPlayer == Projectile.owner && --pauseTimer <= 0)
+            if (--pauseTimer <= 0)
             {
-                progress = Timer / (60 * SwingSpeed * 5);
+                progress = Timer / (maxTime * 6 * Projectile.MaxUpdates);
                 if (Timer++ == 0)
                 {
-                    Projectile.scale *= Projectile.ai[2];
-                    Length = 80 * Projectile.ai[2];
+                    Projectile.scale = 1.5f * Projectile.ai[2];
+                    Length = 70 * Projectile.scale;
                     startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));
                 }
-                if (Timer == (int)(30 * SwingSpeed * 5))
+                if (Timer == (int)(maxTime * 3 * Projectile.MaxUpdates))
                 {
                     if (!Main.dedServ)
                     {
-                        SoundEngine.PlaySound(CustomSounds.ElectricSlash with { Pitch = -.6f }, Player.position);
-                        SoundEngine.PlaySound(CustomSounds.Swing1 with { Pitch = -.6f }, Player.position);
+                        SoundEngine.PlaySound(CustomSounds.ElectricSlash with { Pitch = -.6f }, Owner.position);
+                        SoundEngine.PlaySound(CustomSounds.Swing1 with { Pitch = -.6f }, Owner.position);
                     }
                 }
                 if (progress < 1f)
                 {
                     Rot = MathHelper.ToRadians(60 + 100f * MathF.Atan(6.5f * MathHelper.Pi * (progress - 0.5f))) * Projectile.spriteDirection;
-                    vector = startVector.RotatedBy(Rot) * Length;
+                    positionVector = startVector.RotatedBy(Rot) * Length;
                 }
                 else
                     Projectile.Kill();
             }
+
+            Projectile.rotation = positionVector.ToRotation() + MathHelper.PiOver2;
+            Projectile.Center = armCenter + positionVector;
+            Owner.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, positionVector.ToRotation() + MathHelper.PiOver2);
 
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
             {
@@ -136,13 +113,57 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 oldrot[k] = oldrot[k - 1];
             }
             oldrot[0] = Projectile.rotation;
-            oldPos[0] = Projectile.Center;
+            oldPos[0] = positionVector;
 
             if (Main.netMode != NetmodeID.Server && --pauseTimer <= 0)
             {
                 TrailSetUp();
             }
         }
+        public override bool? CanHitNPC(NPC target)
+        {
+            if (progress > 0.43f && progress < 0.75f)
+                return null;
+            return false;
+        }
+        public bool strike;
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
+            if (!strike)
+            {
+                strike = true;
+                SoundEngine.PlaySound(CustomSounds.Slice4 with { Volume = .7f, Pitch = .2f }, Projectile.position);
+                Owner.RedemptionScreen().ScreenShakeIntensity += 8;
+                pauseTimer = maxTime / 10 * Projectile.MaxUpdates;
+            }
+            Vector2 directionTo = target.DirectionTo(Owner.Center);
+            for (int i = 0; i < 8; i++)
+                Dust.NewDustPerfect(target.Center + directionTo * 5 + new Vector2(0, 70) + Owner.velocity, DustType<DustSpark2>(), directionTo.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f) + 3.14f) * Main.rand.NextFloat(4f, 5f) + (Owner.velocity / 2), 0, Color.White * .8f, 3f);
+
+        }
+        private float drawTimer;
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawTrail();
+            SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Rectangle rect = new(0, 0, texture.Width, texture.Height);
+            Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
+            Vector2 armCenter = Owner.RotatedRelativePoint(Owner.MountedCenter) + new Vector2(Owner.direction * -4, -4);
+            Vector2 drawPos = armCenter + positionVector * 0.8f;
+
+            for (int k = 0; k < Projectile.oldPos.Length; k++)
+            {
+                Vector2 drawPos2 = armCenter + oldPos[k] * 0.8f;
+                Color color = Color.LightCyan with { A = 0 } * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(texture, drawPos2 - Main.screenPosition, null, color * 3, oldrot[k], origin, Projectile.scale, spriteEffects, 0);
+            }
+
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, drawPos - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.LightYellow), Projectile.rotation, origin, Projectile.scale, spriteEffects);
+            Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+            return false;
+        }       
         #region draw trail
         private Vector2[] oldDirVector = new Vector2[60];
         private List<Vector2> directionVectorCache = new();
@@ -154,12 +175,12 @@ namespace Redemption.Items.Weapons.PostML.Melee
         private float opacity = 0;
         public void TrailSetUp()
         {
-            Vector2 armCenter = Player.RotatedRelativePoint(Player.MountedCenter, true) + new Vector2(-Player.direction * 4, -4);
+            Vector2 armCenter = Owner.RotatedRelativePoint(Owner.MountedCenter, true) + new Vector2(-Owner.direction * 4, -4);
             if (Timer == 2)
             {
                 Projectile.alpha = 0;
                 for (int i = 0; i < oldDirVector.Length; i++)
-                    oldDirVector.SetValue(vector, i);
+                    oldDirVector.SetValue(positionVector, i);
             }
 
             float x = (progress - 0.55f) * 10;
@@ -172,7 +193,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             {
                 oldDirVector[k] = oldDirVector[k - 1];
             }
-            oldDirVector[0] = vector;
+            oldDirVector[0] = positionVector;
 
             if (Main.netMode != NetmodeID.Server)
             {
@@ -180,9 +201,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 ManageTrail();
             }
         }
-        public void ManageTrail()
+
+        public void InitializeTrail()
         {
-            trail ??= new DanTrail(Main.instance.GraphicsDevice, oldDirVector.Length, new NoTip(),
+            trail = new DanTrail(RedeGraphics.Instance.Primitives, new NoTip(),
             factor =>
             {
                 float mult = factor;
@@ -196,24 +218,27 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 float progress = EaseFunction.EaseCubicOut.Ease(1 - factor.X);
                 return Color.Lerp(baseColor, endColor, EaseFunction.EaseCubicIn.Ease(progress)) * (1 - progress) * opacity;
             });
-            trail.Positions = positionCache.ToArray();
-            trail.NextPosition = Projectile.Center;
+        }
+
+        public void ManageTrail()
+        {
+            trail.SetPositions(positionCache.ToArray(), Projectile.Center);
         }
         public void DrawTrail()
         {
             Main.spriteBatch.End();
             Main.spriteBatch.BeginDefault();
 
-            Effect effect = ModContent.Request<Effect>("Redemption/Effects/GlowTrailShader", AssetRequestMode.ImmediateLoad).Value;
+            Effect effect = Request<Effect>("Redemption/Effects/GlowTrailShader").Value;
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.X, -Main.screenPosition.Y, 0);
             Matrix view = Main.GameViewMatrix.ZoomMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-            bool flip = Player.direction == -1;
-            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5").Value;
+            bool flip = Owner.direction == -1;
+            Texture2D texture = Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5").Value;
             if (flip)
-                texture = ModContent.Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5_flipped2").Value;
+                texture = Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5_flipped2").Value;
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(texture);
@@ -226,38 +251,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Main.spriteBatch.BeginDefault();
         }
         #endregion
-
-        private float drawTimer;
-        public override bool PreDraw(ref Color lightColor)
-        {
-            DrawTrail();
-            SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Rectangle rect = new(0, 0, texture.Width, texture.Height);
-            Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
-            Vector2 v = Projectile.Center;
-
-            Texture2D Swing = ModContent.Request<Texture2D>("Redemption/Textures/BladeSwing", AssetRequestMode.ImmediateLoad).Value;
-            float dir = Projectile.spriteDirection == 1 ? MathHelper.PiOver4 : -5 * MathHelper.PiOver4;
-
-            float rotation = 0.5f * Rot + startVector.ToRotation() + dir;
-            Vector2 Center = Player.RotatedRelativePoint(Player.MountedCenter);
-            Rectangle rectangle = Swing.Frame(1, 4);
-            Vector2 origin2 = rectangle.Size() / 2f;
-            float opacity = 1 / (1 + 500 * ((progress - 0.5f) * (progress - 0.5f)));
-
-            for (int k = 0; k < Projectile.oldPos.Length; k++)
-            {
-                Vector2 v2 = RedeHelper.PolarVector(1, (oldPos[k] - Player.MountedCenter).ToRotation());
-                Vector2 drawPos = oldPos[k] - v2 - Main.screenPosition;
-                Color color = Color.LightCyan with { A = 0 } * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos, null, color * 3, oldrot[k], origin, Projectile.scale, spriteEffects, 0);
-            }
-
-            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, v - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.LightYellow), Projectile.rotation, origin, Projectile.scale, spriteEffects);
-            Main.EntitySpriteDraw(texture, v - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
-            return false;
-        }
     }
     public class Ukonvasara_Sword_Proj : ModProjectile
     {
@@ -350,11 +343,14 @@ namespace Redemption.Items.Weapons.PostML.Melee
             }
             else
             {
-                if (!thrown && Main.myPlayer == Owner.whoAmI)
+                if (!thrown)
                 {
                     Projectile.friendly = true;
                     SoundEngine.PlaySound(CustomSounds.ElectricSlash2, Owner.position);
-                    Projectile.velocity = Owner.DirectionTo(Main.MouseWorld) * 25f;
+
+                    if (Projectile.owner == Main.myPlayer)
+                        Projectile.velocity = Owner.DirectionTo(Main.MouseWorld) * 25f;
+
                     offset = Projectile.velocity * 0.6f;
                     Projectile.timeLeft = 2400;
                     Projectile.width = Projectile.height = 10;
@@ -489,16 +485,16 @@ namespace Redemption.Items.Weapons.PostML.Melee
             {
                 if (Main.myPlayer == Projectile.owner)
                 {
-                    int q = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center + new Vector2(10, 0), Vector2.Zero, ModContent.ProjectileType<UkonArrowStrike>(), Projectile.damage * 3, Projectile.knockBack, Main.myPlayer, 0, 1);
+                    int q = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center + new Vector2(10, 0), Vector2.Zero, ProjectileType<UkonArrowStrike>(), Projectile.damage * 3, Projectile.knockBack, Main.myPlayer, 0, 1);
                     Main.projectile[q].DamageType = DamageClass.Melee;
                     Main.projectile[q].localAI[0] = 35;
                     Main.projectile[q].alpha = 0;
                     Main.projectile[q].position.Y -= 540;
                     Main.projectile[q].frame = 12;
                     Main.projectile[q].netUpdate = true;
+                    playerDir = Main.MouseWorld.X < Owner.Center.X ? -1 : 1;
+                    swingAngle = Main.MouseWorld.DirectionFrom(Owner.Center).ToRotation();
                 }
-                playerDir = Main.MouseWorld.X < Owner.Center.X ? -1 : 1;
-                swingAngle = Main.MouseWorld.DirectionFrom(Owner.Center).ToRotation();
                 originalPos = Owner.Center;
                 teleportPos = Projectile.Center;
             }
@@ -526,7 +522,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 //Main.NewLightning();
                 if (Main.myPlayer == Projectile.owner)
                 {
-                    int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center + new Vector2(10, 0), Vector2.Zero, ModContent.ProjectileType<UkonArrowStrike>(), Projectile.damage * 3, Projectile.knockBack, Main.myPlayer, 0, 1);
+                    int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center + new Vector2(10, 0), Vector2.Zero, ProjectileType<UkonArrowStrike>(), Projectile.damage * 3, Projectile.knockBack, Main.myPlayer, 0, 1);
                     Main.projectile[p].DamageType = DamageClass.Melee;
                     Main.projectile[p].localAI[0] = 35;
                     Main.projectile[p].alpha = 0;
@@ -536,10 +532,9 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 }
                 Owner.RedemptionScreen().ScreenShakeIntensity += 5;
             }
-            if (teleportTimer == 2)
-            {
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), teleportPos, RedeHelper.PolarVector(5, swingAngle), ModContent.ProjectileType<Ukonvasara_Sword>(), Projectile.damage * 6, Projectile.knockBack, Projectile.owner, swingAngle, playerDir, Projectile.ai[2]);
-            }
+            if (teleportTimer == 2 && Projectile.owner == Main.myPlayer)
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), teleportPos, RedeHelper.PolarVector(5, swingAngle), ProjectileType<Ukonvasara_Sword>(), Projectile.damage * 6, Projectile.knockBack, Projectile.owner, swingAngle, playerDir, Projectile.ai[2]);
+
             if (teleportTimer == 3)
                 Projectile.friendly = false;
             if (teleportTimer >= 60)
@@ -593,7 +588,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
-            target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 180);
+            target.AddBuff(BuffType<ElectrifiedDebuff>(), 180);
             Projectile.localNPCImmunity[target.whoAmI] = 8;
             target.immune[Projectile.owner] = 0;
         }
@@ -620,7 +615,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Main.spriteBatch.End();
             Main.spriteBatch.BeginAdditive();
 
-            Texture2D Dash = ModContent.Request<Texture2D>("Redemption/Textures/Trails/Lightning2", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D Dash = Request<Texture2D>("Redemption/Textures/Trails/Lightning2").Value;
             Vector2 DashCenter = 0.5f * (originalPos + teleportPos);
             Rectangle Dashrectangle = Dash.Frame();
             Vector2 Dashorigin = Dashrectangle.Size() / 2f;

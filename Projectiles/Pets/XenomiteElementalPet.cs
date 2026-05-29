@@ -14,6 +14,7 @@ namespace Redemption.Projectiles.Pets
 			// DisplayName.SetDefault("Pet Xenomite Elemental");
 			Main.projFrames[Projectile.type] = 8;
 			Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.LightPet[Type] = true;
             ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(0, Main.projFrames[Projectile.type], 5)
 				.WithOffset(2, -20f).WithSpriteDirection(-1)
                 .WithCode(DelegateMethods.CharacterPreview.Float);

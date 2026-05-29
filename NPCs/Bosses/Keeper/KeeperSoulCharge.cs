@@ -1,7 +1,10 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
 using Redemption.Globals;
+using Redemption.Globals.Projectiles;
+using Redemption.Projectiles;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -57,7 +60,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, baseColor, baseColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, baseColor, baseColor, thickness);
             }
             if (Projectile.ai[0] == 1)
                 Projectile.alpha += 5;
@@ -95,7 +98,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 

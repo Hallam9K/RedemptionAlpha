@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
 using Redemption.Globals;
+using Redemption.Globals.Projectiles;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -109,7 +111,7 @@ namespace Redemption.Projectiles.Minions
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
             }
             if (fakeTimer > 0)
                 FakeKill();

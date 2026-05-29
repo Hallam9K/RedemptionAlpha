@@ -1,11 +1,14 @@
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary.Core;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
+using Redemption.Effects.Trails.Tips;
 using Redemption.Globals;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Map;
 
 namespace Redemption.Particles
 {
@@ -15,6 +18,7 @@ namespace Redemption.Particles
         public AnglonPortal_EnergyGather(Vector2 seekEntityPos)
         {
             SeekEntityPos = seekEntityPos;
+            InitializeTrail();
         }
         public override string Texture => Redemption.EMPTY_TEXTURE;
         private readonly int NUMPOINTS = 30;
@@ -148,9 +152,9 @@ namespace Redemption.Particles
             }
         }
 
-        public void ManageTrail()
+        public void InitializeTrail()
         {
-            trail ??= new DanTrail(Main.instance.GraphicsDevice, NUMPOINTS, new TriangularTip(4),
+            trail = new DanTrail(RedeGraphics.Instance.Primitives, new TriangularTip(4),
             factor =>
             {
                 float mult = factor;
@@ -171,10 +175,7 @@ namespace Redemption.Particles
 
                 return edgeColor * 0.1f * factor.X;
             });
-
-            trail.Positions = cache.ToArray();
-            trail.NextPosition = Position;
-            trail2 ??= new DanTrail(Main.instance.GraphicsDevice, NUMPOINTS, new TriangularTip(4),
+            trail2 = new DanTrail(RedeGraphics.Instance.Primitives, new TriangularTip(4),
             factor =>
             {
                 float mult = factor;
@@ -193,9 +194,12 @@ namespace Redemption.Particles
                 float progress = EaseFunction.EaseCubicOut.Ease(1 - factor.X);
                 return Color.Lerp(baseColor, endColor, EaseFunction.EaseCubicIn.Ease(progress)) * (1 - progress);
             });
+        }
 
-            trail2.Positions = cache2.ToArray();
-            trail2.NextPosition = Position;
+        public void ManageTrail()
+        {
+            trail.SetPositions(cache.ToArray(), Position);
+            trail2.SetPositions(cache2.ToArray(), Position);
         }
     }
     public class GathuramPortal_EnergyGather : AnglonPortal_EnergyGather

@@ -1,6 +1,6 @@
 displayName = Mod of Redemption [BETA]
 author = Hallam & Tied
-version = 0.8.0.4140
+version = 0.8.0.415
 buildIgnore = *.csproj, *.user, obj\*, bin\*, lib\*, .vs\*, *.gif, *.piskel, Unused\*
 modReferences = ParticleLibrary, StructureHelper, SubworldLibrary, CollisionLib, BetterDialogue
 sortAfter = ThoriumMod

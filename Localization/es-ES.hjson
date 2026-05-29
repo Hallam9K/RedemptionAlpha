@@ -6726,12 +6726,12 @@ Mods: {
 
 			OmegaBox2: {
 				DisplayName: Caja de música (Omega Obliterador)
-				Tooltip: Universe - Hailfire
+				Tooltip: TYESKI - Hailfire
 			}
 
 			PZMusicBox: {
 				DisplayName: Caja de música (Paciente cero)
-				Tooltip: Universe - Xenostate
+				Tooltip: TYESKI - Xenostate
 			}
 
 			SlayerShipBox: {
@@ -11185,6 +11185,31 @@ Mods: {
 				DisplayName: Ojo infectado
 				Tooltip: ""
 			}
+
+			LostSoulBottle: {
+				// DisplayName: Lost Soul in a Bottle
+				// Tooltip: ""
+			}
+
+			EpidotraMusicBox: {
+				// DisplayName: Music Box (Epidotra)
+				// Tooltip: musicman - Epidotra
+			}
+
+			WeirdBloomPainting: {
+				// DisplayName: Weird Bloom Painting
+				// Tooltip: ""
+			}
+
+			AncientFlowerSeeds: {
+				// DisplayName: Ancient Flower Seeds
+				// Tooltip: ""
+			}
+
+			TallAncientGrassSeeds: {
+				// DisplayName: Tall Ancient Grass Seeds
+				// Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -11924,6 +11949,7 @@ Mods: {
 			SunPalmFlare_Proj.DisplayName: Sol Palma Flare
 			Blisterface_GirusTalk.DisplayName: Voz ominosa
 			Blisterface_Drip_Proj.DisplayName: Sludge Droplet
+			// ErhanMagnifyingGlass_HoldOut.DisplayName: Erhan Magnifying Glass_ Hold Out
 		}
 
 		NPCs: {
@@ -12699,6 +12725,7 @@ Mods: {
 			ClayStatuetteTile.MapEntry: Estatuilla de arcilla
 			DesertStatuetteTile.MapEntry: Estatuilla desértica
 			ObsidianStatuetteTile.MapEntry: Estatuilla de obsidiana
+			// LostSoulBottleTile.MapEntry: Lost Soul in a Bottle
 		}
 
 		Keybinds: {

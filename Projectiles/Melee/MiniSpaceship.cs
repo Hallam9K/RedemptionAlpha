@@ -1,15 +1,16 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using Redemption.Globals;
-using Terraria.Audio;
-using Redemption.Globals.Players;
-using Redemption.Projectiles.Ranged;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
+using Redemption.Globals;
+using Redemption.Globals.Players;
+using Redemption.Globals.Projectiles;
+using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Melee
 {
@@ -95,7 +96,7 @@ namespace Redemption.Projectiles.Melee
                         if (modPlayer.hitTarget != -1)
                         {
                             SoundEngine.PlaySound(SoundID.Item12, Projectile.position);
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, Projectile.rotation), ModContent.ProjectileType<MiniSpaceship_Laser>(), 1 + (player.HeldItem.damage / 4), Projectile.knockBack, Projectile.owner);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, Projectile.rotation), ProjectileType<MiniSpaceship_Laser>(), 1 + (player.HeldItem.damage / 4), Projectile.knockBack, Projectile.owner);
                             modPlayer.hitTarget = -1;
                         }
                     }
@@ -104,7 +105,7 @@ namespace Redemption.Projectiles.Melee
                         if (modPlayer.hitTarget2 != -1)
                         {
                             SoundEngine.PlaySound(SoundID.Item12, Projectile.position);
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, Projectile.rotation), ModContent.ProjectileType<MiniSpaceship_Laser>(), 1 + (player.HeldItem.damage / 4), Projectile.knockBack, Projectile.owner);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, Projectile.rotation), ProjectileType<MiniSpaceship_Laser>(), 1 + (player.HeldItem.damage / 4), Projectile.knockBack, Projectile.owner);
                             modPlayer.hitTarget2 = -1;
                         }
                     }
@@ -118,7 +119,7 @@ namespace Redemption.Projectiles.Melee
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
             }
         }
         public override bool PreDraw(ref Color lightColor)
@@ -131,7 +132,7 @@ namespace Redemption.Projectiles.Melee
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 

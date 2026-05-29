@@ -1,11 +1,13 @@
 using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary;
 using ParticleLibrary.Core;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
+using Redemption.Effects.Trails.Tips;
 using Redemption.Globals;
+using Redemption.Globals.Projectiles;
 using Redemption.Particles;
 using Redemption.Textures;
 using System;
@@ -45,6 +47,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 4;
             Projectile.usesLocalNPCImmunity = true;
+
+            InitializeTrail();
         }
         public float vectorOffset = 0f;
         public bool offsetLeft = false;
@@ -165,7 +169,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value);
+                effect.Parameters["sampleTexture"].SetValue(CommonTextures.Trail_4.Value);
                 effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
                 effect.Parameters["repeats"].SetValue(1f);
 
@@ -176,9 +180,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 return true;
             }
         }
-        public void ManageTrail()
+
+        public void InitializeTrail()
         {
-            trail ??= new DanTrail(Main.instance.GraphicsDevice, NUMPOINTS, new TriangularTip(4),
+            trail = new DanTrail(RedeGraphics.Instance.Primitives, new TriangularTip(4),
             factor =>
             {
                 float mult = factor;
@@ -196,10 +201,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
                 return edgeColor * 0.1f * factor.X * Projectile.Opacity;
             });
-
-            trail.Positions = cache.ToArray();
-            trail.NextPosition = Projectile.Center;
-            trail2 ??= new DanTrail(Main.instance.GraphicsDevice, NUMPOINTS, new TriangularTip(4),
+            trail2 = new DanTrail(RedeGraphics.Instance.Primitives, new TriangularTip(4),
             factor =>
             {
                 float mult = factor;
@@ -215,9 +217,12 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 float progress = EaseFunction.EaseCubicOut.Ease(1 - factor.X);
                 return Color.Lerp(baseColor, endColor, EaseFunction.EaseCubicIn.Ease(progress)) * (1 - progress) * Projectile.Opacity;
             });
+        }
 
-            trail2.Positions = cache2.ToArray();
-            trail2.NextPosition = Projectile.Center;
+        public void ManageTrail()
+        {
+            trail.SetPositions(cache.ToArray(), Projectile.Center);
+            trail2.SetPositions(cache2.ToArray(), Projectile.Center);
         }
     }
     public class PNebula2_Friendly : PNebula1_Friendly

@@ -30,7 +30,7 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
-            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide | AnchorType.Table, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             HitSound = CustomSounds.CrystalHit;
             DustType = DustID.Sandnado;

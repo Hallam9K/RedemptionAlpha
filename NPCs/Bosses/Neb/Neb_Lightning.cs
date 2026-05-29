@@ -1,8 +1,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary.Core;
+using Redemption.BaseExtension;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
 using Redemption.Globals;
 using Redemption.Particles;
+using Redemption.Projectiles;
 using Redemption.Textures;
 using Terraria;
 using Terraria.Audio;
@@ -94,7 +98,7 @@ namespace Redemption.NPCs.Bosses.Neb
         }
         #endregion
     }
-    public class Neb_Lightning : ModProjectile
+    public class Neb_Lightning : ModRedeProjectile
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
@@ -117,11 +121,6 @@ namespace Redemption.NPCs.Bosses.Neb
             Projectile.tileCollide = false;
         }
         int timeLeftMax;
-        public Color baseColor = new(193, 255, 219, 0);
-        public Color endColor = new(0, 242, 170, 0);
-        public Color edgeColor = Color.White with { A = 0 };
-        private DanTrail trail;
-        private DanTrail trail2;
         private Vector2 originalVector;
         public override void AI()
         {
@@ -148,23 +147,6 @@ namespace Redemption.NPCs.Bosses.Neb
             Vector2 drawOrigin = new(CommonTextures.WhiteOrb.Width() / 2, CommonTextures.WhiteOrb.Height() / 2);
             Main.EntitySpriteDraw(CommonTextures.WhiteOrb.Value, Projectile.Center - (Projectile.velocity / 20) - Main.screenPosition, null, new(193, 255, 219, 0), Projectile.rotation, drawOrigin, .7f * Projectile.Opacity, SpriteEffects.None, 0);
             Main.EntitySpriteDraw(CommonTextures.WhiteOrb.Value, Projectile.Center - (Projectile.velocity / 20) - Main.screenPosition, null, new(193, 255, 219, 0), Projectile.rotation, drawOrigin, .7f * Projectile.Opacity, SpriteEffects.None, 0);
-
-            Main.spriteBatch.End();
-            Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
-
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.ZoomMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
-            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
-            effect.Parameters["repeats"].SetValue(1f);
-
-            trail?.Render(effect);
-            trail2?.Render(effect);
-
-            Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
             return true;
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)

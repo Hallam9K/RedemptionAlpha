@@ -1,14 +1,15 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
+using Redemption.Effects;
 using Redemption.Globals;
+using System.Collections.Generic;
+using Redemption.Effects.Trails;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Effects;
-using System.Collections.Generic;
+using Redemption.Globals.Projectiles;
 
 namespace Redemption.Projectiles.Ranged
 {
@@ -75,7 +76,7 @@ namespace Redemption.Projectiles.Ranged
         private void BlastSpawn(Vector2 vel)
         {
             if (Projectile.owner == Main.myPlayer)
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + vel, Vector2.Zero, ModContent.ProjectileType<PlasmaRound_Blast>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + vel, Vector2.Zero, ProjectileType<PlasmaRound_Blast>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 
             DustHelper.DrawCircle(Projectile.Center + vel, DustID.OrangeTorch, 1, 2, 2, nogravity: true);
             if (!Main.dedServ)
@@ -91,7 +92,7 @@ namespace Redemption.Projectiles.Ranged
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, edgeColor, endColor, edgeColor, thickness);
             }
             if (fakeTimer > 0)
                 FakeKill();
@@ -106,7 +107,7 @@ namespace Redemption.Projectiles.Ranged
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 
@@ -119,9 +120,9 @@ namespace Redemption.Projectiles.Ranged
         public override void PostDraw(Color lightColor)
         {
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D flare = Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 origin = new(flare.Width / 2, flare.Height / 2);
             Vector2 position = Projectile.Center - Main.screenPosition;
@@ -131,7 +132,7 @@ namespace Redemption.Projectiles.Ranged
             Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), Projectile.GetAlpha(colour) * 0.4f, Projectile.rotation, origin, 2f, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
         }
     }
 
@@ -185,13 +186,13 @@ namespace Redemption.Projectiles.Ranged
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 origin = new(texture.Width / 2f, height / 2f);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
             Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), Projectile.GetAlpha(Color.White) * 0.6f, Projectile.rotation, origin, Projectile.scale + 0.5f, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }

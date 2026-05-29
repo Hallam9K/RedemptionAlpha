@@ -3,9 +3,11 @@ using Redemption.Dusts;
 using Redemption.Effects;
 using Redemption.Globals;
 using System.Collections.Generic;
+using Redemption.Effects.Trails;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.Globals.Projectiles;
 
 namespace Redemption.Projectiles.Ranged
 {
@@ -45,9 +47,9 @@ namespace Redemption.Projectiles.Ranged
             if (!Main.dayTime && Main.moonPhase != 4 && Main.myPlayer == player.whoAmI)
             {
                 if (Main.moonPhase == 0)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, RedeHelper.RandomRotation()), ProjectileType<MoonflareBatIllusion>(), (int)(Projectile.damage * 0.85f), Projectile.knockBack, Main.myPlayer, target.whoAmI);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, RedeHelper.RandomRotation()), ProjectileType<MoonflareBatIllusion>(), (int)(Projectile.damage * 0.7f), Projectile.knockBack, Main.myPlayer, target.whoAmI);
 
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, RedeHelper.RandomRotation()), ProjectileType<MoonflareBatIllusion>(), (int)(Projectile.damage * 0.85f), Projectile.knockBack, Main.myPlayer, target.whoAmI);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, RedeHelper.RandomRotation()), ProjectileType<MoonflareBatIllusion>(), (int)(Projectile.damage * 0.7f), Projectile.knockBack, Main.myPlayer, target.whoAmI);
             }
         }
         private int fakeTimer;
@@ -82,7 +84,7 @@ namespace Redemption.Projectiles.Ranged
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
             }
             if (fakeTimer > 0)
                 FakeKill();

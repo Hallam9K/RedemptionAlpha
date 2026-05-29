@@ -143,8 +143,7 @@ namespace Redemption.Globals.Players
         {
             if ((damageSource.SourceNPCIndex >= 0 || (damageSource.SourceProjectileLocalIndex >= 0 && Main.projectile[damageSource.SourceProjectileLocalIndex].Redemption().TechnicallyMelee)) && contactImmuneTrue)
                 return true;
-            if (((damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].velocity.Length() > Player.velocity.Length() / 2) ||
-                (damageSource.SourceProjectileLocalIndex >= 0 && Main.projectile[damageSource.SourceProjectileLocalIndex].Redemption().TechnicallyMelee)) && parryStance)
+            if ((damageSource.SourceNPCIndex >= 0 || (damageSource.SourceProjectileLocalIndex >= 0 && Main.projectile[damageSource.SourceProjectileLocalIndex].Redemption().TechnicallyMelee)) && parryStance)
             {
                 parried = true;
                 Player.immune = true;

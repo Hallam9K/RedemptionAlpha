@@ -1,11 +1,14 @@
 using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary;
 using ParticleLibrary.Core;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
 using Redemption.Globals;
+using Redemption.Globals.Projectiles;
 using Redemption.Particles;
+using Redemption.Projectiles;
 using Redemption.Textures;
 using System;
 using System.Collections.Generic;
@@ -17,7 +20,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
-    public class PNebula1_Tele : ModProjectile
+    public class PNebula1_Tele : ModRedeProjectile
     {
         public override string Texture => "Redemption/Textures/TelegraphLine";
         public float AITimer
@@ -57,6 +60,8 @@ namespace Redemption.NPCs.Bosses.Neb
         public override bool ShouldUpdatePosition() => false;
         public override void AI()
         {
+            NPC npc = Main.npc[(int)Projectile.ai[2]];
+
             Projectile.rotation = Projectile.velocity.ToRotation();
             #region Beginning And End Effects
             if (AITimer == 0)
@@ -64,9 +69,9 @@ namespace Redemption.NPCs.Bosses.Neb
                 LaserScale = 1;
                 if (Projectile.owner == Main.myPlayer)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<PNebula1>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<PNebula2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<PNebula3>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(npc.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<PNebula1>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, ai2: npc.whoAmI);
+                    Projectile.NewProjectile(npc.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<PNebula2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, ai2: npc.whoAmI);
+                    Projectile.NewProjectile(npc.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ProjectileType<PNebula3>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, ai2: npc.whoAmI);
                 }
             }
             if (Projectile.timeLeft >= 50)
@@ -157,7 +162,7 @@ namespace Redemption.NPCs.Bosses.Neb
         #endregion
     }
 
-    public class PNebula1 : ModProjectile
+    public class PNebula1 : ModRedeProjectile
     {
         public int proType = 0;
         public override void SetStaticDefaults()
@@ -173,12 +178,13 @@ namespace Redemption.NPCs.Bosses.Neb
             Projectile.width = 10;
             Projectile.height = 10;
             Projectile.aiStyle = -1;
-            Projectile.friendly = false;
+            Projectile.friendly = true;
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 180;
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 2;
+            Projectile.Redemption().friendlyHostile = true;
         }
         public float vectorOffset = 0f;
         public bool offsetLeft = false;
@@ -244,14 +250,18 @@ namespace Redemption.NPCs.Bosses.Neb
                 Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57f;
                 Projectile.spriteDirection = 1;
                 Projectile.hostile = true;
+                Projectile.friendly = true;
             }
             else
+            {
                 Projectile.hostile = false;
+                Projectile.friendly = false;
+            }
 
             if (proType != 0 && Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
             }
         }
         public override bool ShouldUpdatePosition()
@@ -296,7 +306,7 @@ namespace Redemption.NPCs.Bosses.Neb
                     Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                     effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                    effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value);
+                    effect.Parameters["sampleTexture"].SetValue(CommonTextures.Trail_4.Value);
                     effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
                     effect.Parameters["repeats"].SetValue(1f);
 

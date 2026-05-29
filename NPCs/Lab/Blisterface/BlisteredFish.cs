@@ -73,7 +73,7 @@ namespace Redemption.NPCs.Lab.Blisterface
             bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
 
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.Bestiary.BlisteredFish"))
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.BlisteredFish"))
             });
         }
         public override void FindFrame(int frameHeight)

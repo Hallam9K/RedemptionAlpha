@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary.Core;
 using ParticleLibrary.Utilities;
 using Redemption.Effects;
 using Redemption.Globals;
@@ -7,7 +6,6 @@ using Redemption.Items.Materials.PostML;
 using Redemption.Particles;
 using Redemption.Projectiles.Ranged;
 using Redemption.Rarities;
-using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -86,6 +84,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Projectile.height = 34;
             Projectile.friendly = false;
             Projectile.hostile = false;
+            Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
         }
@@ -108,22 +107,22 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 
             if (!Player.channel || Player.noItems || Player.CCed || Player.dead || !Player.active)
             {
-                if (Timer++ == 0 && Charge >= 20)
+                if (Timer == 0 && Charge >= 20)
                 {
                     if (Projectile.owner == Main.myPlayer)
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity * 10f, ProjectileType<Twinklestar_ShootingStar>(), Projectile.damage * 3, Projectile.knockBack, Projectile.owner, Charge);
                     DrawParticle();
                 }
 
-                if (Timer == 0 && Charge < 5)
+                if (Charge < 5)
                     Projectile.Kill();
 
-                if (Timer >= 20)
+                if (Timer++ >= 20)
                     Projectile.Kill();
             }
             else
             {
-                Charge += 2 * Player.GetAttackSpeed(DamageClass.Ranged);
+                Charge += 2 * 30f / Player.HeldItem.useTime * Player.GetAttackSpeed(DamageClass.Ranged);
                 Charge = MathHelper.Clamp(Charge, 0, 60);
             }
             Projectile.netUpdate = true;
@@ -157,8 +156,8 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             float chargeProgress = EaseFunction.EaseCubicIn.Ease(Charge / 60f);
             float opacityProgress = EaseFunction.Linear.Ease(Timer / 20f);
 
-            Texture2D TrailTex = Request<Texture2D>("Redemption/Textures/Trails/CrystalTrail", AssetRequestMode.ImmediateLoad).Value;
-            Effect effect = Request<Effect>("Redemption/Effects/Beam", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D TrailTex = Request<Texture2D>("Redemption/Textures/Trails/CrystalTrail").Value;
+            Effect effect = Request<Effect>("Redemption/Effects/Beam").Value;
 
             Color col1 = Color.Lerp(RedeColor.NebColour, Color.White, chargeProgress * 0.5f);
             Color col2 = Color.Lerp(Main.DiscoColor, Color.White, chargeProgress * 0.5f);
@@ -173,9 +172,9 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 
             TrianglePrimitive tri = new()
             {
-                TipPosition = Projectile.Center - vel * chargeProgress * 30 - Main.screenPosition,
+                TipPosition = Projectile.Center - vel * (chargeProgress * 50 + opacityProgress * -200)  - Main.screenPosition,
                 Rotation = vel.ToRotation(),
-                Height = 150,
+                Height = 200,
                 Color = Color.White * opacity,
                 Width = MathHelper.Lerp(100, 20, chargeProgress)
             };

@@ -1,7 +1,7 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Redemption.Effects;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Effects.Trails;
 using Redemption.Globals;
-using Redemption.Globals.NPCs;
+using Redemption.Particles;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -41,7 +41,7 @@ namespace Redemption.Projectiles.Melee
         private DanTrail trail;
         private DanTrail trail2;
         private readonly float thickness = 4f;
-
+        public int homingAdjustmentTimer;
         public override void AI()
         {
             if (++Projectile.frameCounter >= 5)
@@ -51,39 +51,24 @@ namespace Redemption.Projectiles.Melee
                     Projectile.frame = 0;
             }
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
-            if (Projectile.localAI[0] == 0f)
+            NPC target = null;
+            if (RedeHelper.ClosestNPC(ref target, 600, Projectile.Center))
             {
-                AdjustMagnitude(ref Projectile.velocity);
-                Projectile.localAI[0] = 1f;
+                homingAdjustmentTimer++;
+                Projectile.UniformMotion(target.Center, Projectile.velocity.Length(), 0.05f + Utils.GetLerpValue(0, 60, homingAdjustmentTimer, true) * 0.25f);
             }
-            Vector2 move = Vector2.Zero;
-            float distance = 600f;
-            bool target = false;
-            for (int k = 0; k < Main.maxNPCs; k++)
+            if(Projectile.timeLeft == 80)
             {
-                NPC npc = Main.npc[k];
-                if (npc.active && !npc.dontTakeDamage && !npc.friendly && npc.lifeMax > 5 && !npc.immortal && !npc.GetGlobalNPC<RedeNPC>().invisible)
-                {
-                    Vector2 newMove = npc.Center - Projectile.Center;
-                    float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
-                    if (distanceTo < distance)
-                    {
-                        move = newMove;
-                        distance = distanceTo;
-                        target = true;
-                    }
-                }
-            }
-            if (target)
-            {
-                AdjustMagnitude(ref move);
-                Projectile.velocity = (10 * Projectile.velocity + move) / 11f;
-                AdjustMagnitude(ref Projectile.velocity);
+                float rotation = Main.rand.NextFloat(6.28f);
+                Vector2 drawPos = Projectile.Center + Projectile.velocity * 1;
+                Vector2 randVel = rotation.ToRotationVector2();
+                RedeParticleManager.CreateSlashParticle(drawPos, randVel * 10, .5f, Color.LightCyan, 8);
+                RedeParticleManager.CreateSlashParticle(drawPos, randVel.RotatedBy(MathF.PI / 2) * 10, .5f, Color.LightCyan, 8);
             }
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
             }
         }
         private static void AdjustMagnitude(ref Vector2 vector)

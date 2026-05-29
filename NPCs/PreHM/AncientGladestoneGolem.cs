@@ -1,11 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Globals.NPCs;
+using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Placeable.Tiles;
+using Redemption.NPCs.Friendly;
 using Redemption.Projectiles.Hostile;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -13,11 +17,9 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
-using Redemption.BaseExtension;
-using System.IO;
-using Terraria.Localization;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -341,11 +343,17 @@ namespace Redemption.NPCs.PreHM
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
+        public override void OnKill()
+        {
+            if (Main.rand.NextBool(2))
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.4f, 0.8f));
+        }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GathicGladestone>(), 1, 4, 14));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientDirt>(), 1, 2, 8));
             npcLoot.Add(ItemDropRule.Common(ItemID.NightVisionHelmet, 30));
+            npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ItemType<LostSoul>(), 2));
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

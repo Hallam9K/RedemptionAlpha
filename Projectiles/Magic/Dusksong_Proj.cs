@@ -1,11 +1,11 @@
-using Microsoft.Build.Execution;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary;
+using ParticleLibrary.Core;
 using Redemption.Dusts;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
 using Redemption.Globals;
 using Redemption.Globals.NPCs;
+using Redemption.Globals.Projectiles;
 using Redemption.Particles;
 using System;
 using System.Collections.Generic;
@@ -88,7 +88,7 @@ namespace Redemption.Projectiles.Magic
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
             }
             if (fakeTimer > 0)
                 FakeKill();
@@ -102,9 +102,10 @@ namespace Redemption.Projectiles.Magic
                     RedeParticleManager.CreateGlowParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), 3 * Projectile.scale, edgeColor, Main.rand.Next(50, 60));
                 for (int i = 0; i < 20; i++)
                     RedeParticleManager.CreateGlowParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), 3 * Projectile.scale, baseColor, Main.rand.Next(50, 60));
+                SoundEngine.PlaySound(SoundID.NPCDeath51 with { Pitch = -.5f }, Projectile.position);
                 for (int i = 0; i < 20; i++)
                 {
-                    int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<VoidFlame>(), Scale: 2);
+                    int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustType<VoidFlame>(), Scale: 2);
                     Main.dust[dust].velocity *= 2;
                     Main.dust[dust].noGravity = true;
                 }
@@ -125,7 +126,7 @@ namespace Redemption.Projectiles.Magic
 
             bool weak = Projectile.ModProjectile is DusksongWeak_Proj;
 
-            for (int k = 0; k < 40; k++)
+            for (int k = 0; k < 20; k++)
             {
                 Vector2 vector;
                 double angle = Main.rand.NextDouble() * 2d * Math.PI;
@@ -139,7 +140,7 @@ namespace Redemption.Projectiles.Magic
             if (Projectile.owner == Main.myPlayer)
             {
                 for (int i = 0; i < Main.rand.Next(1, 3); i++)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedByRandom(.4f) * Main.rand.NextFloat(.9f, 1.1f), ModContent.ProjectileType<Dusksong_Proj2>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner, weak ? 0 : 1);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedByRandom(.4f) * Main.rand.NextFloat(.9f, 1.1f), ProjectileType<Dusksong_Proj2>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner, weak ? 0 : 1);
             }
             CD = weak ? 7 : 5;
         }
@@ -155,7 +156,7 @@ namespace Redemption.Projectiles.Magic
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 
@@ -186,7 +187,7 @@ namespace Redemption.Projectiles.Magic
             Main.spriteBatch.End();
             Main.spriteBatch.BeginAdditive();
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/PurpleEyeFlare").Value;
+            Texture2D flare = Request<Texture2D>("Redemption/Textures/PurpleEyeFlare").Value;
             Rectangle rect2 = new(0, 0, flare.Width, flare.Height);
             Vector2 origin2 = new(flare.Width / 2, flare.Height / 2);
             Color flareColor = Projectile.ModProjectile is DusksongWeak_Proj ? Color.White : baseColor;
@@ -210,7 +211,7 @@ namespace Redemption.Projectiles.Magic
             SoundEngine.PlaySound(SoundID.NPCDeath51 with { Pitch = -.5f }, Projectile.position);
             for (int i = 0; i < 20; i++)
             {
-                int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<VoidFlame>(), Scale: 2);
+                int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustType<VoidFlame>(), Scale: 2);
                 Main.dust[dust].velocity *= 2;
                 Main.dust[dust].noGravity = true;
             }
@@ -297,6 +298,7 @@ namespace Redemption.Projectiles.Magic
                 RedeParticleManager.CreateGlowParticle(Projectile.Center, Vector2.Zero, 1f, baseColor, Main.rand.Next(10, 20));
             if (Main.rand.NextBool(2))
                 RedeParticleManager.CreateGlowParticle(Projectile.Center, Vector2.Zero, 1f, edgeColor, Main.rand.Next(10, 20));
+
             flareScale += Main.rand.NextFloat(-.02f, .02f);
             flareScale = MathHelper.Clamp(flareScale, .1f, .3f);
             flareOpacity += Main.rand.NextFloat(-.1f, .1f);
@@ -304,7 +306,7 @@ namespace Redemption.Projectiles.Magic
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
             }
         }
         private int fakeTimer;
@@ -336,7 +338,7 @@ namespace Redemption.Projectiles.Magic
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 
@@ -348,7 +350,7 @@ namespace Redemption.Projectiles.Magic
             Main.spriteBatch.End();
             Main.spriteBatch.BeginAdditive();
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/PurpleEyeFlare").Value;
+            Texture2D flare = Request<Texture2D>("Redemption/Textures/PurpleEyeFlare").Value;
             Rectangle rect2 = new(0, 0, flare.Width, flare.Height);
             Vector2 origin2 = new(flare.Width / 2, flare.Height / 2);
             Color flareColor = Projectile.ai[0] != 1 ? Color.White : baseColor;

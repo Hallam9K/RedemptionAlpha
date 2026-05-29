@@ -1,3 +1,4 @@
+using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Tiles.Tiles;
 using Terraria;
@@ -20,13 +21,21 @@ namespace Redemption.Tiles.Plants
             Main.tileMergeDirt[Type] = true;
             Main.tileWaterDeath[Type] = true;
             TileID.Sets.SwaysInWindBasic[Type] = true;
+            TileID.Sets.ReplaceTileBreakUp[Type] = true;
+            TileID.Sets.IgnoredInHouseScore[Type] = true;
             TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
+            TileID.Sets.BreakableWhenPlacing[Type] = true;
             TileObjectData.newTile.Width = 1;
             TileObjectData.newTile.Height = 1;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16 };
-            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.AlternateTile, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.UsesCustomCanPlace = true;
-            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<AncientGrassTile>() };
+            TileObjectData.newTile.AnchorValidTiles = new int[] { TileType<AncientGrassTile>() };
+            TileObjectData.newTile.AnchorAlternateTiles = new int[] {
+                TileID.ClayPot,
+                TileID.PlanterBox,
+                TileID.RockGolemHead
+            };
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.RandomStyleRange = 11;
             TileObjectData.newTile.CoordinateWidth = 16;
@@ -44,11 +53,82 @@ namespace Redemption.Tiles.Plants
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             if (Main.rand.NextBool(100))
-                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<AncientGrassSeeds>());
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemType<AncientGrassSeeds>());
         }
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
         {
             offsetY = 2;
+        }
+    }
+    public class AncientShrub_NoFlowers : AncientShrub
+    {
+        public override string Texture => "Redemption/Tiles/Plants/AncientShrub";
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileCut[Type] = true;
+            Main.tileSolid[Type] = false;
+            Main.tileMergeDirt[Type] = true;
+            Main.tileWaterDeath[Type] = true;
+            TileID.Sets.SwaysInWindBasic[Type] = true;
+            TileID.Sets.ReplaceTileBreakUp[Type] = true;
+            TileID.Sets.IgnoredInHouseScore[Type] = true;
+            TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
+            TileID.Sets.BreakableWhenPlacing[Type] = true;
+            TileObjectData.newTile.Width = 1;
+            TileObjectData.newTile.Height = 1;
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16 };
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.AlternateTile, TileObjectData.newTile.Width, 0);
+            TileObjectData.newTile.UsesCustomCanPlace = true;
+            TileObjectData.newTile.AnchorValidTiles = new int[] { TileType<AncientGrassTile>() };
+            TileObjectData.newTile.AnchorAlternateTiles = new int[] {
+                TileID.ClayPot,
+                TileID.PlanterBox,
+                TileID.RockGolemHead
+            };
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.RandomStyleRange = 6;
+            TileObjectData.newTile.CoordinateWidth = 16;
+            TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.addTile(Type);
+            DustType = DustID.GrassBlades;
+            HitSound = SoundID.Grass;
+            TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
+        }
+    }
+    public class AncientFlowers : AncientShrub
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileCut[Type] = true;
+            Main.tileSolid[Type] = false;
+            Main.tileMergeDirt[Type] = true;
+            Main.tileWaterDeath[Type] = true;
+            TileID.Sets.SwaysInWindBasic[Type] = true;
+            TileID.Sets.ReplaceTileBreakUp[Type] = true;
+            TileID.Sets.IgnoredInHouseScore[Type] = true;
+            TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
+            TileID.Sets.BreakableWhenPlacing[Type] = true;
+            TileObjectData.newTile.Width = 1;
+            TileObjectData.newTile.Height = 1;
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16 };
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.AlternateTile, TileObjectData.newTile.Width, 0);
+            TileObjectData.newTile.UsesCustomCanPlace = true;
+            TileObjectData.newTile.AnchorValidTiles = new int[] { TileType<AncientGrassTile>() };
+            TileObjectData.newTile.AnchorAlternateTiles = new int[] {
+                TileID.ClayPot,
+                TileID.PlanterBox,
+                TileID.RockGolemHead
+            };
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.RandomStyleRange = 5;
+            TileObjectData.newTile.CoordinateWidth = 16;
+            TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.addTile(Type);
+            DustType = DustID.GrassBlades;
+            HitSound = SoundID.Grass;
+            TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
         }
     }
 }

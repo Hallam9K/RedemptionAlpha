@@ -20,6 +20,7 @@ namespace Redemption.Projectiles.Pets
             // DisplayName.SetDefault("Baby Basan");
             Main.projFrames[Projectile.type] = 16;
             Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.LightPet[Type] = true;
             ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(1, 9, 5).WithOffset(2, 0).WithSpriteDirection(-1);
         }
 

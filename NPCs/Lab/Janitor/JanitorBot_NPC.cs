@@ -104,7 +104,7 @@ namespace Redemption.NPCs.Lab.Janitor
                 .Add<BotHanger>(RedeConditions.DownedVolt)
                 .Add<EmptyBotHanger>(RedeConditions.DownedVolt)
                 .Add<Keycard>(RedeConditions.KeycardGiven)
-                .Add<NanoPickaxe>(RedeConditions.DownedBlisterface);
+                .Add<NanoPickaxe>(RedeConditions.DownedVolt);
 
             npcShop.Register();
         }

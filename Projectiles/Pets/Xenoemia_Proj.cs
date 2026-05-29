@@ -1,9 +1,10 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Pets
 {
@@ -13,6 +14,7 @@ namespace Redemption.Projectiles.Pets
         {
             // DisplayName.SetDefault("Xenomite Crystal");
             Main.projFrames[Projectile.type] = 6;
+            ProjectileID.Sets.LightPet[Type] = true;
         }
         public override void SetDefaults()
         {

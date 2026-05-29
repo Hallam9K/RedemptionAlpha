@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
 using Redemption.Globals;
 using Redemption.Globals.Projectiles;
 using Redemption.Helpers;
@@ -113,8 +114,8 @@ namespace Redemption.Items.Armor.PostML.Xenium
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
 
             Texture2D flare = Request<Texture2D>("Redemption/Textures/BubbleShield").Value;
-            Rectangle rect = new(0, 0, flare.Width, flare.Height);
-            Vector2 origin2 = new(flare.Width / 2, flare.Height / 2);
+            Rectangle rect = flare.Frame(1, 2, 0, 0);
+            Vector2 origin2 = rect.Size() / 2;
             Color colour = Color.LightGreen;
             float scale = MathHelper.Clamp(Projectile.ai[0] / 30, 0, 1);
             Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(colour) * Main.rand.NextFloat(1f, 0.7f), 0, origin2, scale, 0, 0);
@@ -218,7 +219,7 @@ namespace Redemption.Items.Armor.PostML.Xenium
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
             }
 
             if (Projectile.ai[0]++ == 0)

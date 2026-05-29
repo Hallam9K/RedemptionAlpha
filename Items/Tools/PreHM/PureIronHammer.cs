@@ -1,9 +1,11 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
+using Redemption.Effects.Trails.Tips;
 using Redemption.Globals;
+using Redemption.Globals.Projectiles;
 using Redemption.Items.Materials.PreHM;
 using ReLogic.Content;
 using System;
@@ -46,13 +48,13 @@ namespace Redemption.Items.Tools.PreHM
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.shoot = ModContent.ProjectileType<PureIronHammer_Proj>();
+            Item.shoot = ProjectileType<PureIronHammer_Proj>();
         }
         public override bool MeleePrefix() => true;
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             float adjustedItemScale2 = player.GetAdjustedItemScale(Item);
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<PureIronHammer_Proj>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
+            Projectile.NewProjectile(source, position, velocity, ProjectileType<PureIronHammer_Proj>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
             return false;
         }
         public override bool CanUseItem(Player player)
@@ -62,7 +64,7 @@ namespace Redemption.Items.Tools.PreHM
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<PureIronAlloy>(), 16)
+                .AddIngredient(ItemType<PureIronAlloy>(), 16)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
@@ -91,6 +93,8 @@ namespace Redemption.Items.Tools.PreHM
             Projectile.extraUpdates = 24;
             Projectile.Redemption().IsHammer = true;
             Projectile.noEnchantmentVisuals = true;
+
+            InitializeTrail();
         }
         public Vector2 vector;
         public Vector2 startVector;
@@ -196,7 +200,7 @@ namespace Redemption.Items.Tools.PreHM
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Player.RedemptionPlayerBuff().pureIronBonus)
-                target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
+                target.AddBuff(BuffType<PureChillDebuff>(), 300);
         }
         Vector2 originPos;
         Vector2 directionVec;
@@ -219,7 +223,7 @@ namespace Redemption.Items.Tools.PreHM
             Main.spriteBatch.End();
             Main.spriteBatch.BeginAdditive();
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Textures/Shockwave").Value;
+            Texture2D texture = Request<Texture2D>("Redemption/Textures/Shockwave").Value;
             Rectangle rect = new(0, 0, texture.Width, texture.Height);
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = originPos + Vector2.UnitY * 20;
@@ -266,7 +270,7 @@ namespace Redemption.Items.Tools.PreHM
 
                     if (Main.netMode != NetmodeID.Server && Projectile.owner == Main.myPlayer)
                     {
-                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), origin + new Vector2(0, -80), new Vector2(0, -30), ModContent.ProjectileType<PureIronHammer_IceSpike>(), (int)(Projectile.damage * 0.75f), 0, Player.whoAmI);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), origin + new Vector2(0, -80), new Vector2(0, -30), ProjectileType<PureIronHammer_IceSpike>(), (int)(Projectile.damage * 0.75f), 0, Player.whoAmI);
                     }
                 }
             }
@@ -279,9 +283,10 @@ namespace Redemption.Items.Tools.PreHM
         private Color baseColor = Color.LightSteelBlue;
         private Color endColor = Color.LightSkyBlue;
         #endregion
-        public void ManageTrail()
+
+        public void InitializeTrail()
         {
-            trail ??= new DanTrail(Main.instance.GraphicsDevice, oldDirVector.Length, new NoTip(),
+            trail = new DanTrail(RedeGraphics.Instance.Primitives, new NoTip(),
             factor =>
             {
                 float mult = factor;
@@ -292,28 +297,33 @@ namespace Redemption.Items.Tools.PreHM
                 float progress = EaseFunction.EaseCubicOut.Ease(1 - factor.X);
                 return Color.Lerp(baseColor, endColor, EaseFunction.EaseCubicIn.Ease(progress)) * (1 - progress) * Projectile.Opacity;
             });
-            trail.Positions = positionCache.ToArray();
-            trail.NextPosition = Projectile.Center;
         }
+
+        public void ManageTrail()
+        {
+            Vector2 nextPos = Projectile.Center;
+            trail.SetPositions(positionCache.ToArray(), nextPos);
+        }
+
         public void DrawTrail()
         {
             Main.spriteBatch.End();
             Main.spriteBatch.BeginDefault();
 
-            Effect effect = ModContent.Request<Effect>("Redemption/Effects/GlowTrailShader", AssetRequestMode.ImmediateLoad).Value;
+            Effect effect = Request<Effect>("Redemption/Effects/GlowTrailShader").Value;
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.X, -Main.screenPosition.Y, 0);
             Matrix view = Main.GameViewMatrix.ZoomMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/CrystalTrail").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/CrystalTrail").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 
-            Texture2D texture = Player.direction == 1 ? ModContent.Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5").Value : ModContent.Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5_flipped").Value;
+            Texture2D texture = Player.direction == 1 ? Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5").Value : Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5_flipped").Value;
 
-            Effect effect2 = ModContent.Request<Effect>("Redemption/Effects/GlowTrailShader", AssetRequestMode.ImmediateLoad).Value;
+            Effect effect2 = Request<Effect>("Redemption/Effects/GlowTrailShader").Value;
             effect2.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect2.Parameters["sampleTexture"].SetValue(texture);
             effect2.Parameters["time"].SetValue(1);
@@ -368,19 +378,19 @@ namespace Redemption.Items.Tools.PreHM
         public override void OnSpawn(IEntitySource source)
         {
             if (!Main.dedServ)
-                SoundEngine.PlaySound(SoundID.DeerclopsIceAttack with { Volume = .5f }, Projectile.Center);
+                SoundEngine.PlaySound(SoundID.DeerclopsIceAttack with { Volume = .25f }, Projectile.Center);
 
             variation = Main.rand.Next(1, 4);
 
             for (int i = 0; i < 5; i++)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), 16, Projectile.velocity * 0.75f * MathHelper.Lerp(0.2f, 0.7f, Main.rand.NextFloat()));
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), DustID.Cloud, Projectile.velocity * 0.75f * MathHelper.Lerp(0.2f, 0.7f, Main.rand.NextFloat()));
                 dust.velocity += Main.rand.NextVector2Circular(0.5f, 0.5f);
                 dust.scale = 0.8f + Main.rand.NextFloat() * 0.5f;
             }
             for (int j = 0; j < 5; j++)
             {
-                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), 16, Main.rand.NextVector2Circular(2f, 2f) + Projectile.velocity * 0.75f * MathHelper.Lerp(0.2f, 0.5f, Main.rand.NextFloat()));
+                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), DustID.Cloud, Main.rand.NextVector2Circular(2f, 2f) + Projectile.velocity * 0.75f * MathHelper.Lerp(0.2f, 0.5f, Main.rand.NextFloat()));
                 dust2.velocity += Main.rand.NextVector2Circular(0.5f, 0.5f);
                 dust2.scale = 0.8f + Main.rand.NextFloat() * 0.5f;
                 dust2.fadeIn = 1f;
@@ -401,10 +411,10 @@ namespace Redemption.Items.Tools.PreHM
             if (delay == 38)
             {
                 for (int i = -1; i < 2; i++)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + Vector2.UnitY * 10 + Vector2.UnitY * 60 * i, Vector2.Zero, ModContent.ProjectileType<IceSpike_Mist>(), Projectile.damage, Projectile.knockBack, Projectile.owner, i);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + Vector2.UnitY * 10 + Vector2.UnitY * 60 * i, Vector2.Zero, ProjectileType<IceSpike_Mist>(), Projectile.damage, Projectile.knockBack, Projectile.owner, i);
 
                 for (int i = 0; i < 5; i++)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.RandAreaInEntity(), Vector2.Zero, ModContent.ProjectileType<IceSpikeShard>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.RandAreaInEntity(), Vector2.Zero, ProjectileType<IceSpikeShard>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             }
             if (Projectile.alpha >= 255)
                 Projectile.Kill();
@@ -413,7 +423,7 @@ namespace Redemption.Items.Tools.PreHM
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Player.RedemptionPlayerBuff().pureIronBonus)
-                target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
+                target.AddBuff(BuffType<PureChillDebuff>(), 300);
         }
         public override void OnKill(int timeLeft)
         {
@@ -421,13 +431,13 @@ namespace Redemption.Items.Tools.PreHM
 
             for (int i = 0; i < 5; i++)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), 16, Main.rand.NextVector2Circular(8f, 8f) * MathHelper.Lerp(0.2f, 0.5f, Main.rand.NextFloat()));
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), DustID.Cloud, Main.rand.NextVector2Circular(8f, 8f) * MathHelper.Lerp(0.2f, 0.5f, Main.rand.NextFloat()));
                 dust.velocity += Main.rand.NextVector2Circular(0.5f, 0.5f);
                 dust.scale = 0.8f + Main.rand.NextFloat() * 0.5f;
             }
             for (int j = 0; j < 5; j++)
             {
-                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), 16, Main.rand.NextVector2Circular(8f, 8f) * MathHelper.Lerp(0.2f, 0.5f, Main.rand.NextFloat()));
+                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), DustID.Cloud, Main.rand.NextVector2Circular(8f, 8f) * MathHelper.Lerp(0.2f, 0.5f, Main.rand.NextFloat()));
                 dust2.velocity += Main.rand.NextVector2Circular(0.5f, 0.5f);
                 dust2.scale = 0.8f + Main.rand.NextFloat() * 0.5f;
                 dust2.fadeIn = 1f;

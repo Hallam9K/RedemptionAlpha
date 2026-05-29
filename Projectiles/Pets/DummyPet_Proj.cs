@@ -1,5 +1,6 @@
 using Redemption.Buffs.Pets;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Pets
@@ -10,7 +11,8 @@ namespace Redemption.Projectiles.Pets
 		public override void SetStaticDefaults()
 		{
 			Main.projPet[Projectile.type] = true;
-		}
+            ProjectileID.Sets.LightPet[Type] = true;
+        }
 
 		public override void SetDefaults()
 		{

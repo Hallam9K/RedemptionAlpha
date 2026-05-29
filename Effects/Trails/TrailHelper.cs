@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Redemption.Globals;
 using System;
 using System.Collections.Generic;
+using Redemption.Effects.Trails.Tips;
+using Redemption.Globals;
 using Terraria;
 
-namespace Redemption.Effects
+namespace Redemption.Effects.Trails
 {
     public static class TrailHelper
     {
@@ -19,6 +19,7 @@ namespace Redemption.Effects
 
             return combined;
         }
+        
         public static void ManageBasicCaches(ref List<Vector2> cache, ref List<Vector2> cache2, int numPoints, Vector2 pos)
         {
             if (cache == null)
@@ -47,10 +48,10 @@ namespace Redemption.Effects
                     cache2.Add(point + (dir * Main.rand.NextFloat(5)));
             }
         }
-
-        public static void ManageBasicTrail(ref List<Vector2> cache, ref List<Vector2> cache2, ref DanTrail trail, ref DanTrail trail2, int numPoints, Vector2 pos, Color baseColor, Color endColor, Color edgeColor, float thickness, bool roundTip = true)
+        
+        public static void ManageBasicTrail(Primitives primitives, List<Vector2> cache, List<Vector2> cache2, ref DanTrail trail, ref DanTrail trail2, int numPoints, Vector2 pos, Color baseColor, Color endColor, Color edgeColor, float thickness, bool roundTip = true)
         {
-            trail ??= new DanTrail(Main.instance.GraphicsDevice, numPoints, roundTip ? new RoundedTip(4) : new TriangularTip(4),
+            trail ??= new DanTrail(primitives, roundTip ? new RoundedTip(4) : new TriangularTip(4),
             factor =>
             {
                 float mult = factor;
@@ -69,9 +70,9 @@ namespace Redemption.Effects
                 return edgeColor * 0.1f * factor.X;
             });
 
-            trail.Positions = cache.ToArray();
-            trail.NextPosition = pos;
-            trail2 ??= new DanTrail(Main.instance.GraphicsDevice, numPoints, roundTip ? new RoundedTip(4) : new TriangularTip(4),
+            trail.SetPositions(cache.ToArray(), pos);
+            
+            trail2 ??= new DanTrail(primitives, roundTip ? new RoundedTip(4) : new TriangularTip(4),
             factor =>
             {
                 float mult = factor;
@@ -88,9 +89,9 @@ namespace Redemption.Effects
                 return Color.Lerp(baseColor, endColor, EaseFunction.EaseCubicIn.Ease(progress)) * (1 - progress);
             });
 
-            trail2.Positions = cache2.ToArray();
-            trail2.NextPosition = pos;
+            trail2.SetPositions(cache2.ToArray(), pos);
         }
+       
         public static void ManageSwordTrailPosition(Projectile Projectile, Player Player, float[] oldrot, ref List<float> RotationCache, ref List<float> RotationCache2, ref List<float> RotationCacheLate, ref List<Vector2> positionCache, ref List<Vector2> positionCacheLate, float drawPos = 15f, int dirType = 0)
         {
             //storing rotation info
@@ -151,6 +152,7 @@ namespace Redemption.Effects
                 positionCacheLate.RemoveAt(0);
             }
         }
+        
         public static void ManageSwordTrailPosition(Projectile Projectile, Vector2 SpawnPoint, float[] oldrot, ref List<float> RotationCache, ref List<float> RotationCache2, ref List<float> RotationCacheLate, ref List<Vector2> positionCache, ref List<Vector2> positionCacheLate, float drawPos = 15f, int dirType = 0)
         {
             //storing rotation info
@@ -211,6 +213,7 @@ namespace Redemption.Effects
                 positionCacheLate.RemoveAt(0);
             }
         }
+        
         public static void ManageSwordTrailPosition(int TrailLength, Vector2 drawCenter, Vector2[] oldDirectionVector, ref List<Vector2> directionVectorCache, ref List<Vector2> positionCache, float extension = 1)
         {
             for (int i = TrailLength - 1; i >= 0; i--)
@@ -233,3 +236,4 @@ namespace Redemption.Effects
         }
     }
 }
+

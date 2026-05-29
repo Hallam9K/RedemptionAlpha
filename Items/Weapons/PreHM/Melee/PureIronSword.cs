@@ -1,7 +1,6 @@
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -57,11 +56,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             float adjustedItemScale2 = player.GetAdjustedItemScale(Item);
-            var projectile = Projectile.NewProjectileDirect(source, position, velocity, ProjectileType<PureIronSword_Proj>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
-            projectile.originalDamage = Item.damage;
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
             return false;
         }
-
         public override void AddRecipes()
         {
             CreateRecipe()

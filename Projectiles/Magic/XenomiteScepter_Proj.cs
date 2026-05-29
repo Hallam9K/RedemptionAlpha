@@ -1,6 +1,4 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary;
 using ParticleLibrary.Core;
 using ParticleLibrary.Utilities;
 using Redemption.Base;
@@ -8,8 +6,11 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Particles;
+using Redemption.Textures;
 using System;
 using System.Collections.Generic;
+using Redemption.Effects.Trails;
+using Redemption.Effects.Trails.Tips;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -41,6 +42,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 0;
 
+            InitializeTrail();
         }
         public float vectorOffset = 0f;
         public Vector2 originalVelocity;
@@ -86,9 +88,9 @@ namespace Redemption.Projectiles.Magic
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(3))
-                target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 300);
+                target.AddBuff(BuffType<GreenRashesDebuff>(), 300);
             else if (Main.rand.NextBool(6))
-                target.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 150);
+                target.AddBuff(BuffType<GlowingPustulesDebuff>(), 150);
             FakeKill();
         }
 
@@ -127,9 +129,10 @@ namespace Redemption.Projectiles.Magic
         private DanTrail trail;
         private DanTrail trail2;
         private readonly float thickness = 4f;
-        public void ManageTrail()
+
+        public void InitializeTrail()
         {
-            trail ??= new DanTrail(Main.instance.GraphicsDevice, NUMPOINTS, new TriangularTip(4),
+            trail = new DanTrail(RedeGraphics.Instance.Primitives, new TriangularTip(4),
             factor =>
             {
                 float mult = factor;
@@ -147,10 +150,7 @@ namespace Redemption.Projectiles.Magic
 
                 return edgeColor * 0.1f * factor.X;
             });
-
-            trail.Positions = cache.ToArray();
-            trail.NextPosition = Projectile.Center;
-            trail2 ??= new DanTrail(Main.instance.GraphicsDevice, NUMPOINTS, new TriangularTip(4),
+            trail2 = new DanTrail(RedeGraphics.Instance.Primitives, new TriangularTip(4),
             factor =>
             {
                 float mult = factor;
@@ -166,17 +166,20 @@ namespace Redemption.Projectiles.Magic
                 float progress = EaseFunction.EaseCubicOut.Ease(1 - factor.X);
                 return Color.Lerp(baseColor, endColor, EaseFunction.EaseCubicIn.Ease(progress)) * (1 - progress);
             });
+        }
 
-            trail2.Positions = cache2.ToArray();
-            trail2.NextPosition = Projectile.Center;
+        public void ManageTrail()
+        {
+            trail.SetPositions(cache.ToArray(), Projectile.Center);
+            trail2.SetPositions(cache2.ToArray(), Projectile.Center);
         }
         public override bool PreDraw(ref Color lightColor)
         {
             Main.spriteBatch.End();
             Main.spriteBatch.BeginAdditive();
 
-            Vector2 drawOrigin = new(ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb").Value.Width / 2, ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb").Value.Height / 2);
-            Main.EntitySpriteDraw(ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb").Value, Projectile.Center - (Projectile.velocity / 20) - Main.screenPosition, null, Color.Green, Projectile.rotation, drawOrigin, 1 * Projectile.Opacity, SpriteEffects.None, 0);
+            Vector2 drawOrigin = new(CommonTextures.WhiteOrb.Width() / 2, CommonTextures.WhiteOrb.Height() / 2);
+            Main.EntitySpriteDraw(CommonTextures.WhiteOrb.Value, Projectile.Center - (Projectile.velocity / 20) - Main.screenPosition, null, Color.Green, Projectile.rotation, drawOrigin, 1 * Projectile.Opacity, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.BeginDefault();
@@ -189,7 +192,7 @@ namespace Redemption.Projectiles.Magic
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value);
+            effect.Parameters["sampleTexture"].SetValue(CommonTextures.Trail_4.Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 

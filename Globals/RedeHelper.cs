@@ -1124,6 +1124,20 @@ namespace Redemption.Globals
         }
 
         /// <summary>
+        /// Moves projectile to a target position while remaining constant speed.
+        /// The lower the responsiveness, the less angle change speed.
+        /// </summary>
+        public static void UniformMotion(this Projectile proj, Vector2 targetPos, float speed, float responsiveness)
+        {
+            Vector2 originalDirection = proj.velocity.SafeNormalize(default);
+            Vector2 directionToTarget = (targetPos - proj.Center).SafeNormalize(default);
+            float angle = directionToTarget.ToRotation() - originalDirection.ToRotation();
+            float rotation = MathHelper.WrapAngle(angle);
+            originalDirection = originalDirection.RotatedBy(rotation * responsiveness);
+            proj.velocity = originalDirection * speed;
+        }
+
+        /// <summary>
         /// Moves the npc to a Vector2.
         /// The lower the turnResistance, the less time it takes to adjust direction.
         /// Example: npc.MoveToPlayer(new Vector2(100, 0), 10, 14);

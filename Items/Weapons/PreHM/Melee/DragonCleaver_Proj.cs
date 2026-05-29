@@ -1,21 +1,20 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary.Core;
 using ParticleLibrary.Utilities;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.Effects;
+using Redemption.Effects.Trails;
+using Redemption.Effects.Trails.Tips;
 using Redemption.Globals;
 using Redemption.Particles;
 using Redemption.Projectiles.Melee;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -31,98 +30,103 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjFire[Type] = true;
         }
-
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()
         {
-            Projectile.width = 80;
-            Projectile.height = 80;
+            Projectile.width = 90;
+            Projectile.height = 90;
             Projectile.friendly = false;
             Projectile.penetrate = 6;
             Projectile.alpha = 255;
             Projectile.extraUpdates = 4;
             Projectile.usesOwnerMeleeHitCD = true;
             Projectile.stopsDealingDamageAfterPenetrateHits = true;
+
+            InitializeTrail();
         }
-        Player Player => Main.player[Projectile.owner];
-        private float startRotation;
-        private Vector2 vector;
+        public Player Owner => Main.player[Projectile.owner];
+        public float startRotation;
+        public Vector2 positionVector;
         public ref float Length => ref Projectile.localAI[0];
-        public ref float Rot => ref Projectile.localAI[1];
-        public ref float Timer => ref Projectile.localAI[2];
+        public ref float Timer => ref Projectile.localAI[1];
         public int pauseTimer;
         public float progress;
         public float SwingSpeed;
+        public int maxTime;
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.spriteDirection = Owner.direction;
+            maxTime = SetUseTime(Owner.HeldItem.useTime);
+            Projectile.scale *= Owner.GetAdjustedItemScale(Owner.HeldItem);
+            Projectile.width = (int)(70 * Projectile.scale);
+            Projectile.height = (int)(70 * Projectile.scale);
+        }
         public override void AI()
         {
-            if (Player.noItems || Player.CCed || Player.dead || !Player.active)
+            if (Owner.noItems || Owner.CCed || Owner.dead || !Owner.active)
                 Projectile.Kill();
 
-            SwingSpeed = SetSwingSpeed(1);
-            Player.heldProj = Projectile.whoAmI;
-            Player.itemTime = 2;
-            Player.itemAnimation = 2;
+            Owner.heldProj = Projectile.whoAmI;
+            Owner.itemTime = 2;
+            Owner.itemAnimation = 2;
 
-            Vector2 armCenter = Player.RotatedRelativePoint(Player.MountedCenter, true) + new Vector2(-Player.direction * 2, -2);
-            Projectile.Center = armCenter + vector;
-
-            Projectile.spriteDirection = Player.direction;
-            if (Projectile.spriteDirection == 1)
-                Projectile.rotation = (Projectile.Center - armCenter).ToRotation() + MathHelper.PiOver4;
-            else
-                Projectile.rotation = (Projectile.Center - armCenter).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
-            Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (armCenter - Projectile.Center).ToRotation() + MathHelper.PiOver2);
-            if (Main.myPlayer == Projectile.owner && --pauseTimer <= 0)
+            Vector2 armCenter = Owner.RotatedRelativePoint(Owner.MountedCenter) + new Vector2(Owner.direction * -4, -4);
+            if (--pauseTimer <= 0)
             {
                 switch (Projectile.ai[0])
                 {
                     case 0:
-                        progress = Timer / (200 * SwingSpeed);
+                        progress = Timer / (maxTime * Projectile.MaxUpdates);
+                    Projectile.friendly = progress >= 0.3f && progress <= 0.7f;
                         if (Timer++ == 0)
                         {
-                            Projectile.width = (int)(70 * Projectile.ai[2]);
-                            Projectile.height = (int)(70 * Projectile.ai[2]);
-
-                            Projectile.scale *= Projectile.ai[2];
-                            startRotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
+                            startRotation = Owner.direction == 1 ? Projectile.velocity.ToRotation() : -Projectile.velocity.ToRotation() + MathHelper.Pi;
                         }
-                        if (Timer == (int)(75 * SwingSpeed))
+                        if (Timer == (int)(maxTime / 2 * Projectile.MaxUpdates))
                         {
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(CustomSounds.Swing1 with { Pitch = -.6f }, Player.position);
+                                SoundEngine.PlaySound(CustomSounds.Swing1 with { Pitch = -.6f }, Owner.position);
                         }
 
                         if (progress < 1f)
                         {
-                            float modifiedProgress = 0.05f + 1 / (1 + MathF.Pow(3, -14 * (progress - 0.5f)));
-                            float x = 30 * MathF.Cos(modifiedProgress * MathHelper.TwoPi * Projectile.spriteDirection * 0.8f);
-                            float y = 30 * MathF.Sin(modifiedProgress * MathHelper.TwoPi * Projectile.spriteDirection * 0.8f);
-                            Vector2 ellipse = new(x, y);
-                            vector = ellipse.RotatedBy(startRotation) * 2.5f * Projectile.scale;
+                            float swingProgress = EaseFunction.EaseQuinticInOut.Ease(progress);
+                            float initialRotation = -0.375f;
+                            float angle = (swingProgress * 0.75f + initialRotation) * MathHelper.TwoPi;
+
+                            Vector2 ellipse = new(90 * MathF.Cos(angle), 90 * MathF.Sin(angle));
+                            ellipse = ellipse.RotatedBy(startRotation);
+                            ellipse.X *= Owner.direction;
+                            positionVector = ellipse * Projectile.scale;
                         }
                         else
                             Projectile.Kill();
                         break;
                     case 1:
-                        progress = Timer / (200 * SwingSpeed);
+                        progress = Timer / (maxTime * Projectile.MaxUpdates);
                         if (Timer++ == 0)
                         {
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(CustomSounds.Swoosh1 with { Pitch = -.6f }, Player.position);
-                            Projectile.friendly = false;
-                            Projectile.width = (int)(70 * Projectile.ai[2]);
-                            Projectile.height = (int)(70 * Projectile.ai[2]);
-                            Length = 50 * Projectile.ai[2];
-                            vector = RedeHelper.PolarVector(Length, Projectile.velocity.ToRotation());
+                                SoundEngine.PlaySound(CustomSounds.Swoosh1 with { Pitch = -.6f }, Owner.position);
+                            Length = 50 * Projectile.scale;
+                            positionVector = RedeHelper.PolarVector(Length, Projectile.velocity.ToRotation());
                         }
                         if (Timer == 20)
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Player.MountedCenter + vector, Main.MouseWorld.DirectionFrom(Player.Center).SafeNormalize(Vector2.One), ModContent.ProjectileType<DragonCleaverSkull_Proj>(), Projectile.damage * 3, Projectile.knockBack, Player.whoAmI);
-
+                        {
+                            if(Projectile.owner == Main.myPlayer)
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.MountedCenter + positionVector, Main.MouseWorld.DirectionFrom(Owner.Center).SafeNormalize(Vector2.One), ProjectileType<DragonCleaverSkull_Proj>(), Projectile.damage * 3, Projectile.knockBack, Owner.whoAmI);
+                        }
                         if (progress > 1f)
                             Projectile.Kill();
                         break;
                 }
             }
+            Projectile.Center = armCenter + positionVector;
+            if (Projectile.spriteDirection == 1)
+                Projectile.rotation = (Projectile.Center - armCenter).ToRotation() + MathHelper.PiOver4;
+            else
+                Projectile.rotation = (Projectile.Center - armCenter).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
+            Owner.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (armCenter - Projectile.Center).ToRotation() + MathHelper.PiOver2);
 
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
                 oldrot[k] = oldrot[k - 1];
@@ -131,47 +135,41 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (progress > 0.3f && progress < 0.7f)
             {
                 BlockProj();
-
-                Projectile.friendly = true;
                 if (Projectile.ai[0] == 0)
                     MakeDust(70 * Projectile.scale);
             }
-            else
-                Projectile.friendly = false;
-
-            if (Main.netMode != NetmodeID.Server && --pauseTimer <= 0)
+            if (!Main.dedServ && --pauseTimer <= 0)
             {
                 TrailSetUp();
             }
         }
         public void MakeDust(float pos)
         {
-            float rotation = (Projectile.Center - Player.Center).ToRotation();
-            Dust dust8 = Dust.NewDustPerfect(Player.Center + RedeHelper.PolarVector(pos, rotation) + new Vector2(Main.rand.NextFloat(-20 * Projectile.scale, 20 * Projectile.scale)), 259, RedeHelper.PolarVector(6, rotation), 0);
+            float rotation = (Projectile.Center - Owner.Center).ToRotation();
+            Dust dust8 = Dust.NewDustPerfect(Owner.Center + RedeHelper.PolarVector(pos, rotation) + new Vector2(Main.rand.NextFloat(-20 * Projectile.scale, 20 * Projectile.scale)), DustID.SolarFlare, RedeHelper.PolarVector(6, rotation), 0);
             dust8.fadeIn = 0.4f + Main.rand.NextFloat() * 0.15f;
             dust8.noGravity = true;
         }
         private void BlockProj()
         {
-            for (int i = 0; i < Main.maxProjectiles; i++)
+            foreach (Projectile target in Main.ActiveProjectiles)
             {
-                Projectile target = Main.projectile[i];
-                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 200 / 4)
+                if (!ProjReflect.FriendlyReflectCheck(Projectile, target, 500) || ProjReflect.ProjBlockBlacklist(target, true))
                     continue;
 
-                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !target.HasElement(ElementID.Fire) || target.ProjBlockBlacklist(true))
+                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !target.HasElement(ElementID.Fire))
                     continue;
 
                 RedeDraw.SpawnExplosion(target.Center, Color.Orange, shakeAmount: 0, scale: .5f, noDust: true, rot: RedeHelper.RandomRotation(), tex: "Redemption/Textures/SwordClash");
 
-                if (Player.HeldItem.ModItem is DragonCleaver host)
+                if (Owner.HeldItem.ModItem is DragonCleaver host)
                 {
                     host.Count++;
                     if (host.Count == 6 && Projectile.ai[1] == 0)
                     {
                         Projectile.ai[1] = 1;
-                        SoundEngine.PlaySound(SoundID.Item88, Player.Center);
-                        RedeDraw.SpawnRing(Player.Center, new Color(255, 65, 65), 0.12f, 0.86f, 4);
+                        SoundEngine.PlaySound(SoundID.Item88, Owner.Center);
+                        RedeDraw.SpawnRing(Owner.Center, new Color(255, 65, 65), 0.12f, 0.86f, 4);
                     }
                 }
 
@@ -192,24 +190,24 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             SoundEngine.PlaySound(CustomSounds.Slice4 with { Volume = .7f, Pitch = .8f }, Projectile.position);
             if (!strike)
             {
-                Player.RedemptionScreen().ScreenShakeIntensity += 5;
+                Owner.RedemptionScreen().ScreenShakeIntensity += 5;
                 strike = true;
-                pauseTimer = Projectile.extraUpdates - 1;
+                pauseTimer = maxTime / 10 * Projectile.MaxUpdates;
             }
-            if (Player.HeldItem.ModItem is DragonCleaver host)
+            if (Owner.HeldItem.ModItem is DragonCleaver host)
             {
                 host.Count++;
                 if (host.Count == 6 && Projectile.ai[1] == 0)
                 {
                     Projectile.ai[1] = 1;
-                    SoundEngine.PlaySound(SoundID.Item88, Player.Center);
-                    RedeDraw.SpawnRing(Player.Center, new Color(255, 65, 65), 0.12f, 0.86f, 4);
+                    SoundEngine.PlaySound(SoundID.Item88, Owner.Center);
+                    RedeDraw.SpawnRing(Owner.Center, new Color(255, 65, 65), 0.12f, 0.86f, 4);
                 }
             }
             RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
 
-            if (Player.RedemptionPlayerBuff().dragonLeadBonus)
-                target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
+            if (Owner.RedemptionPlayerBuff().dragonLeadBonus)
+                target.AddBuff(BuffType<DragonblazeDebuff>(), 300);
 
             Vector2 dir = Projectile.Center.DirectionFrom(target.Center);
             Vector2 drawPos = Vector2.Lerp(Projectile.Center, target.Center, 0.9f);
@@ -219,11 +217,41 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 float randomRotation = Main.rand.NextFloat(-0.5f, 0.5f);
                 float randomVel = Main.rand.NextFloat(2f, 4f);
-                Vector2 direction = target.DirectionFrom(Player.Center);
+                Vector2 direction = target.DirectionFrom(Owner.Center);
                 Vector2 position = target.Center - direction * 10;
                 RedeParticleManager.CreateSpeedParticle(position, direction.RotatedBy(randomRotation) * randomVel * 12, 0.8f, Color.Salmon.WithAlpha(0));
             }
         }
+        public override void CutTiles()
+        {
+            DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
+            Utils.TileActionAttempt cut = new(DelegateMethods.CutTiles);
+            Vector2 lineStart = Owner.RotatedRelativePoint(Owner.MountedCenter);
+            Vector2 lineEnd = Projectile.Center;
+            float height = Projectile.height * Projectile.scale;
+            Utils.PlotTileLine(lineStart, lineEnd, height, cut);
+        }
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            float point = 0f;
+            Vector2 lineStart = Owner.RotatedRelativePoint(Owner.MountedCenter);
+            Vector2 lineEnd = Projectile.Center;
+            float height = Projectile.height * Projectile.scale;
+            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), lineStart, lineEnd, height, ref point))
+                return true;
+            return false;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawTrail();
+            SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 drawOrigin = Projectile.spriteDirection == 1 ? new(texture.Height / 2, texture.Height / 2) : new(texture.Width - texture.Height / 2, texture.Height / 2);
+            Vector2 armCenter = Owner.RotatedRelativePoint(Owner.MountedCenter) + new Vector2(Owner.direction * -4, -4);
+            Vector2 drawPos = armCenter + positionVector.SafeNormalize(default) * 50f * Projectile.scale;
+            Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, spriteEffects, 0);
+            return false;
+        }        
         #region draw trail
         private Vector2[] oldDirVector = new Vector2[60];
         private List<Vector2> directionVectorCache = new();
@@ -235,12 +263,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         private float opacity = 0;
         public void TrailSetUp()
         {
-            Vector2 armCenter = Player.RotatedRelativePoint(Player.MountedCenter, true) + new Vector2(-Player.direction * 2, -2);
+            Vector2 armCenter = Owner.RotatedRelativePoint(Owner.MountedCenter, true) + new Vector2(-Owner.direction * 4, -4);
             if (Timer == 2)
             {
                 Projectile.alpha = 0;
                 for (int i = 0; i < oldDirVector.Length; i++)
-                    oldDirVector.SetValue(vector, i);
+                    oldDirVector.SetValue(positionVector * 0.75f, i);
             }
 
             float x = (progress - 0.55f) * 10;
@@ -253,17 +281,18 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 oldDirVector[k] = oldDirVector[k - 1];
             }
-            oldDirVector[0] = vector;
+            oldDirVector[0] = positionVector * 0.75f;
 
             if (Projectile.ai[0] == 0 && Main.netMode != NetmodeID.Server)
             {
-                TrailHelper.ManageSwordTrailPosition(oldDirVector.Length, armCenter, oldDirVector, ref directionVectorCache, ref positionCache, 1.1f);
+                TrailHelper.ManageSwordTrailPosition(oldDirVector.Length, armCenter, oldDirVector, ref directionVectorCache, ref positionCache, 1);
                 ManageTrail();
             }
         }
-        public void ManageTrail()
+
+        public void InitializeTrail()
         {
-            trail ??= new DanTrail(Main.instance.GraphicsDevice, oldDirVector.Length, new NoTip(),
+            trail = new DanTrail(RedeGraphics.Instance.Primitives, new NoTip(),
             factor =>
             {
                 float mult = factor;
@@ -277,24 +306,27 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 float progress = EaseFunction.EaseCubicOut.Ease(1 - factor.X);
                 return Color.Lerp(baseColor, endColor, EaseFunction.EaseCubicIn.Ease(progress)) * (1 - progress) * opacity;
             });
-            trail.Positions = positionCache.ToArray();
-            trail.NextPosition = Projectile.Center;
+        }
+
+        public void ManageTrail()
+        {
+            trail.SetPositions(positionCache.ToArray(), Projectile.Center);
         }
         public void DrawTrail()
         {
             Main.spriteBatch.End();
             Main.spriteBatch.BeginDefault();
 
-            Effect effect = ModContent.Request<Effect>("Redemption/Effects/GlowTrailShader", AssetRequestMode.ImmediateLoad).Value;
+            Effect effect = Request<Effect>("Redemption/Effects/GlowTrailShader").Value;
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.X, -Main.screenPosition.Y, 0);
             Matrix view = Main.GameViewMatrix.ZoomMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-            bool flip = Player.direction == -1;
-            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5").Value;
+            bool flip = Owner.direction == -1;
+            Texture2D texture = Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5").Value;
             if (flip)
-                texture = ModContent.Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5_flipped2").Value;
+                texture = Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_5_flipped2").Value;
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(texture);
@@ -306,19 +338,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Main.spriteBatch.End();
             Main.spriteBatch.BeginDefault();
         }
-        #endregion
+#endregion
 
-        public override bool PreDraw(ref Color lightColor)
-        {
-            DrawTrail();
-            SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
-            Vector2 armCenter = Player.RotatedRelativePoint(Player.MountedCenter, true) + new Vector2(-Player.direction * 2, -2);
-            Vector2 dir = RedeHelper.PolarVector(1, (armCenter - Projectile.Center).ToRotation());
-            Vector2 Center = Projectile.Center + dir * 20;
-            Main.EntitySpriteDraw(texture, Center - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
-            return false;
-        }
+
     }
 }

@@ -65,19 +65,20 @@ namespace Redemption.Projectiles.Magic
                     Frame3 = 0;
             }
             Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 90, 255);
-            if (Main.myPlayer == Projectile.owner)
-            {
-                if (player.channel)
-                    Projectile.alpha -= 3;
-                else
-                    Projectile.alpha += 6;
 
+            if (player.channel)
+                Projectile.alpha -= 3;
+            else
+                Projectile.alpha += 6;
+
+            if (Projectile.owner == Main.myPlayer)
                 Projectile.Move(Main.MouseWorld, 24, 40);
-                if (Projectile.localAI[0]++ % 360 == 0 && !Main.dedServ)
-                    SoundEngine.PlaySound(CustomSounds.WindLong with { Pitch = -1 }, Projectile.position);
-                if (Projectile.localAI[0] >= 20 && Projectile.alpha >= 255)
-                    Projectile.Kill();
-            }
+
+            if (Projectile.localAI[0]++ % 360 == 0 && !Main.dedServ)
+                SoundEngine.PlaySound(CustomSounds.WindLong with { Pitch = -1 }, Projectile.position);
+            if (Projectile.localAI[0] >= 20 && Projectile.alpha >= 255)
+                Projectile.Kill();
+
             Rectangle left = new((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width / 2, Projectile.height);
             Rectangle right = new((int)Projectile.position.X + (Projectile.width / 2), (int)Projectile.position.Y, Projectile.width / 2, Projectile.height);
             for (int i = 0; i < Main.maxNPCs; i++)
@@ -101,10 +102,8 @@ namespace Redemption.Projectiles.Magic
                 }
             }
 
-            if (Projectile.alpha <= 90 && Projectile.localAI[0] % 10 == 0)
-            {
+            if (Projectile.alpha <= 90 && Projectile.localAI[0] % 10 == 0 && Projectile.owner == Main.myPlayer)
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileType<PoemTornado_Rock>(), (int)(Projectile.damage * 1.5f), Projectile.knockBack, Main.myPlayer, Projectile.whoAmI);
-            }
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
@@ -299,195 +298,4 @@ namespace Redemption.Projectiles.Magic
             return false;
         }
     }
-    #region Alt
-    /*
-    public class PoemTornado_Proj : ModProjectile
-    {
-        private Player Player => Main.player[Projectile.owner];
-
-        private float collisionLength;
-        public override string Texture => Redemption.EMPTY_TEXTURE;
-        public override void SetStaticDefaults()
-        {
-            ElementID.ProjWind[Type] = true;
-        }
-        public override void SetSafeDefaults()
-        {
-            Projectile.DamageType = DamageClass.Magic;
-            Projectile.Redemption().ParryBlacklist = true;
-
-            Projectile.width = 200;
-            Projectile.height = 250;
-            Projectile.alpha = 255;
-            Projectile.hide = true;
-
-            Projectile.friendly = true;
-            Projectile.tileCollide = false;
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 4;
-            Projectile.penetrate = -1;
-
-            collisionLength = 250;
-        }
-        public override void AI()
-        {
-            if (Player.noItems || Player.CCed || Player.dead || !Player.active)
-                Projectile.Kill();
-
-            Player.ChangeDir(Projectile.direction);
-            Player.heldProj = Projectile.whoAmI;
-            Player.itemTime = 2;
-            Player.itemAnimation = 2;
-
-            Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 90, 255);
-            if (Main.myPlayer == Projectile.owner)
-            {
-                if (Player.channel)
-                {
-                    Projectile.alpha -= 3;
-                }
-                else
-                {
-                    Projectile.alpha += 6;
-                }
-                Projectile.Move(Main.MouseWorld, 24, 40);
-                if (Projectile.localAI[0]++ % 180 == 0 && !Main.dedServ)
-                    SoundEngine.PlaySound(CustomSounds.WindLong, Projectile.position);
-                if (Projectile.localAI[0] >= 20 && Projectile.alpha >= 255)
-                    Projectile.Kill();
-            }
-            Rectangle left = new((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width / 2, Projectile.height);
-            Rectangle right = new((int)Projectile.position.X + (Projectile.width / 2), (int)Projectile.position.Y, Projectile.width / 2, Projectile.height);
-            for (int i = 0; i < Main.maxNPCs; i++)
-            {
-                NPC npc = Main.npc[i];
-                if (!npc.active || npc.friendly || npc.dontTakeDamage || npc.knockBackResist <= 0 || npc.boss)
-                    continue;
-
-                float dist = npc.Distance(Projectile.Center);
-                if (left.Intersects(npc.Hitbox))
-                {
-                    npc.velocity *= 0.98f;
-                    npc.velocity.X += 0.8f * npc.knockBackResist;
-                    npc.velocity.Y -= 0.6f * npc.knockBackResist * (dist / 70);
-                }
-                if (right.Intersects(npc.Hitbox))
-                {
-                    npc.velocity *= 0.98f;
-                    npc.velocity.X -= 0.8f * npc.knockBackResist;
-                    npc.velocity.Y -= 0.6f * npc.knockBackResist * (dist / 70);
-                }
-            }
-            if (Projectile.alpha <= 90 && Projectile.localAI[0] % 10 == 0)
-            {
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileType<PoemTornado_Rock>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.whoAmI);
-            }
-            if (!Main.dedServ)
-            {
-                TrailSetUp();
-            }
-        }
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            float coneLength = collisionLength;
-            float maxAngle = MathHelper.ToRadians(15);
-            float rotation = Projectile.velocity.ToRotation();
-            Vector2 collisionStart = Projectile.Center;
-
-            for (int i = -1; i < 2; i++)
-            {
-                if (!targetHitbox.IntersectsConeSlowMoreAccurate(collisionStart, MathF.Max(30, coneLength - MathF.Abs(i) * 25), rotation + MathHelper.ToRadians(i * 10), maxAngle))
-                    continue;
-
-                return true;
-            }
-            return false;
-        }
-        public override bool? CanHitNPC(NPC target) => Projectile.alpha <= 200 ? null : false;
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            Vector2 offset = Player.MountedCenter.DirectionTo(Main.MouseWorld).SafeNormalize(default) * 34;
-            int d = Dust.NewDust(target.Center + Main.rand.NextVector2Square(-10, 10), 2, 2, DustID.WhiteTorch, newColor: Color.White);
-            Main.dust[d].velocity = (Projectile.Center + offset).DirectionFrom(target.Center) * (Projectile.Center - target.Center).Length() * 0.1f;
-            Main.dust[d].noGravity = true;
-        }
-        public override bool PreDraw(ref Color lightColor)
-        {
-            DrawTrail();
-            return false;
-        }
-            
-        #region draw trail
-        private List<Vector2> cache = new();
-        private DanTrail trail;
-        private int NumPoints = 200;
-        public void TrailSetUp()
-        {
-            if (NumPoints > 0)
-                ManageCache();
-            if (cache.Count > 3)
-                ManageTrail();
-        }
-        public void ManageCache()
-        {
-            Vector2 Center = Projectile.Bottom;
-
-            cache = new List<Vector2>();
-
-            for (float i = 0; i < NumPoints; i++)
-            {
-                Vector2 result = Vector2.UnitX * 10 + Vector2.UnitX * i * collisionLength / 200 * 1.1f;
-                result = result.RotatedBy(-1.57f);
-                cache.Add(Center + result);
-            }
-        }
-        public void ManageTrail()
-        {
-            trail = new DanTrail(Main.instance.GraphicsDevice, cache.Count, new NoTip(),
-            factor =>
-            {
-                float width = BaseUtility.MultiLerp(factor, 0.5f, 1.5f, 3);
-                float wave = MathF.Sin(factor * MathHelper.Pi * 4 + Main.GameUpdateCount * .5f);
-                float thickness = width * 100 + wave * 4;
-                return thickness;
-            },
-            factor =>
-            {
-                Color color1 = new(255, 255, 255, 255);
-                Color color2 = new(255, 255, 255, 255);
-                Color c = BaseUtility.MultiLerpColor(factor.X * 2, color2, color1);
-                return c;
-            });
-            trail.Positions = cache.ToArray();
-            trail.NextPosition = Projectile.Center + Projectile.velocity;
-        }
-        public void DrawTrail()
-        {
-            Main.spriteBatch.End();
-            Main.spriteBatch.BeginDefault(true);
-
-            Effect effect = Request<Effect>("Redemption/Effects/UrnWind", AssetRequestMode.ImmediateLoad).Value;
-
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.ZoomMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-            //c Trail_3 Trail_2
-            Texture2D tex0 = Request<Texture2D>("Redemption/Textures/Trails/Trail_2").Value;
-            Texture2D tex1 = Request<Texture2D>("Redemption/Textures/Trails/vTrail_1").Value;
-
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["uTexture0"].SetValue(tex0);
-            effect.Parameters["uTexture1"].SetValue(tex1);
-            effect.Parameters["uTime"].SetValue(Main.GameUpdateCount * -0.01f);
-            trail?.Render(effect);
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.BeginDefault(true);
-        }
-        #endregion
-
-    }
-    */
-    #endregion
 }

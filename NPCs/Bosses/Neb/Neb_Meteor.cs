@@ -1,22 +1,20 @@
 using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary;
-using ParticleLibrary.Core;
 using Redemption.BaseExtension;
-using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Particles;
 using ReLogic.Content;
-using System;
 using System.Collections.Generic;
+using Redemption.Effects.Trails;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.Projectiles;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
-    public class Neb_Meteor_Tele : ModProjectile
+    public class Neb_Meteor_Tele : ModRedeProjectile
     {
         public override string Texture => "Redemption/Textures/RadialTelegraph3";
         public override void SetDefaults()
@@ -88,7 +86,7 @@ namespace Redemption.NPCs.Bosses.Neb
             return false;
         }
     }
-    public class Neb_Meteor : ModProjectile
+    public class Neb_Meteor : ModRedeProjectile
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
@@ -126,8 +124,6 @@ namespace Redemption.NPCs.Bosses.Neb
         private DanTrail trail;
         private DanTrail trail2;
         private readonly float thickness = 30f;
-        public override bool CanHitPlayer(Player target) => true;
-        public override bool? CanHitNPC(NPC target) => null;
         public override bool PreDraw(ref Color lightColor)
         {
             Main.spriteBatch.End();
@@ -150,17 +146,20 @@ namespace Redemption.NPCs.Bosses.Neb
             Main.spriteBatch.End();
             Main.spriteBatch.BeginDefault();
 
-            Texture2D meteor = Request<Texture2D>("Terraria/Images/Projectile_" + meteorID, AssetRequestMode.ImmediateLoad).Value;
-            Rectangle rect = new(0, 0, meteor.Width, meteor.Height);
-            Vector2 origin = new(meteor.Width / 2, meteor.Height / 2);
-            Main.EntitySpriteDraw(meteor, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.White, Projectile.rotation, origin, Projectile.scale, 0);
+            Main.instance.LoadProjectile(meteorID);
+            Asset<Texture2D> meteor = TextureAssets.Projectile[meteorID];
+            Vector2 origin = meteor.Size() / 2;
+            Main.EntitySpriteDraw(meteor.Value, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, origin, Projectile.scale, 0);
             return true;
         }
         public override void AI()
         {
             Projectile proj = Main.projectile[(int)Projectile.ai[0]];
             if (!proj.active || proj.type != ProjectileType<Neb_Meteor_Tele>())
+            {
                 Projectile.Kill();
+                return;
+            }
 
             int speed = 25;
             if (Projectile.ai[1] is 1)
@@ -189,7 +188,7 @@ namespace Redemption.NPCs.Bosses.Neb
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
             }
         }
         public override void OnKill(int timeLeft)
@@ -232,11 +231,6 @@ namespace Redemption.NPCs.Bosses.Neb
             if (Projectile.ai[1] is 1)
                 radius = 190;
              RedeHelper.PlayerRadiusDamage(radius, Projectile, NPCHelper.HostileProjDamageInc(Projectile.damage), Projectile.knockBack);
-        }
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-        {
-            modifiers.ArmorPenetration += 50;
-            target.AddBuff(BuffID.OnFire, 600);
         }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {

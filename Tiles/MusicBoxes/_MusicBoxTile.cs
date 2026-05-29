@@ -93,4 +93,5 @@ namespace Redemption.Tiles.MusicBoxes
     public class FowlEmperorBoxTile : BaseMusicBoxTile { protected override int Item => ModContent.ItemType<FowlEmperorBox>(); }
     public class ThornBoxTile : BaseMusicBoxTile { protected override int Item => ModContent.ItemType<ThornBox>(); }
     public class BeyondSteelBoxTile : BaseMusicBoxTile { protected override int Item => ItemType<BeyondSteelBox>(); }
+    public class EpidotraMusicBoxTile : BaseMusicBoxTile { protected override int Item => ItemType<EpidotraMusicBox>(); }
 }

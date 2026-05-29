@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
 using Redemption.Globals;
+using Redemption.Globals.Projectiles;
 using Redemption.Projectiles;
 using Redemption.Textures;
 using ReLogic.Content;
@@ -75,7 +77,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
             }
         }
         public override void OnKill(int timeLeft)

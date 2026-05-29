@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override string Texture => "Redemption/Textures/BubbleShield";
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Bubble Shield");
+            Main.projFrames[Type] = 2;
         }
         public override void SetDefaults()
         {
@@ -78,12 +78,16 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D overlay = Request<Texture2D>("Redemption/Textures/BubbleShield_Overlay").Value;
-            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Main.EntitySpriteDraw(overlay, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(RedeColor.FadeColour1 with { A = 0 }), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            Rectangle rect = texture.Frame(1, 2, 0, 1);
+            Vector2 drawOrigin = rect.Size() / 2;
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, rect, Projectile.GetAlpha(RedeColor.FadeColour1 with { A = 0 }) * .5f, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+
+            rect = texture.Frame(1, 2, 0, 0);
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, rect, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
         }
     }
@@ -92,7 +96,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override string Texture => "Redemption/Textures/BubbleShield";
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Bubble Shield");
+            Main.projFrames[Type] = 2;
         }
         public override void SetDefaults()
         {
@@ -137,12 +141,16 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D overlay = Request<Texture2D>("Redemption/Textures/BubbleShield_Overlay").Value;
-            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Main.EntitySpriteDraw(overlay, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(RedeColor.FadeColour1 with { A = 0 }), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            Rectangle rect = texture.Frame(1, 2, 0, 1);
+            Vector2 drawOrigin = rect.Size() / 2;
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, rect, Projectile.GetAlpha(RedeColor.FadeColour1 with { A = 0 }) * .5f, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+
+            rect = texture.Frame(1, 2, 0, 0);
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, rect, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
         }
     }

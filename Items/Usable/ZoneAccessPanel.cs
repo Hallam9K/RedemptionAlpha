@@ -28,6 +28,7 @@ namespace Redemption.Items.Usable
             Item.maxStack = 1;
             Item.rare = ItemRarityID.Lime;
             Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.UseSound = CustomSounds.StaticFlare;
             Item.useAnimation = 45;
             Item.useTime = 45;
             Item.consumable = true;

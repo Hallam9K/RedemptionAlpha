@@ -7,6 +7,7 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Placeable.MusicBoxes;
 using Redemption.Items.Quest;
 using Redemption.Items.Tools.PreHM;
 using Redemption.Items.Usable;
@@ -332,6 +333,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 .Add<SilverwoodBow>(Condition.DownedEowOrBoc)
                 .Add<GolemEye>(RedeConditions.DownedEaglecrestGolem)
                 .Add<ChaliceFragments>()
+                .Add<EpidotraMusicBox>(Condition.Hardmode)
                 .Add<GildedSeaEmblem>(Condition.InBeach)
                 .Add<CrystallizedKnowledge>(RedeConditions.ElementBookQuest)
                 .Add<OphosNotes>(Condition.DownedGolem)

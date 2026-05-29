@@ -39,6 +39,8 @@ namespace Redemption.Textures
         public static Asset<Texture2D> Shine;
         public static Asset<Texture2D> Ray;
 
+        public static Asset<Texture2D> Trail_4;
+
         public static Asset<Texture2D> StunVisual;
         public static Asset<Texture2D> RalliedBuffIcon;
         public static Asset<Texture2D> PortalIcon;
@@ -79,6 +81,8 @@ namespace Redemption.Textures
             TransitionTex = Request<Texture2D>("Redemption/Textures/TransitionTex");
             Shine = Request<Texture2D>("Redemption/Textures/Shine");
             Ray = Request<Texture2D>("Redemption/Textures/Ray");
+
+            Trail_4 = Request<Texture2D>("Redemption/Textures/Trails/Trail_4");
 
             StunVisual = Request<Texture2D>("Redemption/Textures/StunVisual");
             RalliedBuffIcon = Request<Texture2D>("Redemption/Buffs/NPCBuffs/FlagbearerBuff_Icon");

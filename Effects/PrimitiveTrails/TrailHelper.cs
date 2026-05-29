@@ -1,21 +1,21 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.NPCs.Bosses.ADD;
 using Redemption.NPCs.Bosses.Gigapora;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Bosses.KSIII;
-using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb;
+using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Friendly;
 using Redemption.Projectiles.Melee;
 using Redemption.Projectiles.Minions;
 using Redemption.Projectiles.Ranged;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 using static Redemption.Globals.RedeNet;
 
 namespace Redemption.Effects.PrimitiveTrails
@@ -37,7 +37,7 @@ namespace Redemption.Effects.PrimitiveTrails
         public TrailManager(Mod mod)
         {
             _trails = new List<BaseTrail>();
-            _effect = ModContent.Request<Effect>("Redemption/Effects/trailShaders", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            _effect = Request<Effect>("Redemption/Effects/trailShaders", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             Main.QueueMainThreadAction(() =>
             {
@@ -50,7 +50,7 @@ namespace Redemption.Effects.PrimitiveTrails
 
         public static void TryTrailKill(Projectile projectile)
         {
-            if (projectile.type == ModContent.ProjectileType<KeeperDreadCoil>() || projectile.type == ModContent.ProjectileType<EaglecrestSling_Proj>() || projectile.type == ModContent.ProjectileType<CrystalGlaive_Proj>() || projectile.type == ModContent.ProjectileType<InfectiousGlaive_Proj>() || projectile.type == ModContent.ProjectileType<XeniumLance_Proj>() || projectile.type == ModContent.ProjectileType<DualcastBall>() || projectile.type == ModContent.ProjectileType<UkkoThunderwave>() || projectile.type == ModContent.ProjectileType<Gigapora_Fireball>() || projectile.type == ModContent.ProjectileType<ShieldCore_Bolt>() || projectile.type == ModContent.ProjectileType<ShieldCore_DualcastBall>() || projectile.type == ModContent.ProjectileType<ShadowBolt>() || projectile.type == ModContent.ProjectileType<KS3_EnergyBolt>() || projectile.type == ModContent.ProjectileType<CurvingStar>() || projectile.type == ModContent.ProjectileType<CurvingStar2>() || projectile.type == ModContent.ProjectileType<Neb_Start_Visual>() || projectile.type == ModContent.ProjectileType<StarFall_Proj2>() || projectile.type == ModContent.ProjectileType<StarFall_Proj>() || projectile.type == ModContent.ProjectileType<NebulaStar>() || projectile.type == ModContent.ProjectileType<NebulaSpark>())
+            if (projectile.type == ProjectileType<KeeperDreadCoil>() || projectile.type == ProjectileType<EaglecrestSling_Proj>() || projectile.type == ProjectileType<CrystalGlaive_Proj>() || projectile.type == ProjectileType<InfectiousGlaive_Proj>() || projectile.type == ProjectileType<XeniumLance_Proj>() || projectile.type == ProjectileType<DualcastBall>() || projectile.type == ProjectileType<UkkoThunderwave>() || projectile.type == ProjectileType<Gigapora_Fireball>() || projectile.type == ProjectileType<ShieldCore_Bolt>() || projectile.type == ProjectileType<ShieldCore_DualcastBall>() || projectile.type == ProjectileType<ShadowBolt>() || projectile.type == ProjectileType<KS3_EnergyBolt>() || projectile.type == ProjectileType<CurvingStar>() || projectile.type == ProjectileType<CurvingStar2>() || projectile.type == ProjectileType<Neb_Start_Visual>() || projectile.type == ProjectileType<StarFall_Proj2>() || projectile.type == ProjectileType<StarFall_Proj>() || projectile.type == ProjectileType<NebulaStar>() || projectile.type == ProjectileType<NebulaSpark>())
                 Redemption.TrailManager.TryEndTrail(projectile, Math.Max(15f, projectile.velocity.Length() * 3f));
             switch (projectile.type)
             {

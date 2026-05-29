@@ -3,9 +3,14 @@ using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
+using Redemption.Effects.Trails.Tips;
 using Redemption.Globals;
+using Redemption.Globals.Projectiles;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.Neb.Phase2;
+using Redemption.Projectiles;
+using Redemption.Textures;
 using ReLogic.Content;
 using ReLogic.Utilities;
 using System.Collections.Generic;
@@ -61,7 +66,7 @@ namespace Redemption.NPCs.Bosses.Neb
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(Projectile)];
             NPC neb = Main.npc[(int)Projectile.ai[0]];
             int speed = 8;
-            if (neb.type == NPCType<Nebuleus2>() || neb.type == NPCType<Nebuleus2_Clone>())
+            if (neb.ModNPC is Nebuleus2)
                 speed = 9;
             if (AITimer > 40)
                 Projectile.MoveToVector2(player.Center + new Vector2(0, -1500), speed);
@@ -158,10 +163,10 @@ namespace Redemption.NPCs.Bosses.Neb
         }
         public void DrawTether(Vector2 Target, Vector2 screenPos, Color color1, Color color2, float Size, float Strength)
         {
-            Effect effect = Request<Effect>("Redemption/Effects/Beam2", AssetRequestMode.ImmediateLoad).Value;
+            Effect effect = Request<Effect>("Redemption/Effects/Beam2").Value;
 
-            Texture2D TrailTex = Request<Texture2D>("Redemption/Textures/Trails/EnergyVertical", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D TrailTex2 = Request<Texture2D>("Redemption/Textures/Trails/FlameVertical", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D TrailTex = Request<Texture2D>("Redemption/Textures/Trails/EnergyVertical").Value;
+            Texture2D TrailTex2 = Request<Texture2D>("Redemption/Textures/Trails/FlameVertical").Value;
             effect.Parameters["uTexture"].SetValue(TrailTex);
             effect.Parameters["progress"].SetValue(Main.GlobalTimeWrappedHourly / 2);
 
@@ -219,7 +224,7 @@ namespace Redemption.NPCs.Bosses.Neb
         }
         #endregion
     }
-    public class Neb_Moonbeam_Tele : ModProjectile
+    public class Neb_Moonbeam_Tele : ModRedeProjectile
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetDefaults()
@@ -233,6 +238,8 @@ namespace Redemption.NPCs.Bosses.Neb
             Projectile.timeLeft = 300;
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 3;
+
+            InitializeTrail();
         }
         public float vectorOffset = 0f;
         public Vector2 originalVelocity = Vector2.Zero;
@@ -296,9 +303,10 @@ namespace Redemption.NPCs.Bosses.Neb
             if (Projectile.alpha >= 255)
                 Projectile.Kill();
         }
-        public void ManageTrail()
+
+        public void InitializeTrail()
         {
-            trail ??= new DanTrail(Main.instance.GraphicsDevice, NUMPOINTS, new TriangularTip(4),
+            trail = new DanTrail(RedeGraphics.Instance.Primitives, new TriangularTip(4),
             factor =>
             {
                 float mult = factor;
@@ -316,10 +324,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
                 return edgeColor * 0.1f * factor.X * Projectile.Opacity;
             });
-
-            trail.Positions = cache.ToArray();
-            trail.NextPosition = Projectile.Center;
-            trail2 ??= new DanTrail(Main.instance.GraphicsDevice, NUMPOINTS, new TriangularTip(4),
+            trail2 = new DanTrail(RedeGraphics.Instance.Primitives, new TriangularTip(4),
             factor =>
             {
                 float mult = factor;
@@ -335,9 +340,12 @@ namespace Redemption.NPCs.Bosses.Neb
                 float progress = EaseFunction.EaseCubicOut.Ease(1 - factor.X);
                 return Color.Lerp(baseColor, endColor, EaseFunction.EaseCubicIn.Ease(progress)) * (1 - progress) * Projectile.Opacity;
             });
+        }
 
-            trail2.Positions = cache2.ToArray();
-            trail2.NextPosition = Projectile.Center;
+        public void ManageTrail()
+        {
+            trail.SetPositions(cache.ToArray(), Projectile.Center);
+            trail2.SetPositions(cache2.ToArray(), Projectile.Center);
         }
         public override bool PreDraw(ref Color lightColor)
         {
@@ -351,7 +359,7 @@ namespace Redemption.NPCs.Bosses.Neb
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value);
+                effect.Parameters["sampleTexture"].SetValue(CommonTextures.Trail_4.Value);
                 effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
                 effect.Parameters["repeats"].SetValue(1f);
 

@@ -2,8 +2,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
 using Redemption.Globals;
+using Redemption.Globals.Projectiles;
 using Redemption.Projectiles;
+using Redemption.Textures;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -89,7 +92,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
             }
             if (fakeTimer > 0)
                 FakeKill();
@@ -120,14 +123,13 @@ namespace Redemption.NPCs.Bosses.KSIII
             Main.spriteBatch.End();
             Main.spriteBatch.BeginAdditive();
 
-            Texture2D flare = Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
-            Rectangle rect = new(0, 0, flare.Width, flare.Height);
-            Vector2 origin = new(flare.Width / 2, flare.Height / 2);
+            Texture2D flare = CommonTextures.WhiteFlare.Value;
+            Vector2 origin = flare.Size() / 2;
             Vector2 position = Projectile.Center - Main.screenPosition;
             Color colour = new(140, 255, 242);
 
-            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, origin, Projectile.scale + .5f, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), Projectile.GetAlpha(colour) * 0.4f, Projectile.rotation, origin, Projectile.scale + 1f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, position, null, Projectile.GetAlpha(Color.White), Projectile.rotation, origin, Projectile.scale + .5f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, position, null, Projectile.GetAlpha(colour) * 0.4f, Projectile.rotation, origin, Projectile.scale + 1f, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.BeginDefault();

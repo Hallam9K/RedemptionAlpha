@@ -1,12 +1,16 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Effects;
 using Redemption.Globals;
+using Redemption.Projectiles;
+using Redemption.Textures;
 using System;
 using System.Collections.Generic;
+using Redemption.Effects.Trails;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
+using Redemption.Globals.Projectiles;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Erhan
@@ -61,10 +65,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                     Vector2 move = Vector2.Zero;
                     float distance = 4000f;
                     bool targetted = false;
-                    for (int p = 0; p < Main.maxPlayers; p++)
+                    foreach (Player target in Main.ActivePlayers)
                     {
-                        Player target = Main.player[p];
-                        if (!target.active || target.dead || target.invis || !Collision.CanHit(Projectile.Center, 0, 0, target.Center, 0, 0))
+                        if (target.dead || target.invis || (Projectile.ai[1] != 1 && !Collision.CanHit(Projectile.Center, 0, 0, target.Center, 0, 0)))
                             continue;
 
                         Vector2 newMove = target.Center - Projectile.Center;
@@ -72,7 +75,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                         if (distanceTo < distance)
                         {
                             move = target.Center;
-                            distance = distanceTo;
                             targetted = true;
                         }
                     }
@@ -85,7 +87,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
             }
         }
 
@@ -101,7 +103,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value);
+            effect.Parameters["sampleTexture"].SetValue(CommonTextures.Trail_4.Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 

@@ -1,236 +1,370 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.Globals;
-using ReLogic.Content;
+using ParticleLibrary.Utilities;
+using Redemption.Base;
 using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
 using Redemption.Buffs.Cooldowns;
+using Redemption.Effects.Trails;
+using Redemption.Globals;
+using Redemption.Particles;
 using Redemption.Projectiles.Melee;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.Enums;
+using Terraria.GameContent;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
-    public class XeniumLance_Proj : ModProjectile, ITrailProjectile
+    public class XeniumLance_Proj : ModProjectile
     {
+        private Player Owner => Main.player[Projectile.owner];
+        private ref float SwingType => ref Projectile.ai[0];
+        private ref float Timer => ref Projectile.ai[1];
+
+        private Vector2 positionVector;
+
+        private float progress;
+
+        private float swingProgress;
+
+        private float startRotation;
+        public override bool ShouldUpdatePosition() => false;
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Xenium Lance");
             ElementID.ProjThunder[Type] = true;
         }
-
-        public override bool ShouldUpdatePosition() => false;
-
         public override void SetDefaults()
         {
-            Projectile.CloneDefaults(ProjectileID.Spear);
-            Length = 40;
-            Rot = MathHelper.ToRadians(3);
-            Projectile.width = 48;
-            Projectile.height = 48;
-            Projectile.friendly = true;
-            Projectile.penetrate = -1;
-            Projectile.alpha = 255;
-            Projectile.usesLocalNPCImmunity = true;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.Redemption().TechnicallyMelee = true;
+
+            Projectile.tileCollide = false;
+            Projectile.ownerHitCheck = true;
+
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+
+            Projectile.width = 30;
+            Projectile.height = 30;
+
+            Projectile.penetrate = -1;
+            Projectile.extraUpdates = 5;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+
+            trailVector = new Vector2[trailLength];
         }
-
-        public void DoTrailCreation(TrailManager tManager)
+        public override void SendExtraAI(BinaryWriter writer)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(136, 255, 255), new Color(105, 255, 255)), new NoCap(), new DefaultTrailPosition(), 150f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
+            Utils.WriteVector2(writer, positionVector);
         }
-
-        private Vector2 vector;
-        private Vector2 startVector;
-        public ref float Length => ref Projectile.localAI[0];
-        public ref float Rot => ref Projectile.localAI[1];
-        public int Timer;
-        private float speed;
-
-        public override bool PreAI()
+        public override void ReceiveExtraAI(BinaryReader reader)
         {
-            Player player = Main.player[Projectile.owner];
-            player.heldProj = Projectile.whoAmI;
-            player.itemTime = 2;
-            player.itemAnimation = 2;
-            Projectile.Center = player.MountedCenter + vector;
+            positionVector = Utils.ReadVector2(reader);
+        }
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.spriteDirection = Owner.direction;
+            Projectile.scale *= Projectile.ai[2];
+        }
+        public override void AI()
+        {
+            if (Owner.noItems || Owner.CCed || Owner.dead || !Owner.active)
+                Projectile.Kill();
 
-            Projectile.spriteDirection = player.direction;
-            if (Projectile.spriteDirection == 1)
-                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver4;
-            else
-                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
+            Owner.heldProj = Projectile.whoAmI;
+            Owner.itemTime = 2;
+            Owner.itemAnimation = 2;
 
-            player.SetCompositeArmFront(true, Length >= 80 ? Player.CompositeArmStretchAmount.Full : Player.CompositeArmStretchAmount.Quarter, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+            Vector2 playerCenter = Owner.RotatedRelativePoint(Owner.MountedCenter);
 
-            switch (Projectile.ai[0])
+            switch (SwingType)
             {
                 case 0:
-                    if (Timer++ == 0)
+                    progress = Timer / (Owner.HeldItem.useTime / Owner.GetAttackSpeed(DamageClass.Melee) * Projectile.MaxUpdates);
+                    if (Timer == 0)
                     {
-                        startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));
-                        speed = MathHelper.ToRadians(6);
+                        Owner.ChangeDir(Projectile.velocity.X >= 0 ? 1 : -1);
+                        startRotation = Owner.direction == 1 ? Projectile.velocity.ToRotation() : -Projectile.velocity.ToRotation() + MathHelper.Pi;
                     }
-                    if (Timer % 3 == 0)
+                    if (progress <= 1)
                     {
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<XeniumLanceSpark_Proj>(), Projectile.damage / 6, 0, Main.myPlayer);
-                    }
-                    if (Timer < 10)
-                    {
-                        Length *= 1.1f;
-                        Rot += speed * Projectile.spriteDirection;
-                        speed *= 1.2f;
-                        vector = startVector.RotatedBy(Rot) * Length;
-                    }
-                    else
-                    {
-                        Length *= 0.98f;
-                        Rot += speed * Projectile.spriteDirection;
-                        speed *= 0.8f;
-                        vector = startVector.RotatedBy(Rot) * Length;
-                    }
-                    if (Timer >= 22)
-                        Projectile.Kill();
+                        swingProgress = EaseFunction.EaseQuadInOut.Ease(progress);
+                        float angle = (0.9f * swingProgress + -0.45f) * MathHelper.TwoPi;
+                        float x = MathF.Cos(angle) * (30 + 90 * BaseUtility.MultiLerp(swingProgress, 0, 1, 1, 1, 0));
+                        float y = MathF.Sin(angle) * 90;
+                        Vector2 path = new(x, y);
+                        path = path.RotatedBy(startRotation);
+                        path.X *= Owner.direction;
 
-                    Length = MathHelper.Clamp(Length, 60, 120);
+                        positionVector = path * Projectile.scale;
+                    }
+                    if (progress > 1)
+                    {
+                        Projectile.Kill();
+                    }
+                    Projectile.friendly = swingProgress < 0.98f;
+                    TrailSetUp();
                     break;
-
                 case 1:
-                    if (Timer++ == 0)
+                    progress = Timer / (Owner.HeldItem.useTime / Owner.GetAttackSpeed(DamageClass.Melee) * Projectile.MaxUpdates);
+                    if (progress == 0)
                     {
-                        startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() + (MathHelper.PiOver2 * Projectile.spriteDirection));
-                        speed = MathHelper.ToRadians(6);
+                        Projectile.velocity = playerCenter.DirectionTo(Main.MouseWorld);
+                        Owner.ChangeDir(Projectile.velocity.X >= 0 ? 1 : -1);
+                        startRotation = Owner.direction == 1 ? Projectile.velocity.ToRotation() : -Projectile.velocity.ToRotation() + MathHelper.Pi;
                     }
-                    if (Timer % 3 == 0)
+                    if (progress <= 1)
                     {
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<XeniumLanceSpark_Proj>(), Projectile.damage / 6, 0, Main.myPlayer);
-                    }
-                    if (Timer < 10)
-                    {
-                        Length *= 1.1f;
-                        Rot -= speed * Projectile.spriteDirection;
-                        speed *= 1.2f;
-                        vector = startVector.RotatedBy(Rot) * Length;
-                    }
-                    else
-                    {
-                        Length *= 0.98f;
-                        Rot -= speed * Projectile.spriteDirection;
-                        speed *= 0.8f;
-                        vector = startVector.RotatedBy(Rot) * Length;
-                    }
-                    if (Timer >= 22)
-                        Projectile.Kill();
+                        swingProgress = EaseFunction.EaseQuadInOut.Ease(progress);
+                        float angle = (1.45f * swingProgress + -0.45f) * -MathHelper.TwoPi;
+                        float x = MathF.Cos(angle) * (30 + 90 * BaseUtility.MultiLerp(swingProgress, 0, 1, 1, 1, 1, 1, 0));
+                        float y = MathF.Sin(angle) * 90;
+                        Vector2 path = new(x, y);
+                        path = path.RotatedBy(startRotation);
+                        path.X *= Owner.direction;
 
-                    Length = MathHelper.Clamp(Length, 60, 120);
+                        positionVector = path * Projectile.scale;
+                    }
+                    if (progress > 1)
+                    {
+                        Projectile.Kill();
+                    }
+                    Projectile.friendly = swingProgress < 0.98f;
+                    TrailSetUp();
                     break;
                 case 2:
-                    if (Timer++ == 0)
+                    progress = Timer / (Owner.HeldItem.useTime / Owner.GetAttackSpeed(DamageClass.Melee) * Projectile.MaxUpdates);
+                    if (progress == 0)
                     {
-                        startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));
-                        speed = MathHelper.ToRadians(6);
-                    }
-                    if (Timer % 2 == 0)
-                    {
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<XeniumLanceSpark_Proj>(), Projectile.damage / 6, 0, Main.myPlayer);
-                    }
-                    if (Timer < 10)
-                    {
-                        Length *= 1.1f;
-                        Rot += speed * Projectile.spriteDirection;
-                        speed *= 1.27f;
-                        vector = startVector.RotatedBy(Rot) * Length;
-                    }
-                    else
-                    {
-                        Length *= 0.98f;
-                        Rot += speed * Projectile.spriteDirection;
-                        speed *= 0.85f;
-                        vector = startVector.RotatedBy(Rot) * Length;
-                    }
-                    if (Timer >= 26)
-                        Projectile.Kill();
+                        Owner.ChangeDir(Projectile.velocity.X >= 0 ? 1 : -1);
+                        startRotation = Owner.direction == 1 ? Projectile.velocity.ToRotation() : -Projectile.velocity.ToRotation() + MathHelper.Pi;
 
-                    Length = MathHelper.Clamp(Length, 60, 120);
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.Swoosh1.WithPitchOffset(.2f).WithVolumeScale(.5f), Owner.position);
+                    }
+                    if (progress <= 1)
+                    {
+                        swingProgress = EaseFunction.EaseCubicInOut.Ease(progress);
+                        float x = MathF.Cos(0) * (30 + 150 * BaseUtility.MultiLerp(swingProgress, 0, 1, 0));
+                        float y = MathF.Sin(0) * 120;
+                        Vector2 path = new(x, y);
+                        path = path.RotatedBy(startRotation);
+                        path.X *= Owner.direction;
+
+                        positionVector = path * Projectile.scale;
+                    }
+                    if (progress > 1)
+                    {
+                        Projectile.Kill();
+                    }
+                    Projectile.friendly = swingProgress < 0.98f;
                     break;
                 case 3:
-                    if (Timer++ == 0)
+                    progress = Timer / (10 * Projectile.MaxUpdates);
+                    if (Timer == 0)
                     {
-                        startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation());
-                        speed = 1.2f;
+                        Projectile.friendly = true;
+                        Projectile.tileCollide = true;
+                        Projectile.velocity = Projectile.velocity.SafeNormalize(default) * 15f;
+                        startRotation = Owner.direction == 1 ? Projectile.velocity.ToRotation() : -Projectile.velocity.ToRotation() + MathHelper.Pi;
                     }
-                    if (Timer == 5)
+                    if (progress <= 1)
                     {
-                        player.velocity = RedeHelper.PolarVector(35, Projectile.velocity.ToRotation());
-                    }
-                    if (Timer >= 5)
-                    {
-                        Vector2 position = player.Center + (Vector2.Normalize(player.velocity) * 30f);
-                        Dust dust = Main.dust[Dust.NewDust(player.position, player.width, player.height, DustID.GreenFairy)];
-                        dust.position = position;
-                        dust.velocity = (player.velocity.RotatedBy(1.57) * 0.33f) + (player.velocity / 4f);
-                        dust.position += player.velocity.RotatedBy(1.57);
-                        dust.fadeIn = 0.5f;
-                        dust.noGravity = true;
-                        dust = Main.dust[Dust.NewDust(player.position, player.width, player.height, DustID.GreenFairy)];
-                        dust.position = position;
-                        dust.velocity = (player.velocity.RotatedBy(-1.57) * 0.33f) + (player.velocity / 4f);
-                        dust.position += player.velocity.RotatedBy(-1.57);
-                        dust.fadeIn = 0.5f;
-                        dust.noGravity = true;
-                    }
-                    if (Timer >= 10)
-                    {
-                        player.Redemption().contactImmune = true;
-                    }
-                    Length *= speed;
-                    vector = startVector * Length;
-                    speed -= 0.015f;
-                    if (Timer >= 26)
-                        Projectile.Kill();
+                        swingProgress = EaseFunction.EaseCubicInOut.Ease(progress);
+                        float x = MathF.Cos(0) * (30 + 120 * BaseUtility.MultiLerp(swingProgress, 0, 1, 1, 0));
+                        float y = MathF.Sin(0) * 60;
+                        Vector2 path = new(x, y);
+                        path = path.RotatedBy(startRotation);
+                        path.X *= Owner.direction;
 
-                    Length = MathHelper.Clamp(Length, 60, 120);
+                        positionVector = path * Projectile.scale;
+                        Owner.velocity = Projectile.velocity * 0.5f;
+                        Owner.position += Projectile.velocity * 0.5f;
+
+                        Color c = new Color(100, 255, 100);
+
+                        for (int i = -1; i < 2; i += 2)
+                        {
+                            Vector2 pos = Projectile.Center + Projectile.velocity * 2 + Projectile.velocity.RotatedBy(1.57f * i);
+                            Vector2 vel = Projectile.velocity.RotatedBy(i * 2.85f);
+                            RedeParticleManager.CreateAdditiveGlowParticle(pos, vel, new Vector2(1.6f, 0.2f) * 1, c, 12, 0.91f);
+                        }
+                    }
+                    if (progress >= 1)
+                    {
+                        Projectile.Kill();
+                    }
+                    if (Timer >= 5 * Projectile.MaxUpdates)
+                    {
+                        if (Timer % 6 == 0)
+                            RedeParticleManager.CreateSpeedParticle(Main.rand.NextVector2FromRectangle(Owner.Hitbox), -Projectile.velocity * 2, .75f, Color.LightSeaGreen.WithAlpha(0));
+                    }
+                    if (Timer >= 10 * Projectile.MaxUpdates)
+                    {
+                        Owner.Redemption().contactImmune = true;
+                    }
                     break;
+
             }
-            if (Timer > 1)
-                Projectile.alpha = 0;
-            return false;
+            Projectile.rotation = positionVector.ToRotation();
+            Projectile.Center = playerCenter + positionVector;
+            Owner.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, Projectile.rotation + MathHelper.ToRadians(-90));
+            Owner.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, MathHelper.ToRadians(0));
+            Timer++;
         }
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
-            if (Projectile.ai[0] == 3 && Timer >= 10)
-                modifiers.FlatBonusDamage += Timer * 200;
+            width = height = 8;
+            return true;
+        }
+        public override void CutTiles()
+        {
+            DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
+            Utils.TileActionAttempt cut = new(DelegateMethods.CutTiles);
+            Vector2 lineStart = Owner.RotatedRelativePoint(Owner.MountedCenter);
+            Vector2 lineEnd = Projectile.Center + positionVector * 0.1f;
+            float height = Projectile.height * Projectile.scale;
+            Utils.PlotTileLine(lineStart, lineEnd, height, cut);
+        }
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            float point = 0f;
+            Vector2 lineStart = Owner.RotatedRelativePoint(Owner.MountedCenter);
+            Vector2 lineEnd = Projectile.Center + positionVector * 0.1f;
+            float height = Projectile.height * Projectile.scale;
+            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), lineStart, lineEnd, height, ref point))
+                return true;
+            return false;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Player player = Main.player[Projectile.owner];
-            Projectile.localNPCImmunity[target.whoAmI] = 15;
-            target.immune[Projectile.owner] = 0;
-            if (Projectile.ai[0] == 3)
+            if (Main.myPlayer == Projectile.owner)
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, Vector2.Zero, ProjectileType<XeniumLanceSpark_Proj>(), Projectile.damage / 5, 0, Projectile.owner);
+
+            SoundEngine.PlaySound(CustomSounds.Gun2KS with { Volume = 1f }, Projectile.position);
+            Vector2 drawPos = Vector2.Lerp(target.Center, Projectile.Center, 0.01f) + Main.rand.NextVector2Square(-10, 0);
+            for (int i = 0; i < 6; i++)
             {
-                player.ClearBuff(ModContent.BuffType<XeniumLanceCooldown>());
-
-                player.immune = true;
-                player.immuneTime = (int)MathHelper.Max(player.immuneTime, 20);
-
-                Projectile.localNPCImmunity[target.whoAmI] = 60;
-                target.immune[Projectile.owner] = 0;
+                float randomRotation = Main.rand.NextFloat(-0.3f, 0.3f);
+                float randomVel = Main.rand.NextFloat(2f, 3f) * 20;
+                Vector2 direction = target.DirectionFrom(Owner.Center);
+                Vector2 drawPos2 = drawPos - direction * 30;
+                RedeParticleManager.CreateSpeedParticle(drawPos2, direction.RotatedBy(randomRotation) * randomVel, .1f, Color.LightGreen.WithAlpha(0), extension: 100);
+                RedeParticleManager.CreateSpeedParticle(drawPos2, direction.RotatedBy(randomRotation) * randomVel, .5f, Color.LightSeaGreen.WithAlpha(0), extension: 100);
             }
+            if(SwingType is 3)
+            {
+                Owner.ClearBuff(BuffType<XeniumLanceCooldown>());
+
+                Owner.immune = true;
+                Owner.immuneTime = (int)MathHelper.Max(Owner.immuneTime, 20);
+            }
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (SwingType == 3 && Timer >= 10 * Projectile.MaxUpdates)
+                modifiers.FlatBonusDamage += Timer * 100;
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            Player player = Main.player[Projectile.owner];
-            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Rectangle rect = new(0, 0, texture.Width, texture.Height);
-            Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
-            var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-
-            Vector2 v = Projectile.Center - RedeHelper.PolarVector(48, (Projectile.Center - player.Center).ToRotation());
-
-            Main.EntitySpriteDraw(texture, v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            DrawTrail();
+            DrawSword(lightColor);
             return false;
         }
+        private void DrawSword(Color lightColor)
+        {
+            SpriteEffects spriteEffects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Rectangle rect = new(0, 0, texture.Width, texture.Height);
+            Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
+            Vector2 drawAnchor = Owner.RotatedRelativePoint(Owner.MountedCenter) - Main.screenPosition;
+            Vector2 drawPos = drawAnchor + positionVector + positionVector.SafeNormalize(default) * -50;
+
+            float rotation = Projectile.spriteDirection == 1 ? Projectile.rotation + 1 * MathHelper.PiOver4 : Projectile.rotation + 3 * MathHelper.PiOver4;
+            Main.EntitySpriteDraw(texture, drawPos, rect, Projectile.GetAlpha(Color.White), rotation, origin, Projectile.scale, spriteEffects, 0);
+        }
+        #region draw trail
+        private Ellipse trail;
+        private List<Vector2> trailCache = new();
+        private Vector2[] trailVector;
+        private int trailLength = 30;
+        public void TrailSetUp()
+        {
+            if (!Main.dedServ)
+            {
+                ManageCache();
+                if (trailCache.Count > 3)
+                    ManageTrail();
+            }
+        }
+        public void ManageCache()
+        {
+            Vector2 armCenter = Owner.RotatedRelativePoint(Owner.MountedCenter) + new Vector2(-Owner.direction * 4, -4);
+            for (int i = trailVector.Length - 1; i > 0; i--)
+            {
+                trailVector[i] = trailVector[i - 1];
+            }
+            trailVector[0] = positionVector + positionVector * 0.1f;
+
+            trailCache = new List<Vector2>();
+            for (int i = 0; i < trailVector.Length; i++)
+            {
+                if (trailVector[i] != Vector2.Zero)
+                {
+                    trailCache.Add(armCenter + trailVector[i]);
+                }
+            }
+        }
+        public void ManageTrail()
+        {
+            Vector2 armCenter = Owner.RotatedRelativePoint(Owner.MountedCenter) + new Vector2(-Owner.direction * 4, -4);
+            trail = new Ellipse(RedeGraphics.Instance.Primitives,
+            factor =>
+            {
+                return 1;
+            },
+            factor =>
+            {
+                Color color = new(50, 205, 50, 0);
+                float opacity = MathHelper.Clamp(1 - 1f * progress, 0, 1);
+                return color * opacity;
+            });
+            trail.SetPositions(trailCache.ToArray(), armCenter);
+        }
+        public void DrawTrail()
+        {
+            Main.spriteBatch.End();
+            Main.spriteBatch.BeginDefault();
+            Main.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+
+            Effect effect = Request<Effect>("Redemption/Effects/HikariteDaggerSlash").Value;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.X, -Main.screenPosition.Y, 0);
+            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            Texture2D texture = Request<Texture2D>("Redemption/Textures/Trails/SlashTrail_2").Value;
+            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["sampleTexture"].SetValue(texture);
+            effect.Parameters["horizontalFlip"].SetValue(false);
+            effect.Parameters["brightTip"].SetValue(true);
+            effect.Parameters["minimumDistanceFromCenter"].SetValue(3);
+            effect.Parameters["squishToEdgeFactor"].SetValue(0);
+            effect.Parameters["squishPowerInverse"].SetValue(0.9f);
+            effect.Parameters["tipColor"].SetValue(new Vector4(1, 1, 1, 1));
+            effect.Parameters["interpolantStart"].SetValue(0.955f);
+            effect.Parameters["interpolantEnd"].SetValue(1f);
+            effect.Parameters["intensity"].SetValue(1);
+            trail?.Render(effect);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.BeginDefault();
+        }
+        #endregion
     }
 }

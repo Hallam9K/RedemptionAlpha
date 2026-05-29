@@ -97,14 +97,21 @@ namespace Redemption.Globals.NPCs
                 case NPCID.WitchDoctor:
                     shop.Add<ErleasFlower>();
                     break;
-                case NPCID.Merchant:
-                    shop.Add<DAVEPainting>(Condition.PlayerCarriesItem(ItemType<JohnSnailItem>()));
-                    break;
                 case NPCID.Dryad:
+                    shop.InsertAfter(ItemID.FlowerPacketTallGrass, ItemType<TallAncientGrassSeeds>());
+                    shop.InsertAfter(ItemID.FlowerPacketTallGrass, ItemType<AncientFlowerSeeds>());
                     shop.InsertAfter(ItemID.FlowerPacketTallGrass, ItemType<PoppySeeds>(), RedeConditions.NukeDropped);
                     break;
             }
         }
+        public override void SetupTravelShop(int[] shop, ref int nextSlot)
+        {
+            if (Main.LocalPlayer.HasItemInAnyInventory(ItemType<JohnSnailItem>()))
+                shop[nextSlot++] = ItemType<DAVEPainting>();
+            if (Main.LocalPlayer.HasItemInAnyInventory(ItemType<WeirdBloom>()) || Main.LocalPlayer.miscEquips[0].type == ItemType<WeirdBloom>())
+                shop[nextSlot++] = ItemType<WeirdBloomPainting>();
+        }
+
         private static bool TalkedDryad;
         public override void GetChat(Terraria.NPC npc, ref string chat)
         {

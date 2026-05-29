@@ -68,8 +68,8 @@ namespace Redemption.NPCs.Lab.Blisterface
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.Bestiary.Blisterface1")),
-                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.Bestiary.Blisterface2"))
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Blisterface1")),
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Blisterface2"))
             });
         }
         public override bool CheckActive()

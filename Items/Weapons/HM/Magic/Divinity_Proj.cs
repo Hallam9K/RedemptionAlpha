@@ -1,11 +1,11 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary;
 using ParticleLibrary.Core;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
 using Redemption.Globals;
+using Redemption.Globals.Projectiles;
 using Redemption.Particles;
 using Redemption.Projectiles.Magic;
 using System;
@@ -50,30 +50,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             if (!player.channel)
                 Projectile.Kill();
 
-            if (Main.myPlayer == Projectile.owner)
-            {
-                float scaleFactor6 = 1f;
-                if (player.inventory[player.selectedItem].shoot == Projectile.type)
-                {
-                    scaleFactor6 = player.inventory[player.selectedItem].shootSpeed * Projectile.scale;
-                }
-                Vector2 vector13 = Main.MouseWorld - vector;
-                vector13.Normalize();
-                if (vector13.HasNaNs())
-                {
-                    vector13 = Vector2.UnitX * player.direction;
-                }
-                vector13 *= scaleFactor6;
-                if (vector13.X != Projectile.velocity.X || vector13.Y != Projectile.velocity.Y)
-                    Projectile.netUpdate = true;
-
-                Projectile.velocity = vector13;
-                if (player.noItems || player.CCed || player.dead || !player.active)
-                {
-                    Projectile.Kill();
-                }
-                Projectile.netUpdate = true;
-            }
+            RedeProjectile.HoldOutProjBasics(Projectile, player, vector);
             Projectile.position = player.RotatedRelativePoint(player.MountedCenter + RedeHelper.PolarVector(18, Projectile.velocity.ToRotation()), true) - Projectile.Size / 2f;
             Projectile.rotation = Projectile.velocity.ToRotation() + num;
             Projectile.spriteDirection = Projectile.direction;
@@ -87,13 +64,13 @@ namespace Redemption.Items.Weapons.HM.Magic
             if (Projectile.localAI[0]++ == 0 && Projectile.owner == Main.myPlayer)
             {
                 Projectile.alpha = 0;
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, new Vector2(-1, -8), ModContent.ProjectileType<Divinity_Sun>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, new Vector2(-1, -8), ProjectileType<Divinity_Sun>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
             }
         }
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D glow = ModContent.Request<Texture2D>("Redemption/Items/Weapons/HM/Magic/Divinity_Glow").Value;
+            Texture2D glow = Request<Texture2D>("Redemption/Items/Weapons/HM/Magic/Divinity_Glow").Value;
             SpriteEffects effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale, effects, 0);
             Main.EntitySpriteDraw(glow, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale, effects, 0);
@@ -108,6 +85,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             // DisplayName.SetDefault("Sun");
             ElementID.ProjFire[Type] = true;
             ElementID.ProjHoly[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -134,93 +112,95 @@ namespace Redemption.Items.Weapons.HM.Magic
             Projectile.timeLeft = 10;
             Projectile staff = Main.projectile[(int)Projectile.ai[0]];
             Player player = Main.player[staff.owner];
-            if (Projectile.owner == Main.myPlayer)
+            switch (Projectile.ai[1])
             {
-                switch (Projectile.ai[1])
-                {
-                    case 0:
-                        godrayFade += 0.02f;
-                        Projectile.scale += 0.03f;
-                        if (Projectile.alpha > 0)
-                            Projectile.alpha -= 8;
-                        if (Projectile.scale >= 1)
-                        {
-                            Projectile.localAI[1] = 30;
-                            Projectile.scale = 1;
-                            if (player.channel)
-                                Projectile.ai[1] = 1;
-                            else
-                                Projectile.Kill();
-                            Projectile.netUpdate = true;
-                        }
-                        break;
-                    case 1:
-                        if (player.DistanceSQ(Projectile.Center) > 1800 * 1800)
-                        {
-                            staff.active = false;
-                            Projectile.Kill();
-                            Projectile.netUpdate = true;
-                        }
-                        if (Projectile.DistanceSQ(player.Center) > 300 * 300)
-                        {
-                            float speed = MathHelper.Lerp(2, 16, Projectile.DistanceSQ(player.Center) / 1800 / 1800);
-                            Projectile.Move(player.Center - new Vector2(0, 100), speed, 20);
-                        }
-                        if (Projectile.localAI[0]++ % 14 == 0 && Projectile.scale < 3)
-                        {
-                            int mana = player.inventory[player.selectedItem].mana;
-                            if (BasePlayer.ReduceMana(player, mana / 10))
-                            {
-                                SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot, Projectile.Center);
-                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), staff.Center, RedeHelper.PolarVector(Main.rand.Next(5, 9), (Main.MouseWorld - player.Center).ToRotation() + (MathHelper.PiOver2 * (Main.rand.NextBool() ? -1 : 1))), ModContent.ProjectileType<Divinity_Ball>(), Projectile.damage / 2, 0, player.whoAmI, Projectile.whoAmI);
-                            }
-                        }
-                        if (Projectile.scale >= 1.1f && !RedeHelper.AnyProjectiles(ModContent.ProjectileType<Divinity_Crosshair>()))
-                        {
-                            if (charged == 0)
-                            {
-                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 2, noDust: true, tex: "Redemption/Textures/HolyGlow2");
-                                if (!Main.dedServ)
-                                    SoundEngine.PlaySound(CustomSounds.NebSound2 with { Pitch = .2f, Volume = .5f }, Projectile.position);
-                                charged = 1;
-                            }
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<Divinity_Crosshair>(), 0, 0, player.whoAmI, Projectile.whoAmI);
-                        }
-                        if (Projectile.scale >= 3 && charged < 2)
-                        {
-                            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 5, noDust: true, tex: "Redemption/Textures/HolyGlow2");
-                            if (!Main.dedServ)
-                                SoundEngine.PlaySound(CustomSounds.NebSound2 with { Volume = .5f }, Projectile.position);
-                            charged = 2;
-                        }
-                        if (!player.channel)
-                        {
-                            if (Projectile.scale >= 1.1f)
-                            {
-                                player.RedemptionScreen().ScreenShakeIntensity += 10 * Projectile.scale;
-                                if (!Main.dedServ)
-                                    SoundEngine.PlaySound(CustomSounds.MACEProjectLaunch, Projectile.position);
-                                int pieCut = 32;
-                                for (int m = 0; m < pieCut; m++)
-                                {
-                                    int dustID = Dust.NewDust(new Vector2(Projectile.Center.X - 1, Projectile.Center.Y - 1), 2, 2, DustID.OrangeTorch, 0f, 0f, 100, Color.White, 4);
-                                    Main.dust[dustID].velocity = BaseUtility.RotateVector(default, new Vector2(14f, 0f), m / (float)pieCut * 6.28f);
-                                    Main.dust[dustID].noGravity = true;
-                                }
-                                mark = Main.MouseWorld;
-                                Projectile.ai[1] = 2;
-                            }
-                            else
-                                Projectile.Kill();
-                        }
-                        break;
-                    case 2:
-                        if (Projectile.DistanceSQ(mark) < 10 * 10)
-                            Projectile.Kill();
+                case 0:
+                    godrayFade += 0.02f;
+                    Projectile.scale += 0.03f;
+                    if (Projectile.alpha > 0)
+                        Projectile.alpha -= 8;
+                    if (Projectile.scale >= 1)
+                    {
+                        Projectile.localAI[1] = 30;
+                        Projectile.scale = 1;
+                        if (player.channel)
+                            Projectile.ai[1] = 1;
                         else
-                            Projectile.Move(mark, 34, 1);
-                        break;
-                }
+                            Projectile.Kill();
+                        Projectile.netUpdate = true;
+                    }
+                    break;
+                case 1:
+                    if (player.DistanceSQ(Projectile.Center) > 1800 * 1800)
+                    {
+                        staff.active = false;
+                        Projectile.Kill();
+                        Projectile.netUpdate = true;
+                    }
+                    if (Projectile.DistanceSQ(player.Center) > 300 * 300)
+                    {
+                        float speed = MathHelper.Lerp(2, 16, Projectile.DistanceSQ(player.Center) / 1800 / 1800);
+                        Projectile.Move(player.Center - new Vector2(0, 100), speed, 20);
+                    }
+                    if (Projectile.localAI[0]++ % 14 == 0 && Projectile.scale < 3)
+                    {
+                        int mana = player.inventory[player.selectedItem].mana;
+                        if (BasePlayer.ReduceMana(player, mana / 10))
+                        {
+                            SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot, Projectile.Center);
+                            if (Projectile.owner == Main.myPlayer)
+                            {
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), staff.Center, RedeHelper.PolarVector(Main.rand.Next(5, 9), (Main.MouseWorld - player.Center).ToRotation() + (MathHelper.PiOver2 * (Main.rand.NextBool() ? -1 : 1))), ProjectileType<Divinity_Ball>(), Projectile.damage / 2, 0, player.whoAmI, Projectile.whoAmI);
+                            }
+                        }
+                    }
+                    if (Projectile.scale >= 1.1f && !RedeHelper.AnyProjectiles(ProjectileType<Divinity_Crosshair>()))
+                    {
+                        if (charged == 0)
+                        {
+                            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 2, noDust: true, tex: "Redemption/Textures/HolyGlow2");
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.NebSound2 with { Pitch = .2f, Volume = .5f }, Projectile.position);
+                            charged = 1;
+                        }
+                        if (Projectile.owner == Main.myPlayer)
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Main.MouseWorld, Vector2.Zero, ProjectileType<Divinity_Crosshair>(), 0, 0, player.whoAmI, Projectile.whoAmI);
+                    }
+                    if (Projectile.scale >= 3 && charged < 2)
+                    {
+                        RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 5, noDust: true, tex: "Redemption/Textures/HolyGlow2");
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.NebSound2 with { Volume = .5f }, Projectile.position);
+                        charged = 2;
+                    }
+                    if (!player.channel)
+                    {
+                        if (Projectile.scale >= 1.1f)
+                        {
+                            player.RedemptionScreen().ScreenShakeIntensity += 10 * Projectile.scale;
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.MACEProjectLaunch, Projectile.position);
+                            int pieCut = 32;
+                            for (int m = 0; m < pieCut; m++)
+                            {
+                                int dustID = Dust.NewDust(new Vector2(Projectile.Center.X - 1, Projectile.Center.Y - 1), 2, 2, DustID.OrangeTorch, 0f, 0f, 100, Color.White, 4);
+                                Main.dust[dustID].velocity = BaseUtility.RotateVector(default, new Vector2(14f, 0f), m / (float)pieCut * 6.28f);
+                                Main.dust[dustID].noGravity = true;
+                            }
+                            if (Projectile.owner == Main.myPlayer)
+                                mark = Main.MouseWorld;
+                            Projectile.ai[1] = 2;
+                        }
+                        else
+                            Projectile.Kill();
+                    }
+                    break;
+                case 2:
+                    if (Projectile.DistanceSQ(mark) < 10 * 10)
+                        Projectile.Kill();
+                    else
+                        Projectile.Move(mark, 34, 1);
+                    break;
             }
             Projectile.scale = MathHelper.Min(Projectile.scale, 3);
         }
@@ -234,9 +214,9 @@ namespace Redemption.Items.Weapons.HM.Magic
             for (int i = 0; i < 20; i++)
                 RedeParticleManager.CreateEmberParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), 1, Main.rand.Next(90, 121));
             SoundEngine.PlaySound(SoundID.Item100 with { Volume = 1 * Projectile.scale, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest }, Projectile.position);
-            if (!Main.dedServ)
-                SoundEngine.PlaySound(CustomSounds.FlameRise with { Pitch = -.3f }, Projectile.position);
+            SoundEngine.PlaySound(CustomSounds.FlameRise with { Pitch = -.3f }, Projectile.position);
 
+            Projectile.GetGlobalProjectile<ElementalProjectile>().OverrideElement[ElementID.Explosive] = ElementID.AddElement;
 
             int boomOrigin = (int)(120 * Projectile.scale);
             Rectangle boom = new((int)Projectile.Center.X - boomOrigin, (int)Projectile.Center.Y - boomOrigin, boomOrigin * 2, boomOrigin * 2);
@@ -270,7 +250,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D aura = ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow").Value;
+            Texture2D aura = Request<Texture2D>("Redemption/Textures/HolyGlow").Value;
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             Vector2 drawOrigin2 = new(aura.Width / 2, aura.Height / 2);
             SpriteEffects effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
@@ -311,6 +291,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             // DisplayName.SetDefault("Divinity Charge");
             ElementID.ProjFire[Type] = true;
             ElementID.ProjHoly[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -341,7 +322,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override void AI()
         {
             Projectile sun = Main.projectile[(int)Projectile.ai[0]];
-            if (!sun.active || sun.type != ModContent.ProjectileType<Divinity_Sun>())
+            if (!sun.active || sun.type != ProjectileType<Divinity_Sun>())
                 Projectile.Kill();
 
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -355,7 +336,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
             }
         }
         public override bool PreDraw(ref Color lightColor)
@@ -368,7 +349,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 

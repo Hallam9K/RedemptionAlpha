@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary.Core;
-using Redemption.Base;
-using Redemption.Effects;
-using ReLogic.Content;
+using Redemption.Effects.Trails;
+using Redemption.Effects.Trails.Tips;
+using Redemption.Globals;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -35,6 +35,7 @@ namespace Redemption.Particles
             OffsetLimit = offsetLimit;
             NumPoints = numPoints;
             Thickness = thickness;
+            InitializeTrail();
         }
         public override void Spawn()
         {
@@ -53,6 +54,8 @@ namespace Redemption.Particles
                 if (cache.Count > 3)
                     ManageTrail();
             }
+            if(TimeLeft % 10 == 0)
+                Randnomness = Main.rand.NextFloat();
         }
         public override void Draw(SpriteBatch spriteBatch, Vector2 location)
         {
@@ -66,24 +69,24 @@ namespace Redemption.Particles
                 cache.Add(Position + oldVelocity * (i / NumPoints));
             }
         }
-        public void ManageTrail()
+
+        public void InitializeTrail()
         {
-            trail = new DanTrail(Main.instance.GraphicsDevice, cache.Count, new NoTip(),
-            factor =>
-            {
-                float sine =  0.5f * MathF.Sin(factor * MathHelper.Pi);
-                float width = 10f + OffsetLimit * sine;
-                return width;
-            },
+            trail = new DanTrail(RedeGraphics.Instance.Primitives, new NoTip(),
             factor =>
             {
                 float progress = TimeLeft / (float)MaxTime;
-                float opacity = progress > 0.9f ? 2 : BaseUtility.MultiLerp(factor.X - 1 + progress * 2, 0, 1);
-
-                return Color.White * opacity;
+                return OffsetLimit * progress;
+            },
+            factor =>
+            {
+                return Color.White;
             });
-            trail.Positions = cache.ToArray();
-            trail.NextPosition = Position;
+        }
+
+        public void ManageTrail()
+        {
+            trail.SetPositions(cache.ToArray(), Position);
         }
         public void DrawTrail()
         {
@@ -93,7 +96,7 @@ namespace Redemption.Particles
             Main.spriteBatch.End();
             Main.spriteBatch.BeginAdditive();
 
-            Effect effect = Request<Effect>("Redemption/Effects/Electric", AssetRequestMode.ImmediateLoad).Value;
+            Effect effect = Request<Effect>("Redemption/Effects/Electric").Value;
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.X, -Main.screenPosition.Y, 0);
             Matrix view = Main.GameViewMatrix.ZoomMatrix;

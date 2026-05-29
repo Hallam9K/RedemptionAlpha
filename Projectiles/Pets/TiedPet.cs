@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Pets;
+using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
@@ -16,6 +17,7 @@ namespace Redemption.Projectiles.Pets
             // DisplayName.SetDefault("Tied");
             Main.projFrames[Projectile.type] = 16;
             Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.LightPet[Type] = true;
             ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(1, 8, 5)
                 .WithOffset(2, 0).WithSpriteDirection(-1);
         }
@@ -32,6 +34,8 @@ namespace Redemption.Projectiles.Pets
         {
             Player player = Main.player[Projectile.owner];
             player.dino = false;
+
+            Lighting.AddLight(Projectile.Center, .7f * Projectile.Opacity, Projectile.Opacity, .7f * Projectile.Opacity);
 
             if (Projectile.ai[0] == 1)
             {
@@ -69,6 +73,26 @@ namespace Redemption.Projectiles.Pets
         {
             Player player = Main.player[Projectile.owner];
             CheckActive(player);
+
+            float overlapVelocity = 0.2f;
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile other = Main.projectile[i];
+
+                if (i != Projectile.whoAmI && other.active && other.owner == Projectile.owner && other.type == ProjectileType<HalPet>() && Math.Abs(Projectile.position.X - other.position.X) + Math.Abs(Projectile.position.Y - other.position.Y) < Projectile.width)
+                {
+                    if (Projectile.position.X < other.position.X)
+                        Projectile.velocity.X -= overlapVelocity;
+                    else
+                        Projectile.velocity.X += overlapVelocity;
+
+                    if (Projectile.position.Y < other.position.Y)
+                        Projectile.velocity.Y -= overlapVelocity;
+                    else
+                        Projectile.velocity.Y += overlapVelocity;
+                }
+            }
+
             if (player.ZoneDesert || player.ZoneUndergroundDesert || player.ZoneUnderworldHeight)
             {
                 if (Main.rand.NextBool(4))

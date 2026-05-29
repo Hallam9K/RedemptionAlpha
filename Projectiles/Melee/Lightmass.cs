@@ -1,7 +1,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
 using Redemption.Globals;
+using Redemption.Globals.Projectiles;
+using Redemption.Textures;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -91,7 +94,7 @@ namespace Redemption.Projectiles.Melee
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
             }
             if (fakeTimer > 0)
                 FakeKill();
@@ -127,7 +130,7 @@ namespace Redemption.Projectiles.Melee
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value);
+            effect.Parameters["sampleTexture"].SetValue(CommonTextures.Trail_4.Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 
@@ -146,6 +149,11 @@ namespace Redemption.Projectiles.Melee
 
             Main.spriteBatch.End();
             Main.spriteBatch.BeginDefault();
+            return false;
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            FakeKill();
             return false;
         }
         public override void OnKill(int timeLeft)

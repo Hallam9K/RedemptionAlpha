@@ -1,8 +1,13 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
 using Redemption.Globals;
+using Redemption.Globals.Projectiles;
+using Redemption.Projectiles;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -109,7 +114,7 @@ namespace Redemption.NPCs.Bosses.ADD
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
             }
             if (Projectile.timeLeft < 2)
             {
@@ -152,9 +157,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2))
-            {
                 target.AddBuff(BuffID.Electrified, target.HasBuff(BuffID.Wet) ? 320 : 160);
-            }
             target.AddBuff(BuffType<StaticStunDebuff>(), 60);
         }
     }

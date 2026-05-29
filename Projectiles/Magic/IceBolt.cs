@@ -1,15 +1,16 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
+using Redemption.Buffs.Debuffs;
+using Redemption.Effects;
+using Redemption.Effects.Trails;
 using Redemption.Globals;
+using Redemption.Globals.Projectiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Effects;
-using System.Collections.Generic;
-using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -56,30 +57,7 @@ namespace Redemption.Projectiles.Magic
                 if (Projectile.spriteDirection == -1)
                     num = MathHelper.ToRadians(90f);
 
-                if (Main.myPlayer == Projectile.owner)
-                {
-                    float scaleFactor6 = 1f;
-                    if (player.inventory[player.selectedItem].shoot == Projectile.type)
-                    {
-                        scaleFactor6 = player.inventory[player.selectedItem].shootSpeed * Projectile.scale;
-                    }
-                    Vector2 vector13 = Main.MouseWorld - vector;
-                    vector13.Normalize();
-                    if (vector13.HasNaNs())
-                    {
-                        vector13 = Vector2.UnitX * player.direction;
-                    }
-                    vector13 *= scaleFactor6;
-                    if (vector13.X != Projectile.velocity.X || vector13.Y != Projectile.velocity.Y)
-                        Projectile.netUpdate = true;
-
-                    Projectile.velocity = vector13;
-                    if (player.noItems || player.CCed || player.dead || !player.active)
-                    {
-                        Projectile.Kill();
-                    }
-                    Projectile.netUpdate = true;
-                }
+                RedeProjectile.HoldOutProjBasics(Projectile, player, vector);
                 Vector2 Offset = Vector2.Normalize(staff.velocity) * 10f;
 
                 if (!Collision.CanHit(player.Center, 0, 0, Projectile.Center + Offset, 0, 0))
@@ -110,7 +88,7 @@ namespace Redemption.Projectiles.Magic
                 if (Main.netMode != NetmodeID.Server)
                 {
                     TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                    TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+                    TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
                 }
                 Projectile.LookByVelocity();
                 Projectile.rotation += Projectile.velocity.Length() / 50 * Projectile.spriteDirection;
@@ -159,7 +137,7 @@ namespace Redemption.Projectiles.Magic
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_3").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/Trail_3").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 
@@ -169,14 +147,14 @@ namespace Redemption.Projectiles.Magic
             Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
 
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D glowTex = ModContent.Request<Texture2D>("Redemption/Textures/Star").Value;
+            Texture2D glowTex = Request<Texture2D>("Redemption/Textures/Star").Value;
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             Rectangle rectGlow = new(0, 0, glowTex.Width, glowTex.Height);
             Vector2 drawOriginGlow = new(glowTex.Width / 2, glowTex.Height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale * 0.5f, effects, 0);
 
@@ -187,7 +165,7 @@ namespace Redemption.Projectiles.Magic
             }
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
 
@@ -202,7 +180,7 @@ namespace Redemption.Projectiles.Magic
                 target.AddBuff(BuffID.Frostburn, 240);
 
             if (player.RedemptionPlayerBuff().pureIronBonus)
-                target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
+                target.AddBuff(BuffType<PureChillDebuff>(), 300);
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {

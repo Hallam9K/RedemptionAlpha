@@ -6697,12 +6697,12 @@ Mods: {
 
 			OmegaBox2: {
 				DisplayName: Music Box (Omega Obliterator)
-				Tooltip: Universe - Hailfire
+				Tooltip: TYESKI - Hailfire
 			}
 
 			PZMusicBox: {
 				DisplayName: Music Box (Patient Zero)
-				Tooltip: Universe - Xenostate
+				Tooltip: TYESKI - Xenostate
 			}
 
 			SlayerShipBox: {
@@ -8205,7 +8205,6 @@ Mods: {
 					'''
 					Hold left-click to charge a Radiance Spin Slash
 					Right-click the moment you're about to be hit by a physical attack (contact damage or weapon) to perform a parry, granting immunity frames
-					Contact damage parries will not take effect if the enemy is stationary or moving twice as slow as you
 					After a successful parry, left-click to counter with an instant Radiance Spin Slash
 					Deals double damage against demonic enemies
 					'''
@@ -8765,7 +8764,7 @@ Mods: {
 				Tooltip:
 					'''
 					Left click to do a close ranged combo attack
-					Right-click to thrust forward, doing more damage at the tail-end of the thrust
+					Right-click to do a supersonic thrust, granting immunity frames
 					Hitting with the thrust allows chaining the right-click, while missing gives a 5 second cooldown
 					'''
 			}
@@ -11089,6 +11088,31 @@ Mods: {
 				DisplayName: Infected Eye
 				Tooltip: ""
 			}
+
+			LostSoulBottle: {
+				DisplayName: Lost Soul in a Bottle
+				Tooltip: ""
+			}
+
+			EpidotraMusicBox: {
+				DisplayName: Music Box (Epidotra)
+				Tooltip: musicman - Epidotra
+			}
+
+			WeirdBloomPainting: {
+				DisplayName: Perfektionsstreben
+				Tooltip: "'M. John'"
+			}
+
+			AncientFlowerSeeds: {
+				DisplayName: Ancient Flower Seeds
+				Tooltip: ""
+			}
+
+			TallAncientGrassSeeds: {
+				DisplayName: Tall Ancient Grass Seeds
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -11828,6 +11852,7 @@ Mods: {
 			SunPalmFlare_Proj.DisplayName: Sun Palm Flare
 			Blisterface_GirusTalk.DisplayName: Ominous Voice
 			Blisterface_Drip_Proj.DisplayName: Sludge Droplet
+			ErhanMagnifyingGlass_HoldOut.DisplayName: "{$Mods.Redemption.Items.ErhanMagnifyingGlass.DisplayName}"
 		}
 
 		NPCs: {
@@ -12603,6 +12628,7 @@ Mods: {
 			ClayStatuetteTile.MapEntry: Clay Statuette
 			DesertStatuetteTile.MapEntry: Desert Statuette
 			ObsidianStatuetteTile.MapEntry: Obsidian Statuette
+			LostSoulBottleTile.MapEntry: Lost Soul in a Bottle
 		}
 
 		Keybinds: {

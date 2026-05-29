@@ -1,9 +1,10 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
 using Redemption.Globals;
 using Redemption.Globals.NPCs;
+using Redemption.Globals.Projectiles;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -66,7 +67,7 @@ namespace Redemption.Projectiles.Magic
                 Projectile.spriteDirection = -Projectile.direction;
             if (Main.rand.NextBool(3))
             {
-                Dust dust = Main.dust[Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<GlowDust>(), Scale: 2)];
+                Dust dust = Main.dust[Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustType<GlowDust>(), Scale: 2)];
                 dust.noGravity = true;
                 Color dustColor = new(39, 206, 204) { A = 0 };
                 dust.color = dustColor * .5f;
@@ -108,7 +109,7 @@ namespace Redemption.Projectiles.Magic
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
-                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+                TrailHelper.ManageBasicTrail(RedeGraphics.Instance.Primitives, cache, cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
             }
         }
         private static void AdjustMagnitude(ref Vector2 vector, float speed)
@@ -124,7 +125,7 @@ namespace Redemption.Projectiles.Magic
             SoundEngine.PlaySound(SoundID.NPCDeath39 with { Pitch = -.4f, Volume = .4f }, Projectile.position);
             for (int i = 0; i < 18; i++)
             {
-                Dust dust = Main.dust[Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<GlowDust>(), Scale: 2)];
+                Dust dust = Main.dust[Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustType<GlowDust>(), Scale: 2)];
                 dust.noGravity = true;
                 Color dustColor = new(39, 206, 204) { A = 0 };
                 dust.color = dustColor * .5f;
@@ -140,7 +141,7 @@ namespace Redemption.Projectiles.Magic
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1").Value);
+            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>("Redemption/Textures/Trails/Trail_1").Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 

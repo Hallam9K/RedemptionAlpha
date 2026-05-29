@@ -370,6 +370,16 @@ namespace Redemption.Globals
             Terraria.Player player = Main.player[Projectile.owner];
             return speed / player.GetAttackSpeed(DamageClass.Melee);
         }
+        public float SetSpeedBonus(int defaultUseTime, int useTime)
+        {
+            Player player = Main.player[Projectile.owner];
+            return (float)defaultUseTime / useTime * player.GetAttackSpeed(DamageClass.Melee);
+        }
+        public int SetUseTime(int useTime)
+        {
+            Player player = Main.player[Projectile.owner];
+            return (int)(useTime / player.GetAttackSpeed(DamageClass.Melee));
+        }
 
         public virtual void SetSafeDefaults() { }
 

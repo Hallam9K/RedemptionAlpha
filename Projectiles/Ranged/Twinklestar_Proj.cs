@@ -3,7 +3,10 @@ using ParticleLibrary.Core;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Redemption.Effects;
+using Redemption.Effects.Trails;
+using Redemption.Effects.Trails.Tips;
 using Redemption.Globals;
+using Redemption.Globals.Projectiles;
 using Redemption.Helpers;
 using Redemption.Particles;
 using Redemption.Textures;
@@ -103,6 +106,8 @@ namespace Redemption.Projectiles.Ranged
             Projectile.extraUpdates = 4;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 6;
+
+            InitializeTrail();
         }
         public override void AI()
         {
@@ -254,9 +259,10 @@ namespace Redemption.Projectiles.Ranged
         private DanTrail trail;
         private DanTrail trail2;
         private readonly float thickness = 4f;
-        public void ManageTrail()
+
+        public void InitializeTrail()
         {
-            trail ??= new DanTrail(Main.instance.GraphicsDevice, NUMPOINTS, new TriangularTip(4),
+            trail = new DanTrail(RedeGraphics.Instance.Primitives, new TriangularTip(4),
             factor =>
             {
                 float mult = factor;
@@ -274,10 +280,7 @@ namespace Redemption.Projectiles.Ranged
 
                 return edgeColor * 0.1f * factor.X * Projectile.Opacity;
             });
-
-            trail.Positions = cache.ToArray();
-            trail.NextPosition = Projectile.Center;
-            trail2 ??= new DanTrail(Main.instance.GraphicsDevice, NUMPOINTS, new TriangularTip(4),
+            trail2 = new DanTrail(RedeGraphics.Instance.Primitives, new TriangularTip(4),
             factor =>
             {
                 float mult = factor;
@@ -293,9 +296,12 @@ namespace Redemption.Projectiles.Ranged
                 float progress = EaseFunction.EaseCubicOut.Ease(1 - factor.X);
                 return Color.Lerp(baseColor, endColor, EaseFunction.EaseCubicIn.Ease(progress)) * (1 - progress) * Projectile.Opacity;
             });
+        }
 
-            trail2.Positions = cache2.ToArray();
-            trail2.NextPosition = Projectile.Center;
+        public void ManageTrail()
+        {
+            trail.SetPositions(cache.ToArray(), Projectile.Center);
+            trail2.SetPositions(cache2.ToArray(), Projectile.Center);
         }
     }
 }

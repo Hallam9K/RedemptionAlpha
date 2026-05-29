@@ -4,6 +4,7 @@ using Redemption.Buffs.Pets;
 using Redemption.Items.Critters;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.PreHM.Ranged;
+using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
@@ -72,6 +73,25 @@ namespace Redemption.Projectiles.Pets
         {
             Player player = Main.player[Projectile.owner];
             CheckActive(player);
+
+            float overlapVelocity = 0.2f;
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile other = Main.projectile[i];
+
+                if (i != Projectile.whoAmI && other.active && other.owner == Projectile.owner && other.type == ProjectileType<TiedPet>() && Math.Abs(Projectile.position.X - other.position.X) + Math.Abs(Projectile.position.Y - other.position.Y) < Projectile.width)
+                {
+                    if (Projectile.position.X < other.position.X)
+                        Projectile.velocity.X -= overlapVelocity;
+                    else
+                        Projectile.velocity.X += overlapVelocity;
+
+                    if (Projectile.position.Y < other.position.Y)
+                        Projectile.velocity.Y -= overlapVelocity;
+                    else
+                        Projectile.velocity.Y += overlapVelocity;
+                }
+            }
 
             if (Main.rand.NextBool(1000000))
             {
