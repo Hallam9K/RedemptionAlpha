@@ -82,7 +82,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             {
                 if (offsetLeft)
                 {
-                    vectorOffset -= 0.1f;
+                    vectorOffset -= 0.1f * Projectile.velocity.Length() / 9f;
                     if (vectorOffset <= -1f)
                     {
                         vectorOffset = -1f;
@@ -91,7 +91,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 }
                 else
                 {
-                    vectorOffset += 0.1f;
+                    vectorOffset += 0.1f * Projectile.velocity.Length() / 9f;
                     if (vectorOffset >= 1f)
                     {
                         vectorOffset = 1f;
@@ -183,7 +183,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
         public void InitializeTrail()
         {
-            trail = new DanTrail(RedeGraphics.Instance.Primitives, new TriangularTip(4),
+            trail = new DanTrail(RedeGraphics.Instance.Primitives, new RoundedTip(12),
             factor =>
             {
                 float mult = factor;
@@ -201,7 +201,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
                 return edgeColor * 0.1f * factor.X * Projectile.Opacity;
             });
-            trail2 = new DanTrail(RedeGraphics.Instance.Primitives, new TriangularTip(4),
+            trail2 = new DanTrail(RedeGraphics.Instance.Primitives, new RoundedTip(12),
             factor =>
             {
                 float mult = factor;
@@ -221,8 +221,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
         public void ManageTrail()
         {
-            trail.SetPositions(cache.ToArray(), Projectile.Center);
-            trail2.SetPositions(cache2.ToArray(), Projectile.Center);
+            trail.SetPositions(cache.ToArray(), Projectile.Center + Projectile.velocity * 2);
+            trail2.SetPositions(cache2.ToArray(), Projectile.Center + Projectile.velocity * 2);
         }
     }
     public class PNebula2_Friendly : PNebula1_Friendly

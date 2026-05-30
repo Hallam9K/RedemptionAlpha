@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Redemption.Particles;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -22,49 +23,66 @@ namespace Redemption.Projectiles.Melee
         {
             Projectile.width = 14;
             Projectile.height = 14;
-            Projectile.friendly = true;
+            Projectile.alpha = 255;
+            Projectile.friendly = false;
             Projectile.hostile = false;
             Projectile.penetrate = 1;
-            Projectile.tileCollide = true;
-            Projectile.timeLeft = 120;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.timeLeft = Main.rand.Next(120, 141);
             Projectile.DamageType = DamageClass.Melee;
         }
         public override void OnSpawn(IEntitySource source)
         {
-            for (float k = 0; k < 6.28f; k += 0.3f)
-            {
-                float x = 2 * MathF.Cos(k);
-                float y = 1 * MathF.Sin(k);
-                Vector2 ellipse = new(x, y);
-                Vector2 rotVec = ellipse.RotatedBy(Projectile.velocity.ToRotation() + MathHelper.PiOver2);
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Red, rotVec * 2f);
-                dust.noGravity = true;
-            }
         }
+        public override bool ShouldUpdatePosition() => Projectile.timeLeft <= 120;
         public override bool? CanHitNPC(NPC target) => Projectile.frame <= 3 ? null : false;
         public override void AI()
         {
-            if (Projectile.timeLeft > 90)
+            if (Projectile.timeLeft == 120)
             {
-                if (++Projectile.frameCounter >= 2)
+                Projectile.friendly = true;
+                Projectile.alpha = 0;
+                for (float k = 0; k < 6.28f; k += 0.3f)
                 {
-                    Projectile.frameCounter = 0;
-                    if (++Projectile.frame >= 3)
-                        Projectile.frame = 2;
+                    float x = 2 * MathF.Cos(k);
+                    float y = 1 * MathF.Sin(k);
+                    Vector2 ellipse = new(x, y);
+                    Vector2 rotVec = ellipse.RotatedBy(Projectile.velocity.ToRotation() + MathHelper.PiOver2);
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Red, rotVec * 2f);
+                    dust.noGravity = true;
                 }
+                RedeParticleManager.CreatePulseParticle(Projectile.Center, Vector2.Zero, Projectile.velocity.ToRotation() + 1.57f, new Vector2(0.8f, 0.4f), Color.IndianRed, 5);
             }
-            else
+            if (Projectile.timeLeft < 120)
             {
-                if (++Projectile.frameCounter >= 5)
+                NPC target = null;
+                if (RedeHelper.ClosestNPC(ref target, 900, Projectile.Center, true))
                 {
-                    Projectile.frameCounter = 0;
-                    if (++Projectile.frame >= 7)
+                    Projectile.Move(target.Center, 50, 5);
+                }
+                if (Projectile.timeLeft > 90)
+                {
+                    if (++Projectile.frameCounter >= 2)
                     {
-                        Projectile.Kill();
+                        Projectile.frameCounter = 0;
+                        if (++Projectile.frame >= 3)
+                            Projectile.frame = 2;
                     }
                 }
+                else
+                {
+                    if (++Projectile.frameCounter >= 5)
+                    {
+                        Projectile.frameCounter = 0;
+                        if (++Projectile.frame >= 7)
+                        {
+                            Projectile.Kill();
+                        }
+                    }
+                }
+                Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             }
-            Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
         }
         public override void OnKill(int timeLeft)
         {
@@ -83,16 +101,15 @@ namespace Redemption.Projectiles.Melee
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            int height = texture.Height / 7;
-            int y = height * Projectile.frame;
-            Rectangle rect = new(0, y, texture.Width, height);
-            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+            Rectangle rect = texture.Frame(1, 7, 0, Projectile.frame);
+            Vector2 drawOrigin = rect.Size() * 0.5f;
             SpriteEffects effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Main.spriteBatch.End();
             Main.spriteBatch.BeginAdditive();
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            Color c = Projectile.timeLeft <= 120 ? Projectile.GetAlpha(Color.White) : Color.Transparent;
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), c, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.BeginDefault();

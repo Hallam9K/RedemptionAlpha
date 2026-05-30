@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using ParticleLibrary.Core;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
@@ -6,6 +7,7 @@ using Redemption.Effects.Trails;
 using Redemption.Effects.Trails.Tips;
 using Redemption.Globals;
 using Redemption.Helpers;
+using Redemption.Particles;
 using Redemption.Projectiles.Ranged;
 using System;
 using System.Collections.Generic;
@@ -31,8 +33,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetSafeDefaults()
         {
             Projectile.aiStyle = -1;
-            Projectile.width = 92;
-            Projectile.height = 92;
+            Projectile.width = 120;
+            Projectile.height = 120;
             Projectile.hostile = false;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
@@ -122,7 +124,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         }
         public override bool? CanHitNPC(NPC target)
         {
-            if (progress > 0.43f && progress < 0.75f)
+            if (progress > 0.2f && progress < 0.9f)
                 return null;
             return false;
         }
@@ -262,20 +264,20 @@ namespace Redemption.Items.Weapons.PostML.Melee
         }
         public override void SetDefaults()
         {
-            Projectile.width = 10;
-            Projectile.height = 10;
-            Projectile.aiStyle = -1;
-            Projectile.alpha = 0;
+            Projectile.width = 92;
+            Projectile.height = 92;
+
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.Redemption().TechnicallyMelee = true;
             Projectile.hostile = false;
             Projectile.friendly = true;
-            Projectile.DamageType = DamageClass.Melee;
+            Projectile.tileCollide = false;
+
             Projectile.penetrate = -1;
             Projectile.timeLeft = 600;
             Projectile.extraUpdates = 1;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.tileCollide = false;
-            Projectile.Redemption().TechnicallyMelee = true;
-            Projectile.noEnchantmentVisuals = true;
+            Projectile.localNPCHitCooldown = 8;
         }
         public override void AI()
         {
@@ -309,7 +311,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             if (Main.myPlayer == Projectile.owner && mousePos == Vector2.Zero)
                 mousePos = Owner.DirectionTo(Main.MouseWorld);
 
-            Vector2 armPos = Owner.RotatedRelativePoint(Owner.MountedCenter, true);
+            Vector2 armPos = Owner.RotatedRelativePoint(Owner.MountedCenter);
             armPos += Utils.SafeNormalize(Projectile.velocity, Vector2.UnitX) * 30f;
 
             if (!thrown)
@@ -351,9 +353,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     if (Projectile.owner == Main.myPlayer)
                         Projectile.velocity = Owner.DirectionTo(Main.MouseWorld) * 25f;
 
-                    offset = Projectile.velocity * 0.6f;
                     Projectile.timeLeft = 2400;
-                    Projectile.width = Projectile.height = 10;
                     Projectile.ignoreWater = false;
                     Projectile.tileCollide = true;
                     ShootDelay = 0;
@@ -497,6 +497,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 }
                 originalPos = Owner.Center;
                 teleportPos = Projectile.Center;
+                int maxTime = Main.rand.Next(8, 12) * 4;
+                ParticleSystem.NewParticle(originalPos, teleportPos - originalPos, new ElectricParticle(maxTime, 60, 1), Color.LightYellow, 1);
             }
             if (teleportTimer == 1)
             {
@@ -544,10 +546,9 @@ namespace Redemption.Items.Weapons.PostML.Melee
         {
             int num = 150;
             Vector2 vector = Owner.position;
-            Vector2 vector2 = Owner.velocity;
             for (int i = 0; i < num; i++)
             {
-                vector2 = (vector + Owner.Size / 2f).DirectionTo(targetPosition).SafeNormalize(Vector2.Zero) * 12f;
+                Vector2 vector2 = (vector + Owner.Size / 2f).DirectionTo(targetPosition).SafeNormalize(Vector2.Zero) * 12f;
                 Vector2 vector3 = Collision.TileCollision(vector, vector2, Owner.width, Owner.height, fallThrough: true, fall2: true, (int)Owner.gravDir);
                 vector += vector3;
             }
@@ -570,29 +571,26 @@ namespace Redemption.Items.Weapons.PostML.Melee
             }
             return false;
         }
-
-        public Vector2 offset;
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            width = 8;
+            height = 8;
+            return true;
+        }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if (Helper.CheckCircularCollision(Projectile.Center - offset, 40, targetHitbox))
-                return true;
-
             for (int i = 0; i < teleportPositions.Count; i++)
             {
                 if (Vector2.Distance(teleportPositions[i], targetHitbox.Center.ToVector2()) < 50f)
                     return true;
             }
-
-            return false;
+            return projHitbox.Intersects(targetHitbox);
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
             target.AddBuff(BuffType<ElectrifiedDebuff>(), 180);
-            Projectile.localNPCImmunity[target.whoAmI] = 8;
-            target.immune[Projectile.owner] = 0;
         }
-
         private float drawTimer;
         public override bool PreDraw(ref Color lightColor)
         {
@@ -601,7 +599,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Rectangle rect = new(0, 0, texture.Width, texture.Height);
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
-            Vector2 v = RedeHelper.PolarVector(30, (Projectile.Center - Player.Center).ToRotation());
+            Vector2 v = !thrown ? RedeHelper.PolarVector(30, (Projectile.Center - Player.Center).ToRotation()) : Vector2.Zero;
             float num = !thrown && Player.direction == -1 ? MathHelper.Pi : 0;
             if (!teleport)
             {
@@ -610,24 +608,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition,
                     new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation + num, origin, Projectile.scale, spriteEffects, 0);
             }
-
-            //Dash effect
-            Main.spriteBatch.End();
-            Main.spriteBatch.BeginAdditive();
-
-            Texture2D Dash = Request<Texture2D>("Redemption/Textures/Trails/Lightning2").Value;
-            Vector2 DashCenter = 0.5f * (originalPos + teleportPos);
-            Rectangle Dashrectangle = Dash.Frame();
-            Vector2 Dashorigin = Dashrectangle.Size() / 2f;
-            float DashRot = (originalPos - teleportPos).ToRotation() + 0.075f * Player.direction;
-            float DashLength = (originalPos - teleportPos).Length();
-            float opacity = 1 - teleportTimer / 60;
-            Vector2 DashScale = new(DashLength * 0.004f, 0.5f);
-            if (teleportTimer >= 2)
-                Main.EntitySpriteDraw(Dash, DashCenter - Main.screenPosition, new Rectangle?(Dashrectangle), Color.White * 0.8f * opacity, DashRot, Dashorigin, DashScale, 0, 0);
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.BeginDefault(true);
             return false;
         }
     }

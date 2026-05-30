@@ -1,11 +1,8 @@
-using Mono.Cecil;
-using Redemption.Buffs.Cooldowns;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Projectiles.Melee;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -31,10 +28,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetStaticDefaults()
         {
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Item.type] = true;
             Item.ResearchUnlockCount = 1;
             SetupDrawing();
         }
-
         public override void SetDefaults()
         {
             Item.damage = 300;
@@ -56,7 +53,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.shootSpeed = 5f;
         }
         public override bool AltFunctionUse(Player player) => true;
-
+        public override bool MeleePrefix() => true;
         public override void HoldItem(Player player)
         {
             var p = player.GetModPlayer<SunInPalmPlayer>();
@@ -67,6 +64,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             if (player.altFunctionUse == 2)
             {
                 type = ProjectileType<SunInThePalm_Proj2>();
+                damage += damage / 2;
                 return;
             }
             type = ProjectileType<SunInThePalm_Proj>();

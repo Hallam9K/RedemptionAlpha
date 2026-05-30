@@ -8075,10 +8075,10 @@ Mods: {
 				DisplayName: Nabój Energii
 				Tooltip:
 					'''
-					While in inventory, allows the user to use energy-based weaponry
-					Energy-based weaponry can pierce through Guard Points
-					Can be stacked up to 3 times, each giving +100 energy
-					Having more than 3 in your inventory will not increase energy further
+					Gdy znajduje się w ekwipunku, pozwala użytkownikowi używać broni energetycznej
+					Broń energetyczna może przebijać Punkty Obrony
+					Można kumulować do 3 razy, każdy daje +100 energii
+					Posiadanie ich więcej niż 3 w ekwipunku nie zwiększa już ilości energii
 					'''
 			}
 
@@ -8769,7 +8769,7 @@ Mods: {
 				Tooltip:
 					'''
 					Lewy przycisk myszy — wykonuje serię ataków z bliska
-					Prawy przycisk myszy — pchnięcie do przodu, zadające większe obrażenia na końcu pchnięcia
+					Kliknij prawym przyciskiem myszy, aby wykonać naddźwiękowe pchnięcie, zapewniający klatki niewrażliwości
 					Trafienie pchnięciem pozwala na łańcuchowe powtarzanie prawego kliknięcia, natomiast pudło nakłada 20-sekundowy czas odnowienia
 					'''
 			}
@@ -11085,38 +11085,38 @@ Mods: {
 			}
 
 			EnergizedGathicStone: {
-				// DisplayName: Energized Gathic Stone
-				// Tooltip: ""
+				DisplayName: Gatycki Energetyczny Kamień
+				Tooltip: ""
 			}
 
 			InfectedEye: {
-				// DisplayName: Infected Eye
-				// Tooltip: ""
+				DisplayName: Zainfekowane Oko
+				Tooltip: ""
 			}
 
 			LostSoulBottle: {
-				// DisplayName: Lost Soul in a Bottle
-				// Tooltip: ""
+				DisplayName: Zagubiona Dusza w Butelce
+				Tooltip: ""
 			}
 
 			EpidotraMusicBox: {
-				// DisplayName: Music Box (Epidotra)
-				// Tooltip: musicman - Epidotra
+				DisplayName: Pozytywka (Epidotra)
+				Tooltip: musicman - Epidotra
 			}
 
 			WeirdBloomPainting: {
-				// DisplayName: Weird Bloom Painting
-				// Tooltip: ""
+				DisplayName: Dążenie do Doskonałości
+				Tooltip: "'M. John'"
 			}
 
 			AncientFlowerSeeds: {
-				// DisplayName: Ancient Flower Seeds
-				// Tooltip: ""
+				DisplayName: Starożytne Nasiona Kwiatów
+				Tooltip: ""
 			}
 
 			TallAncientGrassSeeds: {
-				// DisplayName: Tall Ancient Grass Seeds
-				// Tooltip: ""
+				DisplayName: Starożytne Nasiona Długiej Trawy
+				Tooltip: ""
 			}
 		}
 
@@ -11857,7 +11857,7 @@ Mods: {
 			SunPalmFlare_Proj.DisplayName: Flara Słońca w Dłoniach
 			Blisterface_GirusTalk.DisplayName: Złowieszczy Głos
 			Blisterface_Drip_Proj.DisplayName: Kropla Mułu
-			// ErhanMagnifyingGlass_HoldOut.DisplayName: Erhan Magnifying Glass_ Hold Out
+			// ErhanMagnifyingGlass_HoldOut.DisplayName: "{$Mods.Redemption.Items.ErhanMagnifyingGlass.DisplayName}"
 		}
 
 		NPCs: {

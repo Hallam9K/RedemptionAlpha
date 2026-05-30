@@ -46,7 +46,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 {
                     Vector2 pos = Projectile.Center + RedeHelper.PolarVector(20 * Projectile.spriteDirection, (player.Center - Main.MouseWorld).ToRotation() + MathHelper.PiOver2);
                     SoundEngine.PlaySound(SoundID.Item125, player.position);
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), pos, RedeHelper.PolarVector(player.inventory[player.selectedItem].shootSpeed, (Main.MouseWorld - pos).ToRotation()), ProjectileType<PNebula1_Friendly>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), pos, RedeHelper.PolarVector(Projectile.velocity.Length(), (Main.MouseWorld - pos).ToRotation()), ProjectileType<PNebula1_Friendly>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
                     Projectile.Kill();
                 }
             }

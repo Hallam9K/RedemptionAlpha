@@ -27,7 +27,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.height = 72;
             Projectile.penetrate = -1;
             Projectile.hostile = false;
-            Projectile.friendly = true;
+            Projectile.friendly = false;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 140;
@@ -35,6 +35,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.scale = 0.1f;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
         }
         public override bool? CanCutTiles() => false;
         public float rot;
@@ -45,7 +46,8 @@ namespace Redemption.Projectiles.Melee
             switch (Projectile.localAI[0])
             {
                 case 0:
-                    Projectile.rotation = Projectile.DirectionTo(Main.MouseWorld).ToRotation() + MathHelper.PiOver4;
+                    if (Projectile.owner == Main.myPlayer)
+                        Projectile.rotation = Projectile.DirectionTo(Main.MouseWorld).ToRotation() + MathHelper.PiOver4;
                     rot = Projectile.rotation;
                     Projectile.scale += 0.04f;
                     Projectile.alpha -= 30;
@@ -59,10 +61,11 @@ namespace Redemption.Projectiles.Melee
                 case 1:
                     Projectile.rotation = rot;
                     rot.SlowRotation(Projectile.velocity.ToRotation() + MathHelper.PiOver4, (float)Math.PI / 30f);
-                    if (Projectile.localAI[1] == 0)
+                    if (!Projectile.friendly)
                     {
-                        Projectile.velocity = Projectile.DirectionTo(Main.MouseWorld) * 30;
-                        Projectile.localAI[1] = 1;
+                        if (Projectile.owner == Main.myPlayer)
+                            Projectile.velocity = Projectile.DirectionTo(Main.MouseWorld) * 30;
+                        Projectile.friendly = true;
                     }
                     if (Projectile.timeLeft < 40)
                     {
@@ -73,7 +76,7 @@ namespace Redemption.Projectiles.Melee
                     break;
                 case 2:
                     Projectile.timeLeft = 10;
-                    Projectile.velocity *= 0.86f;
+                    Projectile.velocity *= 0.78f;
                     Projectile.alpha += 6;
                     if (Projectile.alpha >= 255)
                         Projectile.Kill();
@@ -85,13 +88,6 @@ namespace Redemption.Projectiles.Melee
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localAI[0] = 2;
-            Projectile.localNPCImmunity[target.whoAmI] = 10;
-            target.immune[Projectile.owner] = 0;
-
-            Vector2 dir = Projectile.Center.DirectionFrom(target.Center);
-            Vector2 drawPos = Vector2.Lerp(Projectile.Center, target.Center, 0.9f);
-            RedeParticleManager.CreateSlashParticle(drawPos, dir.RotateRandom(.5f) * 100, 1, Color.BlueViolet);
-            RedeParticleManager.CreateDevilsPactParticle(drawPos, Vector2.Zero, .75f, Color.BlueViolet.WithAlpha(0), DustID.PurpleCrystalShard);
         }
         public override bool? CanHitNPC(NPC target)
         {

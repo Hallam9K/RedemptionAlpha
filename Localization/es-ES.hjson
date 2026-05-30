@@ -240,7 +240,7 @@ Mods: {
 		}
 
 		FlavorTextBestiary: {
-			Multiplier: Multiplicadores Elementales
+			Multiplier: Resistencias elementales
 			Daerel: Un viajero del continente Epidotra, tiene una amistad con Zephos. Principalmente hábil en el tiro con arco y el sigilo.
 			Zephos: Un viajero del continente Epidotra, tiene una amistad con Daerel. Principalmente hábil con la esgrima.
 			Fallen: Los Caídos son una categoría de no-muertos con un alma lo suficientemente fuerte como para formar carne de un pálido tono marrón. La mayoría son agresivos hacia los humanos, pero este Caído es un caso raro que puede vender equipo para rituales y reparar fragmentos de armas antiguas.
@@ -1247,7 +1247,7 @@ Mods: {
 			}
 
 			KS3Message: {
-				Attacked1: Vaya, parece que te gusta apretar el gatillo.
+				Attacked1: Vaya, parece que te gusta apretar del gatillo.
 				Attacked2: ¿Sabes que hay como un millón de nosotros, no? Lo que sea, he venido a dejar un mensaje de King Slayer -
 				Message: '''"Me iré al otro mundo pronto,[0.1] Así que si tienes trabajo pendiente conmigo,[0.3] será mejor encargarse de eso antes que nada."'''
 				Variant: Vete al diablo también, supongo.
@@ -8239,8 +8239,7 @@ Mods: {
 					'''
 					Mantén clic izquierdo para cargar un corte giratorio radiante
 					Haz clic derecho en el momento en que estés a punto de recibir un ataque físico (daño de contacto o arma)
-					para realizar un desvío, lo que otorgará cuadros de inmunidad
-					No se hará un desvío si el enemigo está inmóvil o se mueve el doble de lento que tú
+					para realizar un desvío, lo que otorgará cuadros de inmunidad.
 					Después de un desvío exitoso, haz clic izquierdo para contraatacar al instante con un Corte giratorio radiante
 					Inflige el doble de daño contra enemigos demoníacos
 					'''
@@ -8543,7 +8542,7 @@ Mods: {
 				DisplayName: Prototipo de rifle atom
 				Tooltip:
 					'''
-					(4[i:Redemption/EnergyCell]) Reemplaza las balas normales por balas de plasma, consume 4 de energía
+					(4[i:Redemption/EnergyCell]) Reemplaza las balas por balas de plasma, consume 4 de energía
 					Requiere que tengas un Paquete de Energía en tu inventario
 					'''
 				Lore:
@@ -8834,7 +8833,7 @@ Mods: {
 					Haz clic izquierdo para realizar un ataque combinado a corta distancia
 					Haz clic derecho para avanzar con impulso y hacer más daño al final del impulso
 					Si golpeas con el impulso, podrás volver a activarlo al instante con el clic derecho
-					Mientras que si fallas el impulso, tendrás que esperar 20 segundos para volverlo a activar
+					Mientras que si fallas el impulso, tendrás que esperar 5 segundos para volverlo a activar
 					El daño del impulso dependerá de qué tanto tiempo estuviste siendo impulsado
 					'''
 			}
@@ -11187,28 +11186,28 @@ Mods: {
 			}
 
 			LostSoulBottle: {
-				// DisplayName: Lost Soul in a Bottle
-				// Tooltip: ""
+				DisplayName: Alma perdida embotellada
+				Tooltip: ""
 			}
 
 			EpidotraMusicBox: {
-				// DisplayName: Music Box (Epidotra)
-				// Tooltip: musicman - Epidotra
+				DisplayName: Caja de música (Epidotra)
+				Tooltip: musicman - Epidotra
 			}
 
 			WeirdBloomPainting: {
-				// DisplayName: Weird Bloom Painting
-				// Tooltip: ""
+				DisplayName: Perfektionsstreben
+				Tooltip: ""
 			}
 
 			AncientFlowerSeeds: {
-				// DisplayName: Ancient Flower Seeds
-				// Tooltip: ""
+				DisplayName: Semillas de flor antigua
+				Tooltip: ""
 			}
 
 			TallAncientGrassSeeds: {
-				// DisplayName: Tall Ancient Grass Seeds
-				// Tooltip: ""
+				DisplayName: Semillas de pasto antiguo largo
+				Tooltip: ""
 			}
 		}
 
@@ -11949,7 +11948,7 @@ Mods: {
 			SunPalmFlare_Proj.DisplayName: Sol Palma Flare
 			Blisterface_GirusTalk.DisplayName: Voz ominosa
 			Blisterface_Drip_Proj.DisplayName: Sludge Droplet
-			// ErhanMagnifyingGlass_HoldOut.DisplayName: Erhan Magnifying Glass_ Hold Out
+			ErhanMagnifyingGlass_HoldOut.DisplayName: "{$Mods.Redemption.Items.ErhanMagnifyingGlass.DisplayName}"
 		}
 
 		NPCs: {
@@ -12075,7 +12074,7 @@ Mods: {
 
 			PZ: {
 				DisplayName: Paciente Cero
-				BossChecklistIntegration.SpawnInfo: Golpea el ojo cerrado de Paciente Cero que está en el laboratorio abandonado. Usa el [i:Redemption/LabHologramDevice] en la sala de Patient Zero, para invocarlo otra vez.
+				BossChecklistIntegration.SpawnInfo: Golpea el ojo cerrado que está dentro del laboratorio abandonado. Usa el [i:Redemption/LabHologramDevice] en la sala del paciente cero, para invocarlo otra vez.
 			}
 
 			PZ_Body_Holo.DisplayName: "{$Mods.Redemption.NPCs.PZ.DisplayName}"
@@ -12725,7 +12724,7 @@ Mods: {
 			ClayStatuetteTile.MapEntry: Estatuilla de arcilla
 			DesertStatuetteTile.MapEntry: Estatuilla desértica
 			ObsidianStatuetteTile.MapEntry: Estatuilla de obsidiana
-			// LostSoulBottleTile.MapEntry: Lost Soul in a Bottle
+			LostSoulBottleTile.MapEntry: Alma perdida embotellada
 		}
 
 		Keybinds: {
@@ -12926,7 +12925,7 @@ Mods: {
 
 		BossChecklistIntegration: {
 			AbandonedLaboratory: {
-				SpawnInfo: Encuentra el laboratorio abandonado muy por debajo de la superficie y derrota a los dos primeros minijefes que se encuentran en el interior. Es necesario derrotar a todos los jefes mecánicos.
+				SpawnInfo: Encuentra el laboratorio abandonado muy por debajo de la superficie y derrota a los tres primeros minijefes que se encuentran en el interior. Es necesario derrotar a todos los jefes mecánicos.
 				EntryName: Laboratorio abandonado
 			}
 

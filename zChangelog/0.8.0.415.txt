@@ -8,11 +8,14 @@
 - Added Arcane element to Divinity
 - Extended Elemental Stats Panel down so Celestial text isn't escaping confinement
 - Changed composer name of Universe to TYESKI in music box tooltips
+- Weapon Speed modifiers affect Automated Hacksaw's Mode 2 and damage gain of Mode 3
+- Buffed Sun-in-Palm right-click damage by 50%, reduced distance of dash and increased velocity. Dash always creates 10 Sun Palm Flares on hit
+- Added on hit effects for Automated Hacksaw
 2452. Fixed trail effects never being disposed and gradually using more memory
 ----- I copy+pasted the things with trails from private version, the following things might've had changes that were unintentionally copied with the trails:
 > Spellsong: Changed visuals, corrected attack speed modifier
 > Wraith Slayer: Changed visuals, corrected attack speed modifier (30 to 28 use time to account for it)
-> Ukonvasara: Added swing trail
+> Ukonvasara: Added swing trail, improved visual of electric trail
 > Dragon Cleaver: Corrected attack speed modifier
 > Iron Realm Sword: Changed visuals, corrected attack speed modifier
 > Lunar Shot: Reduced damage from bats from 85% to 70% base damage
